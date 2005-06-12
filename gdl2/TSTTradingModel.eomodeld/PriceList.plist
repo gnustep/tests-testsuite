@@ -1,0 +1,26 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = NAME;
+	    externalType = char;
+	    name = name;
+	    valueClassName = NSString;
+	    width = 30;
+	}
+    );
+    className = EOGenericRecord;
+    externalName = PRICELIST;
+    name = PriceList;
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+    );
+}

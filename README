@@ -1,0 +1,37 @@
+
+Testsuite
+=========
+
+This testsuite is a general framework for testing the core GNUstep
+libraries. Since we are testing the very basic level of an Objective-C
+runtime, we can't use more complete unit tests, such as OCUnit
+<http://www.sente.ch/software/ocunit/>, although we recommend proper
+unit tests for higher-level applications and libraries.
+
+Please run this testsuite often, when adding new features, fixing bugs
+and running on new platforms.
+
+License 
+-------
+
+ The testing framework and many of the tests are copyright by the FSF
+and distributed under the GPL.  However, some tests may not be
+copyright by the FSF, but retain the copyright of the original owner
+(e.g tests submited as bug reports). You should feel free to add tests
+that are not copyright by the FSF. The copyright of these tests should
+be clearly stated, however, they should still be distributed under the
+GPL.
+
+Running Tests
+-------------
+
+To run a testsuite, use the runtests.sh script along with the name of
+the project testsuite you with to test:
+
+./runtests.sh base
+
+If you compiled the libraries with debug=yes, make sure to add the
+--debug argument:
+
+./runtests.sh --debug base
+

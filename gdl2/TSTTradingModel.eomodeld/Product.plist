@@ -1,0 +1,49 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = NAME;
+	    externalType = char;
+	    name = name;
+	    valueClassName = NSString;
+	    width = 30;
+	},
+	{
+	    columnName = GRPID;
+	    externalType = integer;
+	    name = grpid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	}
+    );
+    className = EOGenericRecord;
+    classProperties = (
+	name,
+	productGroup
+    );
+    externalName = PRODUCT;
+    name = Product;
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+	{
+	    destination = ProductGroup;
+	    isToMany = N;
+	    joinSemantic = EOInnerJoin;
+	    joins = (
+		{
+		    destinationAttribute = pid;
+		    sourceAttribute = grpid;
+		}
+	    );
+	    name = productGroup;
+	}
+    );
+}

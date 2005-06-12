@@ -1,0 +1,1 @@
+include $(GNUSTEP_MAKEFILES)/Auxiliary/gdl2.make

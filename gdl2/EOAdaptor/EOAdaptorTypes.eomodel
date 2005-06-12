@@ -1,0 +1,52 @@
+{
+  EOModelVersion   = 2;
+
+  connectionDictionary = {
+    databaseName = gdl2test;
+  };
+
+  entities = (
+    {
+      name                 = "MyEntity";
+      externalName         = "MyEntity";
+      className            = "EOGenericRecord";
+      primaryKeyAttributes = ( number );
+      
+      attributesUsedForLocking = (
+        number
+      );
+
+      classProperties = (
+	number,
+	string,
+	data,
+	date
+        );
+
+      attributes = (
+        {
+          name           = number;
+          columnName     = NUM;
+          valueClassName = NSNumber;
+          valueType      = i;
+        },
+        {
+          name           = string;
+          columnName     = STR;
+          valueClassName = NSString;
+          width          = 30;
+         },
+        {
+          name           = data;
+          columnName     = DATA;
+          valueClassName = NSData;
+        },
+        {
+          name           = date;
+          columnName     = DATE;
+          valueClassName = NSCalendarDate;
+        }
+      );
+    },
+  );
+}

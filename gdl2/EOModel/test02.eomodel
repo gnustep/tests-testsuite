@@ -1,0 +1,46 @@
+{ // Comments
+  EOModelVersion   = 2;
+  adaptorClassName = "Postgres95EOAdaptor";
+  adaptorName      = "Postgres95";
+  
+  entities = (
+    { // More commetns
+      name                 = "Product";
+      externalName         = "PRODUCT";
+      className            = "EOGenericRecord";
+      primaryKeyAttributes = ( "pid" );
+      
+      attributesUsedForLocking = (
+        pid,
+        productGroup
+      );
+      classProperties = ( pid, productGroup
+        );
+
+      attributes = (
+        {
+          name           = "pid";
+          columnName     = "PID";
+          externalType   = "integer";
+          valueClassName = "NSNumber";
+          valueType      = i;
+        },
+        {
+          name           = "name";
+          columnName     = "NAME";
+          externalType   = "char";
+          valueClassName = "NSString";
+          width          = 30;
+         },
+        {
+          name           = "grpid";
+          columnName     = "GRPID";
+          externalType   = "integer";
+          valueClassName = "NSNumber";
+          allowsNull     = Y;
+          valueType      = i;
+        }
+      );
+    },
+  );
+}

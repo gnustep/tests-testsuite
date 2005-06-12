@@ -1,0 +1,36 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = NAME;
+	    externalType = char;
+	    name = name;
+	    valueClassName = NSString;
+	    width = 30;
+	},
+	{
+	    columnName = DATE;
+	    externalType = date;
+	    name = date;
+	    valueClassName = NSCalendarDate;
+	}
+    );
+    className = EOGenericRecord;
+    classProperties = (
+	name,
+	date
+    );
+    externalName = PRODUCTGROUP;
+    name = ProductGroup;
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+    );
+}

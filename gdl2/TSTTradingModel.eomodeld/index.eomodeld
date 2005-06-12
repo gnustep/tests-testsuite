@@ -1,0 +1,48 @@
+{
+    EOModelVersion = 2;
+    adaptorName = Postgres95;
+    connectionDictionary = {
+	databaseName = gdl2test;
+    };
+    entities = (
+	{
+	    className = EOGenericRecord;
+	    name = Product;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = ProductGroup;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = Supplier;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = Customer;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = CustomerGroup;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = PriceList;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = PriceListPos;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = Order;
+	},
+	{
+	    className = EOGenericRecord;
+	    name = OrderPos;
+	}
+    );
+    storedProcedures = (
+        procName
+    );
+}

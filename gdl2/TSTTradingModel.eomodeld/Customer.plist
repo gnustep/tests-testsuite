@@ -1,0 +1,33 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = NAME;
+	    externalType = char;
+	    name = name;
+	    valueClassName = NSString;
+	    width = 30;
+	},
+	{
+	    columnName = GRPID;
+	    externalType = integer;
+	    name = grpid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	}
+    );
+    className = EOGenericRecord;
+    externalName = CUSTOMER;
+    name = Customer;
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+    );
+}

@@ -1,0 +1,48 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = CSTID;
+	    externalType = integer;
+	    name = cstid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	    allowsNull = Y;
+	},
+	{
+	    columnName = DATE;
+	    externalType = date;
+	    name = date;
+	    valueClassName = NSCalendarDate;
+	}
+    );
+    className = EOGenericRecord;
+    externalName = ORDER;
+    name = Order;
+    classProperties = (date, orderPos); 
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+        {
+            deleteRule = EODeleteRuleCascade; 
+            destination = OrderPos; 
+            isToMany = Y; 
+            joinSemantic = EOInnerJoin; 
+            joins = (
+                {
+                    destinationAttribute = ordid;
+                    sourceAttribute = pid; 
+                }
+            ); 
+            name = orderPos; 
+            ownsDestination = Y; 
+        }
+    );
+}

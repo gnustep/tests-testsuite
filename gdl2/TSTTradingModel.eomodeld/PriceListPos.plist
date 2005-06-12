@@ -1,0 +1,48 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = PRLID;
+	    externalType = integer;
+	    name = prlid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = PRDID;
+	    externalType = integer;
+	    name = prdid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = CSTID;
+	    externalType = integer;
+	    name = cstid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = PRICE;
+	    externalType = decimal;
+	    name = price;
+	    precision = 12;
+	    scale = "%\U00ED";
+	    valueClassName = NSDecimalNumber;
+	}
+    );
+    className = EOGenericRecord;
+    externalName = PRICELISTPOS;
+    name = PriceListPos;
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+    );
+}

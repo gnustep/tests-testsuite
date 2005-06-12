@@ -1,0 +1,76 @@
+{
+    attributes = (
+	{
+	    columnName = PID;
+	    externalType = integer;
+	    name = pid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = ORDID;
+	    externalType = integer;
+	    name = ordid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = POSNR;
+	    externalType = integer;
+	    name = posnr;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	},
+	{
+	    columnName = PRDID;
+	    externalType = integer;
+	    name = prdid;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	    allowsNull = Y;
+	},
+	{
+	    columnName = PRICE;
+	    externalType = decimal;
+	    name = price;
+	    precision = 12;
+	    scale = 2;
+	    valueClassName = NSDecimalNumber;
+	},
+	{
+	    columnName = AMOUNT;
+	    externalType = decimal;
+	    name = amount;
+	    precision = 12;
+	    scale = 2;
+	    valueClassName = NSDecimalNumber;
+	},
+	{
+	    columnName = VALUE;
+	    externalType = decimal;
+	    name = value;
+	    precision = 12;
+	    scale = 2;
+	    valueClassName = NSDecimalNumber;
+	}
+    );
+    className = EOGenericRecord;
+    externalName = ORDERPOS;
+    name = OrderPos;
+    classProperties = (posnr, price, value, amount, order); 
+    primaryKeyAttributes = (
+	pid
+    );
+    relationships = (
+        {
+            deleteRule = EODeleteRuleDeny; 
+            destination = Order; 
+            isMandatory = Y; 
+            isToMany = N; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = pid; sourceAttribute =
+    ordid; }); 
+            name = order; 
+        }
+    );
+}
