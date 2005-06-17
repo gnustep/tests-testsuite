@@ -1,3 +1,8 @@
+2005-06-17  Matt Rice   <ratmice@yahoo.com>
+
+	* gdl2/GDL2Testing.h: Include ObjectTesting.h instead of stuff.h.
+	* gdl2/EOModel/test05.m: New test for -removeEntity:.
+
 2005-06-11  Adam Fedor  <fedor@gnu.org>
 
 	* Initial import into GNUstep. Rearrange tests into proper

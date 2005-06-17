@@ -3,7 +3,7 @@
 #ifdef GNUSTEP_TESTING
 #include <GNUstepBase/GSTesting.h>
 #else
-#include "../stuff.h"
+#include "../ObjectTesting.h"
 #endif
 
 #include <EOAccess/EOAccess.h>
