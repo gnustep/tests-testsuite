@@ -1,3 +1,14 @@
+2005-06-26  David Ayers  <d.ayers@inode.at>
+
+	* runtest.sh: Default to using gmake yet allow overriding the make
+	command with an environment variable.
+	
+2005-06-26  Riccardo Mottola  <multix@gmail.com>
+
+	* ObjectTesting.h: Make compatible with older gcc versions.
+	* base/NSArray/create.m: Ditto.
+	* runtest.sh: Use default Bourne shell instead of bash.
+
 2005-06-17  Matt Rice   <ratmice@yahoo.com>
 
 	* gdl2/GDL2Testing.h: Include ObjectTesting.h instead of stuff.h.

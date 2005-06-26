@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 #  run tests script for the GNUstep Testsuite
 #
@@ -51,6 +51,14 @@ fi
 
 DIR=`dirname $1`
 NAME=`basename $1`
+if [ ! "$MAKE_CMD" ]
+  then
+    MAKE_CMD=gmake
+    if ( ! $MAKE_CMD --version > /dev/null 2>&1 )
+      then
+      MAKE_CMD=make
+    fi
+fi
 
 if [ ! -e $DIR/IGNORE ] 
   then
@@ -82,7 +90,7 @@ if [ ! -e $DIR/IGNORE ]
 
     # Compile it. Redirect errors to stdout so it shows up in the log, but not
     # in the summary.
-    if ! ( make $MAKEFLAGS 2>&1 ); then
+    if ! ( $MAKE_CMD $MAKEFLAGS 2>&1 ); then
    	echo COMPILEFAIL: $1 >&2
     else
 	# We want aggressive memory checking.
@@ -98,7 +106,7 @@ if [ ! -e $DIR/IGNORE ]
 
 	echo Running $1...
 	# Run it. If it terminates abnormally, mark it as a crash.
-	if ! make -s test; then
+	if ! $MAKE_CMD -s test; then
 		echo FAIL: $1 >&2
 	else
 		echo COMPLETED: $1 >&2

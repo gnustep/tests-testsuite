@@ -141,6 +141,8 @@ static void test_NSObject(NSString *className, NSArray *objects)
       int count2;
       Class sup = Nil;
       const char *prefix;
+      id r;
+
       prefix = [[NSString stringWithFormat:@"Object %i of class '%@'",i,className] cString];
       pass([theObj conformsToProtocol:@protocol(NSObject)], "%s conforms to NSObject", prefix);
       mySelf = [theObj self];
@@ -155,7 +157,7 @@ static void test_NSObject(NSString *className, NSArray *objects)
       pass([theObj isEqual:theObj], "%s isEqual: to self",prefix);
       pass([theObj respondsToSelector:@selector(self)],"%s respondsToSelector:",prefix);
       [theObj isProxy];
-      id r = [theObj retain];
+      r = [theObj retain];
       pass(theObj == r, "%s handles retain",prefix); 
       [theObj release];
       [theObj retain];
