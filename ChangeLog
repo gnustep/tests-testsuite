@@ -2,6 +2,8 @@
 
 	* runtest.sh: Default to using gmake yet allow overriding the make
 	command with an environment variable.
+	* gdl2/GDL2Testing (globalModelForKey): Make compatible with older
+	gcc versions.
 	
 2005-06-26  Riccardo Mottola  <multix@gmail.com>
 

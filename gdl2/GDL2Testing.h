@@ -32,11 +32,12 @@ static EOModel *
 globalModelForKey(NSString *key)
 {
   static NSMutableDictionary *globalModelDictionary = nil;
+  EOModel *model;
 
   if (globalModelDictionary == nil)
     globalModelDictionary = [NSMutableDictionary new];
 
-  EOModel *model = [globalModelDictionary objectForKey: key];
+  model = [globalModelDictionary objectForKey: key];
   if (model == nil)
     {
       NSString *path = [NSString stringWithFormat: @"../%@", key];
