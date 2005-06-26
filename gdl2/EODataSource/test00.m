@@ -120,6 +120,21 @@ int main(int argc,char **argv)
   END_TEST(result,
 	   "-[EODetailDataSource insertObject:] 2");
 
+  START_TEST(YES);
+  tmp1 = [detailDS createObject];
+  START_SET(YES);
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"amount"];
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"value"];
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"price"];
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"posnr"];
+  [detailDS insertObject:tmp1];
+  [ec saveChanges];
+  tmp2 = [detailDS fetchObjects];
+  result = [tmp2 containsObject:tmp1];
+  END_SET("-[EODetailDataSource insertObject:] result evaluation 3");
+  END_TEST(result,
+	   "-[EODetailDataSource insertObject:] 3");
+
   dropDatabaseWithModel(model);
 
   END_SET("EODataSource/test00.m");

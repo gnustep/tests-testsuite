@@ -1,3 +1,8 @@
+2005-06-26  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EODataSource/test00.m: new test for -createObject: with
+	EODetailDataSource
+	
 2005-06-26  David Ayers  <d.ayers@inode.at>
 
 	* runtest.sh: Default to using gmake yet allow overriding the make
