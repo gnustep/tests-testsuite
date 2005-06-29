@@ -25,6 +25,13 @@ void TestNSStringClass(Class stringClass);
 #include <Foundation/NSException.h>
 #include <Foundation/NSString.h>
 
+/* Solaris, in particular, can't handle a NULL string in a printf statement */
+#define FORMAT_STRING(str) ((str) ? str : "NULL")
+
+
+/* Check if a pointer is valid */
+#define IS_VALID_OBJECT(obj) (((id)obj)->class_pointer != (void*) 0xdeadface)
+
 
 Class stringClass;
 
@@ -77,8 +84,8 @@ BOOL test_encodings_helper(NSStringEncoding encoding,
 	if (![decodedString isEqual: referenceString])
 	{
 		printf("decoding data %s in encoding %i gave string %s\n",
-		       POBJECT(referenceData), encoding,
-		       [decodedString lossyCString]);
+		       FORMAT_STRING(POBJECT(referenceData)), encoding,
+		       FORMAT_STRING([decodedString lossyCString]));
 		ok=NO;
 	}
 
@@ -86,8 +93,8 @@ BOOL test_encodings_helper(NSStringEncoding encoding,
 	if (![encodedData isEqual: referenceData])
 	{
 		printf("encoding string %s in encoding %i gave data %s\n",
-		       [referenceString lossyCString], encoding,
-		       POBJECT(encodedData));
+		       FORMAT_STRING([referenceString lossyCString]), encoding,
+		       FORMAT_STRING(POBJECT(encodedData)));
 		ok=NO;
 	}
 
@@ -215,7 +222,8 @@ void test_return_self_optimizations(void)
 		length: 0];
 	returnValue=[string lowercaseString];
 	[string release];
-	pass([@"" isEqual: returnValue],"-lowercaseString returns a valid instance");
+	pass((IS_VALID_OBJECT(returnValue) && [@"" isEqual: returnValue]),
+	     "-lowercaseString returns a valid instance");
 	DESTROY(arp);
 
 	arp=[NSAutoreleasePool new];
@@ -223,7 +231,8 @@ void test_return_self_optimizations(void)
 		length: 0];
 	returnValue=[string uppercaseString];
 	[string release];
-	pass([@"" isEqual: returnValue],"-lowercaseString returns a valid instance");
+	pass((IS_VALID_OBJECT(returnValue) && [@"" isEqual: returnValue]),
+	     "-uppercaseString returns a valid instance");
 	DESTROY(arp);
 
 	arp=[NSAutoreleasePool new];
@@ -231,7 +240,8 @@ void test_return_self_optimizations(void)
 		length: 0];
 	returnValue=[string capitalizedString];
 	[string release];
-	pass([@"" isEqual: returnValue],"-capitalizedString returns a valid instance");
+	pass((IS_VALID_OBJECT(returnValue) && [@"" isEqual: returnValue]),
+	     "-capitalizedString returns a valid instance");
 	DESTROY(arp);
 
 	arp=[NSAutoreleasePool new];
@@ -239,7 +249,8 @@ void test_return_self_optimizations(void)
 		length: 0];
 	returnValue=[string description];
 	[string release];
-	pass([@"" isEqual: returnValue],"-description returns a valid instance");
+	pass((IS_VALID_OBJECT(returnValue) && [@"" isEqual: returnValue]),
+	     "-description returns a valid instance");
 	DESTROY(arp);
 
 	arp=[NSAutoreleasePool new];
@@ -255,7 +266,8 @@ void test_return_self_optimizations(void)
 		length: 1];
 	returnValue=[string stringByExpandingTildeInPath];
 	[string release];
-	pass([@"a" isEqual: returnValue],"-stringByExpandingTildeInPath returns a valid instance (2)");
+	pass((IS_VALID_OBJECT(returnValue) && [@"a" isEqual: returnValue]),
+	     "-stringByExpandingTildeInPath returns a valid instance (2)");
 	DESTROY(arp);
 
 	arp=[NSAutoreleasePool new];
@@ -263,7 +275,8 @@ void test_return_self_optimizations(void)
 		length: 1];
 	returnValue=[string stringByAbbreviatingWithTildeInPath];
 	[string release];
-	pass([@"a" isEqual: returnValue],"-stringByAbbreviatingWithTildeInPath returns a valid instance");
+	pass((IS_VALID_OBJECT(returnValue) && [@"a" isEqual: returnValue]),
+	     "-stringByAbbreviatingWithTildeInPath returns a valid instance");
 	DESTROY(arp);
 
 	/*

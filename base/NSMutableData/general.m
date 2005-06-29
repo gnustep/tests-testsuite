@@ -42,6 +42,7 @@ int main()
   [mutable replaceBytesInRange:NSMakeRange(22,6) withBytes:str2];
   tmp = (char *)malloc([mutable length]);
   [mutable getBytes:tmp range:NSMakeRange(22,6)];
+  tmp[6] = '\0';
   pass(mutable != nil &&
        strcmp(tmp,str2) == 0,
        "-replaceBytesInRange:withBytes suceeds");

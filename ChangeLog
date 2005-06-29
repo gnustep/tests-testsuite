@@ -1,3 +1,11 @@
+2005-06-29  Adam Fedor  <fedor@gnu.org>
+
+	* base/NSCharacterSet/general.m: Work with older gcc versions.
+	* base/NSUndoManager/NSUndoManager_notifications.m: Idem.
+	* base/NSMutableData/general.m: Terminate string so tests works.
+	* base/NSString/NSString_tests.h: Add macros to check for
+	valid strings and objects. Use them.
+
 2005-06-29  David Ayers  <d.ayers@inode.at>
 
 	* base/NSBundle/general.m: Do not include AppKit headers.
