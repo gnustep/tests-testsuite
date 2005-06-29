@@ -1,3 +1,7 @@
+2005-06-29  David Ayers  <d.ayers@inode.at>
+
+	* base/NSBundle/general.m: Do not include AppKit headers.
+	
 2005-06-26  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EODataSource/test00.m: new test for -createObject: with
