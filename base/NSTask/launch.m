@@ -10,41 +10,42 @@
 
 int main()
 {
-	NSTask *task;
-	NSPipe *outPipe;
-	NSFileHandle *outHandle;
-	NSAutoreleasePool *arp;
-	NSData *data = nil;
+  NSTask *task;
+  NSPipe *outPipe;
+  NSFileHandle *outHandle;
+  NSAutoreleasePool *arp;
+  NSData *data = nil;
 
-	arp = [[NSAutoreleasePool alloc] init];
+  arp = [[NSAutoreleasePool alloc] init];
 
-	task = [[NSTask alloc] init];
-	outPipe = RETAIN([NSPipe pipe]);
-	[task setLaunchPath: [NSString stringWithString: COMMAND]];
-	[task setArguments: [NSArray arrayWithObjects: ARGUMENTS]];
-	[task setStandardOutput: outPipe]; 
-	outHandle = [outPipe fileHandleForReading];
+  task = [[NSTask alloc] init];
+  outPipe = RETAIN([NSPipe pipe]);
+  [task setLaunchPath: [NSString stringWithString: COMMAND]];
+  [task setArguments: [NSArray arrayWithObjects: ARGUMENTS]];
+  [task setStandardOutput: outPipe]; 
+  outHandle = [outPipe fileHandleForReading];
 
-	[task launch];
+  [task launch];
 
-	data = [outHandle readDataToEndOfFile];
+  data = [outHandle readDataToEndOfFile];
 
-	// test data?
+  // test data?
 
-	[task terminate];
+  [task terminate];
 
-	TEST_EXCEPTION([task launch];, @"NSInvalidArgumentException", YES, "raised exception on failed launch") 
+  TEST_EXCEPTION([task launch];, @"NSInvalidArgumentException", YES,
+    "raised exception on failed launch") 
 
-	data = [outHandle readDataToEndOfFile];
+  data = [outHandle readDataToEndOfFile];
 
-	// test data?
+  // test data?
 
-	[task terminate];
+  [task terminate];
 
-	RELEASE(outPipe);
-	RELEASE(task);
+  RELEASE(outPipe);
+  RELEASE(task);
 
-	RELEASE(arp);
+  RELEASE(arp);
 
-	return 0;
+  return 0;
 }
