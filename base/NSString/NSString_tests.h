@@ -156,10 +156,10 @@ BOOL test_encoding(void)
 */
 
   ok = ok && test_encodings_helper(NSBIG5StringEncoding, 
-	  (unsigned char[]){0x41, 0x42, 0x43, 0x20, 0xa7, 0x41, 0xa6, 0x6e, 0x21}, 9, 
-	  (unichar[]){0x41, 0x42, 0x43, 0x20, 0x4f60, 0x597d, 0x21}, 7);
+    (unsigned char[]){0x41, 0x42, 0x43, 0x20, 0xa7, 0x41, 0xa6, 0x6e, 0x21}, 9, 
+    (unichar[]){0x41, 0x42, 0x43, 0x20, 0x4f60, 0x597d, 0x21}, 7);
 
-return ok;
+  return ok;
 }
 
 
@@ -179,13 +179,14 @@ BOOL test_getCString_maxLength_range_remainingRange(void)
 	case NSUTF8StringEncoding:
 	  referenceBytes =(unsigned char []){0x41, 0xc3, 0xa5, 0x42};
 	  referenceBytesLength = 4;
-	  referenceString = [stringClass stringWithCharacters: (unichar []){0x41, 0xe5, 0x42}
+	  referenceString = [stringClass stringWithCharacters:
+	    (unichar []){0x41, 0xe5, 0x42}
 		  length: 3];
 	  break;
 	default:
-	  printf("Have no reference string for c-string encoding %i, skipping test.\n", 
-		 [NSString defaultCStringEncoding]);
-	  return YES;
+	  printf("Have no reference string for c-string encoding %i,"
+	    " skipping test.\n", [NSString defaultCStringEncoding]);
+	  NS_VALRETURN(YES);
       }
 
     for (i = 0; i < referenceBytesLength; i++)
@@ -200,12 +201,12 @@ BOOL test_getCString_maxLength_range_remainingRange(void)
 	    break;
 	if (buffer[j]!= 0)
 	  {
-	    pass(0, "-getCString: maxLength: %i range: remainingRange: failed", i);
+	    pass(0, "-getCString: maxLength: %i range: remainingRange: failed",
+	      i);
 	    ok = NO;
 	  }
       }
-
-    return ok;
+    NS_VALRETURN(ok);
   NS_HANDLER
     printf("%s\n", POBJECT(localException));
     return NO;
