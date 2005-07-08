@@ -115,8 +115,8 @@ int main()
        "'nicola.jpg' stringByDeletingPathExtension == 'nicola'");
   pass([[@"nicola..jpg" stringByDeletingPathExtension] isEqual:@"nicola."],
        "'nicola..jpg' stringByDeletingPathExtension == 'nicola.'");
-  pass([[@".jpg" stringByDeletingPathExtension] isEqual:@""],
-       "'.jpg' stringByDeletingPathExtension == ''");
+  pass([[@".jpg" stringByDeletingPathExtension] isEqual:@".jpg"],
+       "'.jpg' stringByDeletingPathExtension == '.jpg'");
   pass([[@"/" stringByDeletingPathExtension] isEqual:@"/"],
        "'/' stringByDeletingPathExtension == '/'");
   

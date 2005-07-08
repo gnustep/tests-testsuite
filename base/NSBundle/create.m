@@ -13,8 +13,8 @@ int main()
   path = [[[NSFileManager defaultManager] currentDirectoryPath] 
   				 stringByAppendingPathComponent:@"Resources"];
   
-  pass([NSBundle mainBundle] == nil, 
-       "+mainBundle returns nil if the tool has no bundle");
+  pass([NSBundle mainBundle] != nil, 
+       "+mainBundle returns non-nil if the tool has no bundle");
   
   bundle = [NSBundle bundleWithPath:path];
   RETAIN(bundle);

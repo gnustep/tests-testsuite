@@ -1,3 +1,15 @@
+2005-07-08  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSBundle/create.m: Correct the sense of the test for a tool
+	with no bundle.
+	* base/NSString/test02.m: correct test of deleting path extension
+	from '.jpg'
+	* base/NSString/NSString_tests.h: Fix retain/release error ...
+	destroying a string and then attempting to use its description is a
+	bug as (for a string) the description method is supposed to return
+	self.
+	Fix bugs in tilde expansion tests.
+
 2005-08-07  Rob Burns  <rburns@softhome.net>
 
 	* base/NSTask/launch.m: New test for correct handling of launching

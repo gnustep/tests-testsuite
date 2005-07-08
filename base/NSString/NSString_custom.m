@@ -11,8 +11,8 @@ implementations of the NSString methods in NSString itself.
 
 @interface CustomString : NSString
 {
-	unichar *characters;
-	unsigned int length;
+  unichar *characters;
+  unsigned int length;
 }
 
 @end
@@ -20,36 +20,36 @@ implementations of the NSString methods in NSString itself.
 @implementation CustomString
 
 - initWithCharactersNoCopy: (unichar *)c
-	length: (unsigned int)l
-	freeWhenDone: (BOOL)freeWhenDone
+		    length: (unsigned int)l
+	      freeWhenDone: (BOOL)freeWhenDone
 {
-	if (l)
-	{
-		characters=malloc(l*sizeof(unichar));
-		memcpy(characters,c,l*sizeof(unichar));
-	}
-	length=l;
-	return self;
+  if (l)
+    {
+      characters = malloc(l * sizeof(unichar));
+      memcpy(characters, c, l * sizeof(unichar));
+    }
+  length = l;
+  return self;
 }
 
 -(void) dealloc
 {
-	if (characters)
-	{
-		free(characters);
-		characters=NULL;
-	}
-	[super dealloc];
+  if (characters)
+    {
+      free(characters);
+      characters = NULL;
+    }
+  [super dealloc];
 }
 
 -(unsigned int) length
 {
-	return length;
+  return length;
 }
 
 -(unichar) characterAtIndex: (unsigned int)index
 {
-	return characters[index];
+  return characters[index];
 }
 
 @end
@@ -57,6 +57,6 @@ implementations of the NSString methods in NSString itself.
 
 int main(int argc,char **argv)
 {
-	TestNSStringClass([CustomString class]);
-	return 0;
+  TestNSStringClass([CustomString class]);
+  return 0;
 }

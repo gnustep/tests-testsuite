@@ -65,16 +65,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
   want = ci;
 
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want,"CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want,"UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want,"UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want,"CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   opts = 0;
   type =  "case sensitive comparison for";
@@ -92,16 +92,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
     }
   want = cs;
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want,"CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want,"UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want,"UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want,"CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
 
   opts = NSCaseInsensitiveSearch | NSLiteralSearch;
   type =  "case insensitive literal comparison for";
@@ -119,16 +119,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
     }
   want = lci;
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want,"CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want,"UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want,"UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want,"CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
 
   opts = NSLiteralSearch;
   type =  "case sensitive literal comparison for";
@@ -146,16 +146,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
     }
   want = lcs;
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want,"CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want,"UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want,"UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want,"CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
 
 }
 
@@ -186,7 +186,7 @@ static void strRange(char *s0, char *s1, unsigned int opts,
                  b = [d mutableBytes];
                  [cs1 getCharacters:b];
                  us1 = [NSString stringWithCharacters:b length:l];,
-                 nil,NO,"create strings for range is ok");
+                 nil,NO, "create strings for range is ok");
   
   res = [cs0 rangeOfString:cs1 options:opts range:range];
   pass(rangesEqual(res,want), "CCString range for '%s' and '%s' is ok",s0,s1);
@@ -249,7 +249,7 @@ static void testLineRange(char *s, NSRange range, NSRange want)
   cs0 = [NSString stringWithCString:s];
   l = [cs0 length];
   res = [cs0 lineRangeForRange:range];
-  pass(rangesEqual(res,want),"lineRangeForRange: with '%s' is ok",s);
+  pass(rangesEqual(res,want), "lineRangeForRange: with '%s' is ok",s);
 }
 
 int main()
@@ -266,23 +266,23 @@ int main()
 		 NSRangeException, YES, 
 		 "NSString comparison with range beyond end of string");
 
-  strCompare("hello","hello", NSOrderedSame, NSOrderedSame, NSOrderedSame,
+  strCompare("hello", "hello", NSOrderedSame, NSOrderedSame, NSOrderedSame,
   	     NSOrderedSame,NSMakeRange(0,5)); 
-  strCompare("","",NSOrderedSame, NSOrderedSame, NSOrderedSame, NSOrderedSame,
+  strCompare("", "",NSOrderedSame, NSOrderedSame, NSOrderedSame, NSOrderedSame,
   	     NSMakeRange(0,0)); 
-  strCompare("hello","Hello", NSOrderedSame, NSOrderedDescending, NSOrderedSame,
+  strCompare("hello", "Hello", NSOrderedSame, NSOrderedDescending, NSOrderedSame,
   	     NSOrderedDescending,NSMakeRange(0,5)); 
-  strCompare("Hello","hello", NSOrderedSame, NSOrderedAscending, NSOrderedSame,
+  strCompare("Hello", "hello", NSOrderedSame, NSOrderedAscending, NSOrderedSame,
   	     NSOrderedAscending, NSMakeRange(0,5)); 
-  strCompare("abc","ab", NSOrderedDescending, NSOrderedDescending, 
+  strCompare("abc", "ab", NSOrderedDescending, NSOrderedDescending, 
              NSOrderedDescending, NSOrderedDescending, NSMakeRange(0,3));
-  strCompare("ab","abc", NSOrderedAscending, NSOrderedAscending, 
+  strCompare("ab", "abc", NSOrderedAscending, NSOrderedAscending, 
              NSOrderedAscending, NSOrderedAscending, NSMakeRange(0,2));
-  strCompare("","a", NSOrderedAscending, NSOrderedAscending, NSOrderedAscending,
+  strCompare("", "a", NSOrderedAscending, NSOrderedAscending, NSOrderedAscending,
   	     NSOrderedAscending, NSMakeRange(0,0));
-  strCompare("a","", NSOrderedDescending, NSOrderedDescending, 
+  strCompare("a", "", NSOrderedDescending, NSOrderedDescending, 
   	     NSOrderedDescending, NSOrderedDescending, NSMakeRange(0,1));
-  strCompare("a","", NSOrderedSame, NSOrderedSame, NSOrderedSame, NSOrderedSame,
+  strCompare("a", "", NSOrderedSame, NSOrderedSame, NSOrderedSame, NSOrderedSame,
              NSMakeRange(0,0));  
   strCompare("Location", "LoCaTiOn", NSOrderedSame, NSOrderedDescending,
              NSOrderedSame, NSOrderedDescending, NSMakeRange(0,8));
@@ -298,7 +298,7 @@ int main()
              "1234567890_!@$%^&*()qwertyuiop{}asdfghjkl:;'zxcvbnm,./<>?",
 	     NSOrderedAscending, NSOrderedAscending, NSOrderedAscending,
 	     NSOrderedAscending, NSMakeRange(0,56));
-  strCompare("abcdefg","ABCDEFG", NSOrderedSame, NSOrderedDescending,
+  strCompare("abcdefg", "ABCDEFG", NSOrderedSame, NSOrderedDescending,
              NSOrderedSame, NSOrderedDescending, NSMakeRange(0, 7));
   strCompare("abcdefg", "CDE", NSOrderedSame, NSOrderedDescending, 
   	     NSOrderedSame, NSOrderedDescending, NSMakeRange(2,3));
