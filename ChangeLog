@@ -1,3 +1,8 @@
+2005-08-07  Rob Burns  <rburns@softhome.net>
+
+	* base/NSTask/launch.m: New test for correct handling of launching
+	terminated tasks.
+	
 2005-06-30  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EORelationship/ToManyKeyPropagation.eomodel: Add inverse
