@@ -34,6 +34,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 +(NSObject *) createTestInstance;
 +(BOOL) verifyTestInstance: (NSObject *)instance
 	ofVersion: (int)version;
+-(BOOL) testEquality;
 @end
 
 @implementation NSObject (DecodingTests)
@@ -44,7 +45,25 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 +(BOOL) verifyTestInstance: (NSObject *)instance
 	ofVersion: (int)version
 {
-	return instance!=nil;
+  
+  return instance!=nil &&
+    ( [instance testEquality] == NO 
+      || [[self createTestInstance] isEqual: instance]);
+}
+-(BOOL) testEquality
+{
+  static IMP impNSObject = 0;
+  /* By default, assume that every class that overrides NSObject's
+     isEqual: implementation can compare archived instances.  
+     subclasses for which this doesn't hold can simply override this
+     method in a category and return a constant YES/NO.  */
+
+  if (!impNSObject) 
+    {
+      impNSObject = [NSObject instanceMethodForSelector:@selector(isEqual:)];
+    }
+  return [self methodForSelector:@selector(isEqual:)] == impNSObject
+    ? NO : YES;
 }
 @end
 
@@ -66,6 +85,13 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 +(NSObject *) createTestInstance
 {
 	return [[self numberWithInt: 1] retain];
+}
+@end
+
+@implementation NSData (DecodingTests)
++(NSObject *) createTestInstance
+{
+	return [[@"We need constant data" dataUsingEncoding: NSUnicodeStringEncoding] retain];
 }
 @end
 
@@ -155,6 +181,7 @@ int main(int argc, char **argv)
 	T(NSAttributedString)
 	T(NSCharacterSet)
 	T(NSData)
+	T(NSMutableData)
 	T(NSDate)
 	T(NSDateFormatter)
 	T(NSDictionary)

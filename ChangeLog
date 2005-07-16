@@ -1,3 +1,13 @@
+2005-07-16  David Ayers  <d.ayers@inode.at>
+
+	* coding/decoding.m: ([NSObject testEquality]): New method.
+	([NSObject verifyTestInstance:ofVersion:]): Also test equality
+	if we can assume to have a meaningful implementation.
+	([NSData createTestInstance]): Actually create
+	some data to be en/decoded.  Test NSMutableData also.
+	* coding/NSData.0.data: Update archive to actually contain data.
+	* coding/NSMutableData.0.data: New reference archive.
+	
 2005-07-08  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSBundle/create.m: Correct the sense of the test for a tool
