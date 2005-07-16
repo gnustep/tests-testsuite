@@ -70,7 +70,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 @implementation NSCharacterSet (DecodingTests)
 +(NSObject *) createTestInstance
 {
-	return [[self alphanumericCharacterSet] retain];
+	return [[self characterSetWithCharactersInString: @"qwertzuiop"] retain];
 }
 @end
 

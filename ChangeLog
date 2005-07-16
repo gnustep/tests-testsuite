@@ -6,11 +6,13 @@
 	([NSData createTestInstance]): Actually create
 	some data to be en/decoded.  Test NSMutableData also.
 	([NSDate createTestInstance]): Create a constant comparable date.
+	([NSCharacterSet createTestInstance]): Use stable character set.
 	* coding/NSData.0.data: Update archive to actually contain data.
 	* coding/NSMutableData.0.data: New reference archive.
 	* coding/NSDate.0.data: Update archive to contain a constant date.
 	* coding/NSNumber.0.data: Update archive to contain an NSNumber
 	instead of an NSValue.
+	* coding/NSCharacterSet.0.data: Use stable character set.
 	
 2005-07-08  Richard Frith-Macdonald  <rfm@gnu.org>
 
