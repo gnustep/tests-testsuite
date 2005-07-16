@@ -95,6 +95,13 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 }
 @end
 
+@implementation NSDate (DecodingTests)
++(NSObject *) createTestInstance
+{
+	return [[NSDate dateWithTimeIntervalSince1970: 4294967296.0] retain];
+}
+@end
+
 @implementation NSURL (DecodingTests)
 +(NSObject *) createTestInstance
 {
