@@ -1,3 +1,20 @@
+2005-07-17  Matt Rice  <ratmice@yahoo.com>
+
+	* coding/basictypes.m: New test for encoding and decoding non-object
+	types.
+	* coding/double-8.type: New archive from x86.
+	* coding/float-4.type: Ditto.
+	* coding/int-4.type: Ditto.
+	* coding/llong-8.type: Ditto.
+	* coding/long-4.type: Ditto.
+	* coding/schar-1.type: Ditto.
+	* coding/short-2.type: Ditto.
+	* coding/uchar-1.type: Ditto.
+	* coding/uint-4.type: Ditto.
+	* coding/ullong-8.type: Ditto.
+	* coding/ulong-4.type: Ditto.
+	* coding/ushort-2.type: Ditto.
+
 2005-07-16  David Ayers  <d.ayers@inode.at>
 
 	* coding/decoding.m: ([NSObject testEquality]): New method.
