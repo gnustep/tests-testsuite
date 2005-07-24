@@ -24,72 +24,73 @@
 #include <Foundation/NSArchiver.h>
 #include "Testing.h"
 
-#define TEST_FOR_CLASS(aClassName,aClass,TestDescription) \
-                pass([aClass isKindOfClass:NSClassFromString(aClassName)], \
-		                     TestDescription)
+#define TEST_FOR_CLASS(aClassName, aClass, TestDescription) \
+  pass([aClass isKindOfClass:NSClassFromString(aClassName)], TestDescription)
 
-#define TEST_STRING(code,description) \
-	   { \
-		NSString *_testString = code; \
-		pass(_testString != nil	&& \
-		     [_testString isKindOfClass:[NSString class]] && \
-		     [_testString length], description); \
-	   }
+#define TEST_STRING(code, description) \
+  { \
+    NSString *_testString = code; \
+    pass(_testString != nil \
+      && [_testString isKindOfClass:[NSString class]] \
+      && [_testString length], description); \
+  }
 
 #define START_SET(supported) if ((supported)) { NS_DURING 
-#define END_SET(desc , args...) NS_HANDLER \
-           fprintf(stderr, "EXCEPTION: %s %s %s\n", \
-		   [[localException name] cString], \
-		   [[localException reason] cString], \
-		   [[[localException userInfo] description] cString]); \
-	   unresolved (desc , ## args); \
-           NS_ENDHANDLER } \
-           else unsupported (desc , ## args)
+#define END_SET(desc, args...) NS_HANDLER \
+  fprintf(stderr, "EXCEPTION: %s %s %s\n", \
+    [[localException name] lossyCString], \
+    [[localException reason] lossyCString], \
+    [[[localException userInfo] description] lossyCString]); \
+  unresolved (desc, ## args); \
+ NS_ENDHANDLER } \
+ else unsupported (desc, ## args)
 
 #define START_TEST(supported) if ((supported)) { NS_DURING 
-#define END_TEST(result, desc , args...) \
-           pass(result, desc , ## args); \
-           NS_HANDLER \
-           fprintf(stderr, "EXCEPTION: %s %s %s\n", \
-		   [[localException name] cString], \
-		   [[localException reason] cString], \
-		   [[[localException userInfo] description] cString]); \
-           pass (NO, desc , ## args); NS_ENDHANDLER } \
-           else unsupported (desc , ## args)
+#define END_TEST(result, desc, args...) \
+  pass(result, desc, ## args); \
+  NS_HANDLER \
+    fprintf(stderr, "EXCEPTION: %s %s %s\n", \
+      [[localException name] lossyCString], \
+      [[localException reason] lossyCString], \
+      [[[localException userInfo] description] lossyCString]); \
+    pass (NO, desc, ## args); NS_ENDHANDLER } \
+  else unsupported (desc, ## args)
 
-/* i guess if shouldThrow == NO you can pass nil for expectedExceptionName */
+/* I guess if shouldThrow == NO you can pass nil for expectedExceptionName */
 /* test if an exception is thrown or not */
 #define TEST_EXCEPTION(code, exceptionName, shouldThrow, description) \
-		NS_DURING \
-		  code \
-		  pass(shouldThrow == NO, description); \
-		NS_HANDLER \
-		  pass((shouldThrow == YES && \
-		       [[localException name] isEqual: exceptionName]), \
-		       description); \
-		  if (shouldThrow == YES && \
-		      ![[localException name] isEqual: exceptionName]) \
-		      [localException raise]; \
-		NS_ENDHANDLER
+  NS_DURING \
+    code \
+    pass(shouldThrow == NO, description); \
+  NS_HANDLER \
+    pass((shouldThrow == YES \
+      && [[localException name] isEqual: exceptionName]), description); \
+    if (shouldThrow == YES \
+      && ![[localException name] isEqual: exceptionName]) \
+      [localException raise]; \
+  NS_ENDHANDLER
 
 /* dunno if i like this one... */
 /* test a condition fail if any exceptions are thrown */
-#define TEST_COND (cond,description) \
-	NS_DURING \
-	  { \
-	    BOOL testCondition = cond; \
-            pass(cond,description); \
-	  } \
-	NS_HANDLER \
-	  pass(0, description); \
-	  if (cond == NO) printf("%s: %s",[[localException name] cString], [[localException description] cString]); \
-	NS_ENDHANDLER
+#define TEST_COND (cond, description) \
+  NS_DURING \
+    { \
+      BOOL testCondition = cond; \
+      pass(cond, description); \
+    } \
+  NS_HANDLER \
+    pass(0, description); \
+    if (cond == NO) \
+      printf("%s: %s", [[localException name] lossyCString], \
+        [[localException description] lossyCString]); \
+  NS_ENDHANDLER
 
 static void test_NSMutableCopying(NSString *iClassName,
 				  NSString *mClassName, 
 				  NSArray *objects) __attribute__ ((unused));
 static void test_alloc(NSString *className) __attribute__ ((unused));
-static void test_NSObject(NSString *className, NSArray *objects) __attribute__ ((unused));
+static void test_NSObject(NSString *className,
+                          NSArray *objects) __attribute__ ((unused));
 static void test_NSCopying(NSString *iClassName,
 			   NSString *mClassName,
 			   NSArray *objects,
@@ -103,14 +104,16 @@ static void test_alloc(NSString *className)
   Class theClass = NSClassFromString(className);
   id obj0 = nil;
   id obj1 = nil;
-  const char *prefix = [[NSString stringWithFormat:@"Class '%@'",className] cString];
-  NSZone *testZone = NSCreateZone(1024,1024,1);
+  const char *prefix = [[NSString stringWithFormat:@"Class '%@'", className]
+    lossyCString];
+  NSZone *testZone = NSCreateZone(1024, 1024, 1);
   NSZone *theZone;
   pass(theClass != Nil, "%s exists", prefix);
   
   obj0 = [theClass alloc];
   pass(obj0 != nil, "%s has working alloc", prefix);
-  pass([obj0 isKindOfClass:theClass], "%s alloc gives the correct class", prefix);
+  pass([obj0 isKindOfClass:theClass],
+    "%s alloc gives the correct class", prefix);
   obj0 = [[theClass alloc] init];
   pass([obj0 isKindOfClass:theClass], "%s has working init", prefix);
   
@@ -129,9 +132,9 @@ static void test_NSObject(NSString *className, NSArray *objects)
   int i;
   Class theClass = Nil;
   theClass = NSClassFromString(className);
-  pass(theClass != Nil, "%s is a known className",[className cString]);
+  pass(theClass != Nil, "%s is a known className", [className lossyCString]);
   
-  for (i=0; i<[objects count];i++)
+  for (i = 0; i < [objects count]; i++)
     {
       id theObj = [objects objectAtIndex:i];
       id mySelf = nil;
@@ -143,22 +146,30 @@ static void test_NSObject(NSString *className, NSArray *objects)
       const char *prefix;
       id r;
 
-      prefix = [[NSString stringWithFormat:@"Object %i of class '%@'",i,className] cString];
-      pass([theObj conformsToProtocol:@protocol(NSObject)], "%s conforms to NSObject", prefix);
+      prefix = [[NSString stringWithFormat:@"Object %i of class '%@'",
+        i, className] lossyCString];
+      pass([theObj conformsToProtocol:@protocol(NSObject)],
+	"%s conforms to NSObject", prefix);
       mySelf = [theObj self];
       pass(mySelf == theObj, "%s can return self", prefix);
       myClass = [theObj class];
       pass(myClass != Nil, "%s can return own class", prefix);
-      pass([theObj isKindOfClass:theClass],"%s object %.160s is of correct class", prefix, [[theObj description] cString]);
-      pass(mySelf == myClass ? ![theObj isMemberOfClass:myClass] : [theObj isMemberOfClass:myClass],"%s isMemberOfClass works", prefix);
+      pass([theObj isKindOfClass:theClass],
+	"%s object %.160s is of correct class", prefix,
+	[[theObj description] lossyCString]);
+      pass(mySelf == myClass ? ![theObj isMemberOfClass:myClass]
+	: [theObj isMemberOfClass:myClass], "%s isMemberOfClass works", prefix);
       sup = [theObj superclass];
-      pass(theClass == NSClassFromString(@"NSObject") ? sup == nil : (sup != nil && sup != myClass), "%s can return superclass",prefix);
-      pass([theObj respondsToSelector:@selector(hash)],"%s responds to hash",prefix);
-      pass([theObj isEqual:theObj], "%s isEqual: to self",prefix);
-      pass([theObj respondsToSelector:@selector(self)],"%s respondsToSelector:",prefix);
+      pass(theClass == NSClassFromString(@"NSObject") ? sup == nil
+	: (sup != nil && sup != myClass), "%s can return superclass", prefix);
+      pass([theObj respondsToSelector:@selector(hash)],
+	"%s responds to hash", prefix);
+      pass([theObj isEqual:theObj], "%s isEqual: to self", prefix);
+      pass([theObj respondsToSelector:@selector(self)],
+	"%s respondsToSelector:", prefix);
       [theObj isProxy];
       r = [theObj retain];
-      pass(theObj == r, "%s handles retain",prefix); 
+      pass(theObj == r, "%s handles retain", prefix); 
       [theObj release];
       [theObj retain];
       [theObj autorelease];
@@ -168,15 +179,17 @@ static void test_NSObject(NSString *className, NSArray *objects)
       count1 = [theObj retainCount];
       [theObj release];
       count2 = [theObj retainCount];
-      pass((count0 == count2), "%s has working retainCount",prefix);
-      pass([[theObj description] isKindOfClass:[NSString class]],"%s has NSString description",prefix);
-      pass([theObj performSelector:@selector(self)] == theObj,"%s handles performSelector",prefix);    
+      pass((count0 == count2), "%s has working retainCount", prefix);
+      pass([[theObj description] isKindOfClass:[NSString class]],
+	"%s has NSString description", prefix);
+      pass([theObj performSelector:@selector(self)] == theObj,
+	"%s handles performSelector", prefix);    
     }
 }
 static void test_NSCoding(NSArray *objects)
 {
   int i;
-  for (i=0; i < [objects count]; i++)
+  for (i = 0; i < [objects count]; i++)
     { 
       id obj = [objects objectAtIndex:i];
       const char *prefix; 
@@ -185,19 +198,19 @@ static void test_NSCoding(NSArray *objects)
       id decoded;
 
       pass([[[obj class] description] length],
-	   "I can extract a class name for object");
+        "I can extract a class name for object");
 
-      prefix = [[NSString stringWithFormat:@"Object %i of class '%s'",i,
-                     [NSStringFromClass([obj class]) cString]] cString];
+      prefix = [[NSString stringWithFormat:@"Object %i of class '%s'", i,
+        [NSStringFromClass([obj class]) lossyCString]] lossyCString];
       pass([obj conformsToProtocol:@protocol(NSCoding)], 
-           "conforms to NSCoding protocol");
+	"conforms to NSCoding protocol");
       data = (NSMutableData *)[NSMutableData data]; 
       archiver = [[NSArchiver alloc] initForWritingWithMutableData: data];
       pass(archiver != nil, "I am able to set up an archiver");
       data = nil;
       [archiver encodeRootObject:obj];
       data = [archiver archiverData];
-      pass(data && [data length] > 0, "%s can be encoded",prefix);
+      pass(data && [data length] > 0, "%s can be encoded", prefix);
       decoded = [NSUnarchiver unarchiveObjectWithData:data];
       pass(decoded != nil, "can be decoded");
       pass([decoded isEqual:obj], "decoded object equals the original");
@@ -213,12 +226,12 @@ static void test_NSCopying(NSString *iClassName,
   Class mClass = NSClassFromString(mClassName);
   int i;
   NSZone *defZone = NSDefaultMallocZone();
-  NSZone *testZone = NSCreateZone(1024,1024,1);
+  NSZone *testZone = NSCreateZone(1024, 1024, 1);
 
-  pass(iClass != Nil, "%s is a known class",[iClassName cString]);
-  pass(mClass != Nil, "%s is a known class",[mClassName cString]);
+  pass(iClass != Nil, "%s is a known class", [iClassName lossyCString]);
+  pass(mClass != Nil, "%s is a known class", [mClassName lossyCString]);
   
-  for (i=0; i < [objects count]; i++)
+  for (i = 0; i < [objects count]; i++)
     {
       BOOL immutable;
       NSString *theName;
@@ -226,24 +239,24 @@ static void test_NSCopying(NSString *iClassName,
       id theCopy = nil;
       Class theClass = Nil;
       BOOL shouldRetain; 
-      id theObj = [objects objectAtIndex:i];
-      if (iClass != mClass && [theObj isKindOfClass:mClass])
+      id theObj = [objects objectAtIndex: i];
+      if (iClass != mClass && [theObj isKindOfClass: mClass])
         { 
-	  immutable=NO;
+	  immutable = NO;
           theName = iClassName;
           theClass = iClass;
         }
       else
         {
-	  immutable=YES;
+	  immutable = YES;
           theName = mClassName;
 	  theClass = mClass;
 	}
      
-      prefix = [[NSString 
-                 stringWithFormat:@"Object %i of class '%s'", i, [theName cString]] cString];
+      prefix = [[NSString stringWithFormat: @"Object %i of class '%s'",
+	i, [theName lossyCString]] lossyCString];
       pass([theObj conformsToProtocol:@protocol(NSCopying)], 
-           "conforms to NSCopying");
+	"conforms to NSCopying");
       if (mustCopy)
         {
 	  shouldRetain = NO;
@@ -258,24 +271,26 @@ static void test_NSCopying(NSString *iClassName,
 	}
       theCopy = [theObj copy];
       pass(theCopy != nil, "%s understands -copy", prefix);
-      pass([theCopy isKindOfClass:iClass],"%s copy is of correct type",prefix);
-      pass([theObj isEqual:theCopy], "%s original and copy are equal",prefix);
+      pass([theCopy isKindOfClass:iClass],
+	"%s copy is of correct type", prefix);
+      pass([theObj isEqual:theCopy], "%s original and copy are equal", prefix);
       if (immutable)
         { 
 	  if (shouldRetain)
 	    {
 	      pass(theCopy == theObj, 
-	           "%s is retained by copy with same zone",prefix);
+		"%s is retained by copy with same zone", prefix);
             }
           else
             { 
-	      pass(theCopy != theObj, "%s is not retained by copy with same zone",prefix);
+	      pass(theCopy != theObj,
+		"%s is not retained by copy with same zone", prefix);
 	    }
 	}
       if (theClass != iClass)
         {
           pass(![theCopy isKindOfClass: theClass], 
-	       "%s result of copy is not immutable",prefix);
+	    "%s result of copy is not immutable", prefix);
 	}
     
       if (mustCopy)
@@ -283,25 +298,28 @@ static void test_NSCopying(NSString *iClassName,
       else if (mustRetain)
         shouldRetain = YES;
       else
-        shouldRetain = NSShouldRetainWithZone(theObj,testZone);
+        shouldRetain = NSShouldRetainWithZone(theObj, testZone);
       
       theCopy = [theObj copyWithZone:testZone];
-      pass(theCopy != nil, "%s understands -copyWithZone",prefix);
-      pass([theCopy isKindOfClass:iClass], "%s zCopy has correct type",prefix);
-      pass([theObj isEqual:theCopy], "%s copy and original are equal",prefix);
+      pass(theCopy != nil, "%s understands -copyWithZone", prefix);
+      pass([theCopy isKindOfClass:iClass], "%s zCopy has correct type", prefix);
+      pass([theObj isEqual:theCopy], "%s copy and original are equal", prefix);
       if (immutable)
         {
            if (shouldRetain)
 	     {
-	       pass(theCopy == theObj,"%s is retained by copy with other zone",prefix);
+	       pass(theCopy == theObj,
+		 "%s is retained by copy with other zone", prefix);
 	     }
 	   else
 	     {
-	       pass(theCopy != theObj,"%s is not retained by copy with other znoe",prefix);
+	       pass(theCopy != theObj,
+		 "%s is not retained by copy with other znoe", prefix);
              }
 	}
      if (theClass != iClass)
-       pass(![theCopy isKindOfClass:theClass], "%s result of copyWithZone: is not immutable",prefix);
+       pass(![theCopy isKindOfClass:theClass],
+	 "%s result of copyWithZone: is not immutable", prefix);
     }
 }
 
@@ -315,10 +333,10 @@ static void test_NSMutableCopying(NSString *iClassName,
   Class mClass = Nil;
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
   iClass = NSClassFromString(iClassName);
-  pass(iClass != Nil, "%s is a known class", [iClassName cString]);
+  pass(iClass != Nil, "%s is a known class", [iClassName lossyCString]);
   
   mClass = NSClassFromString(mClassName);
-  pass(mClass != Nil, "%s is a known class", [mClassName cString]);
+  pass(mClass != Nil, "%s is a known class", [mClassName lossyCString]);
   
   for (i = 0; i < [objects count]; i++)
     {
@@ -345,23 +363,24 @@ static void test_NSMutableCopying(NSString *iClassName,
 	  theClass = mClass;
 	}
       
-      prefix = [[NSString 
-                 stringWithFormat:@"Object %i of class '%s'", i, [theName cString]] cString];
+      prefix = [[NSString stringWithFormat:
+	@"Object %i of class '%s'", i, [theName lossyCString]] lossyCString];
       pass([theObj conformsToProtocol:@protocol(NSMutableCopying)],
-           "%s conforms to NSMutableCopying protocol",prefix);
+	"%s conforms to NSMutableCopying protocol", prefix);
       theCopy = [theObj mutableCopy];
-      pass(theCopy != nil, "%s understands -mutableCopy",prefix);
+      pass(theCopy != nil, "%s understands -mutableCopy", prefix);
       pass([theCopy isKindOfClass:mClass], 
-           "%s mutable copy is of correct type" ,prefix);
-      pass([theCopy isEqual:theObj], "%s copy equals original",prefix);
-      pass(theCopy != theObj, 
-           "%s not retained by mutable copy in the same zone",[mClassName cString]);
+	"%s mutable copy is of correct type", prefix);
+      pass([theCopy isEqual:theObj], "%s copy equals original", prefix);
+      pass(theCopy != theObj,
+	"%s not retained by mutable copy in the same zone",
+	[mClassName lossyCString]);
       
       theCopy = [theObj mutableCopyWithZone:testZone];
-      pass(theCopy != nil,"%s understands mutableCopyWithZone",[mClassName cString]);
-      pass(theCopy != theObj, 
-           "%s not retained by mutable copy in other zone",[mClassName cString]);
+      pass(theCopy != nil,
+	"%s understands mutableCopyWithZone", [mClassName lossyCString]);
+      pass(theCopy != theObj, "%s not retained by mutable copy in other zone",
+	[mClassName lossyCString]);
     }
-  
 }
 
