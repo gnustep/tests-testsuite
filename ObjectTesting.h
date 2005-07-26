@@ -35,6 +35,9 @@
       && [_testString length], description); \
   }
 
+/* SETs are used to group code which is outside of the scope of the
+   current test but could raise exceptions that should be caught to
+   allow further tests to run.  */
 #define START_SET(supported) if ((supported)) { NS_DURING 
 #define END_SET(desc, args...) NS_HANDLER \
   fprintf(stderr, "EXCEPTION: %s %s %s\n", \
@@ -45,6 +48,12 @@
  NS_ENDHANDLER } \
  else unsupported (desc, ## args)
 
+/* START_TEST/END_TEST can be used if the code being tested could raise
+   and the exception should be considered a test failure.  The exception
+   is not reraised to allow subsequent tests to execute.  The START_TEST
+   macro takes an argument which will skip the test as UNSUPPORTED if it
+   evaluates to 0, allowing runtime control of whether the code block 
+   should be executed.  */
 #define START_TEST(supported) if ((supported)) { NS_DURING 
 #define END_TEST(result, desc, args...) \
   pass(result, desc, ## args); \

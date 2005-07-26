@@ -1,3 +1,8 @@
+2005-07-26  David Ayers  <d.ayers@inode.at>
+
+	* ObjectTesting.h (START_SET, END_SET, START_TEST, END_TEST):
+	Added documentation.
+	
 2005-07-17  Matt Rice  <ratmice@yahoo.com>
 
 	* coding/basictypes.m: New test for encoding and decoding non-object
