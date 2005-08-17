@@ -24,7 +24,8 @@
     className = EOGenericRecord;
     classProperties = (
 	name,
-	date
+	date,
+	products
     );
     externalName = TST_PRODUCTGROUP;
     name = ProductGroup;
@@ -32,5 +33,18 @@
 	pid
     );
     relationships = (
+	{
+	    name = products;
+	    destination = Product;
+	    isToMany = Y;
+	    joinSemantic = EOInnerJoin;
+	    joins = (
+		{
+		    destinationAttribute = grpid;
+		    sourceAttribute = pid;
+		}
+	    );
+	    deleteRule = EODeleteRuleCascade;
+	}
     );
 }

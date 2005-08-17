@@ -10,6 +10,10 @@
 
 	* gdl2/EOAdaptor/test00.m: Set useQuotedExternalNames: to
 	handle default naming conventions of PostgreSQL.
+
+	* gdl2/EOEditingContext/EOEditingContext02.m: New File.
+	* gdl2/TSTTradingModel.eomodeld/ProductGroup.plist: Add backward
+	relationship.
 	
 2005-07-26  David Ayers  <d.ayers@inode.at>
 
