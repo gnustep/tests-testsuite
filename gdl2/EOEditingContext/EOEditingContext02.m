@@ -63,7 +63,7 @@ int main(int argc,char **argv)
   EOModel  *model;
   EOEntity *entity;
   EOClassDescription *cd;
-  EOGlobalID *gid;
+  EORelationship *rel;
   EOEditingContext *ec = nil;
   EOFetchSpecification *fs = nil;
   id objPrd = nil;
@@ -75,20 +75,65 @@ int main(int argc,char **argv)
   START_SET(YES);
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
+  rel = [[model entityNamed: @"ProductGroup"] relationshipNamed: @"products"];
 
   createDatabaseWithModel(model);
   [[EOModelGroup defaultGroup] addModel: model];
 
   ec = [EOEditingContext new];
+  [rel setDeleteRule: EODeleteRuleCascade];
   insertObjects(model, ec, &objPrd, &objPrdGrp);
   [ec saveChanges];
 
   START_TEST(YES);
   [ec deleteObject: objPrdGrp];
   [ec processRecentChanges];
-  NSLog(@"DAVE:%@", [ec deletedObjects]);
   result = ([[ec deletedObjects] count] == 2);
   END_TEST(result,"EODeleteRuleCascade");
+
+  [ec saveChanges];
+  [rel setDeleteRule: EODeleteRuleDeny];
+  insertObjects(model, ec, &objPrd, &objPrdGrp);
+  [ec saveChanges];
+
+  START_TEST(YES);
+  [ec deleteObject: objPrdGrp];
+  [ec processRecentChanges];
+  result = ([[ec deletedObjects] count] == 0);
+  END_TEST(result,"EODeleteRuleDeny");
+
+  /* FIXME - Ayers: 
+     we should be able to revert the delete in the existing ec.
+     creating a new one is a temporary hack.  */
+  ec = [EOEditingContext new];
+  [rel setDeleteRule: EODeleteRuleNullify];
+  insertObjects(model, ec, &objPrd, &objPrdGrp);
+  [ec saveChanges];
+  
+  START_TEST(YES);
+  [ec deleteObject: objPrdGrp];
+  [ec processRecentChanges];
+  result = ([[ec deletedObjects] count] == 1);
+  result = result && ([[ec updatedObjects] count] == 1);
+  result = result && ([[[ec updatedObjects] lastObject] valueForKey:@"productGroup"] == 0);
+  END_TEST(result,"EODeleteRuleNullify");
+
+  /* FIXME - Ayers: 
+     we should be able to revert the delete in the existing ec.
+     creating a new one is a temporary hack.  */
+  ec = [EOEditingContext new];
+  [rel setDeleteRule: EODeleteRuleNoAction];
+  insertObjects(model, ec, &objPrd, &objPrdGrp);
+  [ec saveChanges];
+  
+  START_TEST(YES);
+  [ec deleteObject: objPrdGrp];
+  [ec processRecentChanges];
+  result = ([[ec deletedObjects] count] == 1);
+  result = result && ([[ec updatedObjects] count] == 0);
+  result = result && ([objPrd valueForKey:@"productGroup"] == objPrdGrp);
+  END_TEST(result,"EODeleteRuleNoAction");
+
 
   dropDatabaseWithModel(model);
   END_SET("EOEditingContext/" __FILE__);
