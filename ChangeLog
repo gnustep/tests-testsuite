@@ -1,3 +1,16 @@
+2005-08-17  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/TSTTradingModel.eomodeld/*.plist: Prefix external
+	table names with TST_ to avoid name clashes with reserved
+	words.
+	* gdl2/TSTTradingModel.eomodeld/OrderPos.plist: Add product
+	relationship.
+	* gdl2/EODataSource/test00.m: Add Product with ProductGroup
+	to OrderPos satisfy new model constraints.
+
+	* gdl2/EOAdaptor/test00.m: Set useQuotedExternalNames: to
+	handle default naming conventions of PostgreSQL.
+	
 2005-07-26  David Ayers  <d.ayers@inode.at>
 
 	* ObjectTesting.h (START_SET, END_SET, START_TEST, END_TEST):

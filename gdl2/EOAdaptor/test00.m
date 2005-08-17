@@ -51,6 +51,8 @@ int main(int argc,char **argv)
   /*  Now we have the testcases for the installed Adaptors.  */
 
   START_SET(YES);
+  [EOSQLExpression setUseQuotedExternalNames: YES];
+
   START_TEST(YES);
   adaptorNamesArr = [EOAdaptor availableAdaptorNames];
   END_TEST(YES, "+[EOAdaptor availableAdaptorNames:]" );
@@ -202,7 +204,8 @@ int main(int argc,char **argv)
   START_TEST(YES);
   tmp2 = [currAdaptorChannel describeTableNames];
   result = [tmp1 isEqual: tmp2];
-  END_TEST(result,"-[EOAdatorChannel describeTableNames]");
+  END_TEST(result,
+	   "-[EOAdatorChannel describeTableNames] %@ == %@", tmp1, tmp2);
   [currAdaptorChannel closeChannel];
 
   tmp1 = [NSDictionary dictionaryWithObjectsAndKeys:

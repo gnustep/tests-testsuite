@@ -38,7 +38,7 @@
 	}
     );
     className = EOGenericRecord;
-    externalName = PRICELISTPOS;
+    externalName = TST_PRICELISTPOS;
     name = PriceListPos;
     primaryKeyAttributes = (
 	pid

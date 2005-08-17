@@ -23,7 +23,7 @@
 	}
     );
     className = EOGenericRecord;
-    externalName = CUSTOMER;
+    externalName = TST_CUSTOMER;
     name = Customer;
     primaryKeyAttributes = (
 	pid

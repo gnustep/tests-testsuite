@@ -55,21 +55,39 @@
 	}
     );
     className = EOGenericRecord;
-    externalName = ORDERPOS;
+    externalName = TST_ORDERPOS;
     name = OrderPos;
-    classProperties = (posnr, price, value, amount, order); 
+    classProperties = (order, posnr, product, price, amount, value); 
     primaryKeyAttributes = (
 	pid
     );
     relationships = (
+        {
+            deleteRule = EODeleteRuleNullify; 
+            destination = Product; 
+            isMandatory = Y; 
+            isToMany = N; 
+            joinSemantic = EOInnerJoin; 
+            joins = (
+		{
+		    destinationAttribute = pid;
+		    sourceAttribute = prdid; 
+		}
+	    ); 
+            name = product; 
+        },
         {
             deleteRule = EODeleteRuleDeny; 
             destination = Order; 
             isMandatory = Y; 
             isToMany = N; 
             joinSemantic = EOInnerJoin; 
-            joins = ({destinationAttribute = pid; sourceAttribute =
-    ordid; }); 
+            joins = (
+		{
+		    destinationAttribute = pid;
+		    sourceAttribute = ordid;
+		}
+	    ); 
             name = order; 
         }
     );

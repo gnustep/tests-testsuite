@@ -27,7 +27,7 @@
 	name,
 	productGroup
     );
-    externalName = PRODUCT;
+    externalName = TST_PRODUCT;
     name = Product;
     primaryKeyAttributes = (
 	pid
