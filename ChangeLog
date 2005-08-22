@@ -1,3 +1,9 @@
+2005-08-22  Adam Fedor  <fedor@gnu.org>
+
+	* base/Functions/NSGeometry1.m: New file.
+
+	* GNUmakefile: Undo accidental changes.
+
 2005-08-18  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/EOEditingContext/EOEditingContext02.m: New delete rule tests.
