@@ -172,16 +172,15 @@ int main()
   pass([@"home" isAbsolutePath] == NO,
        "'home' isAbsolutePath == NO");
 
+  pass([@"c:/home" isAbsolutePath] == YES,
+       "'c:/home' isAbsolutePath == YES");
+
 #if	defined(__MINGW32__)
   pass([@"/home" isAbsolutePath] == NO,
        "'/home' isAbsolutePath == NO");
-  pass([@"c:/home" isAbsolutePath] == YES,
-       "'c:/home' isAbsolutePath == YES");
 #else
   pass([@"/home" isAbsolutePath] == YES,
        "'/home' isAbsolutePath == YES");
-  pass([@"c:/home" isAbsolutePath] == NO,
-       "'c:/home' isAbsolutePath == NO");
 #endif
   
   result = [NSArray arrayWithObjects:@"nicola",@"core",nil];
