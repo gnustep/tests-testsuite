@@ -39,6 +39,7 @@ do
       ;;
       --debug | -d)
       MAKEFLAGS="$MAKEFLAGS debug=yes"
+      export MAKEFLAGS
       run_args="$run_args --debug";;
     *)
       break
@@ -49,12 +50,14 @@ done
 
 if [ ! "$MAKE_CMD" ]
   then
-    MAKE_CMD=gmake
-    if ( ! $MAKE_CMD --version > /dev/null 2>&1 )
-      then
+    if gmake --version > /dev/null 2>&1
+    then
+      MAKE_CMD=gmake
+    else
       MAKE_CMD=make
     fi
 fi
+export MAKE_CMD
 TEMP=`echo *`
 TESTDIRS=
 for file in $TEMP; do

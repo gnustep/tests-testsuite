@@ -1,5 +1,4 @@
 #include "Testing.h"
-#include "generic.h"
 #include <Foundation/NSArray.h>
 #include <Foundation/NSAutoreleasePool.h>
 #include <Foundation/NSBundle.h>

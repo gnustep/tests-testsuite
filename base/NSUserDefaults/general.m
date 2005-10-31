@@ -6,7 +6,7 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
 
-  id defs;
+  NSUserDefaults *defs;
   id lang;
 
   defs = [NSUserDefaults standardUserDefaults];
@@ -17,7 +17,8 @@ int main()
   pass(lang != nil && [lang isKindOfClass: [NSArray class]],
        "NSUserDefaults understands +userLanguages");
 
-  [NSUserDefaults setUserLanguages: [NSArray arrayWithObject: @"Bogus language"]];
+  [NSUserDefaults setUserLanguages:
+    [NSArray arrayWithObject: @"Bogus language"]];
   pass([lang isEqual: [NSUserDefaults userLanguages]] == NO,
        "NSUserDefaults understands +setUserLanguages");
 
@@ -36,9 +37,6 @@ int main()
   [defs setObject: @"SetString" forKey: @"Test Suite Str"];
   pass([[defs stringForKey: @"Test Suite Str"] isEqual: @"SetString"],
        "NSUserDefaults can set/get a string");
-  
-
-
   
   DESTROY(arp);
   return 0;

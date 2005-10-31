@@ -1,3 +1,16 @@
+2005-10-31  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* GNUmakefile.tests: Use portable name for binaries subdirectory.
+	* runtests.sh: Fix check for make program and exporting variables
+	* base/NSBundle/resources.m: Don't include non-existent file
+	* base/NSBundle/resources2.m: ditto
+	* base/NSBundle/load/load.m: ditto
+	* base/NSCalendarDate/test00.m: ditto
+	* base/NSRunLoop/performers.m: modify for mingw32
+	* base/NSString/test02.m: modify for mingw32
+	* base/NSUserDefaults/general.m: modify for mingw32
+	Some work towards working properly with mingw32/msys
+
 2005-10-20  Adam Fedor  <fedor@gnu.org>
 
 	* base/NSBundle/resources2.m: More tests
