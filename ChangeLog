@@ -2,6 +2,7 @@
 
 	* base/NSFileHandle/basic.m: New test.
 	* base/NSFileHandle/general.m: Ditto.
+	* base/NSFileHandle/socket.m: Ditto.
 	
 2005-10-31  Richard Frith-Macdonald  <rfm@gnu.org>
 

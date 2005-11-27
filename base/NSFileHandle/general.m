@@ -41,44 +41,44 @@ int main()
   NSData *t2Data;
 
   pass([stdInFH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands +fileHandleWithStandardInput");
+       "NSFileHandle understands +fileHandleWithStandardInput");
   pass([stdInFH fileDescriptor]==0,
-       "NSFileManager +fileHandleWithStandardInput has 0 as fileDescriptor");
+       "NSFileHandle +fileHandleWithStandardInput has 0 as fileDescriptor");
 
   pass([stdOutFH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands +fileHandleWithStandardOutput");
+       "NSFileHandle understands +fileHandleWithStandardOutput");
   pass([stdOutFH fileDescriptor]==1,
-       "NSFileManager +fileHandleWithStandardOutput has 1 as fileDescriptor");
+       "NSFileHandle +fileHandleWithStandardOutput has 1 as fileDescriptor");
 
   pass([stdErrFH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands +fileHandleWithStandardError");
+       "NSFileHandle understands +fileHandleWithStandardError");
   pass([stdErrFH fileDescriptor]==2,
-       "NSFileManager +fileHandleWithStandardError has 2 as fileDescriptor");
+       "NSFileHandle +fileHandleWithStandardError has 2 as fileDescriptor");
 
   pass([stdNullFH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands +fileHandleWithNullDevice");
+       "NSFileHandle understands +fileHandleWithNullDevice");
 
   t1FH = [[NSFileHandle alloc] initWithFileDescriptor: 0];
   pass([t1FH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands -initWithFileDescriptor:");
+       "NSFileHandle understands -initWithFileDescriptor:");
 
   t1FH = [NSFileHandle fileHandleForWritingAtPath: tPath];
   pass(t1FH == nil,
-       "NSFileManager +fileHandleForWritingAtPath: with non-existing file return nil");
+       "NSFileHandle +fileHandleForWritingAtPath: with non-existing file return nil");
 
   [@"" writeToFile: tPath atomically: YES];
   t1FH = [NSFileHandle fileHandleForWritingAtPath: tPath];
   pass([t1FH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands +fileHandleForWritingAtPath:");
+       "NSFileHandle understands +fileHandleForWritingAtPath:");
 
   t2FH = [NSFileHandle fileHandleForReadingAtPath: tPath];
   pass([t2FH isKindOfClass:[NSFileHandle class]],
-       "NSFileManager understands +fileHandleForReadingAtPath:");
+       "NSFileHandle understands +fileHandleForReadingAtPath:");
 
   [t1FH writeData: t1Data];
   t2Data = [t2FH availableData];
   pass([t1Data isEqual: t2Data],
-       "NSFileManager -writeData:/-availableData match");
+       "NSFileHandle -writeData:/-availableData match");
 
   [[NSFileManager defaultManager] removeFileAtPath: tPath handler: nil];
   
