@@ -1,3 +1,8 @@
+2005-11-27  David Ayers  <d.ayers@inode.at>
+
+	* base/NSFileHandle/basic.m: New test.
+	* base/NSFileHandle/general.m: Ditto.
+	
 2005-10-31  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* GNUmakefile.tests: Use portable name for binaries subdirectory.
