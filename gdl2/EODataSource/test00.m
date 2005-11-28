@@ -84,7 +84,7 @@ int main(int argc,char **argv)
   tmp = [orderEnt classDescriptionForInstances];
   tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
   [ec insertObject: tmp1];
-  [tmp1 takeValue: [NSCalendarDate date] forKey: @"date"];
+  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"] forKey: @"date"];
   START_TEST(YES);
   [masterDS insertObject: tmp1];
   START_SET(YES);
@@ -109,7 +109,7 @@ int main(int argc,char **argv)
   tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
   [ec insertObject: tmp1];
   [tmp1 takeValue: @"HOWTOs" forKey: @"name"];
-  [tmp1 takeValue: [NSCalendarDate distantPast] forKey: @"date"];
+  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"] forKey: @"date"];
 
   productEnt = [model entityNamed: @"Product"];
   tmp = [productEnt classDescriptionForInstances];

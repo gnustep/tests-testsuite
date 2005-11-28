@@ -1,3 +1,9 @@
+2005-11-28  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EODataSource/test00.m: Make date reproducable.
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m: New test.
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m: Ditto.
+	
 2005-11-27  David Ayers  <d.ayers@inode.at>
 
 	* base/NSFileHandle/basic.m: New test.
