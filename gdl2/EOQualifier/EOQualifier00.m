@@ -210,6 +210,7 @@ int main(int argc,char **argv)
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = (NSDecimalNumber)'25.1''");
 
+  [NSString string];
   START_TEST(YES);
   qual = [qCls qualifierWithQualifierFormat:
 		 @"(key = value) and (key2 = 'constant')"];

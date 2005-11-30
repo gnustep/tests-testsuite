@@ -1,3 +1,8 @@
+2005-11-30  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EOQualifier/EOQualifier02.m: New test for 
+	unicode qualifiers.
+	
 2005-11-28  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/EODataSource/test00.m: Make date reproducable.
