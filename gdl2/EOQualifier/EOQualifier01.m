@@ -70,7 +70,37 @@ int main(int argc,char **argv)
   result = result && [arr2o isEqual: arr2t];
   END_TEST(result, "-[NSArray filteredArrayUsingQualifier:]");
 
-  END_SET("EOQualifier/EOQualifier01.m");
+  dict1 = [NSDictionary dictionaryWithObject: @"red" forKey: @"color"];
+  dict2 = [NSDictionary dictionaryWithObject: @"black" forKey: @"color"];
+  dict3 = [NSDictionary dictionaryWithObject: @"green" forKey: @"color"];
+  dict4 = [NSDictionary dictionaryWithObject: @"light green" forKey: @"color"];
+  dict5 = [NSDictionary dictionaryWithObject: @"dark red" forKey: @"color"];
+
+  arr1 = [NSArray arrayWithObjects: dict1, dict2, dict3, dict4, dict5, nil];
+  arr2 = [NSArray arrayWithObjects: dict3, dict4, nil];
+
+  START_TEST(YES);
+  qual = [EOQualifier qualifierWithQualifierFormat: @"color like '*green'"];
+  arr1o = [arr1 filteredArrayUsingQualifier: qual];
+  result = [[NSSet setWithArray: arr1o] isEqual: [NSSet setWithArray: arr2]];
+  END_TEST(result, "-[NSArray filteredArrayUsingQualifier:] like");
+
+  dict1 = [NSDictionary dictionaryWithObject: @"rot" forKey: @"farbe"];
+  dict2 = [NSDictionary dictionaryWithObject: @"schwarz" forKey: @"farbe"];
+  dict3 = [NSDictionary dictionaryWithObject: [@"\"gr\\U00FCn\\U00CA\\U4E50\"" propertyList] forKey: @"farbe"];
+  dict4 = [NSDictionary dictionaryWithObject: [@"\"hellgr\\U00FCn\\U00CB\\U4E50\"" propertyList] forKey: @"farbe"];
+  dict5 = [NSDictionary dictionaryWithObject: @"dunkel rot" forKey: @"farbe"];
+
+  arr1 = [NSArray arrayWithObjects: dict1, dict2, dict3, dict4, dict5, nil];
+  arr2 = [NSArray arrayWithObjects: dict3, dict4, nil];
+
+  START_TEST(YES);
+  qual = [EOQualifier qualifierWithQualifierFormat: [@"\"farbe like '*gr\\U00FCn?\\U4E50'\"" propertyList]];
+  arr1o = [arr1 filteredArrayUsingQualifier: qual];
+  result = [[NSSet setWithArray: arr1o] isEqual: [NSSet setWithArray: arr2]];
+  END_TEST(result, "Unicode -[NSArray filteredArrayUsingQualifier:] like");
+
+  END_SET("EOQualifier/"__FILE__);
 
   [pool release];
   return (0);

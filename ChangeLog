@@ -1,5 +1,7 @@
 2005-11-30  David Ayers  <d.ayers@inode.at>
 
+	* gdl2/EOQualifier/EOQualifier01.m: Add 'like' wildcard tests
+	including unicode characters.
 	* gdl2/EOQualifier/EOQualifier02.m: New test for 
 	unicode qualifiers.
 	
