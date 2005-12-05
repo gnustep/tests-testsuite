@@ -314,6 +314,42 @@ int main(int argc,char **argv)
   END_TEST(result, "+[EOQualifier allQualifierKeys] "
 	   "@'key = value and key2 = 'constant' or key3 = value3'");
 
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"key = nil"];
+  result = [qual isKindOfClass: [EOKeyValueQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
+	   "@'key = nil'");
+
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"(key = nil)"];
+  result = [qual isKindOfClass: [EOKeyValueQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
+	   "@'(key = nil)'");
+
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @" key = nil "];
+  result = [qual isKindOfClass: [EOKeyValueQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
+	   "@' key = nil '");
+
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"key = nill"];
+  result = [qual isKindOfClass: [EOKeyComparisonQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
+	   "@'key = nill'");
+
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"key = nil0"];
+  result = [qual isKindOfClass: [EOKeyComparisonQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
+	   "@'key = nil0'");
+
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"key = nil_"];
+  result = [qual isKindOfClass: [EOKeyComparisonQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
+	   "@'key = nil_'");
+
   END_SET("EOQualifier/EOQualifier00.m");
 
   [pool release];
