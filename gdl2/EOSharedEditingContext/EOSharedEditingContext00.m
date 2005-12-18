@@ -41,9 +41,9 @@ int main(int argc,char **argv)
   START_TEST(YES);
   {
     ec = [EOEditingContext new];
-    result = ([EOEditingContext sharedContext] == nil);
+    result = ([ec sharedEditingContext] == nil);
   }
-  END_TEST(result, "+[EOEditingContext sharedContext] nil");
+  END_TEST(result, "-[EOEditingContext sharedEditingContext] nil");
 
   START_TEST(YES);
   {
@@ -54,16 +54,16 @@ int main(int argc,char **argv)
 
   START_TEST(YES);
   {
-    result = ([EOEditingContext sharedContext] == sec);
+    result = ([ec sharedEditingContext] == sec);
   }
   END_TEST(result, "sharedContext updated in empty ec's");
 
   START_TEST(YES);
   {
     ec = [EOEditingContext new];
-    result = ([EOEditingContext sharedContext] == sec);
+    result = ([ec sharedEditingContext] == sec);
   }
-  END_TEST(result, "+[EOEditingContext sharedContext] sec");
+  END_TEST(result, "-[EOEditingContext sharedEditingContext] sec");
 
   END_SET("EOSharedEditingContext/"__FILE__);
 

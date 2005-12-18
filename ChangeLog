@@ -1,3 +1,8 @@
+2005-12-19  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m:
+	Fix tests committed from obsolete tree.
+	
 2005-12-05  David Ayers  <d.ayers@inode.at>
 
 	gdl2/EOQualifier/EOQualifier00.m: Add test for parsing qualifiers
