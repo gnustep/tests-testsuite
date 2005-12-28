@@ -11,7 +11,7 @@ implementations of many NSString methods in GSString and its subclasses.
 
 int main(int argc,char **argv)
 {
-	TestNSStringClass([NSString class]);
-	return 0;
+  TestNSStringClass([NSString class]);
+  return 0;
 }
 

@@ -35,6 +35,8 @@ int main(int argc,char **argv)
   EOModel *model;
   EOEntity *orderEnt;
   EOEntity *orderPosEnt;
+  EOEntity *productEnt;
+  EOEntity *productGrpEnt;
   EOEditingContext *ec;
   EODatabaseDataSource *masterDS = nil;
   EODetailDataSource *detailDS = nil;
@@ -82,7 +84,7 @@ int main(int argc,char **argv)
   tmp = [orderEnt classDescriptionForInstances];
   tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
   [ec insertObject: tmp1];
-  [tmp1 takeValue: [NSCalendarDate date] forKey: @"date"];
+  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"] forKey: @"date"];
   START_TEST(YES);
   [masterDS insertObject: tmp1];
   START_SET(YES);
@@ -102,14 +104,30 @@ int main(int argc,char **argv)
   END_TEST(result,
 	   "-[EODetailDataSource qualifyWithRelationshipKey:ofObject:]");
 
+  productGrpEnt = [model entityNamed: @"ProductGroup"];
+  tmp = [productGrpEnt classDescriptionForInstances];
+  tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
+  [ec insertObject: tmp1];
+  [tmp1 takeValue: @"HOWTOs" forKey: @"name"];
+  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"] forKey: @"date"];
+
+  productEnt = [model entityNamed: @"Product"];
+  tmp = [productEnt classDescriptionForInstances];
+  tmp3 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
+  [ec insertObject: tmp3];
+  [tmp3 takeValue: @"The GNUstep Build Guide" forKey: @"name"];
+  [tmp3 takeValue: tmp1 forKey: @"productGroup"];
+  [ec saveChanges];
+
   orderPosEnt = [model entityNamed: @"OrderPos"];
   tmp = [orderPosEnt classDescriptionForInstances];
   tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
   [ec insertObject: tmp1];
+  [tmp1 takeValue: [NSNumber numberWithInt: 1] forKey: @"posnr"];
+  [tmp1 takeValue: tmp3 forKey: @"product"];
   [tmp1 takeValue: [NSNumber numberWithInt: 1] forKey: @"amount"];
   [tmp1 takeValue: [NSNumber numberWithInt: 1] forKey: @"value"];
   [tmp1 takeValue: [NSNumber numberWithInt: 1] forKey: @"price"];
-  [tmp1 takeValue: [NSNumber numberWithInt: 1] forKey: @"posnr"];
   START_TEST(YES);
   [detailDS insertObject: tmp1];
   START_SET(YES);
@@ -119,6 +137,22 @@ int main(int argc,char **argv)
   END_SET("-[EODetailDataSource insertObject:] result evaluation 2");
   END_TEST(result,
 	   "-[EODetailDataSource insertObject:] 2");
+
+  START_TEST(YES);
+  tmp1 = [detailDS createObject];
+  START_SET(YES);
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"amount"];
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"value"];
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"price"];
+  [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"posnr"];
+  [tmp1 takeValue: tmp3 forKey: @"product"];
+  [detailDS insertObject:tmp1];
+  [ec saveChanges];
+  tmp2 = [detailDS fetchObjects];
+  result = [tmp2 containsObject:tmp1];
+  END_SET("-[EODetailDataSource insertObject:] result evaluation 3");
+  END_TEST(result,
+	   "-[EODetailDataSource insertObject:] 3");
 
   dropDatabaseWithModel(model);
 

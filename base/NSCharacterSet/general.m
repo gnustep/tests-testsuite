@@ -7,8 +7,8 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   NSCharacterSet *theSet,*iSet;
-  theSet = [NSCharacterSet alphanumericCharacterSet];
   NSData *data1 = nil;
+  theSet = [NSCharacterSet alphanumericCharacterSet];
   pass([theSet characterIsMember:'A'] &&
        [theSet characterIsMember:'Z'] &&
        [theSet characterIsMember:'a'] &&

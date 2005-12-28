@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 #  run tests script for the GNUstep Testsuite
 #
@@ -39,6 +39,7 @@ do
       ;;
       --debug | -d)
       MAKEFLAGS="$MAKEFLAGS debug=yes"
+      export MAKEFLAGS
       run_args="$run_args --debug";;
     *)
       break
@@ -47,6 +48,16 @@ do
   shift
 done
 
+if [ ! "$MAKE_CMD" ]
+  then
+    if gmake --version > /dev/null 2>&1
+    then
+      MAKE_CMD=gmake
+    else
+      MAKE_CMD=make
+    fi
+fi
+export MAKE_CMD
 TEMP=`echo *`
 TESTDIRS=
 for file in $TEMP; do
@@ -105,7 +116,7 @@ else
 	TESTS=`find $dir -name \*.m | sed -e 's/\(^\| \)X[^ ]*//g'`
 	# If there is a top-level makefile, run it first
 	if [ -f $dir/GNUmakefile ]; then
-	    cd $dir; make $MAKEFLAGS 2>&1; cd ..
+	    cd $dir; $MAKE_CMD $MAKEFLAGS 2>&1; cd ..
 	fi
 	for TESTFILE in $TESTS; do
 	    run_test_file

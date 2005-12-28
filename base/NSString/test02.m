@@ -115,8 +115,8 @@ int main()
        "'nicola.jpg' stringByDeletingPathExtension == 'nicola'");
   pass([[@"nicola..jpg" stringByDeletingPathExtension] isEqual:@"nicola."],
        "'nicola..jpg' stringByDeletingPathExtension == 'nicola.'");
-  pass([[@".jpg" stringByDeletingPathExtension] isEqual:@""],
-       "'.jpg' stringByDeletingPathExtension == ''");
+  pass([[@".jpg" stringByDeletingPathExtension] isEqual:@".jpg"],
+       "'.jpg' stringByDeletingPathExtension == '.jpg'");
   pass([[@"/" stringByDeletingPathExtension] isEqual:@"/"],
        "'/' stringByDeletingPathExtension == '/'");
   
@@ -128,9 +128,18 @@ int main()
   pass(![[@"~/nil" stringByExpandingTildeInPath] 
 					isEqual:@"~/nil"],
       "'~/nil' stringByExpandingTildeInPath: != '~/nil'");
+
+#if	defined(__MINGW32__)
+  {
+    NSString *s = [@"~" stringByAppendingString: NSUserName()];
+    pass(![[s stringByExpandingTildeInPath] isEqual: s],
+      "'~user' stringByExpandingTildeInPath: != '~user'");
+  }
+#else
   pass(![[@"~root" stringByExpandingTildeInPath] 
 				isEqual:@"~root"],
       "'~root' stringByExpandingTildeInPath: != '~root'");
+#endif
   
   testPath = "/home//user";
   resultPath = "/home/user";
@@ -162,8 +171,17 @@ int main()
   
   pass([@"home" isAbsolutePath] == NO,
        "'home' isAbsolutePath == NO");
+
+  pass([@"c:/home" isAbsolutePath] == YES,
+       "'c:/home' isAbsolutePath == YES");
+
+#if	defined(__MINGW32__)
+  pass([@"/home" isAbsolutePath] == NO,
+       "'/home' isAbsolutePath == NO");
+#else
   pass([@"/home" isAbsolutePath] == YES,
        "'/home' isAbsolutePath == YES");
+#endif
   
   result = [NSArray arrayWithObjects:@"nicola",@"core",nil];
   pass([[NSString pathWithComponents:result] isEqual:@"nicola/core"],

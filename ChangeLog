@@ -1,3 +1,185 @@
+2005-12-19  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m:
+	Fix tests committed from obsolete tree.
+	
+2005-12-05  David Ayers  <d.ayers@inode.at>
+
+	gdl2/EOQualifier/EOQualifier00.m: Add test for parsing qualifiers
+	with 'nil'.
+	
+2005-11-30  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EOQualifier/EOQualifier01.m: Add 'like' wildcard tests
+	including unicode characters.
+	* gdl2/EOQualifier/EOQualifier02.m: New test for 
+	unicode qualifiers.
+	
+2005-11-28  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EODataSource/test00.m: Make date reproducable.
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m: New test.
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m: Ditto.
+	
+2005-11-27  David Ayers  <d.ayers@inode.at>
+
+	* base/NSFileHandle/basic.m: New test.
+	* base/NSFileHandle/general.m: Ditto.
+	* base/NSFileHandle/socket.m: Ditto.
+	
+2005-10-31  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* GNUmakefile.tests: Use portable name for binaries subdirectory.
+	* runtests.sh: Fix check for make program and exporting variables
+	* base/NSBundle/resources.m: Don't include non-existent file
+	* base/NSBundle/resources2.m: ditto
+	* base/NSBundle/load/load.m: ditto
+	* base/NSCalendarDate/test00.m: ditto
+	* base/NSRunLoop/performers.m: modify for mingw32
+	* base/NSString/test02.m: modify for mingw32
+	* base/NSUserDefaults/general.m: modify for mingw32
+	Some work towards working properly with mingw32/msys
+
+2005-10-20  Adam Fedor  <fedor@gnu.org>
+
+	* base/NSBundle/resources2.m: More tests
+	* base/NSBundle/Resources/...: Extra files for tests.
+
+2005-08-25  Manuel Guesdon  <mguesdon@orange-concept.com>
+	
+	* gdl2/EOQualifier/EOKeyValueQualifier01.m: New File.
+
+2005-08-24  Manuel Guesdon  <mguesdon@orange-concept.com>
+	
+	* gdl2/EOEditingContext/EOEditingContext03.m: New File.
+
+2005-08-22  Adam Fedor  <fedor@gnu.org>
+
+	* base/Functions/NSGeometry1.m: New file.
+
+	* GNUmakefile: Undo accidental changes.
+
+2005-08-18  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/EOEditingContext/EOEditingContext02.m: New delete rule tests.
+	
+2005-08-17  David Ayers  <d.ayers@inode.at>
+
+	* gdl2/TSTTradingModel.eomodeld/*.plist: Prefix external
+	table names with TST_ to avoid name clashes with reserved
+	words.
+	* gdl2/TSTTradingModel.eomodeld/OrderPos.plist: Add product
+	relationship.
+	* gdl2/EODataSource/test00.m: Add Product with ProductGroup
+	to OrderPos satisfy new model constraints.
+
+	* gdl2/EOAdaptor/test00.m: Set useQuotedExternalNames: to
+	handle default naming conventions of PostgreSQL.
+
+	* gdl2/EOEditingContext/EOEditingContext02.m: New File.
+	* gdl2/TSTTradingModel.eomodeld/ProductGroup.plist: Add backward
+	relationship.
+	
+2005-07-26  David Ayers  <d.ayers@inode.at>
+
+	* ObjectTesting.h (START_SET, END_SET, START_TEST, END_TEST):
+	Added documentation.
+	
+2005-07-17  Matt Rice  <ratmice@yahoo.com>
+
+	* coding/basictypes.m: New test for encoding and decoding non-object
+	types.
+	* coding/double-8.type: New archive from x86.
+	* coding/float-4.type: Ditto.
+	* coding/int-4.type: Ditto.
+	* coding/llong-8.type: Ditto.
+	* coding/long-4.type: Ditto.
+	* coding/schar-1.type: Ditto.
+	* coding/short-2.type: Ditto.
+	* coding/uchar-1.type: Ditto.
+	* coding/uint-4.type: Ditto.
+	* coding/ullong-8.type: Ditto.
+	* coding/ulong-4.type: Ditto.
+	* coding/ushort-2.type: Ditto.
+
+2005-07-16  David Ayers  <d.ayers@inode.at>
+
+	* coding/decoding.m: ([NSObject testEquality]): New method.
+	([NSObject verifyTestInstance:ofVersion:]): Also test equality
+	if we can assume to have a meaningful implementation.
+	([NSData createTestInstance]): Actually create
+	some data to be en/decoded.  Test NSMutableData also.
+	([NSDate createTestInstance]): Create a constant comparable date.
+	([NSCharacterSet createTestInstance]): Use stable character set.
+	* coding/NSData.0.data: Update archive to actually contain data.
+	* coding/NSMutableData.0.data: New reference archive.
+	* coding/NSDate.0.data: Update archive to contain a constant date.
+	* coding/NSNumber.0.data: Update archive to contain an NSNumber
+	instead of an NSValue.
+	* coding/NSCharacterSet.0.data: Use stable character set.
+	
+2005-07-08  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSBundle/create.m: Correct the sense of the test for a tool
+	with no bundle.
+	* base/NSString/test02.m: correct test of deleting path extension
+	from '.jpg'
+	* base/NSString/NSString_tests.h: Fix retain/release error ...
+	destroying a string and then attempting to use its description is a
+	bug as (for a string) the description method is supposed to return
+	self.
+	Fix bugs in tilde expansion tests.
+
+2005-08-07  Rob Burns  <rburns@softhome.net>
+
+	* base/NSTask/launch.m: New test for correct handling of launching
+	terminated tasks.
+	
+2005-06-30  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EORelationship/ToManyKeyPropagation.eomodel: Add inverse
+	relationship of product group.
+
+2005-06-30  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EORelationship/ToManyKeyPropagation.m: New test to fetching
+	relationship from db.
+	
+2005-06-29  Adam Fedor  <fedor@gnu.org>
+
+	* base/NSCharacterSet/general.m: Work with older gcc versions.
+	* base/NSUndoManager/NSUndoManager_notifications.m: Idem.
+	* base/NSMutableData/general.m: Terminate string so tests works.
+	* base/NSString/NSString_tests.h: Add macros to check for
+	valid strings and objects. Use them.
+
+2005-06-29  David Ayers  <d.ayers@inode.at>
+
+	* base/NSBundle/general.m: Do not include AppKit headers.
+	
+2005-06-26  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EODataSource/test00.m: new test for -createObject: with
+	EODetailDataSource
+	
+2005-06-26  David Ayers  <d.ayers@inode.at>
+
+	* runtest.sh: Default to using gmake yet allow overriding the make
+	command with an environment variable.
+	* gdl2/GDL2Testing (globalModelForKey): Make compatible with older
+	gcc versions.
+	
+2005-06-26  Riccardo Mottola  <multix@gmail.com>
+
+	* ObjectTesting.h: Make compatible with older gcc versions.
+	* base/NSArray/create.m: Ditto.
+	* runtest.sh: Use default Bourne shell instead of bash.
+
+2005-06-17  Matt Rice   <ratmice@yahoo.com>
+
+	* gdl2/GDL2Testing.h: Include ObjectTesting.h instead of stuff.h.
+	* gdl2/EOModel/test05.m: New test for -removeEntity:.
+
 2005-06-11  Adam Fedor  <fedor@gnu.org>
 
 	* Initial import into GNUstep. Rearrange tests into proper

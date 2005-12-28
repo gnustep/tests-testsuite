@@ -26,9 +26,14 @@ int main()
    
   run = [NSRunLoop currentRunLoop];
   
-  /* For perhaps not entirely good reasons, a run loop with no input sources
-  does nothing when you tell it to run. Thus, we open a pipe to ourself and
-  add the reading end to the run loop's list of sources. */
+  /* A run loop with no input sources does nothing when you tell it to run.
+     Thus, we need to provide at least one input source ... */
+#if	defined(__MINGW__)
+  [run addEvent: (void *)0
+      type: ET_WINMSG
+      watcher: [Watcher self]
+      forMode: NSDefaultRunLoopMode];
+#else
   {
     int fds[2];
     pipe(fds);
@@ -37,6 +42,7 @@ int main()
 	watcher: [Watcher self]
 	forMode: NSDefaultRunLoopMode];
   }
+#endif
 
   str = [[NSMutableString alloc] init]; 
   [run performSelector:@selector(appendString:)

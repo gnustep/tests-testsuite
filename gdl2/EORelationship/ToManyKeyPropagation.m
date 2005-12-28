@@ -39,6 +39,9 @@ int main(int argc,char **argv)
   EOClassDescription *prdGrpCD = nil;
   id prdObj, prdGrpObj;
   EOEditingContext *ec = nil;
+  EOEditingContext *ec2 = nil;
+  EODatabaseDataSource *ds = nil;
+  NSArray *fromDB = nil;
   NSString *filePath;
 
   START_SET(YES);
@@ -68,6 +71,14 @@ int main(int argc,char **argv)
   START_TEST(YES);
   [ec saveChanges];
   END_TEST(YES, "ToManyKeyPropagation");
+ 
+  ec2 = [EOEditingContext new];
+  ds = [[EODatabaseDataSource alloc] initWithEditingContext:ec2
+	  					entityName:@"ProductGroup"];
+  fromDB = [ds fetchObjects];
+  START_TEST(YES);
+  result = [[[fromDB objectAtIndex:0] valueForKey:@"products"] count] != 0; 
+  END_TEST(result, "fetching relationship from db");
 
   dropDatabaseWithModel(model);
   END_SET("EORelationship/" __FILE__);

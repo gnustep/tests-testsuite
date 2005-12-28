@@ -23,7 +23,7 @@
 	}
     );
     className = EOGenericRecord;
-    externalName = ORDER;
+    externalName = TST_ORDER;
     name = Order;
     classProperties = (date, orderPos); 
     primaryKeyAttributes = (

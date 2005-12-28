@@ -8,10 +8,10 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
   id val1,val2,val3;
   id ptrvals[3];
+  NSArray *obj, *old;
   val1 = @"Tom";
   val2 = @"Petty";
   val3 = @"doesn't want to live like a refugee";
-  NSArray *obj, *old;
 
   ptrvals[0] = val1;
   ptrvals[1] = val2;

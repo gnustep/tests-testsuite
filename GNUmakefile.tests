@@ -15,4 +15,4 @@ ADDITIONAL_OBJCFLAGS += -I@INCLUDEDIR@ -Wall
 include $(GNUSTEP_MAKEFILES)/test-tool.make
 
 test:
-	./obj/@TESTNAME@
+	./$(GNUSTEP_OBJ_PREFIX)/@TESTNAME@

@@ -39,6 +39,20 @@
           valueType      = i;
         }
       );
+      relationships = (
+        {
+	  name = productGroup;
+	  destination = ProductGroup;
+	  isToMany = N;
+	  joinSemantic = EOInnerJoin;
+	  joins = (
+	    {
+	      sourceAttribute = grpid;
+	      destinationAttribute = pid;
+	    }
+	  )
+	}
+      );
     },
     {
       name                 = ProductGroup;

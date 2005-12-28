@@ -32,9 +32,10 @@ BOOL gotCloseUndoGroup;
 @implementation Foo
 - (id) init
 {
+  NSNotificationCenter *nc;
   self = [super init];
   um  = [NSUndoManager new];
-  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+  nc = [NSNotificationCenter defaultCenter];
   [nc addObserver:self selector:@selector(checkPoint:) 
   	     name:NSUndoManagerCheckpointNotification object:um];
   [nc addObserver:self selector:@selector(openUndoGroup:)
