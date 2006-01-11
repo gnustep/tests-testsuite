@@ -29,43 +29,43 @@ int main()
                                  stringByAppendingPathComponent:@"Resources"]],
       "-resourcePath returns the correct path");
  
- pass([[NSBundle pathForResource:@"whitespaceCharSet" 
-                          ofType:@"dat" 
+ pass([[NSBundle pathForResource:@"abbreviations" 
+                          ofType:@"plist" 
 			  inDirectory: [[gstepBundle bundlePath] 
-			     stringByAppendingPathComponent:@"NSCharacterSets"]]
+			     stringByAppendingPathComponent:@"NSTimeZones"]]
 			      testForString],
       "+pathForResource:ofType:inDirectory: works");
  
- pass([[NSBundle pathForResource:@"whitespaceCharSet" 
-                          ofType:@"dat" 
+ pass([[NSBundle pathForResource:@"abbreviations" 
+                          ofType:@"plist" 
 		     inDirectory:[[gstepBundle bundlePath] 
-			    stringByAppendingPathComponent:@"NSCharacterSets"]
+			    stringByAppendingPathComponent:@"NSTimeZones"]
 	             withVersion:0] testForString],
       "+pathForResource:ofType:inDirectory:withVersion: works");
 
- arr = [gstepBundle pathsForResourcesOfType:@"dat" 
-                                 inDirectory:@"NSCharacterSets"];
+ arr = [gstepBundle pathsForResourcesOfType:@"m" 
+                                 inDirectory:@"NSTimeZones"];
  pass(([arr isKindOfClass:[NSArray class]] && [arr count] > 0),
       "-pathsForResourcesOfType:inDirectory: returns an array");
- pass([[gstepBundle pathForResource:@"whitespaceCharSet"
-                            ofType:@"dat"
-		       inDirectory:@"NSCharacterSets"] testForString],
+ pass([[gstepBundle pathForResource:@"abbreviations"
+                            ofType:@"plist"
+		       inDirectory:@"NSTimeZones"] testForString],
       "-pathForResource:ofType:inDirectory: finds a file");
- pass([gstepBundle pathForResource:@"whitespaceCharSet"
+ pass([gstepBundle pathForResource:@"abbreviations"
                             ofType:@"8nicola8"
-		       inDirectory:@"NSCharacterSets"] == nil,
+		       inDirectory:@"NSTimeZones"] == nil,
       "-pathForResource:ofType:inDirectory: doesn't find a non-existing file");
- pass([gstepBundle pathForResource:@"whitespaceCharSet"
-                            ofType:@"dat"
-		       inDirectory:@"NSCharacterSets_dummy"] == nil,
+ pass([gstepBundle pathForResource:@"abbreviations"
+                            ofType:@"plist"
+		       inDirectory:@"NSTimeZones_dummy"] == nil,
       "-pathForResource:ofType:inDirectory: doesn't find files in a non-existing dir");
- pass([[gstepBundle pathForResource:@"whitespaceCharSet"
+ pass([[gstepBundle pathForResource:@"abbreviations"
                              ofType:nil
-		        inDirectory:@"NSCharacterSets"] testForString],
+		        inDirectory:@"NSTimeZones"] testForString],
       "-pathForResource:ofType:inDirectory: with nil type finds a file");
  pass([gstepBundle pathForResource:@"whasssdlkf"
                              ofType:nil
-		        inDirectory:@"NSCharacterSets"] == nil,
+		        inDirectory:@"NSTimeZones"] == nil,
       "-pathForResource:ofType:inDirectory: with nil type doesn't find non-existing files");
  
  pass([[gstepBundle pathForResource:@"NSTimeZones" ofType:nil] testForString], 
