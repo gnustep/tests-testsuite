@@ -2,6 +2,7 @@
 #include "ObjectTesting.h"
 #include <Foundation/NSAutoreleasePool.h>
 #include <Foundation/NSFileManager.h>
+#include <Foundation/NSProcessInfo.h>
 
 int main()
 {
@@ -78,20 +79,24 @@ int main()
     str2 = [[NSString alloc] initWithData:dat1 encoding:1];
     pass([str1 isEqualToString:str2],"NSFileManager moved file contents match");
   }
-        
-  pass([mgr createSymbolicLinkAtPath:@"NSFMLink" pathContent:@"NSFMMove"],
+
+  if ([[NSProcessInfo processInfo] operatingSystem]
+    != NSWindowsNTOperatingSystem)
+    {
+      pass([mgr createSymbolicLinkAtPath:@"NSFMLink" pathContent:@"NSFMMove"],
        "NSFileManager creates a symbolic link");
   
-  pass([mgr fileExistsAtPath:@"NSFMLink"], "link exists");
+      pass([mgr fileExistsAtPath:@"NSFMLink"], "link exists");
   
-  pass([mgr removeFileAtPath:@"NSFMLink" handler:nil], 
+      pass([mgr removeFileAtPath:@"NSFMLink" handler:nil], 
        "NSFileManager removes a symbolic link");
   
-  pass(![mgr fileExistsAtPath:@"NSFMLink"],
+      pass(![mgr fileExistsAtPath:@"NSFMLink"],
        "NSFileManager removed link doesn't exist");
   
-  pass([mgr fileExistsAtPath:@"NSFMMove"],
+      pass([mgr fileExistsAtPath:@"NSFMMove"],
        "NSFileManager removed link's target still exists");
+    }
   
   pass([mgr removeFileAtPath:@"NSFMMove" handler:nil], 
        "NSFileManager removes a file"); 

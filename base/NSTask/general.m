@@ -26,8 +26,8 @@ int main()
        "We can build some objects for task tests");
 
   /* Check which OS we are on. FIXME: Need a better test for this */
-  windows = [[NSBundle _gnustep_target_os] isEqual: @"mingw32"];
-  pth1 = windows ? @"C:\\WINDOWS\\COMMAND\\MEM.EXE" : @"/bin/ls";
+  windows = ([info operatingSystem] == NSWindowsNTOperatingSystem);
+  pth1 = windows ? @"C:\\WINDOWS\\SYSTEM32\\MEM.EXE" : @"/bin/ls";
   pass(YES, "Check which os we are running");
 
   /* Try some tasks.  Make sure the program we use is common between Unix
