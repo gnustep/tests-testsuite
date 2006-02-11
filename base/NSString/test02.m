@@ -22,7 +22,7 @@ int main()
   pass([[result objectAtIndex:0] isEqual:@"/"]
        && [[result objectAtIndex:1] isEqual:@"home"]
        && [[result objectAtIndex:2] isEqual:@"/"],
-       "[@\"/home/\" pathComponents] == (@\"/\", @\"home\",\"/\")]");
+       "[@\"/home\" pathComponents] == (@\"/\", @\"home\",\"/\")]");
   
   result = [@"/home/nicola" pathComponents];
   pass([[result objectAtIndex:0] isEqual:@"/"]
