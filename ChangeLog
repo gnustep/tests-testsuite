@@ -1,3 +1,11 @@
+2006-02-15  Derek Zhou  <Rdzhou@nvidea.com>
+
+        * NSStream/basic.m:
+        * NSStream/memandfile.m:
+        * NSStream/memandfile_2.m:
+        * NSStream/socket.m:
+	Simple NSStream tests
+
 2005-12-19  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m:
