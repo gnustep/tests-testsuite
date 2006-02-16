@@ -1,3 +1,9 @@
+2006-02-16  Derek Zhou  <Rdzhou@nvidea.com>
+
+        * NSStream/pipe.m:
+        * NSStream/socket_cs.m:
+	Tests for server and pipe streams.
+
 2006-02-15  Derek Zhou  <Rdzhou@nvidea.com>
 
         * NSStream/basic.m:
