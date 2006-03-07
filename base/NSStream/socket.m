@@ -37,7 +37,12 @@ static int byteCount = 0;
       {
         NSAssert(theStream==defaultInput, @"Wrong stream for reading");
         readSize = [defaultInput read:buffer maxLength:4096];
-        NSAssert(readSize>=0, @"read error");
+        if (readSize<0)
+          {
+            // it is possible that readSize<0 but not an Error.
+	    // For example would block
+            NSAssert([defaultInput streamError]==nil, @"read error");
+          }
         if (readSize==0)
           [defaultInput close];
         else

@@ -49,8 +49,13 @@ static NSMutableData *testData;
         int readSize;
         NSAssert(theStream==clientInput, @"Wrong stream for reading");
         readSize = [clientInput read:buffer maxLength:4096];
-        NSAssert(readSize>=0, @"read error");
-        if (readSize==0)
+        if (readSize < 0)
+          {
+            // it is possible that readSize<0 but not an Error.
+	    // For example would block
+            NSAssert([clientInput streamError] == nil, @"read error");
+          }
+        else if (readSize == 0)
           [clientInput close];
         else
           [testData appendBytes:buffer length:readSize];
