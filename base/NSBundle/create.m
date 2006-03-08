@@ -7,7 +7,6 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   NSString *path;
-  NSBundle *gnustepBundle = nil;
   NSBundle *bundle;
   
   path = [[[NSFileManager defaultManager] currentDirectoryPath] 
@@ -39,13 +38,6 @@ int main()
     pass(arr != nil && [arr isKindOfClass:[NSArray class]] && [arr count] != 0,
          "+allBundles returns an array");
   }
-  TEST_EXCEPTION(gnustepBundle = [NSBundle gnustepBundle];, nil, NO,
-                 "+gnustepBundle does not crash");
-
-  TEST_FOR_CLASS(@"NSBundle", gnustepBundle, "+gnustepBundle returns a bundle"); 
-  TEST_STRING([gnustepBundle bundlePath],"+gnustepBundle has a path");
-  TEST_FOR_CLASS(@"NSDictionary",[gnustepBundle infoDictionary],
-                 "+gnustepBundle has a infoDictionary");
   DESTROY(arp);
   return 0;
 }

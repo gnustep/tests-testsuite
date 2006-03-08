@@ -7,24 +7,12 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
   NSBundle *gnustepBundle;
   
-  TEST_STRING([NSBundle _gnustep_target_cpu],
-              "+_gnustep_target_cpu returns a string");  
+  gnustepBundle = [NSBundle bundleForLibrary: @"gnustep-base"];
   
-  TEST_STRING([NSBundle _gnustep_target_os],
-  	      "+_gnustep_target_os returns a string");
+  TEST_FOR_CLASS(@"NSBundle",gnustepBundle,"+bundleForLibrary: makes a bundle for us");
   
-  TEST_STRING([NSBundle _gnustep_target_dir],
-              "+_gnustep_target_dir returns a string");
-  
-  TEST_STRING([NSBundle _library_combo],
-              "+_library_combo returns a string");
-
-  gnustepBundle = [NSBundle gnustepBundle];
-  
-  TEST_FOR_CLASS(@"NSBundle",gnustepBundle,"+gnustepBundle makes a bundle for us");
-  
-  pass([gnustepBundle principalClass] == nil, 
-       "-principalClass returns nil for the +gnustepBundle");
+  pass([gnustepBundle principalClass] == [NSObject class], 
+    "-principalClass returns NSbject for the +bundleForLibrary:gnustep-base");
   
   pass([[gnustepBundle classNamed:@"NSArray"] isEqual:[NSArray class]] &&
        [[NSArray class] isEqual: [gnustepBundle classNamed:@"NSArray"]],

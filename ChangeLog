@@ -1,3 +1,9 @@
+2005-03-08  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* NSBundle/create.m:
+	* NSBundle/general.m:
+	Remove obsolete tests and update for 'bundleForLibrary:'
+
 2005-02-19  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* NSFileManager/general.m: Check basic creation of attributes
