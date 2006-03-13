@@ -60,10 +60,20 @@ static int byteCount = 0;
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
-  NSRunLoop *rl = [NSRunLoop currentRunLoop];
-  NSHost *host = [NSHost hostWithName:@"www.google.com"];
-  Listener *li = AUTORELEASE([Listener new]);
+  NSRunLoop *rl;
+  NSHost *host;
+  Listener *li;
 
+  if ([[NSProcessInfo processInfo] operatingSystem]
+    == NSWindowsNTOperatingSystem)
+    {
+      unsupported("NSStream for sockets on mingw32");
+      return 0;
+    }
+
+  rl = [NSRunLoop currentRunLoop];
+  host = [NSHost hostWithName:@"www.google.com"];
+  li = AUTORELEASE([Listener new]);
   [NSStream getStreamsToHost:host port:80 inputStream:&defaultInput outputStream:&defaultOutput];
 
   [defaultInput setDelegate:li];

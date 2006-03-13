@@ -42,6 +42,7 @@ int main()
       "NSFileManager returns non-nil for attributes of existing file");
     pass([NSUserName() isEqual: [attr fileOwnerAccountName]],
       "newly created file is owned by current user");
+NSLog(@"'%@', '%@'", NSUserName(), [attr fileOwnerAccountName]);
   }
   
   pass([mgr changeCurrentDirectoryPath: dir],
