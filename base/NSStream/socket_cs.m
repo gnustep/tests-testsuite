@@ -14,15 +14,16 @@ static NSData *goldData;
 static NSMutableData *testData;
 
 @interface ClientListener : NSObject <GSStreamListener>
+{
+  uint8_t buffer[4096];
+  int writePointer;
+}
 @end
 
 @implementation ClientListener
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
 {
-  static uint8_t buffer[4096];
-  static int writePointer=0;
-
   switch (streamEvent) 
     {
     case NSStreamEventOpenCompleted:
@@ -37,11 +38,14 @@ static NSMutableData *testData;
         if (writePointer<[goldData length])
           {
             int writeReturn = [clientOutput write:[goldData bytes]+writePointer 
-                                             maxLength:[goldData length]-writePointer];
+	      maxLength:[goldData length]-writePointer];
             writePointer += writeReturn;
           }          
         else
+	  {
+	    writePointer = 0;
             [clientOutput close];          
+	  }
         break;
       }
     case NSStreamEventHasBytesAvailable:
@@ -74,17 +78,18 @@ static NSMutableData *testData;
 @end
 
 @interface ServerListener : NSObject <GSStreamListener>
+{
+  uint8_t buffer[4096];
+  int readSize;
+  int writeSize;
+  BOOL finished;
+}
 @end
 
 @implementation ServerListener
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
 {
-  static uint8_t buffer[4096];
-  static int readSize = 0;
-  static int writeSize = 0;
-  static BOOL finished = NO;
-
   switch (streamEvent) 
     {
     case NSStreamEventHasBytesAvailable:
@@ -162,14 +167,16 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
   NSRunLoop *rl = [NSRunLoop currentRunLoop];
   NSHost *host = [NSHost currentHost];
-  ServerListener *sli = AUTORELEASE([ServerListener new]);
-  ClientListener *cli = AUTORELEASE([ClientListener new]);
+  ServerListener *sli;
+  ClientListener *cli;
 
   NSString *path = @"socket_cs.m";
   NSString *socketPath = @"test-socket";
   NSLog(@"sending and receiving on %@: %@", host, [host address]);
   goldData = [NSData dataWithContentsOfFile:path];
 
+  sli = AUTORELEASE([ServerListener new]);
+  cli = AUTORELEASE([ClientListener new]);
   testData = [NSMutableData dataWithCapacity:4096];
   serverStream = [GSServerStream serverStreamToAddr:[host address] port:4321];
   [serverStream setDelegate:sli];
@@ -187,12 +194,15 @@ int main()
   [rl run];
   pass([goldData isEqualToData:testData], "Local tcp");
 
+  sli = AUTORELEASE([ServerListener new]);
+  cli = AUTORELEASE([ClientListener new]);
   testData = [NSMutableData dataWithCapacity:4096];
   serverStream = [GSServerStream serverStreamToAddr:socketPath];
   [serverStream setDelegate:sli];
   [serverStream scheduleInRunLoop:rl forMode:NSDefaultRunLoopMode];
   [serverStream open];
   
+  [testData setLength: 0];
   [NSStream getLocalStreamsToPath:socketPath inputStream:&clientInput outputStream:&clientOutput];
   [clientInput setDelegate:cli];
   [clientOutput setDelegate:cli];
