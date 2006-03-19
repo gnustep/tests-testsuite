@@ -113,7 +113,7 @@ if [ x"$TESTDIRS" = x ]; then
 else
     for dir in $TESTDIRS; do
 	echo "--- Running tests in $dir ---"
-	TESTS=`find $dir -name \*.m | sed -e 's/\(^\| \)X[^ ]*//g'`
+	TESTS=`find $dir -name \*.m | sort | sed -e 's/\(^\| \)X[^ ]*//g'`
 	# If there is a top-level makefile, run it first
 	if [ -f $dir/GNUmakefile ]; then
 	    cd $dir; $MAKE_CMD $MAKEFLAGS 2>&1; cd ..
