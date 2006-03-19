@@ -1,4 +1,10 @@
-2005-03-08  Richard Frith-Macdonald  <rfm@gnu.org>
+2006-03-19  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EOModel/test01.m: Add test for -validateName: with unchanged
+	name.
+	* runtests.sh: Run tests in alphabetic order.
+
+2006-03-08  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* NSBundle/create.m:
 	* NSBundle/general.m:
