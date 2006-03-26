@@ -1,3 +1,7 @@
+2006-03-26  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSString/test04.m: Try creating a string with bad unichar.
+
 2006-03-19  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EOModel/test01.m: Add test for -validateName: with unchanged
@@ -6,27 +10,27 @@
 
 2006-03-08  Richard Frith-Macdonald  <rfm@gnu.org>
 
-	* NSBundle/create.m:
-	* NSBundle/general.m:
+	* base/NSBundle/create.m:
+	* base/NSBundle/general.m:
 	Remove obsolete tests and update for 'bundleForLibrary:'
 
 2005-02-19  Richard Frith-Macdonald  <rfm@gnu.org>
 
-	* NSFileManager/general.m: Check basic creation of attributes
+	* base/NSFileManager/general.m: Check basic creation of attributes
 	directory for existing/non-existent file and ownership of file.
 
 2006-02-16  Derek Zhou  <Rdzhou@nvidea.com>
 
-        * NSStream/pipe.m:
-        * NSStream/socket_cs.m:
+        * base/NSStream/pipe.m:
+        * base/NSStream/socket_cs.m:
 	Tests for server and pipe streams.
 
 2006-02-15  Derek Zhou  <Rdzhou@nvidea.com>
 
-        * NSStream/basic.m:
-        * NSStream/memandfile.m:
-        * NSStream/memandfile_2.m:
-        * NSStream/socket.m:
+        * base/NSStream/basic.m:
+        * base/NSStream/memandfile.m:
+        * base/NSStream/memandfile_2.m:
+        * base/NSStream/socket.m:
 	Simple NSStream tests
 
 2005-12-19  David Ayers  <d.ayers@inode.at>
