@@ -23,7 +23,13 @@ int main()
        [want length] == 9 &&
        [base isEqual:want],
        "We can append a unicode string to a C string");
-   
-  DESTROY(arp);
+
+  TEST_EXCEPTION([[NSMutableString stringWithString:@"foo"]
+		  			appendString:@"bar"];,
+		nil,
+		NO,
+		"can append to string from NSMutableString +stringWithString:");
+
+  DESTROY(arp); 
   return 0;
 }
