@@ -1,3 +1,9 @@
+2006-03-28  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSString/basic.m: Add tests for init using unichar method with
+	ascii and non ascii data.
+	* base/NSMutableString/basic.m: ditto
+
 2006-03-27  Matt Rice  <ratmice@yahoo.com>
 
 	* base/NSMutableString/basic.m: add test for +stringWithString:

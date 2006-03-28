@@ -5,7 +5,10 @@
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
-  NSString *testObj = [NSString stringWithCString:@"Hello\n"];
+  unichar	u0 = 'a';
+  unichar	u1 = 0xfe66;
+  NSString	*s;
+  NSString *testObj = [NSString stringWithCString: "Hello\n"];
 
   test_alloc(@"NSString");
   test_NSObject(@"NSString",[NSArray arrayWithObject:testObj]);
@@ -15,6 +18,16 @@ int main()
   test_NSMutableCopying(@"NSString", @"NSMutableString",
   			[NSArray arrayWithObject:testObj]);
   
+  pass([(s = [[NSString alloc] initWithCharacters: &u0 length: 1])
+    isKindOfClass: [NSString class]]
+    && ![s isKindOfClass: [NSMutableString class]],
+    "initWithCharacters:length: creates mutable string for ascii");
+
+  pass([(s = [[NSString alloc] initWithCharacters: &u1 length: 1])
+    isKindOfClass: [NSString class]]
+    && ![s isKindOfClass: [NSMutableString class]],
+    "initWithCharacters:length: creates mutable string for unicode");
+
   DESTROY(arp);
   return 0;
 }
