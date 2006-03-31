@@ -1,3 +1,11 @@
+2006-03-31  Matt Rice <ratmice@yahoo.com>
+
+	* gdl2/EOModel/test04.m: Add tests for renaming	attributes/relationships
+	* gdl2/EOModel/test05.m: Add tests for removing	attributes/relationships
+	* gdl2/EOModel/test06.m: New tests for -referencesToProperty: and
+	-referencesProperty:
+
+
 2006-03-28  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSString/basic.m: Add tests for init using unichar method with

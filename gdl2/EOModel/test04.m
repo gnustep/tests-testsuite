@@ -10,6 +10,8 @@ int main()
   EOEntity *entity = [EOEntity new];
   EOAttribute *attrib = [EOAttribute new];
   EOAttribute *attrib2 = [EOAttribute new];
+  EORelationship *rel = [EORelationship new];
+  EORelationship *rel2 = [EORelationship new];
   EOModelGroup *modelGroup = [EOModelGroup defaultGroup];
 
   NS_DURING
@@ -80,6 +82,20 @@ int main()
       pass(NO, "Attribute -setName: renaming an attribute and back again");
       [localException raise];
     }
+  NS_ENDHANDLER
+ 
+  NS_DURING
+    [rel setName:@"rel"];
+    [entity addRelationship:rel];
+    pass([entity relationshipNamed:@"rel"] == rel, "-relationshipNamed: works");
+    pass([[entity relationships] containsObject:rel], "-relationships return value.");
+    [rel setName:@"relNewName"];
+    pass([entity relationshipNamed:@"relNewName"] == rel, "-relationshipNamed: with new name."); 
+    pass([entity relationshipNamed:@"rel"] == nil, "-relationshipNamed: with old name.");
+    pass([[entity relationships] containsObject:rel], "-relationships return value.");
+  NS_HANDLER
+    pass(NO, "relationship tests failure");
+    [localException raise];
   NS_ENDHANDLER
   
   DESTROY(pool);  
