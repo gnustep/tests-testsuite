@@ -4,7 +4,8 @@
 	* gdl2/EOModel/test05.m: Add tests for removing	attributes/relationships
 	* gdl2/EOModel/test06.m: New tests for -referencesToProperty: and
 	-referencesProperty:
-
+	* gdl2/EODataSource/test00.m: Test for the detail data sources editing
+	context.
 
 2006-03-28  Richard Frith-Macdonald  <rfm@gnu.org>
 

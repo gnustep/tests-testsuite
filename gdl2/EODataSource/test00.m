@@ -73,6 +73,11 @@ int main(int argc,char **argv)
   result = [detailDS isKindOfClass: [EODetailDataSource class]];
   END_TEST(result, 
 	   "-[EODatabaseDataSource dataSourceQualifiedByKey:]");
+  
+  START_TEST(YES);
+  result = ([detailDS editingContext] == [masterDS editingContext]);
+  END_TEST(result,
+	   "-[EODetailDataSource editingContext]");
 
   START_TEST(YES);
   tmp = [detailDS fetchObjects];
