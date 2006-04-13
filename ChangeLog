@@ -1,12 +1,19 @@
 2006-03-31  Matt Rice <ratmice@yahoo.com>
 
-	* gdl2/EOModel/test04.m: Add tests for renaming	attributes/relationships
-	* gdl2/EOModel/test05.m: Add tests for removing	attributes/relationships
+	* gdl2/EOModel/test04.m: Add tests for renaming	attributes and
+	relationships.
+	* gdl2/EOModel/test05.m: Add tests for removing	attributes and
+	relationships.
 	* gdl2/EOModel/test06.m: New tests for -referencesToProperty: and
-	-referencesProperty:
+	-referencesProperty:.
 	* gdl2/EODataSource/test00.m: Test for the detail data sources editing
 	context.
 
+2006-03-26  David Ayers  <d.ayers@inode.at>
+
+	* base/NSString/bom.m
+	* base/NSString/utf8bom.txt: New tests for UTF-8 BOM.
+	
 2006-03-28  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSString/basic.m: Add tests for init using unichar method with
