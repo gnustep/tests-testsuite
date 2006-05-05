@@ -1,10 +1,16 @@
 #include "ObjectTesting.h"
 #include <Foundation/Foundation.h>
 
+@interface	TestClass : NSObject
+@end
+
+@implementation	TestClass
+@end
+
 int main()
 { 
   CREATE_AUTORELEASE_POOL(arp);
-  NSBundle *gnustepBundle, *bundle;
+  NSBundle *classBundle, *gnustepBundle, *bundle;
   NSFileManager *fm = [NSFileManager defaultManager];
   NSString *path, *exepath;
   
@@ -13,8 +19,19 @@ int main()
   TEST_FOR_CLASS(@"NSBundle",gnustepBundle,"+bundleForLibrary: makes a bundle for us");
   
   pass([gnustepBundle principalClass] == [NSObject class], 
-    "-principalClass returns NSbject for the +bundleForLibrary:gnustep-base");
+    "-principalClass returns NSObject for the +bundleForLibrary:gnustep-base");
   
+  classBundle = [NSBundle bundleForClass: [TestClass class]];
+
+  TEST_FOR_CLASS(@"NSBundle",classBundle,"+bundleForClass: makes a bundle for us");
+
+  NSLog(@"%@", [classBundle principalClass]);
+  pass([classBundle principalClass] == [TestClass class], 
+    "-principalClass returns TestClass for +bundleForClass:[TestClass class]");
+
+  pass(classBundle == [NSBundle mainBundle], 
+    "-mainBundle is the same as +bundleForClass:[TestClass class]");
+
   pass([[gnustepBundle classNamed:@"NSArray"] isEqual:[NSArray class]] &&
        [[NSArray class] isEqual: [gnustepBundle classNamed:@"NSArray"]],
        "-classNamed returns the correct class");
@@ -27,7 +44,7 @@ int main()
   pass([gnustepBundle load], "-load behaves properly on the gnustep bundle");
 
   exepath = [gnustepBundle executablePath];
-  pass([fm isExecutableFileAtPath: exepath],"-executablePath returns an executable path (library bundle)");
+  pass([fm isExecutableFileAtPath: exepath],"-executablePath returns an executable path (gnustep bundle)");
 
   path = [[[fm currentDirectoryPath] stringByAppendingPathComponent:@"Resources"]
 		   stringByAppendingPathComponent: @"TestBundle.bundle"];

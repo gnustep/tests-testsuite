@@ -51,6 +51,18 @@ int main()
   						timeIntervalSinceReferenceDate],
        "-addTimeInterval: works on a NSCalendarDate parsed with no timezone");
 
+  {
+  NSString *fmt = [NSString 
+	  stringWithFormat:@"%%Y-%%m-%%d %%H:%%M:%%S:%%F"];
+  NSString *dateString = [NSString 
+	  stringWithFormat:@"2006-04-22 22:22:22:901"];
+  NSCalendarDate *date = [NSCalendarDate 
+	  dateWithString:dateString calendarFormat:fmt];
+NSLog(@"%@\n%@", dateString, [date descriptionWithCalendarFormat:fmt]);
+  pass([dateString isEqual: [date descriptionWithCalendarFormat:fmt]],
+		  "formatting milliseconds works");
+  }
+
   DESTROY(arp);
   return 0;
 }
