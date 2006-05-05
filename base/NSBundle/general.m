@@ -1,11 +1,12 @@
 #include "ObjectTesting.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSBundle.h>
+#include <Foundation/Foundation.h>
 
 int main()
 { 
   CREATE_AUTORELEASE_POOL(arp);
-  NSBundle *gnustepBundle;
+  NSBundle *gnustepBundle, *bundle;
+  NSFileManager *fm = [NSFileManager defaultManager];
+  NSString *path, *exepath;
   
   gnustepBundle = [NSBundle bundleForLibrary: @"gnustep-base"];
   
@@ -24,6 +25,18 @@ int main()
   pass([gnustepBundle bundleVersion] == 42,"we can set and get gnustep bundle version");
   
   pass([gnustepBundle load], "-load behaves properly on the gnustep bundle");
+
+  exepath = [gnustepBundle executablePath];
+  pass([fm isExecutableFileAtPath: exepath],"-executablePath returns an executable path (library bundle)");
+
+  path = [[[fm currentDirectoryPath] stringByAppendingPathComponent:@"Resources"]
+		   stringByAppendingPathComponent: @"TestBundle.bundle"];
+
+  bundle = [NSBundle bundleWithPath: path];
+  pass([bundle isKindOfClass:[NSBundle class]],"+bundleWithPath returns an NSBundle");
+
+  exepath = [bundle executablePath];
+  pass([fm isExecutableFileAtPath: exepath],"-executablePath returns an executable path (real bundle)");
   
   DESTROY(arp);
   return 0;

@@ -1,3 +1,10 @@
+2006-05-05  David Ayers  <d.ayers@inode.at>
+
+	* base/NSBundle/resources2.m: Move +bundleWithPath test to...
+	* base/NSBundle/general.m: ... here.  Use 
+	#include <Foundaton/Foundation.h> to increase portability.
+	Add tests for -executablePath.
+	
 2006-03-31  Matt Rice <ratmice@yahoo.com>
 
 	* gdl2/EOModel/test04.m: Add tests for renaming	attributes and
