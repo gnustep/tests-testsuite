@@ -44,7 +44,7 @@ int main()
   pass([gnustepBundle load], "-load behaves properly on the gnustep bundle");
 
   exepath = [gnustepBundle executablePath];
-  pass([fm isExecutableFileAtPath: exepath],"-executablePath returns an executable path (gnustep bundle)");
+  pass([fm fileExistsAtPath: exepath],"-executablePath returns an executable path (gnustep bundle)");
 
   path = [[[fm currentDirectoryPath] stringByAppendingPathComponent:@"Resources"]
 		   stringByAppendingPathComponent: @"TestBundle.bundle"];
