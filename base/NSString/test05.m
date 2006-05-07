@@ -8,6 +8,9 @@ int main()
   NSString *theString;
   unichar theUniChar[1] = {0xe5};
   theString = [NSString stringWithCharacters:theUniChar length:1];
+
+  pass([theString isEqual:[[NSString alloc] initWithCString: [theString cStringUsingEncoding: NSISOLatin1StringEncoding] encoding: NSISOLatin1StringEncoding]],"foo");
+
   NS_DURING
     pass([theString isEqual:[[NSString alloc] initWithCString: [theString cString]]],"foo");
   NS_HANDLER
