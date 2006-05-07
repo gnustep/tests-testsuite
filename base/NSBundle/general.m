@@ -53,7 +53,6 @@ int main()
   pass([bundle isKindOfClass:[NSBundle class]],"+bundleWithPath returns an NSBundle");
 
   exepath = [bundle executablePath];
-NSLog(@"PATH '%@'", exepath);
   pass([fm fileExistsAtpath: exepath],"-executablePath returns an executable path (real bundle)");
   
   DESTROY(arp);
