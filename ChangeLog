@@ -1,3 +1,7 @@
+2006-05-11  David Ayers  <d.ayers@inode.at>
+
+	* base/NSCharacterSet/illegalCharacterSet.m: New experimental test.
+	
 2006-05-05  David Ayers  <d.ayers@inode.at>
 
 	* base/NSBundle/resources2.m: Move +bundleWithPath test to...
