@@ -1,3 +1,8 @@
+2006-05-13  David Ayers  <d.ayers@inode.at>
+
+	* base/NSString/basic.m: Add mutable copy test for non-ASCII strings
+	fixed by recent patch.
+	
 2006-05-12  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: Replace broken test with
