@@ -19,16 +19,34 @@ implementations of the NSString methods in NSString itself.
 
 @implementation CustomString
 
-- initWithCharactersNoCopy: (unichar *)c
-		    length: (unsigned int)l
-	      freeWhenDone: (BOOL)freeWhenDone
+- initWithBytesNoCopy: (const void *)c
+	       length: (unsigned int)l
+	     encoding: (NSStringEncoding)encoding
+         freeWhenDone: (BOOL)freeWhenDone
 {
-  if (l)
+  if (l > 0)
     {
-      characters = malloc(l * sizeof(unichar));
-      memcpy(characters, c, l * sizeof(unichar));
+      if (encoding == NSUnicodeStringEncoding)
+	{
+	  characters = malloc(l);
+	  memcpy(characters, c, l);
+	}
+      else
+	{
+	  NSString	*s;
+
+	  s = [[NSString alloc] initWithBytesNoCopy: c
+					     length: l
+					   encoding: encoding
+				       freeWhenDone: freeWhenDone];
+	  if (s == nil) return nil;
+	  l = [s length] * sizeof(unichar);
+	  characters = malloc(l);
+	  [s getCharacters: characters];
+	  RELEASE(s);
+	}
     }
-  length = l;
+  length = l / sizeof(unichar);
   return self;
 }
 

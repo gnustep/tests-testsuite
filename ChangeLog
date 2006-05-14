@@ -1,3 +1,8 @@
+2006-05-14  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSString/NSString_custom.m: update for new designated
+	initialiser.
+
 2006-05-13  David Ayers  <d.ayers@inode.at>
 
 	* base/NSString/basic.m: Add mutable copy test for non-ASCII strings
