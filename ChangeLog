@@ -1,3 +1,7 @@
+2006-05-15  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSURL/basic.m: a few trivial tests.
+
 2006-05-14  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSString/NSString_custom.m: update for new designated
