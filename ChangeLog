@@ -1,3 +1,8 @@
+2006-05-21  David Ayers  <d.ayers@inode.at>
+
+	* base/NSCharacterSet/illegalCharacterSet.m: Add test to insure
+	that UCS-2 code points can be represented in an NSString.
+
 2006-05-15  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSURL/basic.m: a few trivial tests.

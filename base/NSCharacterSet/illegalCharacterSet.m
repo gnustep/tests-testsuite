@@ -8,6 +8,9 @@ main (int argc, char**argv)
   id pool = [NSAutoreleasePool new];
   NSCharacterSet *illegal = [NSCharacterSet illegalCharacterSet];
   NSCharacterSet *legal = [illegal invertedSet];
+  NSMutableData *data;
+  NSString *s;
+  unichar cp;
 
   pass([illegal characterIsMember: 0xfffe], "0xfffe is illegal");
   pass(![legal characterIsMember: 0xfffe], "0xfffe is bnot legal");
@@ -31,8 +34,24 @@ main (int argc, char**argv)
   pass(![illegal longCharacterIsMember: 0x0010fffd], "0x0010fffd not illegal");
   pass([legal longCharacterIsMember: 0x0010fffd], "0x0010fffd is legal");
 
+  // Entire UCS-2 set (UTF-16 surrogates start above 0xD800)
+  // (still looking for official information on the range of UCS-2 code points,
+  //  i.e. whether UCS-4/UCS-2 are actually official code point sets
+  //  or whether they are just commonly used terms to differentiate 
+  //  the full UCS code point set from it's UTF-16 encoding.)
+  data = [NSMutableData dataWithCapacity: sizeof(cp) * 0xD800];
+  // Do not start with 0x0000 otherwise a leading BOM could misinterpreted.
+  for (cp=0x0001;cp<0xD800;cp++)
+    {
+      if ([legal characterIsMember:cp])
+	{
+	  [data appendBytes: &cp length: sizeof(cp)];
+	}
+    }
+  s = [[NSString alloc] initWithData: data encoding: NSUnicodeStringEncoding];
+  pass([s length],"legal UCS-2 set can be represented in an NSString.");
+  [s release];
+
   RELEASE(pool);
   return (0);
 }
-
-
