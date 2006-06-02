@@ -1,3 +1,8 @@
+2006-06-01  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSMutableString/basic.m: add a few tests for replacing substring
+	with constant string and custom string values.
+
 2006-05-21  David Ayers  <d.ayers@inode.at>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: Add test to insure
