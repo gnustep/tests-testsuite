@@ -1,3 +1,8 @@
+2006-06-14  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* GNUmakefile.tests: Work for non-flattened filesystem layout.
+	* Testing.h: Include MacOS-X compatibility headers
+
 2006-06-01  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSMutableString/basic.m: add a few tests for replacing substring

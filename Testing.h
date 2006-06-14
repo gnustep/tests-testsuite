@@ -67,3 +67,62 @@ static void unsupported(const char *description, ...)
 
 #endif
 
+#import	<Foundation/NSObject.h>
+
+#ifndef	CREATE_AUTORELEASE_POOL
+#define	RETAIN(object)		[object retain]
+#define	RELEASE(object)		[object release]
+#define	AUTORELEASE(object)	[object autorelease]
+#define	TEST_RETAIN(object)	({\
+id __object = (id)(object); (__object != nil) ? [__object retain] : nil; })
+#define	TEST_RELEASE(object)	({\
+id __object = (id)(object); if (__object != nil) [__object release]; })
+#define	TEST_AUTORELEASE(object)	({\
+id __object = (id)(object); (__object != nil) ? [__object autorelease] : nil; })
+#define	ASSIGN(object,value)	({\
+id __value = (id)(value); \
+id __object = (id)(object); \
+if (__value != __object) \
+  { \
+    if (__value != nil) \
+      { \
+	[__value retain]; \
+      } \
+    object = __value; \
+    if (__object != nil) \
+      { \
+	[__object release]; \
+      } \
+  } \
+})
+#define	ASSIGNCOPY(object,value)	({\
+id __value = (id)(value); \
+id __object = (id)(object); \
+if (__value != __object) \
+  { \
+    if (__value != nil) \
+      { \
+	__value = [__value copy]; \
+      } \
+    object = __value; \
+    if (__object != nil) \
+      { \
+	[__object release]; \
+      } \
+  } \
+})
+#define	DESTROY(object) 	({ \
+  if (object) \
+    { \
+      id __o = object; \
+      object = nil; \
+      [__o release]; \
+    } \
+})
+#define	CREATE_AUTORELEASE_POOL(X)	\
+  NSAutoreleasePool *(X) = [NSAutoreleasePool new]
+#define RECREATE_AUTORELEASE_POOL(X)  \
+  if (X == nil) \
+    (X) = [NSAutoreleasePool new]
+#endif
+
