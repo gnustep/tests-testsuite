@@ -69,7 +69,7 @@
 /* test if an exception is thrown or not */
 #define TEST_EXCEPTION(code, exceptionName, shouldThrow, description) \
   NS_DURING \
-    code \
+    code; \
     pass(shouldThrow == NO, description); \
   NS_HANDLER \
     pass((shouldThrow == YES \
@@ -323,7 +323,7 @@ static void test_NSCopying(NSString *iClassName,
 	   else
 	     {
 	       pass(theCopy != theObj,
-		 "%s is not retained by copy with other znoe", prefix);
+		 "%s is not retained by copy with other zone", prefix);
              }
 	}
      if (theClass != iClass)
