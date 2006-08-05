@@ -39,16 +39,18 @@ int main()
   pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
        "unarchiveObjectWithFile: seems ok");
 
-  /**
-  data2 = [NSMutableData data];
+  // encode
+  data2 = [[NSMutableData alloc] initWithCapacity: 10240];
   archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: data2];
   [archiver encodeObject: val3 forKey: @"string"];
   [archiver finishEncoding];
+
+  // decode...
   unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData: data2];
   s = RETAIN([unarchiver decodeObjectForKey: @"string"]);
   pass((s != nil && [s isKindOfClass:[NSString class]] && [s isEqual: val3]),"encodeObject:forKey: seems okay");
-  NSLog(@"Original string: %@, unarchived string: %@",val3,s);
-  */
+  NSLog(@"Original string: %@, unarchived string: %@",val3, s);
+
   // DESTROY(arp);
   return 0;
 }
