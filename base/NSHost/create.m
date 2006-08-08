@@ -1,7 +1,7 @@
-#include "ObjectTesting.h"
-#include <Foundation/NSHost.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSString.h>
+#import "ObjectTesting.h"
+#import <Foundation/NSHost.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
 
 int main()
 {

@@ -1,7 +1,8 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSUndoManager.h>
-#include <Foundation/NSNotification.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSUndoManager.h>
+#import <Foundation/NSNotification.h>
+#import <Foundation/NSString.h>
 
 static NSUndoManager *um;
 BOOL sane;

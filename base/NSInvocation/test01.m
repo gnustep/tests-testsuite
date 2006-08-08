@@ -1,13 +1,13 @@
-#include "Testing.h"
-#include "ObjectTesting.h"
-#include "InvokeProxyProtocol.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSBundle.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSFileManager.h>
-#include <Foundation/NSInvocation.h>
-#include <Foundation/NSMethodSignature.h>
-#include <Foundation/NSProxy.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+#import "InvokeProxyProtocol.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSBundle.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSFileManager.h>
+#import <Foundation/NSInvocation.h>
+#import <Foundation/NSMethodSignature.h>
+#import <Foundation/NSProxy.h>
 
 int main()
 { 

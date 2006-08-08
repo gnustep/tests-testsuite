@@ -22,9 +22,9 @@
   
 */
 
-#include "Testing.h"
-#include "ObjectTesting.h"
-#include <Foundation/Foundation.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
 
 int main()
 {

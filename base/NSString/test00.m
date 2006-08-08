@@ -1,8 +1,8 @@
-#include "Testing.h" 
-#include "ObjectTesting.h"
-#include <Foundation/NSString.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSCharacterSet.h>
+#import "Testing.h" 
+#import "ObjectTesting.h"
+#import <Foundation/NSString.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSCharacterSet.h>
 
 static BOOL rangesEqual(NSRange r1, NSRange r2)
 {

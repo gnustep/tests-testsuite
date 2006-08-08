@@ -1,7 +1,7 @@
-#include <Foundation/Foundation.h>
-#include <GNUstepBase/GSXML.h>
-#include "Testing.h"
-#include "ObjectTesting.h"
+#import <Foundation/Foundation.h>
+#import <GNUstepBase/GSXML.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);

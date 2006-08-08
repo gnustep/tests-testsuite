@@ -1,5 +1,5 @@
-#include <Foundation/NSAutoreleasePool.h>
-#include "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import "ObjectTesting.h"
 
 int main()
 {

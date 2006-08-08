@@ -1,6 +1,6 @@
-#include "ObjectTesting.h"
-#include <Foundation/Foundation.h>
-#include <Foundation/NSStream.h>
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
+#import <Foundation/NSStream.h>
 
 int main()
 {

@@ -1,6 +1,6 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSLock.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSLock.h>
 
 int main()
 {
@@ -26,12 +26,16 @@ int main()
     [lock unlock];
   pass(ret, "NSLock lockBeforeDate: works");
   
+#if	defined(APPLE)
+  pass(NO, "Recursive lockBeforeDate: with NSLock returns NO ... this is not a real test, just a reminder of an apple bug ... you may want to check to see if it has been fixed");
+#else
   ASSIGN(lock,[NSLock new]);
   [lock tryLock];
   ret = [lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:5]];
   if (ret)
     [lock unlock];
   pass(ret == NO, "Recursive lockBeforeDate: with NSLock returns NO");
+#endif
   
   DESTROY(arp);
   return 0;

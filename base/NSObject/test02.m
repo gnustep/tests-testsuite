@@ -1,6 +1,6 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSObject.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSObject.h>
 /* Nicola Pero, Tue Dec 18 17:54:53 GMT 2001 */
 @protocol DoingNothing
 - (void) doNothing;

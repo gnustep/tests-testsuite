@@ -1,5 +1,5 @@
-#include <Foundation/Foundation.h>
-#include "ObjectTesting.h"
+#import <Foundation/Foundation.h>
+#import "ObjectTesting.h"
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);

@@ -1,9 +1,10 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSBundle.h>
-#include <Foundation/NSConnection.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSFileManager.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSBundle.h>
+#import <Foundation/NSConnection.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSFileManager.h>
+#import <Foundation/NSString.h>
 
 int main()
 {

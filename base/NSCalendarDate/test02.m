@@ -1,10 +1,10 @@
-#include "Testing.h"
-#include <Foundation/NSArray.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSCalendarDate.h>
-#include <Foundation/NSString.h>
-#include <Foundation/NSTimeZone.h>
-#include <Foundation/NSUserDefaults.h>
+#import "Testing.h"
+#import <Foundation/NSArray.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSCalendarDate.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSTimeZone.h>
+#import <Foundation/NSUserDefaults.h>
 
 int main()
 {

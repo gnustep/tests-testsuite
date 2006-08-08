@@ -1,6 +1,6 @@
 /* NSGeometry tests */
-#include <Foundation/Foundation.h>
-#include "Testing.h"
+#import <Foundation/Foundation.h>
+#import "Testing.h"
 
 extern BOOL	GSMacOSXCompatibleGeometry(void);	// Compatibility mode
 

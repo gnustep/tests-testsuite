@@ -21,9 +21,9 @@
    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA.
   
 */
-#include "Testing.h"
-#include "ObjectTesting.h"
-#include <Foundation/Foundation.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
 
 #define GST_PORT @"32329"
 

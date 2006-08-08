@@ -25,8 +25,8 @@
 Testing of Various Byte Order Markers.
 */
 
-#include "Testing.h"
-#include <Foundation/Foundation.h>
+#import "Testing.h"
+#import <Foundation/Foundation.h>
 
 int main(int argc, char **argv)
 {

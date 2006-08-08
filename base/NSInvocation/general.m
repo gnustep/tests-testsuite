@@ -1,13 +1,14 @@
-#include "Testing.h"
-#include "InvokeProxyProtocol.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSBundle.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSFileManager.h>
-#include <Foundation/NSInvocation.h>
-#include <Foundation/NSMethodSignature.h>
-#include <Foundation/NSObject.h>
-#include <Foundation/NSProxy.h>
+#import "Testing.h"
+#import "InvokeProxyProtocol.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSBundle.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSFileManager.h>
+#import <Foundation/NSInvocation.h>
+#import <Foundation/NSMethodSignature.h>
+#import <Foundation/NSObject.h>
+#import <Foundation/NSProxy.h>
+#import <Foundation/NSString.h>
 
 /* these macros should only be used in the scope of main */
 #define TEST_INVOKE(selx) \

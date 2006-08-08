@@ -1,8 +1,8 @@
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSTask.h>
-#include <Foundation/NSProcessInfo.h>
-#include <Foundation/NSBundle.h>
-#include "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSTask.h>
+#import <Foundation/NSProcessInfo.h>
+#import <Foundation/NSBundle.h>
+#import "ObjectTesting.h"
 
 int main()
 {

@@ -1,6 +1,6 @@
-#include "ObjectTesting.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSTimeZone.h>
+#import "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSTimeZone.h>
 
 int main()
 {

@@ -1,9 +1,9 @@
 /**
  * This test tests client and server socket
  */
-#include "ObjectTesting.h"
-#include <Foundation/Foundation.h>
-#include <Foundation/NSStream.h>
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
+#import <Foundation/NSStream.h>
 
 static GSServerStream *serverStream; 
 static NSOutputStream *serverOutput = nil;

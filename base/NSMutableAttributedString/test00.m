@@ -1,6 +1,6 @@
-#include "Testing.h"
-#include <Foundation/NSAttributedString.h>
-#include <Foundation/NSAutoreleasePool.h>
+#import "Testing.h"
+#import <Foundation/NSAttributedString.h>
+#import <Foundation/NSAutoreleasePool.h>
 
 @interface NSMutableAttributedString (TestingAdditions)
 -(BOOL)checkAttributes:(NSDictionary *)attr location:(int)location;

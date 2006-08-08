@@ -1,9 +1,9 @@
-#include "Testing.h"
-#include "ObjectTesting.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSFileManager.h>
-#include <Foundation/NSProcessInfo.h>
-#include <Foundation/NSPathUtilities.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSFileManager.h>
+#import <Foundation/NSProcessInfo.h>
+#import <Foundation/NSPathUtilities.h>
 
 int main()
 {

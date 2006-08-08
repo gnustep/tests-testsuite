@@ -1,8 +1,8 @@
-#include "ObjectTesting.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSInvocation.h>
-#include <Foundation/NSRunLoop.h>
-#include <Foundation/NSTimer.h>
+#import "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSInvocation.h>
+#import <Foundation/NSRunLoop.h>
+#import <Foundation/NSTimer.h>
 
 int main()
 {

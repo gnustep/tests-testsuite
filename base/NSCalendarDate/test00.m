@@ -1,7 +1,7 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSCalendarDate.h>
-#include <Foundation/NSString.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSCalendarDate.h>
+#import <Foundation/NSString.h>
 @interface NSCalendarDate(TestAdditions)
 -(BOOL)testDateValues:(int)y :(int)m :(int)d :(int)h :(int)i :(int)s;
 @end

@@ -15,14 +15,14 @@
    General Public License for more details.
  
 */
-#include <Foundation/NSObjCRuntime.h>
-#include <Foundation/NSString.h>
-#include <Foundation/NSObject.h>
-#include <Foundation/NSArray.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSData.h>
-#include <Foundation/NSArchiver.h>
-#include "Testing.h"
+#import <Foundation/NSObjCRuntime.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSObject.h>
+#import <Foundation/NSArray.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSData.h>
+#import <Foundation/NSArchiver.h>
+#import "Testing.h"
 
 #define TEST_FOR_CLASS(aClassName, aClass, TestDescription) \
   pass([aClass isKindOfClass:NSClassFromString(aClassName)], TestDescription)
@@ -65,7 +65,8 @@
     pass (NO, desc, ## args); NS_ENDHANDLER } \
   else unsupported (desc, ## args)
 
-/* I guess if shouldThrow == NO you can pass nil for expectedExceptionName */
+/* You can pass nil for expectedExceptionName if you don't care about the
+ * type of exception */
 /* test if an exception is thrown or not */
 #define TEST_EXCEPTION(code, exceptionName, shouldThrow, description) \
   NS_DURING \
@@ -73,9 +74,12 @@
     pass(shouldThrow == NO, description); \
   NS_HANDLER \
     pass((shouldThrow == YES \
-      && [[localException name] isEqual: exceptionName]), description); \
+      && (exceptionName == nil \
+	|| [[localException name] isEqual: exceptionName])), \
+      description); \
     if (shouldThrow == YES \
-      && ![[localException name] isEqual: exceptionName]) \
+      && !(exceptionName == nil \
+	|| [[localException name] isEqual: exceptionName])) \
       [localException raise]; \
   NS_ENDHANDLER
 

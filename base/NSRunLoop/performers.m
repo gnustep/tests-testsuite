@@ -1,10 +1,10 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSDate.h>
-#include <Foundation/NSRunLoop.h>
-#include <Foundation/NSString.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSDate.h>
+#import <Foundation/NSRunLoop.h>
+#import <Foundation/NSString.h>
 
-#include <unistd.h>
+#import <unistd.h>
 
 @interface Watcher : NSObject
 @end

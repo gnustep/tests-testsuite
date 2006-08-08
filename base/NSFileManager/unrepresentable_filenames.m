@@ -2,9 +2,11 @@
 copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 */
 
-#include <Foundation/NSArray.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSFileManager.h>
+#import "Testing.h"
+#import <Foundation/NSArray.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSFileManager.h>
 
 int main(int argc, char **argv)
 {

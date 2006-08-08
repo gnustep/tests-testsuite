@@ -1,11 +1,11 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSString.h>
-#include <Foundation/NSArray.h>
-#include <Foundation/NSDictionary.h>
-#include <Foundation/NSData.h>
-#include <Foundation/NSPropertyList.h>
-#include <Foundation/NSProcessInfo.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSArray.h>
+#import <Foundation/NSDictionary.h>
+#import <Foundation/NSData.h>
+#import <Foundation/NSPropertyList.h>
+#import <Foundation/NSProcessInfo.h>
 
 static BOOL
 test_parse_unparse(id object)

@@ -1,7 +1,7 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSString.h>
-#include <Foundation/NSArray.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSArray.h>
 @interface MyEvilClass : NSObject
 {
  Class class;

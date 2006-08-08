@@ -5,9 +5,9 @@ Test -base's cluster of NSString classes. This tests the optimized
 implementations of many NSString methods in GSString and its subclasses.
 */
 
-#include "NSString_tests.h"
+#import "NSString_tests.h"
 
-#include <Foundation/NSString.h>
+#import <Foundation/NSString.h>
 
 int main(int argc,char **argv)
 {

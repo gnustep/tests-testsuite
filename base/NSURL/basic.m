@@ -1,6 +1,6 @@
-#include <Foundation/Foundation.h>
-#include "Testing.h"
-#include "ObjectTesting.h"
+#import <Foundation/Foundation.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
 
 int main()
 {

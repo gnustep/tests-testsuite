@@ -4,6 +4,7 @@
 	* base/NSStream/memandfile_2.m:
 	Fixup for MacOS-X semantics ... where events are only signalled once
 	rather than every time round the run loop.
+	* base/*: use import to work with apple frameworks
 
 2006-06-15  Richard Frith-Macdonald  <rfm@gnu.org>
 

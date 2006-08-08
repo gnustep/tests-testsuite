@@ -1,6 +1,6 @@
-#include "Testing.h"
-#include "ObjectTesting.h"
-#include <Foundation/NSAutoreleasePool.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
 
 int main()
 {

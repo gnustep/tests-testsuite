@@ -2,7 +2,7 @@
 
    Written By: Adam Fedor <fedor@gnu.org>
 */
-#include <Foundation/NSObject.h>
+#import <Foundation/NSObject.h>
 
 typedef struct {
   char	c;

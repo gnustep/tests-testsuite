@@ -1,6 +1,6 @@
-#include <Foundation/Foundation.h>
-#include <GNUstepBase/GSMime.h>
-#include "Testing.h"
+#import <Foundation/Foundation.h>
+#import <GNUstepBase/GSMime.h>
+#import "Testing.h"
 
 int main()
 {

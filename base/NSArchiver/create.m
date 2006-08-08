@@ -1,9 +1,9 @@
-#include <Foundation/NSArchiver.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSData.h>
-#include "Testing.h"
-#include "ObjectTesting.h"
+#import <Foundation/NSArchiver.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSData.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
 
 int main()
 {

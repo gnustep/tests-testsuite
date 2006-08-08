@@ -1,10 +1,10 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSScanner.h>
-#include <Foundation/NSString.h>
-#include <Foundation/NSValue.h>
-#include <math.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSScanner.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSValue.h>
+#import <math.h>
 
 static BOOL scanInt(int value, int *retp)
 { 

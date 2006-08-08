@@ -5,9 +5,9 @@ Test that -base's cluster of NSMutableString classes are valid NSString
 classes.
 */
 
-#include "../NSString/NSString_tests.h"
+#import "../NSString/NSString_tests.h"
 
-#include <Foundation/NSString.h>
+#import <Foundation/NSString.h>
 
 int main(int argc,char **argv)
 {

@@ -1,4 +1,4 @@
-#include "generic.h"
+#import "generic.h"
 
 @implementation NSObject(TestAdditions)
 -(BOOL)testEquals:(id)anObject

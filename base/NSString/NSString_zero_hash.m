@@ -2,9 +2,9 @@
 copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 */
 
-#include "Testing.h"
+#import "Testing.h"
 
-#include <Foundation/NSString.h>
+#import <Foundation/NSString.h>
 
 int main(int argc, char **argv)
 {

@@ -1,5 +1,5 @@
-#include "ObjectTesting.h"
-#include <Foundation/Foundation.h>
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
 
 @interface	TestClass : NSObject
 @end

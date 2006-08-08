@@ -1,9 +1,9 @@
-#include <Foundation/NSTask.h>
-#include <Foundation/NSFileHandle.h>
-#include <Foundation/NSData.h>
-#include <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSTask.h>
+#import <Foundation/NSFileHandle.h>
+#import <Foundation/NSData.h>
+#import <Foundation/NSAutoreleasePool.h>
 
-#include "ObjectTesting.h" 
+#import "ObjectTesting.h" 
 
 #define	COMMAND		@"ls"
 #define ARGUMENTS	@"-l",nil

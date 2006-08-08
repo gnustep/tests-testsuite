@@ -5,9 +5,9 @@ Tests that nul characters are handled correctly in strings and string
 constants.
 */
 
-#include "Testing.h"
+#import "Testing.h"
 
-#include <Foundation/NSString.h>
+#import <Foundation/NSString.h>
 
 int main(int argc, char **argv)
 {

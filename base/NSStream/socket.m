@@ -1,9 +1,9 @@
 /**
  * This test tests basic client side socket
  */
-#include "ObjectTesting.h"
-#include <Foundation/Foundation.h>
-#include <Foundation/NSStream.h>
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
+#import <Foundation/NSStream.h>
 
 static NSOutputStream *defaultOutput = nil;
 static NSInputStream *defaultInput = nil;

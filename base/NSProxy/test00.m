@@ -1,8 +1,8 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSInvocation.h>
-#include <Foundation/NSProxy.h>
-#include <Foundation/NSString.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSInvocation.h>
+#import <Foundation/NSProxy.h>
+#import <Foundation/NSString.h>
 
 @interface MyProxy : NSProxy
 {

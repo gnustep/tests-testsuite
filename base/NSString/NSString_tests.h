@@ -14,16 +14,16 @@ should be included _once_ in a test that wants to test a particular class.
 This is the main entry point to this file. Call it with a class that's
 supposed to be a concrete NSString subclass.
 */
-#include <objc/Object.h>
+#import <objc/Object.h>
 
 void TestNSStringClass(Class stringClass);
 
 
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSData.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSString.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSData.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSString.h>
 
 /* Solaris, in particular, can't handle a NULL string in a printf statement */
 #define FORMAT_STRING(str) ((str) ? str : "NULL")

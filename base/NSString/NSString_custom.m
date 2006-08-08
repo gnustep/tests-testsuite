@@ -5,9 +5,9 @@ Test that a minimal custom subclass works. This tests the generic
 implementations of the NSString methods in NSString itself.
 */
 
-#include "NSString_tests.h"
+#import "NSString_tests.h"
 
-#include <Foundation/NSString.h>
+#import <Foundation/NSString.h>
 
 @interface CustomString : NSString
 {

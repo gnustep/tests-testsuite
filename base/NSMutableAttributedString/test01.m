@@ -1,6 +1,6 @@
-#include "Testing.h"
-#include <Foundation/NSAttributedString.h>
-#include <Foundation/NSAutoreleasePool.h>
+#import "Testing.h"
+#import <Foundation/NSAttributedString.h>
+#import <Foundation/NSAutoreleasePool.h>
 
 /* get rid of compiler warnings */
 @interface NSObject(evil)

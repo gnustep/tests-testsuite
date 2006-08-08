@@ -1,7 +1,7 @@
-#include "Testing.h"
-#include "ObjectTesting.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSCharacterSet.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSCharacterSet.h>
 
 int main()
 {

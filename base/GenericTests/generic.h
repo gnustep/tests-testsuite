@@ -1,6 +1,6 @@
 
-#include <Foundation/NSObject.h>
-#include <Foundation/NSString.h>
+#import <Foundation/NSObject.h>
+#import <Foundation/NSString.h>
 
 @interface NSObject(TestsAdditions)
 -(BOOL)testEquals: (id)anObject;

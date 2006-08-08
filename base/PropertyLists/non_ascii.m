@@ -2,10 +2,10 @@
 copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 */
 
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSString.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
 
-#include "Testing.h"
+#import "Testing.h"
 
 int main(int argc, char **argv)
 {

@@ -19,8 +19,8 @@
 #ifndef Testing_h
 #define Testing_h
 
-#include <stdio.h>
-#include <stdarg.h>
+#import <stdio.h>
+#import <stdarg.h>
 
 static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
 static void pass(int testPassed, const char *description, ...)
@@ -57,8 +57,8 @@ static void unsupported(const char *description, ...)
 #define POBJECT(obj)      [[obj description] lossyCString]
 
 /* some good macros to compare floating point numbers */
-#include <math.h>
-#include <float.h>
+#import <math.h>
+#import <float.h>
 #define EQ(x, y) (fabs((x) - (y)) <= fabs((x) + (y)) * (FLT_EPSILON * 100))
 #define LE(x, y) ((x)<(y) || EQ(x, y))
 #define GE(x, y) ((y)<(x) || EQ(x, y))

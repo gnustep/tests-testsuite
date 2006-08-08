@@ -1,7 +1,8 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSDate.h>
-#include <Foundation/NSString.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSDate.h>
+#import <Foundation/NSCalendarDate.h>
+#import <Foundation/NSString.h>
 
 int main()
 {

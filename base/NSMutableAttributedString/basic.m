@@ -1,6 +1,6 @@
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSAttributedString.h>
-#include "ObjectTesting.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSAttributedString.h>
+#import "ObjectTesting.h"
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);

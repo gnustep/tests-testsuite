@@ -1,7 +1,7 @@
-#include "Testing.h"
-#include <Foundation/NSCalendarDate.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSString.h>
+#import "Testing.h"
+#import <Foundation/NSCalendarDate.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSString.h>
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);

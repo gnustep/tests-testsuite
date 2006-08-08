@@ -1,9 +1,9 @@
-#include "Testing.h"
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSException.h>
-#include <Foundation/NSString.h>
-#include <Foundation/NSScanner.h>
-#include <Foundation/NSCharacterSet.h>
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSException.h>
+#import <Foundation/NSString.h>
+#import <Foundation/NSScanner.h>
+#import <Foundation/NSCharacterSet.h>
 
 static BOOL scanAWord(NSScanner *theScanner, NSCharacterSet *cSet)
 {

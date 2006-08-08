@@ -1,10 +1,10 @@
-#include <Foundation/NSString.h>
-#include <Foundation/NSArray.h>
-#include <Foundation/NSKeyedArchiver.h>
-#include <Foundation/NSAutoreleasePool.h>
-#include <Foundation/NSData.h>
-#include "Testing.h"
-#include "ObjectTesting.h"
+#import <Foundation/NSString.h>
+#import <Foundation/NSArray.h>
+#import <Foundation/NSKeyedArchiver.h>
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSData.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
 
 int main()
 {
