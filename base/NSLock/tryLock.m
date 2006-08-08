@@ -26,7 +26,7 @@ int main()
     [lock unlock];
   pass(ret, "NSLock lockBeforeDate: works");
   
-#if	defined(APPLE)
+#if	!defined(GNUSTEP_BASE_LIBRARY)
   pass(NO, "Recursive lockBeforeDate: with NSLock returns NO ... this is not a real test, just a reminder of an apple bug ... you may want to check to see if it has been fixed");
 #else
   ASSIGN(lock,[NSLock new]);

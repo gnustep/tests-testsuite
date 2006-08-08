@@ -1,3 +1,4 @@
+#if     defined(GNUSTEP_BASE_LIBRARY)
 #import <Foundation/Foundation.h>
 #import <GNUstepBase/GSMime.h>
 #import "Testing.h"
@@ -57,4 +58,9 @@ int main()
   DESTROY(arp);
   return 0;
 }
-
+#else
+int main(int argc,char **argv)
+{
+  return 0;
+}
+#endif
