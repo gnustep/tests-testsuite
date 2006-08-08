@@ -19,8 +19,8 @@
 #ifndef Testing_h
 #define Testing_h
 
-#import <stdio.h>
-#import <stdarg.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
 static void pass(int testPassed, const char *description, ...)
