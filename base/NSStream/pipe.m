@@ -10,7 +10,7 @@ static NSInputStream *defaultInput = nil;
 static NSData *goldData;
 static NSMutableData *testData;
 
-@interface Listener : NSObject <GSStreamListener>
+@interface Listener : NSObject
 @end
 
 @implementation Listener

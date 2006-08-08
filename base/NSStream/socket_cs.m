@@ -13,7 +13,7 @@ static NSInputStream *clientInput = nil;
 static NSData *goldData;
 static NSMutableData *testData;
 
-@interface ClientListener : NSObject <GSStreamListener>
+@interface ClientListener : NSObject
 {
   uint8_t buffer[4096];
   int writePointer;
@@ -98,7 +98,7 @@ NSLog(@"Client %p %d", theStream, streamEvent);
 
 @end
 
-@interface ServerListener : NSObject <GSStreamListener>
+@interface ServerListener : NSObject
 {
   uint8_t buffer[4096];
   int readSize;

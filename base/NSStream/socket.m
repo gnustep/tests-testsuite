@@ -9,7 +9,7 @@ static NSOutputStream *defaultOutput = nil;
 static NSInputStream *defaultInput = nil;
 static int byteCount = 0;
 
-@interface Listener : NSObject <GSStreamListener>
+@interface Listener : NSObject
 @end
 
 @implementation Listener

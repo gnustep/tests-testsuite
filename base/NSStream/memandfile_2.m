@@ -8,10 +8,10 @@
 static NSOutputStream *defaultOutput = nil;
 static NSInputStream *defaultInput = nil;
 
-@interface Listener1 : NSObject <GSStreamListener>
+@interface Listener1 : NSObject
 @end
 
-@interface Listener2 : NSObject <GSStreamListener>
+@interface Listener2 : NSObject
 @end
 
 @implementation Listener1
