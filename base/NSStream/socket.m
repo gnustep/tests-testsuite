@@ -106,8 +106,7 @@ int main()
   [defaultOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [defaultInput open];
   [defaultOutput open];
-  [rl runMode: NSDefaultRunLoopMode
-   beforeDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
   // I cannot verify the content at www.google.com, so as long as it has something, that is passing
   pass(byteCount>0, "read www.google.com");
