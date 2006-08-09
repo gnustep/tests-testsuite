@@ -14,29 +14,44 @@ static int byteCount = 0;
 
 @implementation Listener
 
-- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent
+- (void)stream: (NSStream *)theStream handleEvent: (NSStreamEvent)streamEvent
 {
   static uint8_t buffer[4096];
+  static BOOL doneWrite = NO;
   int readSize;
+NSLog(@"Got %d on %p", streamEvent, theStream);
   switch (streamEvent) 
     {
-    case NSStreamEventOpenCompleted:
+    case NSStreamEventOpenCompleted: 
       {
-        if (theStream==defaultOutput)
+	if (theStream == defaultOutput)
+	  {
+	    doneWrite = NO;
+	  }
+	break;
+      }
+    case NSStreamEventHasSpaceAvailable: 
+      {
+        NSAssert(theStream==defaultOutput, @"Wrong stream for reading");
+        if (doneWrite == NO)
           {
-            NSString * str = [NSString stringWithFormat:@"GET / HTTP/1.0\r\n\r\n"];
-            const uint8_t * rawstring = (const uint8_t *)[str UTF8String];
+            const uint8_t * rawstring = "GET / HTTP/1.0\r\n\r\n";
             // there may be a problem so that write is not complete. 
-            // However, since this is so short it is pretty much always complete.
-            [defaultOutput write:rawstring maxLength:strlen((char*)rawstring)];
+            // However, since this is so short it is pretty much always ok.
+	    doneWrite = YES;
+            [defaultOutput write: rawstring
+		       maxLength: strlen((char*)rawstring)];
             [defaultOutput close];
+	    [defaultOutput removeFromRunLoop: [NSRunLoop currentRunLoop]
+				     forMode: NSDefaultRunLoopMode];
+	    NSLog(@"Closed %p", defaultOutput);
           }          
         break;
       }
-    case NSStreamEventHasBytesAvailable:
+    case NSStreamEventHasBytesAvailable: 
       {
         NSAssert(theStream==defaultInput, @"Wrong stream for reading");
-        readSize = [defaultInput read:buffer maxLength:4096];
+        readSize = [defaultInput read: buffer maxLength: 4096];
         if (readSize<0)
           {
             // it is possible that readSize<0 but not an Error.
@@ -44,12 +59,20 @@ static int byteCount = 0;
             NSAssert([defaultInput streamError]==nil, @"read error");
           }
         if (readSize==0)
-          [defaultInput close];
+	  {
+            [defaultInput close];
+	    [defaultInput removeFromRunLoop: [NSRunLoop currentRunLoop]
+				    forMode: NSDefaultRunLoopMode];
+	    NSLog(@"Closed %p", defaultInput);
+	  }
         else
-          byteCount += readSize;
+	  {
+            byteCount += readSize;
+	    NSLog(@"Read %d: %*.*s", readSize, readSize, readSize, buffer);
+	  }
         break;
       }
-    default:
+    default: 
       {
         NSAssert1(1, @"Error! code is %d", [[theStream streamError] code]);
         break;
@@ -72,17 +95,19 @@ int main()
     }
 
   rl = [NSRunLoop currentRunLoop];
-  host = [NSHost hostWithName:@"www.google.com"];
+  host = [NSHost hostWithName: @"www.google.com"];
   li = AUTORELEASE([Listener new]);
-  [NSStream getStreamsToHost:host port:80 inputStream:&defaultInput outputStream:&defaultOutput];
+  [NSStream getStreamsToHost: host port: 80
+    inputStream: &defaultInput outputStream: &defaultOutput];
 
-  [defaultInput setDelegate:li];
-  [defaultOutput setDelegate:li];
-  [defaultInput scheduleInRunLoop:rl forMode:NSDefaultRunLoopMode];
-  [defaultOutput scheduleInRunLoop:rl forMode:NSDefaultRunLoopMode];
+  [defaultInput setDelegate: li];
+  [defaultOutput setDelegate: li];
+  [defaultInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [defaultOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [defaultInput open];
   [defaultOutput open];
-  [rl run];
+  [rl runMode: NSDefaultRunLoopMode
+   beforeDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
   // I cannot verify the content at www.google.com, so as long as it has something, that is passing
   pass(byteCount>0, "read www.google.com");

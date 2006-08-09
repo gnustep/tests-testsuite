@@ -26,6 +26,7 @@ static BOOL scanIntOverflow(int value, int *retp)
           && (0 > value) ? (intmin == *retp) : (intmax == *retp));
 }
 
+#if     defined(GNUSTEP_BASE_LIBRARY)
 static BOOL scanRadixUnsigned(NSString *str, 
 			      int expectValue,
 			      unsigned int expectedValue,
@@ -37,6 +38,7 @@ static BOOL scanRadixUnsigned(NSString *str,
   return ((expectValue == 1) ? (expectedValue == *retp) : YES
           && expectedScanLoc == [scn scanLocation]);
 }
+#endif
 
 static BOOL scanHex(NSString *str, 
 		    int expectValue,
@@ -83,6 +85,7 @@ int main()
   pass(![scn scanInt:&ret] && ([scn scanLocation] == 0),
        "NSScanner non-digits dont consume characters to be skipped");
   
+#if     defined(GNUSTEP_BASE_LIBRARY)
   pass(scanRadixUnsigned(@"1234FOO", 1, 1234, 4, &ret)
        && scanRadixUnsigned(@"01234FOO", 1, 01234, 5, &ret)
        && scanRadixUnsigned(@"0x1234FOO", 1, 0x1234F, 7, &ret)
@@ -94,6 +97,7 @@ int main()
        && scanRadixUnsigned(@"  FOO", 0, 0, 0, &ret)
        && scanRadixUnsigned(@" 0x ", 0, 0, 0, &ret),
        "NSScanner radiux unsigned (non-digits dont move scan)");
+#endif
   
   pass(scanHex(@"1234FOO", 1, 0x1234F, 5, &ret)
        && scanHex(@"01234FOO", 1, 0x1234F, 6, &ret),

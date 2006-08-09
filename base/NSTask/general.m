@@ -33,7 +33,7 @@ int main()
   /* Try some tasks.  Make sure the program we use is common between Unix
      and Windows (and others?) */
   task = [NSTask launchedTaskWithLaunchPath: pth1
-		 arguments: nil];
+		 arguments: [NSArray array]];
   [task waitUntilExit];
   pass(YES, "launchedTaskWithLaunchPath:arguments: works");
 

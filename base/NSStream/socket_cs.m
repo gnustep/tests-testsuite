@@ -1,3 +1,4 @@
+#if	defined(GNUSTEP_BASE_LIBRARY)
 /**
  * This test tests client and server socket
  */
@@ -301,3 +302,9 @@ int main()
   RELEASE(arp);
   return 0;
 }
+#else
+int main()
+{
+  return 0;
+}
+#endif

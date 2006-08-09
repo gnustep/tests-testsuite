@@ -1,10 +1,12 @@
+#if	defined(GNUSTEP_BASE_LIBRARY)
 #import "Testing.h"
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSDate.h>
 #import <Foundation/NSRunLoop.h>
 #import <Foundation/NSString.h>
+#import <Foundation/NSArray.h>
 
-#import <unistd.h>
+#include <unistd.h>
 
 @interface Watcher : NSObject
 @end
@@ -126,3 +128,9 @@ int main()
   DESTROY(arp);
   return 0;
 }
+#else
+int main()
+{
+  return 0;
+}
+#endif

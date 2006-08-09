@@ -3,9 +3,16 @@
 #import <Foundation/NSAutoreleasePool.h>
 
 /* get rid of compiler warnings */
-@interface NSObject(evil)
+@interface NSMutableAttributedString(evil)
 -(void) _sanity;
 @end
+#if	defined(GNUSTEP_BASE_LIBRARY)
+@implementation NSMutableAttributedString(evil)
+-(void) _sanity
+{
+}
+@end
+#endif
 
 @interface NSMutableAttributedString (TestingAdditions)
 -(BOOL)checkAttributes:(NSDictionary *)attr location:(int)location;

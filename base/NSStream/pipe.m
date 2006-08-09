@@ -1,3 +1,4 @@
+#if	defined(GNUSTEP_BASE_LIBRARY)
 /**
  * This test tests a pipe using NSStream
  */
@@ -81,3 +82,9 @@ int main()
   RELEASE(arp);
   return 0;
 }
+#else
+int main()
+{
+  return 0;
+}
+#endif

@@ -6,15 +6,22 @@
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
-  NSHost *current = [NSHost currentHost];
-  NSHost *localh = [NSHost localHost];
+  NSHost *current;
+  NSHost *localh;
   NSHost *tmp; 
+
+  current = [NSHost currentHost];
   pass(current != nil && [current isKindOfClass:[NSHost class]],
        "NSHost understands +currentHost");
  
+#if	defined(GNUSTEP_BASE_LIBRARY)
+  localh = [NSHost localHost];
   pass(localh != nil && [localh isKindOfClass:[NSHost class]],
        "NSHost understands +localHost");
-  
+#else
+  localh = current;
+#endif
+
   tmp = [NSHost hostWithName:[current name]];
   pass([tmp isEqualToHost:current], "NSHost understands +hostWithName:");
   

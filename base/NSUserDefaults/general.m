@@ -7,11 +7,14 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
 
   NSUserDefaults *defs;
-  id lang;
 
   defs = [NSUserDefaults standardUserDefaults];
   pass(defs != nil && [defs isKindOfClass: [NSUserDefaults class]],
        "NSUserDefaults understands +standardUserDefaults");
+
+#if	defined(GNUSTEP_BASE_LIBRARY)
+{
+  id lang;
 
   lang = [NSUserDefaults userLanguages];
   pass(lang != nil && [lang isKindOfClass: [NSArray class]],
@@ -25,6 +28,8 @@ int main()
   [NSUserDefaults setUserLanguages: lang];
   pass([lang isEqual: [NSUserDefaults userLanguages]],
        "NSUserDefaults can set user languages");
+}
+#endif
 
   [defs setBool: YES forKey: @"Test Suite Bool"];
   pass([defs boolForKey: @"Test Suite Bool"],

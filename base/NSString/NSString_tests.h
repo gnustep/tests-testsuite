@@ -29,8 +29,12 @@ void TestNSStringClass(Class stringClass);
 #define FORMAT_STRING(str) ((str) ? str : "NULL")
 
 
+#if	defined(GNUSTEP_BASE_LIBRARY)
 /* Check if a pointer is valid */
 #define IS_VALID_OBJECT(obj) (((id)obj)->class_pointer != (void*) 0xdeadface)
+#else
+#define IS_VALID_OBJECT(obj) (1)
+#endif
 
 
 Class stringClass;
@@ -133,9 +137,11 @@ BOOL test_encoding(void)
 	  0xd7, 0xa9, 0xd7, 0x9c, 0xd7, 0x95, 0xd7, 0x9d}, 14, 
 	  (unichar[]){0xe5, 0xe4, 0xf6, 0x5e9, 0x5dc, 0x5d5, 0x5dd}, 7);
 
+#if	defined(GNUSTEP_BASE_LIBRARY)
   ok = ok && test_encodings_helper(NSISOHebrewStringEncoding, 
 	  (unsigned char[]){0xf9, 0xec, 0xe5, 0xed}, 4, 
 	  (unichar[]){0x5e9, 0x5dc, 0x5d5, 0x5dd}, 4);
+#endif
 
   ok = ok && test_encodings_helper(NSISOLatin1StringEncoding, 
 	  (unsigned char[]){116, 101, 115, 116, 45, 229, 228, 246}, 8, 
@@ -155,9 +161,11 @@ BOOL test_encoding(void)
 ;      #xe22) #t #t)
 */
 
+#if	defined(GNUSTEP_BASE_LIBRARY)
   ok = ok && test_encodings_helper(NSBIG5StringEncoding, 
     (unsigned char[]){0x41, 0x42, 0x43, 0x20, 0xa7, 0x41, 0xa6, 0x6e, 0x21}, 9, 
     (unichar[]){0x41, 0x42, 0x43, 0x20, 0x4f60, 0x597d, 0x21}, 7);
+#endif
 
   return ok;
 }
@@ -186,7 +194,7 @@ BOOL test_getCString_maxLength_range_remainingRange(void)
 	default:
 	  printf("Have no reference string for c-string encoding %i,"
 	    " skipping test.\n", [NSString defaultCStringEncoding]);
-	  NS_VALRETURN(YES);
+	  NS_VALUERETURN(YES, BOOL);
       }
 
     for (i = 0; i < referenceBytesLength; i++)
@@ -206,7 +214,7 @@ BOOL test_getCString_maxLength_range_remainingRange(void)
 	    ok = NO;
 	  }
       }
-    NS_VALRETURN(ok);
+    NS_VALUERETURN(ok, BOOL);
   NS_HANDLER
     printf("%s\n", POBJECT(localException));
     return NO;

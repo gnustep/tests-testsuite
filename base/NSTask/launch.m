@@ -5,7 +5,7 @@
 
 #import "ObjectTesting.h" 
 
-#define	COMMAND		@"ls"
+#define	COMMAND		@"/bin/ls"
 #define ARGUMENTS	@"-l",nil
 
 int main()

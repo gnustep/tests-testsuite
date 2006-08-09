@@ -1,3 +1,4 @@
+#if	defined(GNUSTEP_BASE_LIBRARY)
 /*
    Copyright (C) 2005 Free Software Foundation, Inc.
 
@@ -89,3 +90,9 @@ int main()
   DESTROY(arp);
   return 0;
 }
+#else
+int main()
+{
+  return 0;
+}
+#endif
