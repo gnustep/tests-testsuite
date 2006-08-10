@@ -1,3 +1,9 @@
+2006-08-10  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSTask/launch.m: Fix launch path for windows
+	* base/NSStream/socket.m: Enable on windows
+	* base/NSStream/socket_cs.m: Enable on windows
+
 2006-08-08  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSStream/socket_cs.m:

@@ -38,27 +38,33 @@ NSLog(@"Got %d on %p", streamEvent, theStream);
             const uint8_t * rawstring = "GET / HTTP/1.0\r\n\r\n";
             // there may be a problem so that write is not complete. 
             // However, since this is so short it is pretty much always ok.
+	    NSLog(@"Written request");
 	    doneWrite = YES;
             [defaultOutput write: rawstring
 		       maxLength: strlen((char*)rawstring)];
+	  }
+/*
+	else
+	  {
             [defaultOutput close];
 	    [defaultOutput removeFromRunLoop: [NSRunLoop currentRunLoop]
 				     forMode: NSDefaultRunLoopMode];
 	    NSLog(@"Closed %p", defaultOutput);
           }          
+*/
         break;
       }
     case NSStreamEventHasBytesAvailable: 
       {
         NSAssert(theStream==defaultInput, @"Wrong stream for reading");
         readSize = [defaultInput read: buffer maxLength: 4096];
-        if (readSize<0)
+        if (readSize < 0)
           {
             // it is possible that readSize<0 but not an Error.
 	    // For example would block
             NSAssert([defaultInput streamError]==nil, @"read error");
           }
-        if (readSize==0)
+        if (readSize == 0)
 	  {
             [defaultInput close];
 	    [defaultInput removeFromRunLoop: [NSRunLoop currentRunLoop]
@@ -70,6 +76,14 @@ NSLog(@"Got %d on %p", streamEvent, theStream);
             byteCount += readSize;
 	    NSLog(@"Read %d: %*.*s", readSize, readSize, readSize, buffer);
 	  }
+        break;
+      }
+    case NSStreamEventEndEncountered: 
+      {
+        [theStream close];
+	[theStream removeFromRunLoop: [NSRunLoop currentRunLoop]
+			     forMode: NSDefaultRunLoopMode];
+        NSLog(@"Close %p", theStream);
         break;
       }
     default: 
@@ -87,13 +101,6 @@ int main()
   NSHost *host;
   Listener *li;
 
-  if ([[NSProcessInfo processInfo] operatingSystem]
-    == NSWindowsNTOperatingSystem)
-    {
-      unsupported("NSStream for sockets on mingw32");
-      return 0;
-    }
-
   rl = [NSRunLoop currentRunLoop];
   host = [NSHost hostWithName: @"www.google.com"];
   li = AUTORELEASE([Listener new]);
@@ -108,7 +115,8 @@ int main()
   [defaultOutput open];
   [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
-  // I cannot verify the content at www.google.com, so as long as it has something, that is passing
+  // I cannot verify the content at www.google.com,
+  // so as long as it has something, that is passing
   pass(byteCount>0, "read www.google.com");
 
   RELEASE(arp);

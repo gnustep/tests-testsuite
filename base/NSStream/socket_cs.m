@@ -64,6 +64,7 @@ NSLog(@"Client %p %d", theStream, streamEvent);
             // it is possible that readSize<0 but not an Error.
 	    // For example would block
             NSAssert([clientInput streamError] == nil, @"read error");
+            NSLog(@"Client read %d", readSize);
           }
         else if (readSize == 0)
 	  {
@@ -160,6 +161,14 @@ NSLog(@"Server %p %d", theStream, streamEvent);
         [theStream close];
 	[theStream removeFromRunLoop: [NSRunLoop currentRunLoop]
 			     forMode: NSDefaultRunLoopMode];
+        NSLog(@"Server close %p", theStream);
+	if (theStream == serverInput && writeSize == readSize)
+	  {
+	    [serverOutput close];
+	    [serverOutput removeFromRunLoop: [NSRunLoop currentRunLoop]
+				    forMode: NSDefaultRunLoopMode];
+	    NSLog(@"Server close %p", serverOutput);
+	  }
         break;
       }
     case NSStreamEventErrorOccurred: 
@@ -268,7 +277,7 @@ int main()
   [clientInput open];
   [clientOutput open];
 
-  [rl run];
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
   pass([goldData isEqualToData: testData], "Local tcp");
 
   DESTROY(serverInput);
@@ -293,7 +302,7 @@ int main()
   [clientInput open];
   [clientOutput open];
 
-  [rl run];
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
   pass([goldData isEqualToData: testData], "Local unix domain socket");
 

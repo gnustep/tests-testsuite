@@ -5,7 +5,11 @@
 
 #import "ObjectTesting.h" 
 
+#if	defined(__MINGW32__)
+#define	COMMAND		@"ls"
+#else
 #define	COMMAND		@"/bin/ls"
+#endif
 #define ARGUMENTS	@"-l",nil
 
 int main()
