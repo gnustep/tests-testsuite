@@ -6,7 +6,7 @@
 #import "ObjectTesting.h" 
 
 #if	defined(__MINGW32__)
-#define	COMMAND		@"ls"
+#define	COMMAND		@"C:\\WINDOWS\\SYSTEM32\\MEM.EXE"
 #else
 #define	COMMAND		@"/bin/ls"
 #endif

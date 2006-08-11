@@ -41,8 +41,8 @@ NSLog(@"Client %p %d", theStream, streamEvent);
           {
             int writeReturn = [clientOutput write: [goldData bytes]+writePointer 
 	      maxLength: [goldData length]-writePointer];
+	    NSLog(@"Client %p wrote %d", clientOutput, writeReturn);
             writePointer += writeReturn;
-	   NSLog(@"Client wrote %d", writeReturn);
           }          
         else
 	  {
@@ -64,7 +64,7 @@ NSLog(@"Client %p %d", theStream, streamEvent);
             // it is possible that readSize<0 but not an Error.
 	    // For example would block
             NSAssert([clientInput streamError] == nil, @"read error");
-            NSLog(@"Client read %d", readSize);
+            NSLog(@"Client %p read %d", clientInput, readSize);
           }
         else if (readSize == 0)
 	  {
@@ -76,7 +76,7 @@ NSLog(@"Client %p %d", theStream, streamEvent);
         else
 	  {
             [testData appendBytes: buffer length: readSize];
-	    NSLog(@"Client read %d", readSize);
+	    NSLog(@"Client %p read %d", clientInput, readSize);
 	  }
         break;
       }
@@ -131,6 +131,8 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 				       forMode: NSDefaultRunLoopMode];
                 [serverOutput scheduleInRunLoop: rl
 					forMode: NSDefaultRunLoopMode];
+		NSLog(@"Server input stream is %p", serverInput);
+		NSLog(@"Server output stream is %p", serverOutput);
                 RETAIN(serverInput);
                 RETAIN(serverOutput);
                 [serverInput setDelegate: self];
@@ -187,9 +189,8 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	{
 	  readSize = [serverInput read: buffer maxLength: 4096];
 	  readable = NO;
-	  NSLog(@"Server read %d", readSize);
+	  NSLog(@"Server %p read %d", serverInput, readSize);
 	  writeSize = 0;
-	  NSAssert(readSize>=0, @"read error");
 	  if (readSize == 0)
 	    {
 	      [serverInput close];
@@ -224,8 +225,8 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	    }
 	  else if (writeReturn > 0)
 	    {
+	      NSLog(@"Server %p wrote %d", serverOutput, writeReturn);
 	      writeSize += writeReturn;
-	      NSLog(@"Server wrote %d", writeReturn);
 	    }
 
 	  /* If we have finished writing and there is no more data coming,
@@ -274,6 +275,8 @@ int main()
   [clientOutput setDelegate: cli];
   [clientInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  NSLog(@"Client input stream is %p", clientInput);
+  NSLog(@"Client output stream is %p", clientOutput);
   [clientInput open];
   [clientOutput open];
 
@@ -299,6 +302,8 @@ int main()
   [clientOutput setDelegate: cli];
   [clientInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  NSLog(@"Client input stream is %p", clientInput);
+  NSLog(@"Client output stream is %p", clientOutput);
   [clientInput open];
   [clientOutput open];
 
