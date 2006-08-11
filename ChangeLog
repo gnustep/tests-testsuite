@@ -1,3 +1,10 @@
+2006-08-11  Fred Kiefer <FredKiefer@gmx.de>
+
+	* gui/NSSavePanel/setDelegate_reload.m (main()): Changed from
+	expecting "CVS" to ".svn", as we did switch the version control
+	system some time ago. Also increased the expected count in the last two
+	tests to match the tested items.
+
 2006-08-10  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSTask/launch.m: Fix launch path for windows

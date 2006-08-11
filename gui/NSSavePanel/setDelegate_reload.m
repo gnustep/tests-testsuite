@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 	pass([m numberOfRows] == 3
 	     && [[[m cellAtRow: 0 column: 0] stringValue] isEqual: @"A"]
 	     && [[[m cellAtRow: 1 column: 0] stringValue] isEqual: @"B"]
-	     && [[[m cellAtRow: 2 column: 0] stringValue] isEqual: @"CVS"],
+	     && [[[m cellAtRow: 2 column: 0] stringValue] isEqual: @".svn"],
 		"browser initially contains all files");
 
 	[p setDelegate: [Delegate self]];
@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	m=[b matrixInColumn: [b lastColumn]];
 	pass([m numberOfRows] == 2
 	     && [[[m cellAtRow: 0 column: 0] stringValue] isEqual: @"A"]
-	     && [[[m cellAtRow: 1 column: 0] stringValue] isEqual: @"CVS"],
+	     && [[[m cellAtRow: 1 column: 0] stringValue] isEqual: @".svn"],
 		"browser is reloaded after -setDelegate:");
 
 
@@ -100,19 +100,19 @@ int main(int argc, char **argv)
 	[p setDelegate: nil];
 	b=((NSSavePanel_ivars *)p)->_browser;
 	m=[b matrixInColumn: [b lastColumn]];
-	pass([m numberOfRows] == 2
+	pass([m numberOfRows] == 3
 	     && [[[m cellAtRow: 0 column: 0] stringValue] isEqual: @"A"]
 	     && [[[m cellAtRow: 1 column: 0] stringValue] isEqual: @"B"]
-	     && [[[m cellAtRow: 2 column: 0] stringValue] isEqual: @"CVS"],
+	     && [[[m cellAtRow: 2 column: 0] stringValue] isEqual: @".svn"],
 		"browser contains all files after resetting delegate");
 
 	[b scrollColumnsLeftBy: [b lastColumn]];
 	[p setDelegate: [Delegate self]];
 	b=((NSSavePanel_ivars *)p)->_browser;
 	m=[b matrixInColumn: [b lastColumn]];
-	pass([m numberOfRows] == 1
+	pass([m numberOfRows] == 2
 	     && [[[m cellAtRow: 0 column: 0] stringValue] isEqual: @"A"]
-	     && [[[m cellAtRow: 1 column: 0] stringValue] isEqual: @"CVS"],
+	     && [[[m cellAtRow: 1 column: 0] stringValue] isEqual: @".svn"],
 		"browser is reloaded after -setDelegate: (2)");
 #endif
 
