@@ -204,7 +204,7 @@ BOOL test_getCString_maxLength_range_remainingRange(void)
 		range: NSMakeRange(0, [referenceString length])
 		remainingRange: &remainingRange];
 
-	for (j = 0; i + 1; j++)
+	for (j = 0; j <= i ; j++)
 	  if (buffer[j] == 0 || buffer[j] != referenceBytes[j])
 	    break;
 	if (buffer[j]!= 0)

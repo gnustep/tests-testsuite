@@ -1,3 +1,9 @@
+2006-08-12  David Ayers  <d.ayers@inode.at>
+
+	* base/NSString/NSString_tests.h 
+	(test_getCString_maxLength_range_remainingRange): Correct exit condition
+	in for loop.
+	
 2006-08-11  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/NSSavePanel/setDelegate_reload.m (main()): Changed from
