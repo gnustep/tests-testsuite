@@ -139,7 +139,7 @@ BOOL test_encoding(void)
 
   /* Codepoint U+2F801 CJK Compatiblity Ideograph */
   ok = ok && test_encodings_helper(NSUTF8StringEncoding, 
-	  (unsigned char[]){0xf0, 0xaf, 0xa0, 0x80}, 4, 
+	  (unsigned char[]){0xf0, 0xaf, 0xa0, 0x81}, 4, 
 	  (unichar[]){0xd87e, 0xdc01}, 2);
 
 #if	defined(GNUSTEP_BASE_LIBRARY)
