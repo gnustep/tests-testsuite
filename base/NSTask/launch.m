@@ -7,10 +7,11 @@
 
 #if	defined(__MINGW32__)
 #define	COMMAND		@"C:\\WINDOWS\\SYSTEM32\\MEM.EXE"
+#define ARGUMENTS	nil
 #else
 #define	COMMAND		@"/bin/ls"
-#endif
 #define ARGUMENTS	@"-l",nil
+#endif
 
 int main()
 {

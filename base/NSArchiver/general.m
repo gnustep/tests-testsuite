@@ -3,6 +3,7 @@
 #import <Foundation/NSArchiver.h>
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSData.h>
+#import <Foundation/NSFileManager.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
 
@@ -15,16 +16,18 @@ int main()
   NSArray *a;
 
   TEST_EXCEPTION(val1 = [NSString stringWithCString:"Archiver.dat"];
-  		 val2 = [NSString stringWithCString:"A Goodbye"];
-		 val3 = [NSString stringWithCString:"Testing all strings"];
-		 vals1 = [[NSArray arrayWithObject:val1] arrayByAddingObject:val2];
-		 vals2 = [vals1 arrayByAddingObject:val2];, nil, NO, 
-		 "We can build basic strings and arrays for tests");
+    val2 = [NSString stringWithCString:"A Goodbye"];
+    val3 = [NSString stringWithCString:"Testing all strings"];
+    vals1 = [[NSArray arrayWithObject:val1] arrayByAddingObject:val2];
+    vals2 = [vals1 arrayByAddingObject:val2];, nil, NO, 
+    "We can build basic strings and arrays for tests");
   
   data1 = [NSArchiver archivedDataWithRootObject:vals2];
-  pass((data1 != nil && [data1 length] != 0), "archivedDataWithRootObject: seems ok");
+  pass((data1 != nil && [data1 length] != 0),
+    "archivedDataWithRootObject: seems ok");
   
-  pass([NSArchiver archiveRootObject:vals2 toFile:val1],"archiveRootObject:toFile: seems ok"); 
+  pass([NSArchiver archiveRootObject:vals2 toFile:val1],
+    "archiveRootObject:toFile: seems ok"); 
   
   a = [NSUnarchiver unarchiveObjectWithData:data1];
   pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
@@ -34,7 +37,8 @@ int main()
   pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
        "unarchiveObjectWithFile: seems ok");
 
-  
+  [[NSFileManager  defaultManager] removeFileAtPath: val1 handler: nil];
+
   DESTROY(arp);
   return 0;
 }

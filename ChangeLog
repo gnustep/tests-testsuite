@@ -4,6 +4,9 @@
 	timezone info is not installed.
 	*  runtest.sh: Change to detect messages sent to deallocated objects.
 	* base/NSIndexpath: new test
+	* base/NSKeyedArchiver/general.m: fix checks for memory problems
+	* base/NSKeyedArchiver/Archiver.dat: remove
+	* base/NSArchiver/Archiver.dat: remove
 
 2006-08-12  David Ayers  <d.ayers@inode.at>
 

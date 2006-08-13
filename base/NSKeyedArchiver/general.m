@@ -3,12 +3,13 @@
 #import <Foundation/NSKeyedArchiver.h>
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSData.h>
+#import <Foundation/NSFileManager.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
 
 int main()
 {
-  // CREATE_AUTORELEASE_POOL(arp);
+  CREATE_AUTORELEASE_POOL(arp);
   NSString *val1, *val2, *val3, *s;
   NSArray  *vals1, *vals2;
   NSData   *data1;
@@ -17,17 +18,20 @@ int main()
   NSKeyedArchiver *archiver = nil;
   NSKeyedUnarchiver *unarchiver = nil;
 
+[NSObject enableDoubleReleaseCheck: YES];
   TEST_EXCEPTION(val1 = [NSString stringWithCString:"Archiver.dat"];
-  		 val2 = [NSString stringWithCString:"A Goodbye"];
-		 val3 = [NSString stringWithCString:"Testing all strings"];
-		 vals1 = [[NSArray arrayWithObject:val1] arrayByAddingObject:val2];
-		 vals2 = [vals1 arrayByAddingObject:val2];, nil, NO, 
-		 "We can build basic strings and arrays for tests");
+    val2 = [NSString stringWithCString:"A Goodbye"];
+    val3 = [NSString stringWithCString:"Testing all strings"];
+    vals1 = [[NSArray arrayWithObject:val1] arrayByAddingObject:val2];
+    vals2 = [vals1 arrayByAddingObject:val2];, nil, NO, 
+    "We can build basic strings and arrays for tests");
+  
+  pass([NSKeyedArchiver archiveRootObject:vals2 toFile:val1],
+    "archiveRootObject:toFile: seems ok"); 
   
   data1 = [NSKeyedArchiver archivedDataWithRootObject:vals2];
-  pass((data1 != nil && [data1 length] != 0), "archivedDataWithRootObject: seems ok");
-  
-  pass([NSKeyedArchiver archiveRootObject:vals2 toFile:val1],"archiveRootObject:toFile: seems ok"); 
+  pass((data1 != nil && [data1 length] != 0),
+    "archivedDataWithRootObject: seems ok");
   
   a = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
   NSLog(@"From data: original array %@, decoded array %@",vals2, a);
@@ -48,9 +52,13 @@ int main()
   // decode...
   unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData: data2];
   s = RETAIN([unarchiver decodeObjectForKey: @"string"]);
-  pass((s != nil && [s isKindOfClass:[NSString class]] && [s isEqual: val3]),"encodeObject:forKey: seems okay");
+  pass((s != nil && [s isKindOfClass:[NSString class]] && [s isEqual: val3]),
+    "encodeObject:forKey: seems okay");
+  RELEASE(data2);
+
   NSLog(@"Original string: %@, unarchived string: %@",val3, s);
 
-  // DESTROY(arp);
+  [[NSFileManager  defaultManager] removeFileAtPath: val1 handler: nil];
+  DESTROY(arp);
   return 0;
 }
