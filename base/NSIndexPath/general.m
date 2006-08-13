@@ -58,6 +58,17 @@ int main()
        "comparison one way works");
   pass([index2 compare: index1] == NSOrderedDescending,
        "comparison the other way works");
+  index1 = [index1 indexPathByAddingIndex: 1];
+  pass([index1 compare: index2] == NSOrderedAscending,
+       "longer index1 comparison one way works");
+  pass([index2 compare: index1] == NSOrderedDescending,
+       "longer index1 comparison the other way works");
+  index1 = [index1 indexPathByRemovingLastIndex];
+  index2 = [index2 indexPathByAddingIndex: 1];
+  pass([index1 compare: index2] == NSOrderedAscending,
+       "longer index2 comparison one way works");
+  pass([index2 compare: index1] == NSOrderedDescending,
+       "longer index2 comparison the other way works");
 
   DESTROY(arp);
   { 
