@@ -3,6 +3,7 @@
 	* base/NSCalendarDate/test00.m: Fix nil format test to work even if
 	timezone info is not installed.
 	*  runtest.sh: Change to detect messages sent to deallocated objects.
+	* base/NSIndexpath: new test
 
 2006-08-12  David Ayers  <d.ayers@inode.at>
 
