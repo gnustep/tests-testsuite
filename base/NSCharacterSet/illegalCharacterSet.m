@@ -41,8 +41,10 @@ main (int argc, char**argv)
   //  the full UCS code point set from it's UTF-16 encoding.)
   data = [NSMutableData dataWithCapacity: sizeof(cp) * 0xD800];
   // Do not start with 0x0000 otherwise a leading BOM could misinterpreted.
-  for (cp=0x0001;cp<0xD800;cp++)
+  for (cp=0x0001;cp<0xFFFF;cp++)
     {
+      /* Skip code points that are reserved for surrogate characters.  */
+      if (cp == 0xD800) cp = 0xF900;
       if ([legal characterIsMember:cp])
 	{
 	  [data appendBytes: &cp length: sizeof(cp)];

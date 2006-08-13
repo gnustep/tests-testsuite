@@ -1,3 +1,12 @@
+2006-08-13  David Ayers  <d.ayers@inode.at>
+
+	* base/NSString/NSString_tests.h (test_encoding): Add test
+	for surrogate characters.
+	* base/NSKeyedArchiver/GNUmakefile: Remove generated file.
+	* base/NSCharacterSet/illegalCharacterSet.m
+	(main): Adjust dest to only skip codepoints which clash
+	with surrogate characters.
+	
 2006-08-13  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCalendarDate/test00.m: Fix nil format test to work even if

@@ -137,6 +137,11 @@ BOOL test_encoding(void)
 	  0xd7, 0xa9, 0xd7, 0x9c, 0xd7, 0x95, 0xd7, 0x9d}, 14, 
 	  (unichar[]){0xe5, 0xe4, 0xf6, 0x5e9, 0x5dc, 0x5d5, 0x5dd}, 7);
 
+  /* Codepoint U+2F801 CJK Compatiblity Ideograph */
+  ok = ok && test_encodings_helper(NSUTF8StringEncoding, 
+	  (unsigned char[]){0xf0, 0xaf, 0xa0, 0x80}, 4, 
+	  (unichar[]){0xd87e, 0xdc01}, 2);
+
 #if	defined(GNUSTEP_BASE_LIBRARY)
   ok = ok && test_encodings_helper(NSISOHebrewStringEncoding, 
 	  (unsigned char[]){0xf9, 0xec, 0xe5, 0xed}, 4, 
