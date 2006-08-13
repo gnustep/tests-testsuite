@@ -31,7 +31,7 @@ int main()
        "+calendarDate works");
   date1 = [NSCalendarDate dateWithString:val1 calendarFormat:val2];
   pass(date1 != nil, "+dateWithString:calendarFormat: works");
-  date1 = [NSCalendarDate dateWithString:@"Fri Oct 27 08:41:14MDT 2000" calendarFormat:nil];
+  date1 = [NSCalendarDate dateWithString:@"Fri Oct 27 08:41:14GMT 2000" calendarFormat:nil];
   pass(date1 != nil,"+dateWithString:calendarFormat: with nil format works");
   date1 = [NSCalendarDate dateWithString: @"1999-12-31 23:59:59" 
                           calendarFormat:val2];

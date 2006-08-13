@@ -99,10 +99,10 @@ if [ ! -e $DIR/IGNORE ]
 	# any.
 	export MALLOC_CHECK_=2
 
-	# Tell GNUstep-base to check for messages sent to deallocated objects.
-	# (TODO: doesn't actually help, since it just prints a warning. we
-	# want a crash)
+	# Tell GNUstep-base to check for messages sent to deallocated objects
+	# and crash if it happens.
 	export NSZombieEnabled=YES
+	export CRASH_ON_ZOMBIE=YES
 
 	echo Running $1...
 	# Run it. If it terminates abnormally, mark it as a crash.
