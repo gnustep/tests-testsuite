@@ -4,6 +4,7 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSData.h>
 #import <Foundation/NSFileManager.h>
+#import <Foundation/NSNumber.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
 
@@ -11,6 +12,7 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   NSString *val1, *val2, *val3, *s;
+  NSNumber *val4;
   NSArray  *vals1, *vals2;
   NSData   *data1;
   NSMutableData *data2;
@@ -20,11 +22,14 @@ int main()
 
 [NSObject enableDoubleReleaseCheck: YES];
   TEST_EXCEPTION(val1 = [NSString stringWithCString:"Archiver.dat"];
-    val2 = [NSString stringWithCString:"A Goodbye"];
-    val3 = [NSString stringWithCString:"Testing all strings"];
-    vals1 = [[NSArray arrayWithObject:val1] arrayByAddingObject:val2];
-    vals2 = [vals1 arrayByAddingObject:val2];, nil, NO, 
-    "We can build basic strings and arrays for tests");
+		 val2 = [NSString stringWithCString:"A Goodbye"];
+		 val3 = [NSString stringWithCString:"Testing all strings"];
+		 val4 = [NSNumber numberWithUnsignedInt: 100];
+		 vals1 = [[[NSArray arrayWithObject:val1] 
+			    arrayByAddingObject:val2] 
+			   arrayByAddingObject: val4];		 
+		 vals2 = [vals1 arrayByAddingObject: val2];, nil, NO, 
+		 "We can build basic strings and arrays for tests");
   
   pass([NSKeyedArchiver archiveRootObject:vals2 toFile:val1],
     "archiveRootObject:toFile: seems ok"); 
