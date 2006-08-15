@@ -20,7 +20,6 @@ int main()
   NSKeyedArchiver *archiver = nil;
   NSKeyedUnarchiver *unarchiver = nil;
 
-[NSObject enableDoubleReleaseCheck: YES];
   TEST_EXCEPTION(val1 = [NSString stringWithCString:"Archiver.dat"];
 		 val2 = [NSString stringWithCString:"A Goodbye"];
 		 val3 = [NSString stringWithCString:"Testing all strings"];

@@ -1,3 +1,9 @@
+2006-08-15  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSCalendarDate/test00.m: use a locale dictionary containing
+	the day name abbreviations we are intending to test parsing, so the
+	test should work irrespective of the current locale.
+
 2006-08-13  David Ayers  <d.ayers@inode.at>
 
 	* base/NSString/NSString_tests.h (test_encoding): Add test

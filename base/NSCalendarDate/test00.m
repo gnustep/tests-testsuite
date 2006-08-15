@@ -2,6 +2,11 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSCalendarDate.h>
 #import <Foundation/NSString.h>
+#import <Foundation/NSDictionary.h>
+#import <Foundation/NSArray.h>
+#import <Foundation/NSUserDefaults.h>
+#import <Foundation/NSTimeZone.h>
+
 @interface NSCalendarDate(TestAdditions)
 -(BOOL)testDateValues:(int)y :(int)m :(int)d :(int)h :(int)i :(int)s;
 @end
@@ -21,18 +26,29 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
   NSString *val1,*val2;
   NSCalendarDate *date1, *date2;
+  NSDictionary	*locale;
   
   val1 = @"1999-12-31 23:59:59"; 
   val2 = @"%Y-%m-%d %H:%M:%S";
   
   /* Y2K checks */
   date1 = [NSCalendarDate calendarDate];
-  pass(date1 != nil && [date1 isKindOfClass:[NSCalendarDate class]],
+  pass(date1 != nil && [date1 isKindOfClass: [NSCalendarDate class]],
        "+calendarDate works");
-  date1 = [NSCalendarDate dateWithString:val1 calendarFormat:val2];
+
+  date1 = [NSCalendarDate dateWithString: val1 calendarFormat: val2];
   pass(date1 != nil, "+dateWithString:calendarFormat: works");
-  date1 = [NSCalendarDate dateWithString:@"Fri Oct 27 08:41:14GMT 2000" calendarFormat:nil];
-  pass(date1 != nil,"+dateWithString:calendarFormat: with nil format works");
+
+  locale = [NSDictionary dictionaryWithObjectsAndKeys:
+    [NSArray arrayWithObjects:
+      @"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat",
+      nil], NSShortWeekDayNameArray,
+    nil];
+  date1 = [NSCalendarDate dateWithString: @"Fri Oct 27 08:41:14GMT 2000"
+			  calendarFormat: nil
+				  locale: locale];
+  pass(date1 != nil,
+    "+dateWithString:calendarFormat:locale: with nil format works");
   date1 = [NSCalendarDate dateWithString: @"1999-12-31 23:59:59" 
                           calendarFormat:val2];
   pass([date1 testDateValues:1999 :12 :31 :23 :59 :59],
