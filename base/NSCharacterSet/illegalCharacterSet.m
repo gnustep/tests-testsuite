@@ -31,8 +31,8 @@ main (int argc, char**argv)
   pass(![illegal characterIsMember: 0xdc00], "0xdc00 is not illegal");
   pass([legal characterIsMember: 0xdc00], "0xdc00 is legal");
   // Private use character in code plane 16
-  pass(![illegal longCharacterIsMember: 0x0010fffd], "0x0010fffd not illegal");
-  pass([legal longCharacterIsMember: 0x0010fffd], "0x0010fffd is legal");
+  pass([illegal longCharacterIsMember: 0x0010fffd], "0x0010fffd illegal");
+  pass(![legal longCharacterIsMember: 0x0010fffd], "0x0010fffd is illegal");
 
   // Entire UCS-2 set (UTF-16 surrogates start above 0xD800)
   // (still looking for official information on the range of UCS-2 code points,

@@ -1,3 +1,8 @@
+2006-08-16  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSCharacterSet/illegalCharacterSet.m: Reverse test for
+	private code plane (character 0x0010fffd) to match MacOS-X
+
 2006-08-15  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCalendarDate/test00.m: use a locale dictionary containing
