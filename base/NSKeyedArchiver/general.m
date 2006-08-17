@@ -4,7 +4,7 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSData.h>
 #import <Foundation/NSFileManager.h>
-#import <Foundation/NSNumber.h>
+#import <Foundation/NSValue.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
 
