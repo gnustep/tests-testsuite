@@ -174,22 +174,107 @@ int main()
        "date check with %s",[[date2 description] cString]);
   /* End daylight savings checks */
   
+  /* Seconds calculation checks */
   date2 = [NSCalendarDate dateWithString:@"2002-10-27 00:30:00" calendarFormat:val2];
   pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
-       "date check with %s",[[date2 description] cString]);
+       "date second calculation check with %s",[[date2 description] cString]);
   
-  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:1 minutes:0 seconds:0];
-  pass([date2 testDateValues:2002 :10 :27 :01 :30 :00],
-       "date check with %s",[[date2 description] cString]);
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:0 minutes:0 seconds:-1];
+  pass([date2 testDateValues:2002 :10 :27 :00 :29 :59],
+       "date second calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:0 minutes:0 seconds:1];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date second calculation check with %s",[[date2 description] cString]);
+
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:0 minutes:0 seconds:2];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :02],
+       "date second calculation check with %s",[[date2 description] cString]);
+
+  /* Minutes calculation checks */
+  date2 = [NSCalendarDate dateWithString:@"2002-10-27 00:30:00" calendarFormat:val2];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date minute calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:0 minutes:-1 seconds:0];
+  pass([date2 testDateValues:2002 :10 :27 :00 :29 :00],
+       "date minute calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:0 minutes:1 seconds:0];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date minute calculation check with %s",[[date2 description] cString]);
+
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:0 minutes:1 seconds:0];
+  pass([date2 testDateValues:2002 :10 :27 :00 :31 :00],
+       "date minute calculation check with %s",[[date2 description] cString]);
+
+  /* Hour calculation checks */
+  date2 = [NSCalendarDate dateWithString:@"2002-10-27 00:30:00" calendarFormat:val2];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date hour calculation check with %s",[[date2 description] cString]);
   
   date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:-1 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :10 :26 :23 :30 :00],
+       "date hour calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:1 minutes:0 seconds:0];
   pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
-       "date check with %s",[[date2 description] cString]);
+       "date hour calculation check with %s",[[date2 description] cString]);
 
   date2 = [date2 dateByAddingYears:0 months:0 days:0 hours:2 minutes:0 seconds:0];
   pass([date2 testDateValues:2002 :10 :27 :02 :30 :00],
-       "date check with %s",[[date2 description] cString]);
+       "date hour calculation check with %s",[[date2 description] cString]);
   
+  /* Days calculation checks */
+  date2 = [NSCalendarDate dateWithString:@"2002-10-27 00:30:00" calendarFormat:val2];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date day calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:0 days:-1 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :10 :26 :00 :30 :00],
+       "date day calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:0 days:1 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date day calculation check with %s",[[date2 description] cString]);
+
+  date2 = [date2 dateByAddingYears:0 months:0 days:2 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :10 :29 :00 :30 :00],
+       "date day calculation check with %s",[[date2 description] cString]);
+
+  /* Months calculation checks */
+  date2 = [NSCalendarDate dateWithString:@"2002-10-27 00:30:00" calendarFormat:val2];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date month calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:-1 days:0 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :9 :27 :00 :30 :00],
+       "date month calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:0 months:1 days:0 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date month calculation check with %s",[[date2 description] cString]);
+
+  date2 = [date2 dateByAddingYears:0 months:2 days:0 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :12 :27 :00 :30 :00],
+       "date month calculation check with %s",[[date2 description] cString]);
+
+  /* Years calculation checks */
+  date2 = [NSCalendarDate dateWithString:@"2002-10-27 00:30:00" calendarFormat:val2];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date year calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:-1 months:0 days:0 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2001 :10 :27 :00 :30 :00],
+       "date year calculation check with %s",[[date2 description] cString]);
+  
+  date2 = [date2 dateByAddingYears:1 months:0 days:0 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2002 :10 :27 :00 :30 :00],
+       "date year calculation check with %s",[[date2 description] cString]);
+
+  date2 = [date2 dateByAddingYears:2 months:0 days:0 hours:0 minutes:0 seconds:0];
+  pass([date2 testDateValues:2004 :10 :27 :00 :30 :00],
+       "date year calculation check with %s",[[date2 description] cString]);
 
   DESTROY(arp);
   return 0;
