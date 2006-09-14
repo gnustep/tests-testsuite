@@ -78,7 +78,8 @@ int main(int argc,char **argv)
                          withString:@""];
     sqlString=[sqlString stringByReplacingString:@"t1"
                          withString:@"t0"];
-    result = [sqlString isEqualToString:@"t0.NAME='PostgresSQL'"];
+    result = [sqlString isEqualToString:@"t0.NAME='PostgresSQL'"] 
+	     || [sqlString isEqualToString:@"t0.\"NAME\"='PostgresSQL'"];
   }
   END_TEST(result,
            "EOKeyValueQualifier with keyPath (rel1.rel2.rel3.propertyName) as key");
@@ -131,7 +132,8 @@ int main(int argc,char **argv)
                            withString:@"t0"];
       sqlString=[sqlString stringByReplacingString:@"'5'"
                            withString:@"5"];
-      result = [sqlString isEqualToString:@"t0.GRPID=5"];
+      result = [sqlString isEqualToString:@"t0.GRPID=5"]
+	       || [sqlString isEqualToString:@"t0.\"GRPID\"=5"];
     }
     END_TEST(result,
              "EOKeyValueQualifier with keyPath (rel1.rel2.rel3) as key");
@@ -166,7 +168,8 @@ int main(int argc,char **argv)
                            withString:@"t0"];
       sqlString=[sqlString stringByReplacingString:@"'5'"
                            withString:@"5"];
-      result = [sqlString isEqualToString:@"t0.GRPID=5"];
+      result = [sqlString isEqualToString:@"t0.GRPID=5"]
+	       || [sqlString isEqualToString:@"t0.\"GRPID\"=5"];
     }
     END_TEST(result,
              "EOKeyValueQualifier with keyPath (rel1.rel2.rel3) as key with flattened relationship");

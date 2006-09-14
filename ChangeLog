@@ -1,3 +1,10 @@
+2006-09-14  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EOQualifier/EOKeyValueQualifier01.m: Fix tests for when quoting
+	external names is enabled in the adaptor.
+	* gdl2/EOObserverCenter/test00.m: Update tests to conform to new
+	omniscient observers implementation.
+	
 2006-08-16  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: Reverse test for

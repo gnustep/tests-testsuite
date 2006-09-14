@@ -84,7 +84,7 @@ int main()
   
   recordedObservers = [NSMutableArray new];
 
-  object = [Foo new];
+  object = [NSObject new];
   
   for (i = 0; i < 64; i++)
     {
@@ -112,8 +112,8 @@ int main()
 	      		     forObject:object];
     }
   [observers removeAllObjects];
-  object = [Foo new];
-  observer = [Foo new];
+  object = [NSObject new];
+  observer = [NSObject new];
   [EOObserverCenter addObserver:observer forObject:object];
   pass([object retainCount] == 1,
        "EOObserverCenter +addObserver:forObject doesn't retain object");
@@ -131,14 +131,14 @@ int main()
   RELEASE(object);
   
 
-  object = [Foo new];
+  object = [NSObject new];
   observer = [[SuperflousExample alloc] initWithFoo:object];
   RELEASE(object);
   RELEASE(observer);
   pass(reachedDealloc == 1,
        "can add observer in -init and remove in -dealloc");
   
-  object = [Foo new];
+  object = [NSObject new];
   observer = [OmniscientObserver new];
   [observers addObject: observer];
   [EOObserverCenter addOmniscientObserver:observer];
@@ -156,7 +156,7 @@ int main()
   pass(omniChangeCount == 2 && tmpi1 == 2,
        "sending will change twice only sends to observers once");
   DESTROY(object); 
-  object = [Foo new];
+  object = [NSObject new];
   omniChangeCount = 0;
   [object willChange];
   [EOObserverCenter notifyObserversObjectWillChange:nil]; 
@@ -164,23 +164,27 @@ int main()
   /* when object occupied the same memory space 
    * EOObserverCenter can contain a dangling pointer to the new object 
    * and if (lastObject != object) will return a false negative */
-  pass(tmpi1 == 2 && omniChangeCount == 4,
+  pass(tmpi1 == 2 && omniChangeCount == 6,
        "+notifyObserversObjectWillChange: with nil argument dangling pointer test");
   DESTROY(object);
 
   /* just make sure we have new memory.. */
-  takeupmemory = [Foo new]; 
-  object = [Foo new];
+  takeupmemory = [NSObject new]; 
+  object = [NSObject new];
   omniChangeCount = 0;
   [object willChange];
   [EOObserverCenter notifyObserversObjectWillChange:nil]; 
   [object willChange];
   /* when oldobject and object occupied the same memory space 
    * EOObserverCenter can contain a dangling pointer to the new object */
-  pass( tmpi1 == 2 && omniChangeCount == 4,
+  pass( tmpi1 == 2 && omniChangeCount == 6,
        "+notifyObserversObjectWillChange: with nil argument works");
   
-  object = [Foo new];
+  omniChangeCount = 0;
+  [EOObserverCenter notifyObserversObjectWillChange:nil];
+  pass(omniChangeCount == 2, "+notifyObserversObjectWillChange notifies omniscient observers of a nil argument");
+  
+  object = [NSObject new];
   [EOObserverCenter removeOmniscientObserver:[observers objectAtIndex:0]];  
   [observers removeObjectAtIndex:0];
   omniChangeCount = 0;
