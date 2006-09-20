@@ -99,7 +99,8 @@ run_test_file ()
 	cat tests.tmp >> tests.log
 
 	# Extract the summary information and add it to the summary file.
-	grep "^[COMP|PAS|FAIL|TEST|UN][A-Z]*:" tests.tmp > tests.sum.tmp
+#	grep "^[COMP|PAS|FAIL|TEST|UN][A-Z]*:" tests.tmp > tests.sum.tmp
+	egrep "^[A-Z0-9]{4,20}[:-]" tests.tmp > tests.sum.tmp
 	cat tests.sum.tmp >> tests.sum
 
 	# If there was anything other than PASS and COMPLETE in the summary...
