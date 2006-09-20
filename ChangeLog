@@ -1,3 +1,29 @@
+2006-09-21  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * base/NSProcessInfo/info.m
+    Test actual return values from the class
+
+2006-09-21  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * runtests.sh:
+    Added counting and reporting of log output lines so they are noticed
+
+2006-09-20  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * runtests.sh:
+    * runtest.sh:
+    Fixed running tests in sub-dirs of testsuites
+    Support for custom makefiles in testing
+    Made operation more robust generally, with better reporting of problems
+    * SelfTest/badlink.m
+    * SelfTest/badheader.m
+    * SelfTest/unsupported.m
+    * SelfTest/unresolved.m
+    Additional tests to cover testsuite features & functions
+    * SelfTest/CustomMakefile/Custom_Makefile
+    * SelfTest/CustomMakefile/bar.m
+    Tests to cover custom makefiles in testing
+
 2006-09-14  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EOQualifier/EOKeyValueQualifier01.m: Fix tests for when quoting
@@ -40,7 +66,7 @@
 	* base/NSString/NSString_tests.h 
 	(test_getCString_maxLength_range_remainingRange): Correct exit condition
 	in for loop.
-	
+
 2006-08-11  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/NSSavePanel/setDelegate_reload.m (main()): Changed from
@@ -103,11 +129,11 @@
 2006-05-11  David Ayers  <d.ayers@inode.at>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: New experimental test.
-	
+
 2006-05-05  David Ayers  <d.ayers@inode.at>
 
 	* base/NSBundle/resources2.m: Move +bundleWithPath test to...
-	* base/NSBundle/general.m: ... here.  Use 
+	* base/NSBundle/general.m: ... here.  Use
 	#include <Foundaton/Foundation.h> to increase portability.
 	Add tests for -executablePath.
 	

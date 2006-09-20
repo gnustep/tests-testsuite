@@ -40,8 +40,10 @@ int main()
        [obj isKindOfClass:[NSString class]] &&
        [obj length] > 0),
        "-operatingSystemName works");
+
   val = [info operatingSystem];
-  pass(val != 0, "-operatingSystem works"); 
+  pass(val != 0, "-operatingSystem works");
+
   DESTROY(arp);
   return 0;
 }

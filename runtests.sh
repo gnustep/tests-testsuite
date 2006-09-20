@@ -153,6 +153,8 @@ fi
 TESTTOTAL=`grep "^[TEST][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c`
 echo    $TESTTOTAL BLOCKS > tests.tmp
 grep "^[COMP|PAS|FAIL|UN][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
+LOGLINES=`egrep "^[0-9]{4}-[0-9]{2}-" tests.sum | cut -d- -f1 | wc -l`
+echo "  " $LOGLINES log output lines >> tests.tmp
 
 echo >> tests.sum
 cat tests.tmp >> tests.sum
