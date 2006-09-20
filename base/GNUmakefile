@@ -1,16 +1,18 @@
-#
-# Top-level base testsuite makefile
-#
-# Run this before loading any tests
+# __GENERATED__ makefile marker
 #
 
 include $(GNUSTEP_MAKEFILES)/common.make
+-include ../GNUmakefile.super
+-include Flags.mk
 
-SUBPROJECTS = GenericTests
+TEST_TOOL_NAME = NSTask
+
+ADDITIONAL_OBJCFLAGS += -I/f/Development/Step/GNU/sbox/core/tests -Wall
+
+NSTask_OBJC_FILES = NSTask
 
 -include GNUmakefile.preamble
-ADDITIONAL_OBJCFLAGS += -Wall
+include $(GNUSTEP_MAKEFILES)/test-tool.make
 
-include $(GNUSTEP_MAKEFILES)/aggregate.make
-
--include GNUmakefile.postamble
+test:
+	./$(GNUSTEP_OBJ_DIR_NAME)/NSTask

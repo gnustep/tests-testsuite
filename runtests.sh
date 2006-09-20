@@ -40,7 +40,14 @@ do
       --debug | -d)
       MAKEFLAGS="$MAKEFLAGS debug=yes"
       export MAKEFLAGS
-      run_args="$run_args --debug";;
+      run_args="$run_args --debug"
+      ;;
+      --verbose | -V)
+      VERBOSE=yes
+      ;;
+      --version | -v)
+      echo "Testsuite 0.2 modified by Sheldon Gill"
+      ;;
     *)
       break
       ;;
@@ -66,6 +73,8 @@ for file in $TEMP; do
     fi
 done
 
+TOPDIR=`pwd`
+
 if [ x$1 != x ]; then
     if [ -d $1 ]; then
 	# Only find in the directories specified.
@@ -79,17 +88,18 @@ fi
 run_test_file ()
 {
 	echo >> tests.log
-	echo Testing $TESTFILE... >> tests.log
+	echo begin test $TESTFILE... >> tests.log
 	echo >> tests.sum
+	echo TEST: $TESTFILE... >> tests.sum
 
 	# Run the test. Log everything to a temporary file.
-	./runtest.sh $run_args $TESTFILE > tests.tmp 2>&1
+	$TOPDIR/runtest.sh $run_args $TESTFILE $TOPDIR > tests.tmp 2>&1
 
 	# Add the information to the detailed log.
 	cat tests.tmp >> tests.log
 
 	# Extract the summary information and add it to the summary file.
-	grep "^[A-Z]*:" tests.tmp > tests.sum.tmp
+	grep "^[COMP|PAS|FAIL|TEST|UN][A-Z]*:" tests.tmp > tests.sum.tmp
 	cat tests.sum.tmp >> tests.sum
 
 	# If there was anything other than PASS and COMPLETE in the summary...
@@ -105,27 +115,43 @@ run_test_file ()
 # Delete the old files.
 rm -f tests.log tests.sum
 
+echo `date` Test commencing on `hostname` > tests.log
+cat tests.log > tests.sum
+
 if [ x"$TESTDIRS" = x ]; then
     # I think we should depreciate this part, but for now...
     for TESTFILE in $TESTS; do
-	run_test_file
+	   run_test_file
     done
 else
     for dir in $TESTDIRS; do
 	echo "--- Running tests in $dir ---"
-	TESTS=`find $dir -name \*.m | sort | sed -e 's/\(^\| \)X[^ ]*//g'`
+	if [ -f $dir/Custom_makefile ]; then
+	    TESTS=$dir/Custom_makefile
+	else
+		TEST_BLOCKS=`find $dir -name \*.m | sort | sed -e 's/\(^\| \)X[^ ]*//g'`
+		CUSTOM_TEST=`find $dir -name Custom_makefile | sort`
+
+        TESTS="$TEST_BLOCKS $CUSTOM_TEST"
+	fi
+
 	# If there is a top-level makefile, run it first
-	if [ -f $dir/GNUmakefile ]; then
-	    cd $dir; $MAKE_CMD $MAKEFLAGS 2>&1; cd ..
+	if [ -f $dir/Top_makefile ]; then
+	    cd $dir; $MAKE_CMD $MAKEFLAGS 2>&1; cd $TOPDIR
 	fi
 	for TESTFILE in $TESTS; do
+	    if [ $VERBOSE ]; then
+            echo Found test block $TESTFILE
+        fi
 	    run_test_file
-	done
+    done
     done
 fi
 
 # Make some stats.
-grep "^[A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c > tests.tmp
+TESTTOTAL=`grep "^[TEST][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c`
+echo    $TESTTOTAL BLOCKS > tests.tmp
+grep "^[COMP|PAS|FAIL|UN][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
 
 echo >> tests.sum
 cat tests.tmp >> tests.sum

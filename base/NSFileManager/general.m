@@ -40,11 +40,20 @@ int main()
     attr = [mgr fileAttributesAtPath: dir traverseLink: NO];
     pass(attr != nil,
       "NSFileManager returns non-nil for attributes of existing file");
-    pass([NSUserName() isEqual: [attr fileOwnerAccountName]],
-      "newly created file is owned by current user");
-NSLog(@"'%@', '%@'", NSUserName(), [attr fileOwnerAccountName]);
+    // The following will fail on ms-windows because it behaves differently
+    // File owner may well be a group which is valid for that platform. -SG
+    if (is_mswindows())
+      {
+        unresolved("newly created file should be owned by whom?");
+        NSLog(@"'%@', '%@'", NSUserName(), [attr fileOwnerAccountName]);
+      }
+    else
+      {
+        pass([NSUserName() isEqual: [attr fileOwnerAccountName]],
+          "newly created file is owned by current user");
+      }
   }
-  
+
   pass([mgr changeCurrentDirectoryPath: dir],
        "NSFileManager can change directories");
   
@@ -93,27 +102,31 @@ NSLog(@"'%@', '%@'", NSUserName(), [attr fileOwnerAccountName]);
     pass([str1 isEqualToString: str2],"NSFileManager moved file contents match");
   }
 
-  if ([[NSProcessInfo processInfo] operatingSystem]
-    != NSWindowsNTOperatingSystem)
+  if (is_mswindows())
+    {
+      unsupported("symlinks don't exist on ms-windows");
+      // NOTE: Junctions *aren't* symlinks -SG
+    }
+  else
     {
       pass([mgr createSymbolicLinkAtPath: @"NSFMLink" pathContent: @"NSFMMove"],
        "NSFileManager creates a symbolic link");
-  
+
       pass([mgr fileExistsAtPath: @"NSFMLink"], "link exists");
-  
-      pass([mgr removeFileAtPath: @"NSFMLink" handler: nil], 
+
+      pass([mgr removeFileAtPath: @"NSFMLink" handler: nil],
        "NSFileManager removes a symbolic link");
-  
+
       pass(![mgr fileExistsAtPath: @"NSFMLink"],
        "NSFileManager removed link doesn't exist");
-  
+
       pass([mgr fileExistsAtPath: @"NSFMMove"],
        "NSFileManager removed link's target still exists");
     }
-  
-  pass([mgr removeFileAtPath: @"NSFMMove" handler: nil], 
-       "NSFileManager removes a file"); 
- 
+
+  pass([mgr removeFileAtPath: @"NSFMMove" handler: nil],
+       "NSFileManager removes a file");
+
   pass(![mgr fileExistsAtPath: @"NSFMMove"],
        "NSFileManager removed file doesn't exist");
   

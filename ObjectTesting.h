@@ -24,6 +24,9 @@
 #import <Foundation/NSArchiver.h>
 #import "Testing.h"
 
+#ifndef __ObjectTesting_h_GNUSTEP_TESTING
+#define __ObjectTesting_h_GNUSTEP_TESTING
+
 #define TEST_FOR_CLASS(aClassName, aClass, TestDescription) \
   pass([aClass isKindOfClass:NSClassFromString(aClassName)], TestDescription)
 
@@ -397,3 +400,4 @@ static void test_NSMutableCopying(NSString *iClassName,
     }
 }
 
+#endif /* __ObjectTesting_h_GNUSTEP_TESTING */

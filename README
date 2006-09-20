@@ -35,3 +35,12 @@ If you compiled the libraries with debug=yes, make sure to add the
 
 ./runtests.sh --debug base
 
+You can also run parts of a testsuite like:
+
+./runtests.sh /base/NSFileManager
+
+or specific test blocks like:
+
+./runtests.sh /base/NSFileManager/general.m
+
+

@@ -2,11 +2,8 @@
 #error You need to define TEST_PARAM for this to compile
 #endif
 
-extern int bar_main(void);
-
-int main()
+int bar_main()
 {
-  printf("Say foo!\n");
-  bar_main();
+  printf("Say bar!\n");
   return 0;
 }

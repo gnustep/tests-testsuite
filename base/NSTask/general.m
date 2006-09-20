@@ -11,39 +11,52 @@ int main()
   id task;
   id info;
   id env;
-  id pth1;
-  id pth2;
+  id path1;
+  id path2;
   BOOL yes;
   BOOL windows;
 
   info = [NSProcessInfo processInfo];
   env = [[info environment] mutableCopy];
   yes = YES;
-  
+
   pass(info != nil && [info isKindOfClass: [NSProcessInfo class]]
        && env != nil && [env isKindOfClass: [NSMutableDictionary class]]
        && yes == YES,
-       "We can build some objects for task tests");
+       "We can build the objects for task tests");
 
-  /* Check which OS we are on. FIXME: Need a better test for this */
-  windows = ([info operatingSystem] == NSWindowsNTOperatingSystem);
-  pth1 = windows ? @"C:\\WINDOWS\\SYSTEM32\\MEM.EXE" : @"/bin/ls";
-  pass(YES, "Check which os we are running");
+  /* Check which OS we are on */
+  windows = is_mswindows();
+  if (windows)
+    {
+#if defined(__MINGW32__)
+      path1 = [env objectForKey: @"SYSTEMROOT"];
+      pass(path1 != nil, "Found Windows system installation '%s'",[path1 lossyCString]);
+      path1 = [path1 stringByAppendingString: @"\\system32\\mem.exe"];
+#else
+      path1 = @"unused";
+#endif
+    }
+  else
+    {
+      path1 = @"/bin/ls";
+    }
+  pass(YES, "Determined command to run as '%s'",[path1 lossyCString]);
 
   /* Try some tasks.  Make sure the program we use is common between Unix
      and Windows (and others?) */
-  task = [NSTask launchedTaskWithLaunchPath: pth1
+  task = [NSTask launchedTaskWithLaunchPath: path1
 		 arguments: [NSArray array]];
   [task waitUntilExit];
-  pass(YES, "launchedTaskWithLaunchPath:arguments: works");
+  pass(task != nil, "launchedTaskWithLaunchPath:arguments: works");
 
   if (windows == NO)
     {
       id task = [NSTask new];
       id args = [NSArray arrayWithObjects: @"-c", @"echo $PATH", nil];
-      pth2 = @"/bin/sh";
+      path2 = @"/bin/sh";
       [task setEnvironment: env];
-      [task setLaunchPath: pth2];
+      [task setLaunchPath: path2];
       [task setArguments: args];
       [task launch];
       [task waitUntilExit];

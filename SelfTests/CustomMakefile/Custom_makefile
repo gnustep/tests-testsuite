@@ -1,0 +1,18 @@
+include $(GNUSTEP_MAKEFILES)/common.make
+
+ADDITIONAL_FLAGS += -DTEST_PARAM
+
+TEST_TOOL_NAME = thing
+
+thing_OBJC_FILES=foo.m \
+                 bar.m
+
+include $(GNUSTEP_MAKEFILES)/test-tool.make
+
+test:
+	./$(GNUSTEP_OBJ_DIR_NAME)/$(TEST_TOOL_NAME)
+
+
+
+#test:
+#	./obj/foo

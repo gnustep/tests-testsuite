@@ -3,25 +3,38 @@
    Copyright (C) 2005 Free Software Foundation, Inc.
 
    Written by: Alexander Malmberg <alexander@malmberg.org>
- 
+
    This package is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
    License as published by the Free Software Foundation; either
    version 2 of the License, or (at your option) any later version.
- 
+
    This library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    General Public License for more details.
- 
+
 */
 
-#ifndef Testing_h
-#define Testing_h
+#ifndef __Testing_h_GNUSTEP_TESTING
+#define __Testing_h_GNUSTEP_TESTING
 
 #include <stdio.h>
 #include <stdarg.h>
 
+#if	defined(__cplusplus)
+extern "C" {
+#endif
+
+/* Basic test outcomes:
+     PASS
+     FAIL
+     UNRESOLVED:   tests for which the outcome is unresolved
+     UNSUPPORTED:  tests which aren't supported because
+                      - the platform doesn't have the right features
+                      - the features themselves aren't supported by the core team
+                      - libraries were compiled without support for feature
+ */
 static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
 static void pass(int testPassed, const char *description, ...)
 {
@@ -53,6 +66,30 @@ static void unsupported(const char *description, ...)
   va_end(args);
 }
 
+/*
+ * OS platform determination
+ *
+ *  We do this here so we don't have to rely on library functionality.
+ *  Testing means having the answer first.
+ */
+#define PLATFORM_GENERIC_UNIX  0
+#define PLATFORM_MSWIN         1
+#define PLATFORM_OSX           2
+
+#if defined(__MINGW32__)
+int current_platform_type = PLATFORM_MSWIN;
+#else
+#if defined(__APPLE__)
+int current_platform_type = PLATFORM_OSX;
+#endif /* __APPLE */
+int current_platform_type = PLATFORM_GENERIC_UNIX;
+#endif /* __MINGW32__ */
+
+static inline int is_mswindows(void)
+{
+  return current_platform_type == PLATFORM_MSWIN;
+}
+
 /* Pass an object as a string to a print function.  */
 #define POBJECT(obj)      [[obj description] lossyCString]
 
@@ -64,8 +101,6 @@ static void unsupported(const char *description, ...)
 #define GE(x, y) ((y)<(x) || EQ(x, y))
 #define LT(x, y) (!GE(x, y))
 #define GT(x, y) (!LE(x, y))
-
-#endif
 
 #import	<Foundation/NSObject.h>
 
@@ -126,3 +161,8 @@ if (__value != __object) \
     (X) = [NSAutoreleasePool new]
 #endif
 
+#if	defined(__cplusplus)
+}
+#endif
+
+#endif /* __Testing_h_GNUSTEP_TESTING */

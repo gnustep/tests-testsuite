@@ -3,15 +3,7 @@
 #import <Foundation/NSData.h>
 #import <Foundation/NSAutoreleasePool.h>
 
-#import "ObjectTesting.h" 
-
-#if	defined(__MINGW32__)
-#define	COMMAND		@"C:\\WINDOWS\\SYSTEM32\\MEM.EXE"
-#define ARGUMENTS	nil
-#else
-#define	COMMAND		@"/bin/ls"
-#define ARGUMENTS	@"-l",nil
-#endif
+#import "ObjectTesting.h"
 
 int main()
 {
@@ -20,13 +12,26 @@ int main()
   NSFileHandle *outHandle;
   NSAutoreleasePool *arp;
   NSData *data = nil;
+  NSString *command_path;
+  NSString *command_args;
+
+  if (is_mswindows())
+    {
+      command_path = @"E:\\msys\\bin\\ls";
+      command_args = @"-l";
+    }
+  else
+    {
+      command_path = @"/bin/ls";
+      command_args = @"-l";
+    }
 
   arp = [[NSAutoreleasePool alloc] init];
 
   task = [[NSTask alloc] init];
   outPipe = RETAIN([NSPipe pipe]);
-  [task setLaunchPath: [NSString stringWithString: COMMAND]];
-  [task setArguments: [NSArray arrayWithObjects: ARGUMENTS]];
+  [task setLaunchPath: [NSString stringWithString: command_path]];
+  [task setArguments: [NSArray arrayWithObjects: command_args, nil]];
   [task setStandardOutput: outPipe]; 
   outHandle = [outPipe fileHandleForReading];
 

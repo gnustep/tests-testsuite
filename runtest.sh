@@ -51,6 +51,7 @@ fi
 
 DIR=`dirname $1`
 NAME=`basename $1`
+TOPDIR=$2
 if [ ! "$MAKE_CMD" ]
   then
     MAKE_CMD=gmake
@@ -60,26 +61,30 @@ if [ ! "$MAKE_CMD" ]
     fi
 fi
 
-if [ ! -e $DIR/IGNORE ] 
+if [ ! -e $DIR/IGNORE ]
   then
     # Remove the extension, if there is one. If there is no extension, add
     # .obj .
     TESTNAME=`echo $NAME | sed -e"s/^\([^.]*\)$/\1.obj./;s/\.[^.]*//g"`
     CWD=`pwd`
 
-    # Check for a custom makefile generate, if none exists generate one.
-    if [ -r $DIR/Custom.mk ]
+#echo Invoked from $TOPDIR
+#echo In $DIR told to do $TESTNAME while in \"$CWD\"
+
+    # Check for a custom makefile generator, if none exists generate one.
+    if [ -r $DIR/Custom_makefile ]
       then
-        if [ $NAME = "Custom.mk" ] 
+        if [ $NAME = "Custom_makefile" ]
 	  then
             echo "-include Flags.mk" >$DIR/GNUmakefile
-            echo "include Custom.mk" >>$DIR/GNUmakefile
+            echo "include Custom_makefile" >>$DIR/GNUmakefile
           else
+        echo file $NAME requires Custom_makefile so ignoring
 	    exit 0
 	fi
     else
         # Create the GNUmakefile by filling in the name of the test.
-        sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < GNUmakefile.tests > $DIR/GNUmakefile
+        sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < $TOPDIR/GNUmakefile.tests > $DIR/GNUmakefile
     fi
     # Move to the test's directory.
     cd $DIR
@@ -90,6 +95,11 @@ if [ ! -e $DIR/IGNORE ]
 
     # Compile it. Redirect errors to stdout so it shows up in the log, but not
     # in the summary.
+    if [ ! -f GNUmakefile ]; then
+        echo ERROR: No Makefile in `pwd`
+        exit 1
+    fi
+
     if ! ( $MAKE_CMD $MAKEFLAGS 2>&1 ); then
    	echo COMPILEFAIL: $1 >&2
     else
@@ -116,5 +126,6 @@ if [ ! -e $DIR/IGNORE ]
     # Clean up to avoid contaminating later tests. (Optimistically) assume that
     # this will never fail in any interesting way.
     rm -f core
+    rm -f obj/*
     #make clean >/dev/null 2>&1
 fi
