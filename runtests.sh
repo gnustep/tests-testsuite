@@ -47,6 +47,7 @@ do
       ;;
       --version | -v)
       echo "Testsuite 0.2 modified by Sheldon Gill"
+      exit 0
       ;;
     *)
       break
@@ -66,6 +67,8 @@ if [ ! "$MAKE_CMD" ]
 fi
 export MAKE_CMD
 TEMP=`echo *`
+
+# Build a list of directories which contain tests
 TESTDIRS=
 for file in $TEMP; do
     if [ -d $file -a $file != CVS ]; then
@@ -84,6 +87,9 @@ if [ x$1 != x ]; then
 	TESTS=$*
     fi
 fi
+
+#echo dirs are $TESTDIRS
+#echo tests are $TESTS
 
 run_test_file ()
 {
@@ -112,7 +118,6 @@ run_test_file ()
 	fi
 }
 
-
 # Delete the old files.
 rm -f tests.log tests.sum
 
@@ -138,7 +143,14 @@ else
 
 	# If there is a top-level makefile, run it first
 	if [ -f $dir/Top_makefile ]; then
-	    cd $dir; $MAKE_CMD $MAKEFLAGS 2>&1; cd $TOPDIR
+	    cd $dir
+	    if [ $VERBOSE ]; then
+	        echo Found top-level makefile for $dir
+	        $MAKE_CMD -f Top_makefile $MAKEFLAGS 2>&1
+	    else
+	        $MAKE_CMD -s -f Top_makefile $MAKEFLAGS 2>&1
+	    fi
+        cd $TOPDIR
 	fi
 	for TESTFILE in $TESTS; do
 	    if [ $VERBOSE ]; then

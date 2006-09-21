@@ -1,0 +1,39 @@
+How to write tests
+==================
+
+Simply create a new .m file and write your code. It must have a main() function
+as you need to write it like a simple tool.
+
+int main(int argc, char *argv[])
+{
+  return 0;
+}
+
+The system will find it and compile it for you, then run it.
+Not much use without an actual test. Write your test code and check the outcome
+with one of the macros in Testing.h
+
+Let's revise the example now to something a little better:
+
+#include "Testing.h"
+
+int main(int argc, char *argv[])
+{
+  int one, two, three;
+
+  one = 1;
+  two = 2;
+  three = one + two;
+
+  pass( three == 3, "Addition works" );
+
+  return 0;
+}
+
+You use pass() to indicate pass or failure of your test. A file can have any number
+of tests in it.
+
+In this testsuite we refer to the file as a Test Block. The idea is that a test
+block has closely related tests, often sequential.
+
+

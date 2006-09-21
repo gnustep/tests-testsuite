@@ -68,8 +68,8 @@ if [ ! -e $DIR/IGNORE ]
     TESTNAME=`echo $NAME | sed -e"s/^\([^.]*\)$/\1.obj./;s/\.[^.]*//g"`
     CWD=`pwd`
 
-#echo Invoked from $TOPDIR
-#echo In $DIR told to do $TESTNAME while in \"$CWD\"
+echo Invoked from $TOPDIR
+echo In $DIR told to do $TESTNAME while in \"$CWD\"
 
     # Check for a custom makefile generator, if none exists generate one.
     if [ -r $DIR/Custom_makefile ]

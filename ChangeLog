@@ -1,5 +1,28 @@
 2006-09-21  Sheldon Gill  <sheldon@westnet.net.au>
 
+    * selfcheck.sh:
+    Script to run through verification of testsuite
+    * runtests.sh:
+    Checked fundamental Top_makefile support works
+    Minor clean-up and documentation changes
+    * WritingTests.txt:
+    Documentation on how to write tests in the suite
+    * SelfTests/badlib.m:
+    * SelfTests/badheader.m:
+    * SelfTests/unresolved.m:
+    * SelfTests/unsupported.m:
+    Added documentation for these
+    * SelfTests/logproblem.m:
+    New test to verify summary and console reporting of log entries
+
+2006-09-21  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * base/NSProcessInfo/info.m
+    Fix for detecting running on Cygwin
+    Add detection for SunOS
+
+2006-09-21  Sheldon Gill  <sheldon@westnet.net.au>
+
     * base/NSProcessInfo/info.m
     Test actual return values from the class
 

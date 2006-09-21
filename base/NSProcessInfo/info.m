@@ -1,13 +1,11 @@
 /*
-   More detailed testing of the information returned by NSProcessInfo
-
-   AUTHOR:  Sheldon Gill
-
-   COPYRIGHT (C) 2006, Sheldon Gill
-   
-   License: GPL V2
-*/
-
+ *  More detailed testing of the information returned by NSProcessInfo
+ *
+ *  AUTHOR:  Sheldon Gill
+ *
+ *  COPYRIGHT (C) 2006, Sheldon Gill
+ *  License: GPL V2
+ */
 
 #import "Testing.h"
 #import <Foundation/NSArray.h>
@@ -49,10 +47,13 @@ int operating_system(void)
             return NSGNULinuxOperatingSystem;
         if (strcmp(uns.sysname,"Solaris") == 0)
             return NSSolarisOperatingSystem;
+        if (strcmp(uns.sysname,"SunOS") == 0)
+            return NSSunOSOperatingSystem;
         if (strcmp(uns.system,"Darwin") == 0)
             return NSMachOperatingSystem;
-        if (strcmp(uns.system,"cygwin") == 0)
+        if (strncmp(uns.system,"CYGWIN",6) == 0)
             return NSCygwinOperatingSystem;
+        // FIXME: What do the BSDs return? -SG
       }
     else
       {
