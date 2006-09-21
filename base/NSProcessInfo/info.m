@@ -32,6 +32,9 @@ int operating_system(void)
 }
 
 #else
+
+#include <sys/utsname.h>
+
 int get_process_id(void)
 {
   return (int)getpid();
@@ -49,9 +52,9 @@ int operating_system(void)
             return NSSolarisOperatingSystem;
         if (strcmp(uns.sysname,"SunOS") == 0)
             return NSSunOSOperatingSystem;
-        if (strcmp(uns.system,"Darwin") == 0)
-            return NSMachOperatingSystem;
-        if (strncmp(uns.system,"CYGWIN",6) == 0)
+        if (strcmp(uns.sysname,"Darwin") == 0)
+            return NSMACHOperatingSystem;
+        if (strncmp(uns.sysname,"CYGWIN",6) == 0)
             return NSCygwinOperatingSystem;
         // FIXME: What do the BSDs return? -SG
       }
