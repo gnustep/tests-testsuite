@@ -56,6 +56,12 @@ do
   shift
 done
 
+if [ ! "$GNUSTEP_MAKEFILES" ]; then
+    echo "You need to have GNUstep-make installed and set up."
+    echo "Have you sourced GNUstep.sh yet?"
+    exit 1
+fi
+
 if [ ! "$MAKE_CMD" ]
   then
     if gmake --version > /dev/null 2>&1

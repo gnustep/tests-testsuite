@@ -1,3 +1,22 @@
+2006-09-22  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * base/NSTask/general.m
+    Rework test so its more portable
+    Add test for ntvdm.exe error (mswin)
+    Add test for null console output
+      and argument mis-handling (mswin)
+    Add test with re-direction of stdout and read from
+       the pipe so we can check the result.
+
+    Minor bug fixes...
+    * WritingTests.txt:
+    Minor corrections
+    * Testing.h:
+    Corrected situation where __APPLE__ is defined
+    * runtests.h
+    Make it complain if gnustep-make environment isn't there
+    (Doh! Forgot to . GNUstep.sh)
+
 2006-09-21  Sheldon Gill  <sheldon@westnet.net.au>
 
     * selfcheck.sh:
@@ -86,7 +105,7 @@
 
 2006-08-12  David Ayers  <d.ayers@inode.at>
 
-	* base/NSString/NSString_tests.h 
+	* base/NSString/NSString_tests.h
 	(test_getCString_maxLength_range_remainingRange): Correct exit condition
 	in for loop.
 

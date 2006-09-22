@@ -35,7 +35,7 @@ extern "C" {
                       - the features themselves aren't supported by the core team
                       - libraries were compiled without support for feature
  */
-static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
+static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3), unused));
 static void pass(int testPassed, const char *description, ...)
 {
   va_list args;
@@ -81,13 +81,19 @@ int current_platform_type = PLATFORM_MSWIN;
 #else
 #if defined(__APPLE__)
 int current_platform_type = PLATFORM_OSX;
-#endif /* __APPLE */
+#else
 int current_platform_type = PLATFORM_GENERIC_UNIX;
+#endif /* __APPLE */
 #endif /* __MINGW32__ */
 
 static inline int is_mswindows(void)
 {
   return current_platform_type == PLATFORM_MSWIN;
+}
+
+static inline int is_macosx(void)
+{
+  return current_platform_type == PLATFORM_OSX;
 }
 
 /* Pass an object as a string to a print function.  */

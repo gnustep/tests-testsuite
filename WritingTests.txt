@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
 }
 
 The system will find it and compile it for you, then run it.
-Not much use without an actual test. Write your test code and check the outcome
-with one of the macros in Testing.h
+Not much use without an actual test. When you write your test code you need to
+check the outcome with one of the macros in Testing.h
 
 Let's revise the example now to something a little better:
 
