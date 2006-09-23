@@ -1,9 +1,9 @@
 /*
  *  More detailed testing of the information returned by NSProcessInfo
  *
- *  AUTHOR:  Sheldon Gill
+ *  AUTHOR:  Sheldon Gill <sheldon@westnet.net.au>
  *
- *  COPYRIGHT (C) 2006, Sheldon Gill
+ *  Copyright (C) 2006, Sheldon Gill
  *  License: GPL V2
  */
 
@@ -20,6 +20,16 @@
 #define PROCESSNAME @"info"
 #endif
 
+/*
+ * Return the integer ID of this process
+ */
+int get_process_id(void);
+
+/*
+ * Return the integer ID of this process
+ */
+int operating_system(void);
+
 #if defined(__MINGW32__)
 int get_process_id(void)
 {
@@ -30,15 +40,27 @@ int operating_system(void)
 {
   return NSWindowsNTOperatingSystem;
 }
-
 #else
 
+#include <sys/unistd.h>
 #include <sys/utsname.h>
+#include <string.h>
 
 int get_process_id(void)
 {
   return (int)getpid();
 }
+
+/* GNUstep extensions so they don't exist in Cocoa */
+#if defined(__APPLE__)
+#define NSGNULinuxOperatingSystem 65534
+#define NSBSDOperatingSystem      65533
+#define NSBeOperatingSystem       65532
+#endif
+
+#ifndef NSCygwinOperatingSystem
+#define NSCygwinOperatingSystem   65531
+#endif
 
 int operating_system(void)
 {
@@ -46,17 +68,21 @@ int operating_system(void)
 
     if (!uname(&uns))
       {
-        if (strcmp(uns.sysname,"Linux") == 0)
-            return NSGNULinuxOperatingSystem;
+        /* The regular OpenStep defined OperatingSystem */
         if (strcmp(uns.sysname,"Solaris") == 0)
             return NSSolarisOperatingSystem;
         if (strcmp(uns.sysname,"SunOS") == 0)
             return NSSunOSOperatingSystem;
         if (strcmp(uns.sysname,"Darwin") == 0)
             return NSMACHOperatingSystem;
+        /* The regular OpenStep defined OperatingSystem */
+        if (strcmp(uns.sysname,"Linux") == 0)
+            return NSGNULinuxOperatingSystem;
+        // FIXME: What do the BSDs return? -SG
+        if (strcmp(uns.sysname,"DragonFly") == 0)
+            return NSBSDOperatingSystem; // NSDragonFlyBSDOperatingSystem
         if (strncmp(uns.sysname,"CYGWIN",6) == 0)
             return NSCygwinOperatingSystem;
-        // FIXME: What do the BSDs return? -SG
       }
     else
       {
@@ -65,6 +91,29 @@ int operating_system(void)
 }
 #endif
 
+/*
+ * return the name of local host based on environment variable
+ */
+NSString *local_host_name(id obj)
+{
+#if defined(__MINGW32__)
+    NSString *hostEnvKey = @"COMPUTERNAME";
+#else
+    NSString *hostEnvKey = @"HOSTNAME";
+#endif
+    // FIXME: Let's implement an expects() style solution
+    //         so we can get authoritative answers from
+    //         the human running the tests. -SG
+    if ([obj respondsToSelector: @selector(environment)])
+      {
+        return [[obj environment] objectForKey: hostEnvKey];
+      }
+    return nil;
+}
+
+/*
+ * return a string representation of the NS*OperationSystem constant
+ */
 char *os_constant(int os_id)
 {
     switch(os_id)
@@ -115,10 +164,14 @@ int main()
        "processName is %s", [aString lossyCString]);
 
   val = get_process_id();
-  pass(val == [info processIdentifier], "-processIdentifier works");
+  pass(val == [info processIdentifier], "processIdentifier seems correct");
+
+  aString = [info hostName];
+  pass([aString isEqual: local_host_name(info)],
+         "got hostName %s correct", [aString lossyCString]);
 
   val = [info operatingSystem];
-  pass(val != 0, "operating  system is %s",os_constant(val));
+  pass(val != 0, "operating system is %s",os_constant(val));
 
   aString = [NSString stringWithCString: os_constant(val)];
   pass([aString isEqual: [info operatingSystemName]],

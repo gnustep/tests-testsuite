@@ -1,3 +1,10 @@
+2006-09-23  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * GNUmakefile
+    Re-added this as it was deleted earlier
+    * base/NSProcessInfo/info.m
+    Clean-up spelling errors & missing headers so it can compile on *nix
+
 2006-09-22  Sheldon Gill  <sheldon@westnet.net.au>
 
     * base/NSTask/general.m
