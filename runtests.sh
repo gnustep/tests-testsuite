@@ -111,8 +111,8 @@ run_test_file ()
 	cat tests.tmp >> tests.log
 
 	# Extract the summary information and add it to the summary file.
-#	grep "^[COMP|PAS|FAIL|TEST|UN][A-Z]*:" tests.tmp > tests.sum.tmp
-	egrep "^[A-Z0-9]{4,20}[:-]" tests.tmp > tests.sum.tmp
+#	grep "^[COMP|PAS|FAIL|TEST|UN|PROBLEM][_A-Z]*:" tests.tmp > tests.sum.tmp
+	egrep "^[A-Z0-9_]{4,20}[:-]" tests.tmp > tests.sum.tmp
 	cat tests.sum.tmp >> tests.sum
 
 	# If there was anything other than PASS and COMPLETE in the summary...
@@ -171,8 +171,13 @@ fi
 TESTTOTAL=`grep "^[TEST][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c`
 echo    $TESTTOTAL BLOCKS > tests.tmp
 grep "^[COMP|PAS|FAIL|UN][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
+#egrep "^[A-Z_]{4,20}[:-]" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
+
 LOGLINES=`egrep "^[0-9]{4}-[0-9]{2}-" tests.sum | cut -d- -f1 | wc -l`
 echo "  " $LOGLINES log output lines >> tests.tmp
+
+LOGLINES=`egrep "^PROBLEM_[A-Z]*:" tests.sum | cut -d- -f1 | wc -l`
+echo "  " $LOGLINES problems >> tests.tmp
 
 echo >> tests.sum
 cat tests.tmp >> tests.sum

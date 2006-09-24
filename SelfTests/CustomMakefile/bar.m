@@ -5,5 +5,5 @@
 int bar_main()
 {
   printf("Say bar!\n");
-  return 0;
+  return 1;
 }

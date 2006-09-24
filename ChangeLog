@@ -1,13 +1,23 @@
+2006-09-24  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * selfcheck.sh:
+    * runtests.sh:
+    * runtest.sh:
+    Abort instead of over-writing an unexpected GNUmakefile
+    * SelfTests/DontClobber/GNUmakefile
+    * SelfTests/DontClobber/dummy.m
+    Tests to verify feature
+
 2006-09-23  Sheldon Gill  <sheldon@westnet.net.au>
 
-    * GNUmakefile
+    * GNUmakefile:
     Re-added this as it was deleted earlier
-    * base/NSProcessInfo/info.m
+    * base/NSProcessInfo/info.m:
     Clean-up spelling errors & missing headers so it can compile on *nix
 
 2006-09-22  Sheldon Gill  <sheldon@westnet.net.au>
 
-    * base/NSTask/general.m
+    * base/NSTask/general.m:
     Rework test so its more portable
     Add test for ntvdm.exe error (mswin)
     Add test for null console output
@@ -20,7 +30,7 @@
     Minor corrections
     * Testing.h:
     Corrected situation where __APPLE__ is defined
-    * runtests.h
+    * runtests.h:
     Make it complain if gnustep-make environment isn't there
     (Doh! Forgot to . GNUstep.sh)
 
@@ -64,13 +74,13 @@
     Fixed running tests in sub-dirs of testsuites
     Support for custom makefiles in testing
     Made operation more robust generally, with better reporting of problems
-    * SelfTest/badlink.m
-    * SelfTest/badheader.m
-    * SelfTest/unsupported.m
-    * SelfTest/unresolved.m
+    * SelfTest/badlink.m:
+    * SelfTest/badheader.m:
+    * SelfTest/unsupported.m:
+    * SelfTest/unresolved.m:
     Additional tests to cover testsuite features & functions
-    * SelfTest/CustomMakefile/Custom_Makefile
-    * SelfTest/CustomMakefile/bar.m
+    * SelfTest/CustomMakefile/Custom_Makefile:
+    * SelfTest/CustomMakefile/bar.m:
     Tests to cover custom makefiles in testing
 
 2006-09-14  Matt Rice  <ratmice@yahoo.com>

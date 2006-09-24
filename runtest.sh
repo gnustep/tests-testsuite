@@ -68,23 +68,31 @@ if [ ! -e $DIR/IGNORE ]
     TESTNAME=`echo $NAME | sed -e"s/^\([^.]*\)$/\1.obj./;s/\.[^.]*//g"`
     CWD=`pwd`
 
-echo Invoked from $TOPDIR
-echo In $DIR told to do $TESTNAME while in \"$CWD\"
+#echo Invoked from $TOPDIR
+#echo In $DIR told to do $TESTNAME while in \"$CWD\"
 
     # Check for a custom makefile generator, if none exists generate one.
     if [ -r $DIR/Custom_makefile ]
       then
         if [ $NAME = "Custom_makefile" ]
-	  then
+          then
             echo "-include Flags.mk" >$DIR/GNUmakefile
+            echo "ADDITIONAL_OBJCFLAGS += -I" $TOPDIR >>$DIR/GNUmakefile
             echo "include Custom_makefile" >>$DIR/GNUmakefile
           else
-        echo file $NAME requires Custom_makefile so ignoring
-	    exit 0
-	fi
-    else
-        # Create the GNUmakefile by filling in the name of the test.
-        sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < $TOPDIR/GNUmakefile.tests > $DIR/GNUmakefile
+            echo file $NAME requires Custom_makefile so ignoring
+	        exit 0
+        fi
+      else
+        # Check the GNUmakefile and auto-generate one if necessary
+        if [ -n `head -n 1 $DIR/GNUmakefile | grep __GENERATED__` ]
+          then
+            echo "PROBLEM_MAKEFILE: Can't generate $DIR/GNUmakefile. Custom one in the way"
+            exit 1
+          else
+            # Create the GNUmakefile by filling in the name of the test.
+            sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < $TOPDIR/GNUmakefile.tests > $DIR/GNUmakefile
+        fi
     fi
     # Move to the test's directory.
     cd $DIR
