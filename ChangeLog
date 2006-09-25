@@ -1,3 +1,16 @@
+2006-09-25  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * Testing.h:
+    * selfcheck.sh:
+    * runtests.sh:
+    * runtest.sh:
+    Added answers feature, an expects() style solution
+    * WritingTests.txt
+    Documentation for answers feature and more explanations
+    * SelfTests/TestAnswers
+    * SelfTests/ExpectedAnswers/check_answers.m:
+    Tests to verify feature
+
 2006-09-24  Sheldon Gill  <sheldon@westnet.net.au>
 
     * selfcheck.sh:

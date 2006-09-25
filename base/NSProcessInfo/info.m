@@ -44,7 +44,6 @@ int operating_system(void)
 
 #include <sys/unistd.h>
 #include <sys/utsname.h>
-#include <string.h>
 
 int get_process_id(void)
 {
@@ -92,15 +91,17 @@ int operating_system(void)
 #endif
 
 /*
- * return the name of local host based on environment variable
+ * return the name of local host based on answer in file
  */
 NSString *local_host_name(id obj)
 {
+/*
 #if defined(__MINGW32__)
     NSString *hostEnvKey = @"COMPUTERNAME";
 #else
     NSString *hostEnvKey = @"HOSTNAME";
 #endif
+
     // FIXME: Let's implement an expects() style solution
     //         so we can get authoritative answers from
     //         the human running the tests. -SG
@@ -108,7 +109,9 @@ NSString *local_host_name(id obj)
       {
         return [[obj environment] objectForKey: hostEnvKey];
       }
-    return nil;
+*/
+    NSString *hostName = [NSString stringWithCString: get_test_answer("HostName")];
+    return hostName;
 }
 
 /*
@@ -167,14 +170,14 @@ int main()
   pass(val == [info processIdentifier], "processIdentifier seems correct");
 
   aString = [info hostName];
-  pass([aString isEqual: local_host_name(info)],
-         "got hostName %s correct", [aString lossyCString]);
+  pass([aString isEqualToString: local_host_name(info)],
+         "got hostName '%s' correct", [aString lossyCString]);
 
   val = [info operatingSystem];
   pass(val != 0, "operating system is %s",os_constant(val));
 
   aString = [NSString stringWithCString: os_constant(val)];
-  pass([aString isEqual: [info operatingSystemName]],
+  pass([aString isEqualToString: [info operatingSystemName]],
          "NeXT/OSX compatible operatingSystemName implementation");
 
   DESTROY(arp);

@@ -21,6 +21,8 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
+#include <stdlib.h>
 
 #if	defined(__cplusplus)
 extern "C" {
@@ -94,6 +96,47 @@ static inline int is_mswindows(void)
 static inline int is_macosx(void)
 {
   return current_platform_type == PLATFORM_OSX;
+}
+
+/*
+ * This gets an answer string from the TestAnswers file
+ *
+ */
+static char *get_test_answer(char *question_key) __attribute__ ((unused));
+static char *get_test_answer(char *question_key)
+{
+  char *answers_file = getenv("TEST_ANSWERS");
+  char linebuf[256];
+  FILE *fs;
+  int len;
+  char *answer = NULL;
+
+  if (answers_file == NULL)
+    {
+      printf("Environment not setup. Don't know where to find ANSWERS!");
+    }
+
+  if ((fs = fopen(answers_file,"r")) != NULL)
+    {
+      while(fgets(linebuf,255,fs))
+        {
+          if (linebuf[0] != '#')
+            {
+              len = strlen(question_key);
+              if (!strncmp(question_key,linebuf,len))
+                {
+                  //printf("Answer for %s is \"%s\"",question_key,&linebuf[len+1]);
+                  answer = malloc(strlen(&linebuf[len+1]));
+                  answer[0] = 0;
+                  strcpy(answer,&linebuf[len+1]);
+                  answer[strlen(answer)-1] = 0;
+                  return answer;
+                }
+            }
+        }
+      fclose(fs);
+    }
+  return NULL;
 }
 
 /* Pass an object as a string to a print function.  */

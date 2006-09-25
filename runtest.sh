@@ -68,8 +68,8 @@ if [ ! -e $DIR/IGNORE ]
     TESTNAME=`echo $NAME | sed -e"s/^\([^.]*\)$/\1.obj./;s/\.[^.]*//g"`
     CWD=`pwd`
 
-#echo Invoked from $TOPDIR
-#echo In $DIR told to do $TESTNAME while in \"$CWD\"
+#DBG echo Invoked from $TOPDIR
+#DBG echo In $DIR told to do $TESTNAME while in \"$CWD\"
 
     # Check for a custom makefile generator, if none exists generate one.
     if [ -r $DIR/Custom_makefile ]
@@ -84,13 +84,21 @@ if [ ! -e $DIR/IGNORE ]
 	        exit 0
         fi
       else
+        #DBG echo Checking GNUmakefile
         # Check the GNUmakefile and auto-generate one if necessary
-        if [ -n `head -n 1 $DIR/GNUmakefile | grep __GENERATED__` ]
+        if [ -f $DIR/GNUmakefile ]; then
+            IS_GEN=`head -n 1 $DIR/GNUmakefile | grep __GENERATED__`
+            #DBG echo $IS_GEN
+          else
+            IS_GEN=""
+        fi
+        if [ "$IS_GEN" == "" ]
           then
             echo "PROBLEM_MAKEFILE: Can't generate $DIR/GNUmakefile. Custom one in the way"
             exit 1
           else
             # Create the GNUmakefile by filling in the name of the test.
+            #DBG echo Creating $DIR/GNUmakefile
             sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < $TOPDIR/GNUmakefile.tests > $DIR/GNUmakefile
         fi
     fi

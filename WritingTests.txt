@@ -1,20 +1,21 @@
 How to write tests
 ==================
 
-Simply create a new .m file and write your code. It must have a main() function
-as you need to write it like a simple tool.
+Simply create a new .m file and write your code. It must have a main() function as you need to write it like a simple tool.
 
+----<code>----
 int main(int argc, char *argv[])
 {
   return 0;
 }
+------------
 
 The system will find it and compile it for you, then run it.
-Not much use without an actual test. When you write your test code you need to
-check the outcome with one of the macros in Testing.h
+Not much use without an actual test. When you write your test code you need to check the outcome with one of the functions in Testing.h
 
 Let's revise the example now to something a little better:
 
+----<code>----
 #include "Testing.h"
 
 int main(int argc, char *argv[])
@@ -29,11 +30,87 @@ int main(int argc, char *argv[])
 
   return 0;
 }
+------------
 
-You use pass() to indicate pass or failure of your test. A file can have any number
-of tests in it.
+You use pass() to indicate pass or failure of your test. A file can have any number of tests in it. In this testsuite we refer to the file as a Test Block. The idea is that a test block has closely related tests, often sequential.
 
-In this testsuite we refer to the file as a Test Block. The idea is that a test
-block has closely related tests, often sequential.
+These test blocks are placed into a directory tree to logically categorise them. You can nest directories deeply. All blocks in the run are executed in alphabetical order.
 
 
+Having your tests report results
+================================
+
+The header file "Testing.h" has routines and definitions to make writing tests easier and to properly report findings so the testsuite can pick them up in the test summary.
+
+Basic test outcomes:
+  PASS          tests which have produced the anticipated result
+  FAIL
+  UNRESOLVED    tests for which the outcome is unresolved
+                  - the right answer hasn't been found yet
+                  - a problem has been encountered which needs resolution
+  UNSUPPORTED   tests which aren't supported because
+                  - the platform doesn't have the right features
+                  - the features themselves aren't supported by the development team
+                  - libraries were compiled without support for feature
+
+These are supported via the following functions:
+
+  pass( condition, description )
+  unresolved( description )
+  unsupported( description )
+
+Looking at the existing tests will help 
+
+
+Knowing what the test result should be
+======================================
+
+In writing a test, you should normally know in advance what the outcome should be. You need to know in order to decide if the test has passed or failed.
+
+The test block should determine the correct outcome itself as far as possible. Unfortunately, this isn't always possible. There are mechanisms in place to help out with this though.
+
+The first mechanism is unresolved(). That lets you flag the situation. You haven't resolved how to determine the right answer. An example would be
+
+----<code>----
+  if (is_mswindows())
+    {
+      unresolved("How to support [MyClass wonderfulFeature] on MS-Windows");
+    }
+  else
+    {
+      pass( [MyClass wonderfulFeature] == YES,
+              "wonderful feature did its thing");
+    }
+------------
+
+This lets you develop the feature and write tests without needing to know all about everything in advance. Hopefully, other members of the team will help you with the answers ;)
+
+The other situation which can arise is that it is very difficult for the test to automatically determine what the correct result should be. Maybe you have no way of programatically determining what the correct result should be.
+
+The testsuite supports this situation through a test answer file and the get_test_answer() function. You use it like this:
+
+----<code>----
+  char *expected_result = get_test_answer("WhereIsWally");
+------------
+
+Lets consider a hypothetical test case to illustrate why this is useful. Lets say you are developing code which will automatically locate a service on the local network using a custom protocol. Since you are in the process of developing it, there is no way for the test to automatically discover where the server is itself.
+Chicken and egg problem. You can't use the auto discovery mechanism to obtain the expected result because that is what you are developing and testing. The only alternative you have is human expertise. The human expert knows where the service is supposed to be.
+
+So you can write an answer file which would have an entry like:
+
+# test server running our neat service
+NeatServiceServer=neat.ourdomain.net
+
+and then your test code would look something like
+
+----<code>----
+  char *expected_server_name = get_test_answer("NeatServiceServer");
+
+  NSString *expectedServer = [NSString stringWithCString: expected_server_name];
+
+  NSString *serverName = [MyNeatServiceClass discoverServer];
+
+  pass( [serverName isEqualToString: expectedServer], "Found server for neat service");
+------------
+  
+Currently, you can only have one TestAnswers file and it has to be in the top level directory for your testsuite. For gnustep-base this is base/TestAnswers

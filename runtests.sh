@@ -46,7 +46,7 @@ do
       VERBOSE=yes
       ;;
       --version | -v)
-      echo "Testsuite 0.2 modified by Sheldon Gill"
+      echo "Testsuite 0.2.1 modified by Sheldon Gill"
       exit 0
       ;;
     *)
@@ -146,6 +146,13 @@ else
 
         TESTS="$TEST_BLOCKS $CUSTOM_TEST"
 	fi
+
+    # If there is an answer file, we test it
+    ANSWERS_FILE=`echo $dir | cut -d/ -f1`/TestAnswers
+    if [ -f $ANSWERS_FILE ]; then
+        #DBG echo ANSWERS are in $ANSWERS_FILE
+        export TEST_ANSWERS=$TOPDIR/$ANSWERS_FILE
+    fi
 
 	# If there is a top-level makefile, run it first
 	if [ -f $dir/Top_makefile ]; then

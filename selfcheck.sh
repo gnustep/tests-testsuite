@@ -42,9 +42,9 @@ echo --------------------------------------------------
 
 echo self check done
 echo
-echo "There should be 14 test blocks"
+echo "There should be 15 test blocks"
 echo "There should be  3 compile failures"
-echo "There should be  7 completed test blocks"
+echo "There should be  8 completed test blocks"
 echo "There should be  2 failed tests"
 echo "There should be  1 pass"
 echo "There should be  1 unresolved"
@@ -52,5 +52,4 @@ echo "There should be  1 unsupported"
 echo "There should be  1 log output"
 echo "There should be  1 problem"
 echo
-echo Testsuite is ready for action
 
