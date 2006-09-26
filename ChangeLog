@@ -1,3 +1,11 @@
+2006-09-26  Matt Rice  <ratmice@yahoo.com>
+	
+	* gdl2/EODisplayGroup/EODisplayGroup00.m: add tests for
+	-selectedObject:, -selectNext:, -selectPrevious:,
+	-enabledToSetSelectedObjectValueForKey:, -clearSelection,
+	-lessThanQueryValues, -equalToQueryValues, -greaterThanQueryValues,
+	-qualifierFromQueryValues, -setValue:forObject:key:.
+
 2006-09-14  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EOQualifier/EOKeyValueQualifier01.m: Fix tests for when quoting
