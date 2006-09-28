@@ -1,8 +1,12 @@
 {
   EOModelVersion   = 2;
-
-  connectionDictionary = {
-    databaseName = gdl2test;
+  userInfo = {
+    PostgreSQLConnectionDictionary = {
+      databaseName = gdl2test;
+    };
+    Postgres95ConnectionDictionary = {
+      databaseName = gdl2test;
+    };
   };
 
   entities = (

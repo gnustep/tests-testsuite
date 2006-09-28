@@ -40,6 +40,7 @@ int main()
   
   [[Test alloc] init];  /* hack for NSRunLoop */
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
+  setupModelForAdaptorNamed(model, @"PostgreSQL");
   createDatabaseWithModel(model);
 
   [[EOModelGroup defaultGroup] addModel: model];

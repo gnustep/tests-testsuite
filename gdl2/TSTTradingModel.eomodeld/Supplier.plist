@@ -2,17 +2,13 @@
     attributes = (
 	{
 	    columnName = PID;
-	    externalType = integer;
+	    prototypeName = integer;
 	    name = pid;
-	    valueClassName = NSNumber;
-	    valueType = i;
 	},
 	{
 	    columnName = NAME;
-	    externalType = char;
+	    prototypeName = char;
 	    name = name;
-	    valueClassName = NSString;
-	    width = 30;
 	}
     );
     className = EOGenericRecord;

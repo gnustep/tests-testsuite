@@ -1,3 +1,29 @@
+2006-09-28  Matt Rice  <ratmice@yahoo.com>
+	
+	* gdl2/TSTTradingModel.eomodeld/EOPostgreSQLPrototypes.plist: New
+	file.
+	* gdl2/TSTTradingModel.eomodeld/*: Use prototypes. Add adaptor
+	specific connection dictionaries to the userInfo.
+	* gdl2/EOAdaptor/EOAdaptorTypes.eomodel: Add adaptor specific
+	connection dictionaries to userInfo.
+	* gdl2/EOAdaptor/test00.m: Handle abstract entities in
+	-describeTableNames test. Use model setup function. 
+	* gdl2/GDL2Testing.h: Add a function to setup the model for an
+	adaptor.
+	* gdl2/EOModel/test02.eomodel,
+	* gdl2/EORelationship/ToManyKeyPropagation.eomodel,
+	* gdl2/EOModel/test00.m: Change Postgres95 to PostgreSQL.
+	* gdl2/EODataSource/test00.m: Run tests on all available adaptors.
+	
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m,
+	* gdl2/EOQualifier/EOKeyValueQualifier01.m,
+	* gdl2/EOEditingContext/EOEditingContext01.m,
+	* gdl2/EOEditingContext/EOEditingContext02.m,
+	* gdl2/EOEditingContext/EOEditingContext03.m,
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m,
+	* gdl2/EOEditingContext/TemporaryGlobalID.m: Use model setup function.
+	
+
 2006-09-26  Matt Rice  <ratmice@yahoo.com>
 	
 	* gdl2/EODisplayGroup/EODisplayGroup00.m: add tests for

@@ -75,6 +75,7 @@ int main(int argc,char **argv)
   START_SET(YES);
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
+  setupModelForAdaptorNamed(model, @"PostgreSQL");
   rel = [[model entityNamed: @"ProductGroup"] relationshipNamed: @"products"];
 
   createDatabaseWithModel(model);

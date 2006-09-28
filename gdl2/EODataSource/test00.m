@@ -44,11 +44,17 @@ int main(int argc,char **argv)
   id tmp = nil, tmp1 = nil, tmp2 = nil, tmp3 = nil;
   unsigned i,c;
   volatile BOOL result = NO;
-
+  unsigned adaptorI, adaptorC;
+  NSArray *adaptors = [EOAdaptor availableAdaptorNames];
+ 
+  for (adaptorI = 0, adaptorC = [adaptors count]; i < c; i++)
+  {
+    NSString *adaptorName = [adaptors objectAtIndex:adaptorI];
   START_SET(YES);
 
   /* Setup the database */
   model = globalModelForKey(TSTTradingModelName);
+  setupModelForAdaptorNamed(model, adaptorName);
   createDatabaseWithModel(model);
   [[EOModelGroup defaultGroup] addModel: model];
   ec = [[EOEditingContext new] autorelease];
@@ -162,6 +168,7 @@ int main(int argc,char **argv)
   dropDatabaseWithModel(model);
 
   END_SET("EODataSource/test00.m");
+  }
   [pool release];
   return (0);
 }

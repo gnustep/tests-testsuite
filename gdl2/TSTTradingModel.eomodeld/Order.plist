@@ -2,24 +2,19 @@
     attributes = (
 	{
 	    columnName = PID;
-	    externalType = integer;
 	    name = pid;
-	    valueClassName = NSNumber;
-	    valueType = i;
+	    prototypeName = integer;
 	},
 	{
 	    columnName = CSTID;
-	    externalType = integer;
 	    name = cstid;
-	    valueClassName = NSNumber;
-	    valueType = i;
+	    prototypeName = integer;
 	    allowsNull = Y;
 	},
 	{
 	    columnName = DATE;
-	    externalType = date;
 	    name = date;
-	    valueClassName = NSCalendarDate;
+	    prototypeName = date;
 	}
     );
     className = EOGenericRecord;

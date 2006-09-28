@@ -53,7 +53,6 @@ int main(int argc,char **argv)
 
   START_SET(YES);
   adaptorNamesArr = [EOAdaptor availableAdaptorNames];
-
   for (i = 0, c = [adaptorNamesArr count]; i < c; i++)
     {
       NSAutoreleasePool *pool;
@@ -61,20 +60,20 @@ int main(int argc,char **argv)
       START_SET(YES);
 
       pool = [NSAutoreleasePool new];
+      NSLog(@"%@", currAdaptorName);
       currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
 
       currAdaptorExprClass = [currAdaptor expressionClass];
-      tmp = [NSDictionary dictionaryWithObject: @"gdl2test"
-			  forKey: @"databaseName"];
-      [currAdaptor setConnectionDictionary: tmp];
+      model = [[EOModel alloc] initWithContentsOfFile: @"EOAdaptorTypes.eomodel"];
+      NSCAssert(model, @"Failed to load model. ");
+      [model setAdaptorName: currAdaptorName];
+      setupModelForAdaptorNamed(model, currAdaptorName);
+      [currAdaptor setConnectionDictionary: [model connectionDictionary]];
       [currAdaptor assertConnectionDictionaryIsValid];
       currAdaptorContext = [currAdaptor createAdaptorContext];
       currAdaptorChannel = [currAdaptorContext createAdaptorChannel];
       [currAdaptorChannel openChannel];
 
-      model = [[EOModel alloc] initWithContentsOfFile: @"EOAdaptorTypes.eomodel"];
-      NSCAssert(model, @"Failed to load model. ");
-      [model setAdaptorName: currAdaptorName];
       [[currAdaptor class] assignExternalInfoForEntireModel: model];
       filePath = NSTemporaryDirectory();
       filePath = [filePath stringByAppendingPathComponent: currAdaptorName];
@@ -124,8 +123,9 @@ int main(int argc,char **argv)
       END_TEST(result, "fetched date");
 
       [ec release];
-      [[EOModelGroup defaultGroup] removeModel: model];
 
+      [[EOModelGroup defaultGroup] removeModel: model];
+      
       dropDatabaseWithModel(model);
       [pool release];
 

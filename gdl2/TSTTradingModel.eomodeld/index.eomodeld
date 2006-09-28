@@ -1,10 +1,11 @@
 {
     EOModelVersion = 2;
-    adaptorName = Postgres95;
-    connectionDictionary = {
-	databaseName = gdl2test;
-    };
+    adaptorName = PostgreSQL;
     entities = (
+    	{
+	    name = EOPostgreSQLPrototypes;
+	    className = EOGenericRecord;
+	},
 	{
 	    className = EOGenericRecord;
 	    name = Product;
@@ -45,4 +46,13 @@
     storedProcedures = (
         procName
     );
+    userInfo = 
+    {
+     	PostgreSQLConnectionDictionary = {
+		databaseName = gdl2test;
+	};
+     	Postgres95ConnectionDictionary = {
+		databaseName = gdl2test;
+	};
+    };
 }

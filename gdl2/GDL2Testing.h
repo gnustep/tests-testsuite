@@ -50,6 +50,17 @@ globalModelForKey(NSString *key)
   return model;
 }
 
+static NSString *setupModelForAdaptorNamed(EOModel *model, NSString *adaptorName) __attribute__((unused));
+static NSString *setupModelForAdaptorNamed(EOModel *model, NSString *adaptorName)
+{
+  NSString *tmp = [NSString stringWithFormat:@"%@ConnectionDictionary", adaptorName];
+  [model setConnectionDictionary:[[model userInfo] objectForKey:tmp]];
+  [model setAdaptorName:adaptorName];
+  tmp = [NSString stringWithFormat:@"%@%@", [model name], adaptorName];
+  [model setName:tmp];
+  return tmp;
+}
+
 static void createDatabaseWithModel(EOModel *model) __attribute__ ((unused));
 static void createDatabaseWithModel(EOModel *model)
 {

@@ -2,56 +2,39 @@
     attributes = (
 	{
 	    columnName = PID;
-	    externalType = integer;
 	    name = pid;
-	    valueClassName = NSNumber;
-	    valueType = i;
+	    prototypeName = integer;
 	},
 	{
 	    columnName = ORDID;
-	    externalType = integer;
 	    name = ordid;
-	    valueClassName = NSNumber;
-	    valueType = i;
+	    prototypeName = integer;
 	},
 	{
 	    columnName = POSNR;
-	    externalType = integer;
 	    name = posnr;
-	    valueClassName = NSNumber;
-	    valueType = i;
+	    prototypeName = integer;
 	},
 	{
 	    columnName = PRDID;
-	    externalType = integer;
 	    name = prdid;
-	    valueClassName = NSNumber;
-	    valueType = i;
 	    allowsNull = Y;
+	    prototypeName = integer;
 	},
 	{
 	    columnName = PRICE;
-	    externalType = decimal;
 	    name = price;
-	    precision = 12;
-	    scale = 2;
-	    valueClassName = NSDecimalNumber;
+	    prototypeName = decimal;
 	},
 	{
 	    columnName = AMOUNT;
-	    externalType = decimal;
 	    name = amount;
-	    precision = 12;
-	    scale = 2;
-	    valueClassName = NSDecimalNumber;
+	    prototypeName = decimal;
 	},
 	{
 	    columnName = VALUE;
-	    externalType = decimal;
 	    name = value;
-	    precision = 12;
-	    scale = 2;
-	    valueClassName = NSDecimalNumber;
+	    prototypeName = decimal;
 	}
     );
     className = EOGenericRecord;

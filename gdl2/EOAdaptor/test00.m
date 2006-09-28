@@ -48,6 +48,7 @@ int main(int argc,char **argv)
   unsigned i,c;
   volatile BOOL result = NO;
 
+  model = globalModelForKey(TSTTradingModelName);
   /*  Now we have the testcases for the installed Adaptors.  */
 
   START_SET(YES);
@@ -60,6 +61,7 @@ int main(int argc,char **argv)
   for (i = 0, c = [adaptorNamesArr count]; i < c; i++)
     {
       currAdaptorName = [adaptorNamesArr objectAtIndex: i];
+      setupModelForAdaptorNamed(model, currAdaptorName);
       START_SET(YES);
 
       START_TEST(YES);
@@ -90,8 +92,7 @@ int main(int argc,char **argv)
 		    != [EOSQLExpression class]));
       END_TEST(result, "-[EOAdaptor expressionClass]");
 
-      tmp = [NSDictionary dictionaryWithObject: @"gdl2test"
-			  forKey: @"databaseName"];
+      tmp = [model connectionDictionary];
       START_TEST(YES);
       [currAdaptor setConnectionDictionary: tmp];
       result = [[currAdaptor connectionDictionary] isEqual: tmp];
@@ -156,9 +157,7 @@ int main(int argc,char **argv)
 
       
       END_SET("EOAdaptor: %s", [currAdaptorName cString]);
-    }
 
-  model = globalModelForKey(TSTTradingModelName);
   entities = [model entities];
   tmp1 = [NSDictionary dictionaryWithObjectsAndKeys:
 			 @"NO", @"EODropTablesKey",
@@ -200,14 +199,26 @@ int main(int argc,char **argv)
   [currAdaptorChannel closeChannel];
   
   [currAdaptorChannel openChannel];
-  tmp1 = [[model entities] valueForKey: @"externalName"];
-  START_TEST(YES);
-  tmp2 = [currAdaptorChannel describeTableNames];
-  result = [tmp1 isEqual: tmp2];
-  END_TEST(result,
-	   "-[EOAdatorChannel describeTableNames] %@ == %@", tmp1, tmp2);
-  [currAdaptorChannel closeChannel];
-
+  {
+    NSMutableArray *ents = [NSMutableArray arrayWithArray:[model entities]];
+    int i;
+    for (i = 0; i < [ents count]; i++)
+    {
+      EOEntity *ent = [ents objectAtIndex:i];
+      if ([ent isAbstractEntity])
+        {
+	  [ents removeObjectAtIndex:i];
+	  i--;
+	}
+    }
+    tmp1 = [ents valueForKey: @"externalName"];
+    START_TEST(YES);
+    tmp2 = [currAdaptorChannel describeTableNames];
+    result = [tmp1 isEqual: tmp2];
+    END_TEST(result,
+	   "-[EOAdatorChannel describeTableNames] %s == %s", [[tmp1 description] cString], [[tmp2 description] cString]);
+    [currAdaptorChannel closeChannel];
+  }
   tmp1 = [NSDictionary dictionaryWithObjectsAndKeys:
 			 @"NO", @"EOPrimaryKeyConstraintsKey",
 		       @"NO", @"EOCreatePrimaryKeySupportKey",
@@ -257,7 +268,7 @@ int main(int argc,char **argv)
 	   [[readTableNames description] cString]);
   [currAdaptorChannel closeChannel];
 
-
+  }
   END_SET("EOAdaptor/test00.m");
   [pool release];
   return (0);
