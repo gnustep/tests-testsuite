@@ -6,6 +6,10 @@
 	    name = EOPostgreSQLPrototypes;
 	    className = EOGenericRecord;
 	},
+    	{
+	    name = EOPostgres95Prototypes;
+	    className = EOGenericRecord;
+	},
 	{
 	    className = EOGenericRecord;
 	    name = Product;

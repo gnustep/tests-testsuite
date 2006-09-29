@@ -49,6 +49,7 @@ int main(int argc,char **argv)
   volatile BOOL result = NO;
 
   model = globalModelForKey(TSTTradingModelName);
+  currAdaptorName = setupModel(model);
   /*  Now we have the testcases for the installed Adaptors.  */
 
   START_SET(YES);
@@ -56,12 +57,9 @@ int main(int argc,char **argv)
 
   START_TEST(YES);
   adaptorNamesArr = [EOAdaptor availableAdaptorNames];
-  END_TEST(YES, "+[EOAdaptor availableAdaptorNames:]" );
+  result = [adaptorNamesArr containsObject:currAdaptorName];
+  END_TEST(result, "+[EOAdaptor availableAdaptorNames:]" );
 
-  for (i = 0, c = [adaptorNamesArr count]; i < c; i++)
-    {
-      currAdaptorName = [adaptorNamesArr objectAtIndex: i];
-      setupModelForAdaptorNamed(model, currAdaptorName);
       START_SET(YES);
 
       START_TEST(YES);
@@ -268,7 +266,6 @@ int main(int argc,char **argv)
 	   [[readTableNames description] cString]);
   [currAdaptorChannel closeChannel];
 
-  }
   END_SET("EOAdaptor/test00.m");
   [pool release];
   return (0);

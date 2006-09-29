@@ -54,7 +54,7 @@ int main(int argc,char **argv)
 
   /* Setup the database */
   model = globalModelForKey(TSTTradingModelName);
-  setupModelForAdaptorNamed(model, adaptorName);
+  setupModel(model);
   createDatabaseWithModel(model);
   [[EOModelGroup defaultGroup] addModel: model];
   ec = [[EOEditingContext new] autorelease];

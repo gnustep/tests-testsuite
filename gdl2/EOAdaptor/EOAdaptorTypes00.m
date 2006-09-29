@@ -42,34 +42,30 @@ int main(int argc,char **argv)
   EOEntity *entity;
   EOClassDescription *cd;
   NSString *filePath;
-
   EOEditingContext *ec;
 
   id obj = nil, tmp = nil, tmp1 = nil, tmp2 = nil, tmp3 = nil, tmp4 = nil;
-  unsigned i,c;
   volatile BOOL result = NO;
 
   /*  Now we have the testcases for the installed Adaptors.  */
 
   START_SET(YES);
-  adaptorNamesArr = [EOAdaptor availableAdaptorNames];
-  for (i = 0, c = [adaptorNamesArr count]; i < c; i++)
-    {
-      NSAutoreleasePool *pool;
-      currAdaptorName = [adaptorNamesArr objectAtIndex: i];
       START_SET(YES);
 
-      pool = [NSAutoreleasePool new];
-      NSLog(@"%@", currAdaptorName);
-      currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
-
-      currAdaptorExprClass = [currAdaptor expressionClass];
       model = [[EOModel alloc] initWithContentsOfFile: @"EOAdaptorTypes.eomodel"];
       NSCAssert(model, @"Failed to load model. ");
-      [model setAdaptorName: currAdaptorName];
-      setupModelForAdaptorNamed(model, currAdaptorName);
+      currAdaptorName = setupModel(model);
+      
+      START_TEST(YES)
+      adaptorNamesArr = [EOAdaptor availableAdaptorNames];
+      result = [adaptorNamesArr containsObject: currAdaptorName];
+      END_TEST(result, [[NSString stringWithFormat:@"availableAdaptorNames contains '%@'", currAdaptorName] cString]);
+	      
+      NSLog(@"%@", currAdaptorName);
+      currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
       [currAdaptor setConnectionDictionary: [model connectionDictionary]];
       [currAdaptor assertConnectionDictionaryIsValid];
+      currAdaptorExprClass = [currAdaptor expressionClass];
       currAdaptorContext = [currAdaptor createAdaptorContext];
       currAdaptorChannel = [currAdaptorContext createAdaptorChannel];
       [currAdaptorChannel openChannel];
@@ -127,10 +123,8 @@ int main(int argc,char **argv)
       [[EOModelGroup defaultGroup] removeModel: model];
       
       dropDatabaseWithModel(model);
-      [pool release];
 
       END_SET("EOAdaptor: %s", [currAdaptorName cString]);
-    }
 
   END_SET("EOAdaptor/EOAdaptorTypes00.m");
   [pool release];

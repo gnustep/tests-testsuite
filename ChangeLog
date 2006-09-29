@@ -1,3 +1,22 @@
+2006-09-29  Matt Rice  <ratmice@yahoo.com>
+	
+	* gdl2/GDL2Testing.h (setupModel): New function setup to check for
+	TEST_ADAPTOR environment variable or GDL2TestAdaptor default.
+
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m:
+	* gdl2/EOQualifier/EOKeyValueQualifier01.m:
+	* gdl2/EOEditingContext/EOEditingContext01.m:
+	* gdl2/EOEditingContext/EOEditingContext02.m:
+	* gdl2/EOEditingContext/EOEditingContext03.m:
+	* gdl2/EOEditingContext/TemporaryGlobalID.m:
+	* gdl2/EODataSource/test00.m:
+	* gdl2/EOAdaptor/test00.m:
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m: Use setup function.
+
+	* gdl2/TSTTradingModel.eomodeld/index.eomodeld: Add
+	EOPostgres95Prototypes.
+	* gdl2/TSTTradingModel.eomodeld/EOPostgres95Prototypes.plist: New file.
+
 2006-09-28  Matt Rice  <ratmice@yahoo.com>
 	
 	* gdl2/TSTTradingModel.eomodeld/EOPostgreSQLPrototypes.plist: New

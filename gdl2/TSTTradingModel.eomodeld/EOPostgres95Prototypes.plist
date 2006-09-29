@@ -1,0 +1,33 @@
+{
+  className = EOGenericRecord;
+  name = EOPostgres95Prototypes;
+  isAbstractEntity = YES;
+  
+  attributes = (
+	{
+	  name = integer;
+	  externalType = integer;
+	  valueClassName = NSNumber;
+	  valueType = i;
+	},
+	{
+	    externalType = char;
+	    name = char;
+	    valueClassName = NSString;
+	    width = 30;
+	},
+	{
+            externalType = date;
+	    valueClassName = NSCalendarDate;
+	    name = date;
+	},
+	{
+            externalType = decimal;
+            name = decimal;
+            precision = 12;
+            scale = 2;
+            valueClassName = NSDecimalNumber;
+	},
+  );
+  
+}

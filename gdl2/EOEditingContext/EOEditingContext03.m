@@ -57,7 +57,7 @@ int main(int argc,char **argv)
   START_SET(YES);
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
-  setupModelForAdaptorNamed(model, @"PostgreSQL");
+  setupModel(model);
 
   createDatabaseWithModel(model);
   [[EOModelGroup defaultGroup] addModel: model];
