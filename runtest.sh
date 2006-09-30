@@ -73,6 +73,8 @@ if [ ! -e $DIR/IGNORE ]
       then
         if [ $NAME = "Custom_makefile" ]
           then
+            echo "# __GENERATED__ makefile marker"
+            echo "#"
             echo "-include Flags.mk" >$DIR/GNUmakefile
             echo "ADDITIONAL_OBJCFLAGS += -I" $TOPDIR >>$DIR/GNUmakefile
             echo "include Custom_makefile" >>$DIR/GNUmakefile

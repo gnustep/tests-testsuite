@@ -1,6 +1,18 @@
 2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
 
     * runtest.sh:
+    GNUmakefile generated from custom one should have a marker
+    * runtests.sh
+    Test result summary fix
+    * base/NSProcessInfo/info.m
+    Made operating_system() seem more intentional as pointed out by
+    David Ayers.
+    * base/TestAnswers.base.template
+    Template for creating answers to tests in base
+
+2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * runtest.sh:
     Bug-fix not clobbering non-generated GNUmakefile
 
 2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>

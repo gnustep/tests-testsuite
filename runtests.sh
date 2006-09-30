@@ -177,7 +177,7 @@ fi
 # Make some stats.
 TESTTOTAL=`grep "^TEST[A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c`
 echo    $TESTTOTAL BLOCKS > tests.tmp
-grep "^[COMP|PAS|FAIL|UN|EX][A-Z_]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
+grep "^\(COMP\|PAS\|FAIL\|UN\|EX\)[A-Z_]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
 #egrep "^[A-Z_]{4,20}[:-]" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
 
 LOGLINES=`egrep "^[0-9]{4}-[0-9]{2}-" tests.sum | cut -d- -f1 | wc -l`

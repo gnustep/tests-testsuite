@@ -1,0 +1,18 @@
+#
+#  Test Answers file
+#
+# This file contains answers for those test cases which can't be
+# determined correctly automatically. At least, not easily ;)
+#
+# It is a simple key=string format
+#
+# Don't use quotation marks if the answer string has spaces
+#   They are read to end of line
+#
+# Rename this template file TestAnswers and fill in
+# the responses which are correct for your setup
+#
+
+HostName=ORION
+OSVersion=Version 5.0 (Build 2195: Service Pack 4)
+

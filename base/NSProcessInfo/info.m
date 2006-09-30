@@ -75,20 +75,30 @@ int operating_system(void)
     if (uname(&uns) != -1)
       {
         /* The regular OpenStep defined OperatingSystem */
-        if (strcmp(uns.sysname,"SunOS") == 0)
-            return NSSolarisOperatingSystem;
-//        if (strcmp(uns.sysname,"SunOS") == 0)
-//            return NSSunOSOperatingSystem;
+        /* MacOS-X & NeXTstep says this... */
         if (strcmp(uns.sysname,"Darwin") == 0)
             return NSMACHOperatingSystem;
-        /* The regular OpenStep defined OperatingSystem */
-        if (strcmp(uns.sysname,"Linux") == 0)
-            return NSGNULinuxOperatingSystem;
-        // FIXME: What do the other BSDs return? -SG
+
+        /* Solaris says this... */
+        if (strcmp(uns.sysname,"SunOS") == 0)
+            return NSSolarisOperatingSystem;
+        /* DragonFlyBSD says this... */
         if (strcmp(uns.sysname,"DragonFly") == 0)
             return NSBSDOperatingSystem; // NSDragonFlyBSDOperatingSystem
+
+//        /* Does anyone use SunOS anymore...? */
+//        if (strcmp(uns.sysname,"SunOS") == 0)
+//            return NSSunOSOperatingSystem;
+
+        /* For all Linux distributions... */
+        if (strcmp(uns.sysname,"Linux") == 0)
+            return NSGNULinuxOperatingSystem;
+
+        /* Cygwin apparently says... */
         if (strncmp(uns.sysname,"CYGWIN",6) == 0)
             return NSCygwinOperatingSystem;
+
+        // FIXME: What do the other BSDs return? -SG
       }
   return -1; // Failed
 }
