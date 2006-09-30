@@ -31,11 +31,13 @@ extern "C" {
 /* Basic test outcomes:
      PASS
      FAIL
-     UNRESOLVED:   tests for which the outcome is unresolved
-     UNSUPPORTED:  tests which aren't supported because
-                      - the platform doesn't have the right features
-                      - the features themselves aren't supported by the core team
-                      - libraries were compiled without support for feature
+     EXPECTED FAIL:    this test is expected to fail (ie test should not be true)
+     UNEXPECTED PASS:  a test which was expected to fail has passed
+     UNRESOLVED:       tests for which the outcome is unresolved
+     UNSUPPORTED:      tests which aren't supported because
+                         - the platform doesn't have the right features
+                         - the features themselves aren't supported by the core team
+                         - libraries were compiled without support for feature
  */
 static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3), unused));
 static void pass(int testPassed, const char *description, ...)
@@ -47,6 +49,18 @@ static void pass(int testPassed, const char *description, ...)
   fprintf(stderr, "\n");
   va_end(args);
 }
+
+static void fail(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3), unused));
+static void fail(int testPassed, const char *description, ...)
+{
+  va_list args;
+  va_start(args, description);
+  fprintf(stderr, testPassed?"UNEXPECTEDPASS: ":"EXPECTEDFAIL: ");
+  vfprintf(stderr, description, args);
+  fprintf(stderr, "\n");
+  va_end(args);
+}
+
 static void unresolved(const char *description, ...) __attribute__ ((format(printf, 1, 2), unused));
 static void unresolved(const char *description, ...)
 {

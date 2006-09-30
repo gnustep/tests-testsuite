@@ -20,7 +20,7 @@
 # functions. Use runtests.sh to run tests.
 
 PACKAGE_NAME = Testsuite
-VERSION = 0.1.0
+VERSION = 0.2.1
 
 SUBPROJECTS = base gui coding gdl2 SelfTests SelfContainedHeaders
 
@@ -34,8 +34,9 @@ include $(GNUSTEP_MAKEFILES)/aggregate.make
 
 after-clean::
 	rm -f tests.log tests.sum
+	./cleanmakefiles.sh
 
 after-distclean::
-	rm -f SelfTests/GNUmakefile coding/GNUmakefile
+
 
 

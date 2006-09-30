@@ -1,10 +1,35 @@
+2006-09-28  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * runtests.sh
+    Fixed bug situation where output of test causes log to be binary
+    as determined by (e)grep
+
+2006-09-28  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * base/NSProcessInfo/general.m
+    Added operatingSystemVersionString check
+    * base/NSProcessInfo/info.m
+    Sorted out hostname resolution and operatingSystemName behaviour
+
+2006-09-27  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * Testing.h
+    * runtests.sh
+    Added expected fail
+
+2006-09-25  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * GNUmakefile
+    * cleanmakefiles.sh
+    Better cleaning
+
 2006-09-25  Sheldon Gill  <sheldon@westnet.net.au>
 
     * Testing.h:
     * selfcheck.sh:
     * runtests.sh:
     * runtest.sh:
-    Added answers feature, an expects() style solution
+    Added answers feature, an expects() style solution begins
     * WritingTests.txt
     Documentation for answers feature and more explanations
     * SelfTests/TestAnswers

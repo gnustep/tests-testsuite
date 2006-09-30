@@ -142,6 +142,8 @@ if [ ! -e $DIR/IGNORE ]
     # Clean up to avoid contaminating later tests. (Optimistically) assume that
     # this will never fail in any interesting way.
     rm -f core
-    rm -f obj/*
+
+    # We don't auto-clean. The tests made may be usefully executed...
+    #rm -f obj/*
     #make clean >/dev/null 2>&1
 fi

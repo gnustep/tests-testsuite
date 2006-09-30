@@ -40,6 +40,13 @@ int operating_system(void)
 {
   return NSWindowsNTOperatingSystem;
 }
+
+NSString *os_name(void)
+{
+  NSString *thisOS = @"MS-Windows";
+
+  return thisOS;
+}
 #else
 
 #include <sys/unistd.h>
@@ -65,29 +72,38 @@ int operating_system(void)
 {
     struct utsname uns;
 
-    if (!uname(&uns))
+    if (uname(&uns) != -1)
       {
         /* The regular OpenStep defined OperatingSystem */
-        if (strcmp(uns.sysname,"Solaris") == 0)
-            return NSSolarisOperatingSystem;
         if (strcmp(uns.sysname,"SunOS") == 0)
-            return NSSunOSOperatingSystem;
+            return NSSolarisOperatingSystem;
+//        if (strcmp(uns.sysname,"SunOS") == 0)
+//            return NSSunOSOperatingSystem;
         if (strcmp(uns.sysname,"Darwin") == 0)
             return NSMACHOperatingSystem;
         /* The regular OpenStep defined OperatingSystem */
         if (strcmp(uns.sysname,"Linux") == 0)
             return NSGNULinuxOperatingSystem;
-        // FIXME: What do the BSDs return? -SG
+        // FIXME: What do the other BSDs return? -SG
         if (strcmp(uns.sysname,"DragonFly") == 0)
             return NSBSDOperatingSystem; // NSDragonFlyBSDOperatingSystem
         if (strncmp(uns.sysname,"CYGWIN",6) == 0)
             return NSCygwinOperatingSystem;
       }
-    else
-      {
-        return -1; // Failed
-      }
+  return -1; // Failed
 }
+
+NSString *os_name(void)
+{
+    struct utsname uns;
+
+    if (uname(&uns) != -1)
+      {
+        return [NSString stringWithCString: uns.sysname];
+      }
+  return nil; // Failed
+}
+
 #endif
 
 /*
@@ -95,23 +111,13 @@ int operating_system(void)
  */
 NSString *local_host_name(id obj)
 {
-/*
-#if defined(__MINGW32__)
-    NSString *hostEnvKey = @"COMPUTERNAME";
-#else
-    NSString *hostEnvKey = @"HOSTNAME";
-#endif
+  char buf[256];
 
-    // FIXME: Let's implement an expects() style solution
-    //         so we can get authoritative answers from
-    //         the human running the tests. -SG
-    if ([obj respondsToSelector: @selector(environment)])
+    if (gethostname(buf,256) != -1)
       {
-        return [[obj environment] objectForKey: hostEnvKey];
+        return [NSString stringWithCString: buf];
       }
-*/
-    NSString *hostName = [NSString stringWithCString: get_test_answer("HostName")];
-    return hostName;
+    return nil;
 }
 
 /*
@@ -153,6 +159,7 @@ int main()
   NSProcessInfo *info = [NSProcessInfo processInfo];
   NSDictionary  *env;
   NSString      *aString;
+  NSString      *osName;
   unsigned int val;
   pass(info != nil, "NSProcessInfo returned processInfo");
 
@@ -176,9 +183,26 @@ int main()
   val = [info operatingSystem];
   pass(val != 0, "operating system is %s",os_constant(val));
 
+  osName = [info operatingSystemName];
   aString = [NSString stringWithCString: os_constant(val)];
-  pass([aString isEqualToString: [info operatingSystemName]],
+  fail([aString isEqualToString: osName],
          "NeXT/OSX compatible operatingSystemName implementation");
+
+  aString = os_name();
+  pass((aString != nil) &&
+       [aString isEqualToString: [info operatingSystemName]],
+         "GNUstep compatible operatingSystemName implementation");
+
+  SEL sel_oSVS = NSSelectorFromString(@"operatingSystemVersionString");
+  BOOL has_oSVS = [info respondsToSelector: sel_oSVS];
+
+  if (has_oSVS)
+    {
+      aString = [info operatingSystemVersionString];
+      pass((aString != nil) &&
+           [aString isEqualToString: get_test_answer("OSVersion")],
+           "operatingSystemVersionString correct: %s",[aString lossyCString]);
+    }
 
   DESTROY(arp);
   return 0;

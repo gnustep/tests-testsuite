@@ -112,15 +112,15 @@ run_test_file ()
 
 	# Extract the summary information and add it to the summary file.
 #	grep "^[COMP|PAS|FAIL|TEST|UN|PROBLEM][_A-Z]*:" tests.tmp > tests.sum.tmp
-	egrep "^[A-Z0-9_]{4,20}[:-]" tests.tmp > tests.sum.tmp
+	egrep -a "^[A-Z0-9_]{4,20}[:-]" tests.tmp > tests.sum.tmp
 	cat tests.sum.tmp >> tests.sum
 
 	# If there was anything other than PASS and COMPLETE in the summary...
-	if grep -L -v "^\(PASS\|COMPLETED\)" tests.sum.tmp > /dev/null; then
+	if grep -L -v "^\(PASS\|COMPLETED\|EXPECTED\)" tests.sum.tmp > /dev/null; then
 		# ... print them to stdout.
 		echo
 		echo $TESTFILE:
-		grep -v "^\(PASS\|COMPLETED\)" tests.sum.tmp
+		grep -v "^\(PASS\|COMPLETED\|EXPECTED\)" tests.sum.tmp
 	fi
 }
 
@@ -175,9 +175,9 @@ else
 fi
 
 # Make some stats.
-TESTTOTAL=`grep "^[TEST][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c`
+TESTTOTAL=`grep "^TEST[A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c`
 echo    $TESTTOTAL BLOCKS > tests.tmp
-grep "^[COMP|PAS|FAIL|UN][A-Z]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
+grep "^[COMP|PAS|FAIL|UN|EX][A-Z_]*:" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
 #egrep "^[A-Z_]{4,20}[:-]" tests.sum | cut -d: -f1 | sort | uniq -c >> tests.tmp
 
 LOGLINES=`egrep "^[0-9]{4}-[0-9]{2}-" tests.sum | cut -d- -f1 | wc -l`

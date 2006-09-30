@@ -44,6 +44,19 @@ int main()
   val = [info operatingSystem];
   pass(val != 0, "-operatingSystem works");
 
+  SEL sel_oSVS = NSSelectorFromString(@"operatingSystemVersionString");
+  BOOL has_oSVS = [info respondsToSelector: sel_oSVS];
+
+  pass(has_oSVS,"-operatingSystemVersionString is implemented");
+  if (has_oSVS)
+    {
+      obj = [info operatingSystemVersionString];
+      pass((obj != nil &&
+           [obj isKindOfClass:[NSString class]] &&
+           [obj length] > 0),
+           "-operatingSystemVersionString works: %s",[obj lossyCString]);
+    }
+
   DESTROY(arp);
   return 0;
 }
