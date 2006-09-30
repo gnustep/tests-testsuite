@@ -48,6 +48,7 @@ int main(int argc,char **argv)
   START_SET(YES);
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
+  setupModel(model);
 
   createDatabaseWithModel(model);
 

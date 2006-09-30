@@ -138,7 +138,7 @@ int main(int argc,char **argv)
   START_TEST(YES);
   model = [EOModel new];
   [model setName: @"gdl2test"];
-  [model setAdaptorName: @"Postgres95"];
+  [model setAdaptorName: @"PostgreSQL"];
   [model setConnectionDictionary: connDict];
   [model addEntity: productEnt];
   [model addEntity: supplierEnt];
@@ -148,7 +148,7 @@ int main(int argc,char **argv)
     result = NO;
     local = [model isKindOfClass: [EOModel class]];
     local = local && [[model name] isEqual: @"gdl2test"];
-    local = local && [[model adaptorName] isEqual: @"Postgres95"];
+    local = local && [[model adaptorName] isEqual: @"PostgreSQL"];
     local = local && [[model connectionDictionary] isEqual: connDict];
     local = local && [[model entities] count] == 2;
     local = local && [[model entities] containsObject: productEnt];

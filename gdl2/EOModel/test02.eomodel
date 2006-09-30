@@ -1,7 +1,7 @@
 { // Comments
   EOModelVersion   = 2;
-  adaptorClassName = "Postgres95EOAdaptor";
-  adaptorName      = "Postgres95";
+  adaptorClassName = "PostgreSQLAdaptor";
+  adaptorName      = "PostgreSQL";
   
   entities = (
     { // More commetns

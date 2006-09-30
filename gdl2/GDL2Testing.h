@@ -7,6 +7,8 @@
 #endif
 
 #include <EOAccess/EOAccess.h>
+#include <Foundation/NSProcessInfo.h>
+#include <Foundation/NSUserDefaults.h>
 
 NSString *TSTTradingModelName = @"TSTTradingModel";
 
@@ -49,6 +51,36 @@ globalModelForKey(NSString *key)
     }
   return model;
 }
+static void setupModelForAdaptorNamed(EOModel *model, NSString *adaptorName) __attribute__((unused));
+static void setupModelForAdaptorNamed(EOModel *model, NSString *adaptorName)
+{
+  NSString *tmp = [NSString stringWithFormat:@"%@ConnectionDictionary", adaptorName];
+  [model setConnectionDictionary:[[model userInfo] objectForKey:tmp]];
+  [model setAdaptorName:adaptorName];
+  return;
+}
+
+static NSString *setupModel(EOModel *model) __attribute__((unused));
+static NSString *setupModel(EOModel *model)
+{
+  static NSString *adaptorName;
+
+  if (adaptorName)
+    return adaptorName;
+  
+  adaptorName = [[[NSProcessInfo processInfo] environment] objectForKey:@"TEST_ADAPTOR"];
+  
+  if (!adaptorName)
+    adaptorName = [[NSUserDefaults standardUserDefaults] stringForKey:@"GDL2TestAdaptorName"];
+  
+  if (!adaptorName)
+    adaptorName = @"PostgreSQL";
+  
+  setupModelForAdaptorNamed(model, adaptorName);
+
+  return adaptorName;
+}
+
 
 static void createDatabaseWithModel(EOModel *model) __attribute__ ((unused));
 static void createDatabaseWithModel(EOModel *model)

@@ -1,3 +1,51 @@
+2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
+
+    Merged testsuite changes from HEAD being gdl2 tests from Matt Rice
+
+2006-09-29  Matt Rice  <ratmice@yahoo.com>
+	
+	* gdl2/GDL2Testing.h (setupModel): New function setup to check for
+	TEST_ADAPTOR environment variable or GDL2TestAdaptor default.
+
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m:
+	* gdl2/EOQualifier/EOKeyValueQualifier01.m:
+	* gdl2/EOEditingContext/EOEditingContext01.m:
+	* gdl2/EOEditingContext/EOEditingContext02.m:
+	* gdl2/EOEditingContext/EOEditingContext03.m:
+	* gdl2/EOEditingContext/TemporaryGlobalID.m:
+	* gdl2/EODataSource/test00.m:
+	* gdl2/EOAdaptor/test00.m:
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m: Use setup function.
+
+	* gdl2/TSTTradingModel.eomodeld/index.eomodeld: Add
+	EOPostgres95Prototypes.
+	* gdl2/TSTTradingModel.eomodeld/EOPostgres95Prototypes.plist: New file.
+
+2006-09-28  Matt Rice  <ratmice@yahoo.com>
+	
+	* gdl2/TSTTradingModel.eomodeld/EOPostgreSQLPrototypes.plist: New
+	file.
+	* gdl2/TSTTradingModel.eomodeld/*: Use prototypes. Add adaptor
+	specific connection dictionaries to the userInfo.
+	* gdl2/EOAdaptor/EOAdaptorTypes.eomodel: Add adaptor specific
+	connection dictionaries to userInfo.
+	* gdl2/EOAdaptor/test00.m: Handle abstract entities in
+	-describeTableNames test. Use model setup function. 
+	* gdl2/GDL2Testing.h: Add a function to setup the model for an
+	adaptor.
+	* gdl2/EOModel/test02.eomodel,
+	* gdl2/EORelationship/ToManyKeyPropagation.eomodel,
+	* gdl2/EOModel/test00.m: Change Postgres95 to PostgreSQL.
+	* gdl2/EODataSource/test00.m: Run tests on all available adaptors.
+
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m,
+	* gdl2/EOQualifier/EOKeyValueQualifier01.m,
+	* gdl2/EOEditingContext/EOEditingContext01.m,
+	* gdl2/EOEditingContext/EOEditingContext02.m,
+	* gdl2/EOEditingContext/EOEditingContext03.m,
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m,
+	* gdl2/EOEditingContext/TemporaryGlobalID.m: Use model setup function.
+
 2006-09-28  Sheldon Gill  <sheldon@westnet.net.au>
 
     * runtests.sh
@@ -16,6 +64,14 @@
     * Testing.h
     * runtests.sh
     Added expected fail
+
+2006-09-26  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EODisplayGroup/EODisplayGroup00.m: add tests for
+	-selectedObject:, -selectNext:, -selectPrevious:,
+	-enabledToSetSelectedObjectValueForKey:, -clearSelection,
+	-lessThanQueryValues, -equalToQueryValues, -greaterThanQueryValues,
+	-qualifierFromQueryValues, -setValue:forObject:key:.
 
 2006-09-25  Sheldon Gill  <sheldon@westnet.net.au>
 
