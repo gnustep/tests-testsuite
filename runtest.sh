@@ -68,9 +68,6 @@ if [ ! -e $DIR/IGNORE ]
     TESTNAME=`echo $NAME | sed -e"s/^\([^.]*\)$/\1.obj./;s/\.[^.]*//g"`
     CWD=`pwd`
 
-#DBG echo Invoked from $TOPDIR
-#DBG echo In $DIR told to do $TESTNAME while in \"$CWD\"
-
     # Check for a custom makefile generator, if none exists generate one.
     if [ -r $DIR/Custom_makefile ]
       then
@@ -84,24 +81,19 @@ if [ ! -e $DIR/IGNORE ]
 	        exit 0
         fi
       else
-        #DBG echo Checking GNUmakefile
         # Check the GNUmakefile and auto-generate one if necessary
         if [ -f $DIR/GNUmakefile ]; then
             IS_GEN=`head -n 1 $DIR/GNUmakefile | grep __GENERATED__`
-            #DBG echo $IS_GEN
-          else
-            IS_GEN=""
+
+            if [ "$IS_GEN" == "" ]; then
+                echo "PROBLEM_MAKEFILE: Can't generate $DIR/GNUmakefile. Custom one in the way"
+                exit 1
+            fi
         fi
-        if [ "$IS_GEN" == "" ]
-          then
-            echo "PROBLEM_MAKEFILE: Can't generate $DIR/GNUmakefile. Custom one in the way"
-            exit 1
-          else
-            # Create the GNUmakefile by filling in the name of the test.
-            #DBG echo Creating $DIR/GNUmakefile
-            sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < $TOPDIR/GNUmakefile.tests > $DIR/GNUmakefile
-        fi
+        # Create the GNUmakefile by filling in the name of the test.
+        sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < $TOPDIR/GNUmakefile.tests > $DIR/GNUmakefile
     fi
+
     # Move to the test's directory.
     cd $DIR
 
@@ -117,26 +109,26 @@ if [ ! -e $DIR/IGNORE ]
     fi
 
     if ! ( $MAKE_CMD $MAKEFLAGS 2>&1 ); then
-   	echo COMPILEFAIL: $1 >&2
+   	    echo COMPILEFAIL: $1 >&2
     else
-	# We want aggressive memory checking.
+	    # We want aggressive memory checking.
 
-	# Tell glibc to check for malloc errors, and to crash if it detects
-	# any.
-	export MALLOC_CHECK_=2
+        # Tell glibc to check for malloc errors, and to crash if it detects
+        # any.
+        export MALLOC_CHECK_=2
 
-	# Tell GNUstep-base to check for messages sent to deallocated objects
-	# and crash if it happens.
-	export NSZombieEnabled=YES
-	export CRASH_ON_ZOMBIE=YES
+        # Tell GNUstep-base to check for messages sent to deallocated objects
+        # and crash if it happens.
+        export NSZombieEnabled=YES
+        export CRASH_ON_ZOMBIE=YES
 
-	echo Running $1...
-	# Run it. If it terminates abnormally, mark it as a crash.
-	if ! $MAKE_CMD -s test; then
-		echo FAIL: $1 >&2
-	else
-		echo COMPLETED: $1 >&2
-	fi
+        echo Running $1...
+        # Run it. If it terminates abnormally, mark it as a crash.
+        if ! $MAKE_CMD -s test; then
+            echo FAIL: $1 >&2
+        else
+            echo COMPLETED: $1 >&2
+        fi
     fi
 
     # Clean up to avoid contaminating later tests. (Optimistically) assume that

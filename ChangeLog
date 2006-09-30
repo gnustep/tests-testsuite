@@ -1,5 +1,10 @@
 2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
 
+    * runtest.sh:
+    Bug-fix not clobbering non-generated GNUmakefile
+
+2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
+
     Merged testsuite changes from HEAD being gdl2 tests from Matt Rice
 
 2006-09-29  Matt Rice  <ratmice@yahoo.com>
