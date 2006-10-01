@@ -10,6 +10,10 @@
 	    name = EOPostgres95Prototypes;
 	    className = EOGenericRecord;
 	},
+    	{
+	    name = EOSQLite3Prototypes;
+	    className = EOGenericRecord;
+	},
 	{
 	    className = EOGenericRecord;
 	    name = Product;
@@ -57,6 +61,9 @@
 	};
      	Postgres95ConnectionDictionary = {
 		databaseName = gdl2test;
+	};
+	SQLite3ConnectionDictionary = {
+		databasePath = /tmp/gdl2test;
 	};
     };
 }

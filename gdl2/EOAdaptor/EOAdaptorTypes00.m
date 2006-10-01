@@ -26,6 +26,32 @@
 #include <EOAccess/EOAccess.h>
 
 #include "../GDL2Testing.h"
+@interface NSObject(GDL2Testing)
+- (BOOL) testIsEqual:(id)obj;
+@end
+
+@implementation NSObject(GDL2Testing)
+- (BOOL) testIsEqual:(id)obj;
+{
+  return [self isEqual:obj];
+}
+@end
+
+@interface NSCalendarDate (GDL2Testing)
+- (BOOL) testIsEqual:(id)obj;
+@end
+
+@implementation NSCalendarDate (GDL2Testing)
+- (BOOL) testIsEqual:(id)obj
+{
+  // adaptors can change the time.
+  if (self == obj) return YES;
+  if (![obj isKindOfClass:[NSCalendarDate class]]) return NO;
+  return ([self dayOfMonth] == [obj dayOfMonth]
+	  && [self monthOfYear] == [obj monthOfYear]
+	  && [self yearOfCommonEra] == [obj yearOfCommonEra]);
+}
+@end
 
 int main(int argc,char **argv)
 {
@@ -43,9 +69,14 @@ int main(int argc,char **argv)
   EOClassDescription *cd;
   NSString *filePath;
   EOEditingContext *ec;
+  NSArray *attributes;
 
   id obj = nil, tmp = nil, tmp1 = nil, tmp2 = nil, tmp3 = nil, tmp4 = nil;
   volatile BOOL result = NO;
+  unsigned tmpData[32];
+
+  memset(&tmpData, 1, 32);
+  memset(&tmpData, 0, 16);
 
   /*  Now we have the testcases for the installed Adaptors.  */
 
@@ -61,7 +92,6 @@ int main(int argc,char **argv)
       result = [adaptorNamesArr containsObject: currAdaptorName];
       END_TEST(result, [[NSString stringWithFormat:@"availableAdaptorNames contains '%@'", currAdaptorName] cString]);
 	      
-      NSLog(@"%@", currAdaptorName);
       currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
       [currAdaptor setConnectionDictionary: [model connectionDictionary]];
       [currAdaptor assertConnectionDictionaryIsValid];
@@ -103,25 +133,76 @@ int main(int argc,char **argv)
       [[ec rootObjectStore] invalidateAllObjects];
 
       START_TEST(YES);
-      result = [[obj valueForKey: @"number"] isEqual: tmp1];
+      result = [[obj valueForKey: @"number"] testIsEqual: tmp1];
       END_TEST(result, "fetched number");
 
       START_TEST(YES);
-      result = [[obj valueForKey: @"string"] isEqual: tmp2];
+      result = [[obj valueForKey: @"string"] testIsEqual: tmp2];
       END_TEST(result, "fetched string");
 
       START_TEST(YES);
-      result = [[obj valueForKey: @"data"] isEqual: tmp3];
+      result = [[obj valueForKey: @"data"] testIsEqual: tmp3];
       END_TEST(result, "fetched data");
 
       START_TEST(YES);
-      result = [[obj valueForKey: @"date"] isEqual: tmp4];
+      result = [[obj valueForKey: @"date"] testIsEqual: tmp4];
       END_TEST(result, "fetched date");
 
       [ec release];
-
-      [[EOModelGroup defaultGroup] removeModel: model];
+      attributes = [NSArray arrayWithObjects:[entity attributeNamed:@"date"], 
+		 		[entity attributeNamed:@"data"],
+				[entity attributeNamed:@"string"],
+				[entity attributeNamed:@"number"], nil];
+      [currAdaptorChannel selectAttributes:attributes
+	      		fetchSpecification:[EOFetchSpecification fetchSpecificationWithEntityName:@"MyEntity" qualifier:nil sortOrderings:nil]
+			lock:NO
+			entity:entity];
+      tmp = [currAdaptorChannel fetchRowWithZone:NULL];
+      START_TEST(YES)
+      result = [[tmp valueForKey:@"number"] testIsEqual: tmp1];
+      END_TEST(result, "fetched number 2");
       
+      START_TEST(YES)
+      result = [[tmp valueForKey:@"string"] testIsEqual: tmp2];
+      END_TEST(result, "fetched string 2");
+      
+      START_TEST(YES)
+      result = [[tmp valueForKey:@"data"] testIsEqual: tmp3];
+      END_TEST(result, "fetched data 2");
+      
+      START_TEST(YES)
+      result = [[tmp valueForKey:@"date"] testIsEqual: tmp4];
+      END_TEST(result, "fetched date 2");
+     
+      START_TEST(YES)
+      result = ([currAdaptorChannel fetchRowWithZone:NULL] == NULL); 
+      END_TEST(result, "only one row exists");
+
+      tmp = [NSMutableDictionary dictionaryWithDictionary:tmp];
+      [tmp setObject:@"o','r','84','z'"  forKey:@"string"];
+      [tmp setObject:@"99" forKey:@"number"];
+      tmp3 = [NSData dataWithBytes:tmpData length:32];
+      [tmp setObject:tmp3 forKey:@"data"];
+      [currAdaptorChannel evaluateExpression:[[currAdaptor expressionClass] insertStatementForRow:tmp entity:entity]];
+      
+      [currAdaptorChannel selectAttributes:attributes
+	      		fetchSpecification:[EOFetchSpecification fetchSpecificationWithEntityName:@"MyEntity" qualifier:nil sortOrderings:nil]
+			lock:NO
+			entity:entity];
+      
+      tmp = [currAdaptorChannel fetchRowWithZone:NULL];
+      tmp = [currAdaptorChannel fetchRowWithZone:NULL];
+      [currAdaptorChannel cancelFetch];
+      
+      START_TEST(YES)
+      result = [[tmp objectForKey:@"string"] testIsEqual:@"o','r','84','z'"];
+      END_TEST(result, "fetch string requiring single quote escaping");
+      
+      START_TEST(YES)
+      result = [[tmp objectForKey:@"data"] testIsEqual:tmp3];
+      END_TEST(result, "fetch data containing nulls");
+      
+      [[EOModelGroup defaultGroup] removeModel: model];
       dropDatabaseWithModel(model);
 
       END_SET("EOAdaptor: %s", [currAdaptorName cString]);
@@ -130,7 +211,4 @@ int main(int argc,char **argv)
   [pool release];
   return (0);
 }
-
-
-
 

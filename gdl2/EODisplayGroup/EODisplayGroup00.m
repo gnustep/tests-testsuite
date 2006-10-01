@@ -28,25 +28,58 @@
 #include <EOControl/EOQualifier.h>
 #include "../GDL2Testing.h"
 
+@interface NSObject(GDL2Testing)
+- (BOOL) testIsEqual:(id)obj;
+@end 
+@implementation NSObject(GDL2Testing)
+- (BOOL) testIsEqual:(id)obj
+{
+  return [self isEqual:obj];
+}
+@end
+
 @implementation EOKeyValueQualifier(equality)
-- (BOOL) isEqual:(id)obj
+- (BOOL) testIsEqual:(id)obj
 {
   if (![obj isKindOfClass: [self class]])
     return NO;
 
   return sel_eq(_selector, (SEL)((EOKeyValueQualifier *)obj)->_selector)
-         && [_key isEqual:((EOKeyValueQualifier *)obj)->_key]
-         && [_value isEqual:((EOKeyValueQualifier *)obj)->_value];
+         && [_key testIsEqual:((EOKeyValueQualifier *)obj)->_key]
+         && [_value testIsEqual:((EOKeyValueQualifier *)obj)->_value];
 }
 @end
+
 @implementation NSCalendarDate(equality)
-- (BOOL) isEqual:(id)obj
+- (BOOL) testIsEqual:(id)obj
 {
   if (![obj isKindOfClass:[self class]])
     return NO;
   return [[self description] isEqual: [obj description]];
 }
 @end
+
+@interface NSArray (GDL2Testing)
+- (BOOL) testContainsObject:(id)obj;
+@end
+
+@implementation NSArray(GDL2Testing)
+- (BOOL) testContainsObject:(id)obj
+{
+  unsigned i, c; 
+
+  for (i = 0, c = [self count]; i < c; i++)
+    {
+      id objI = [self objectAtIndex:i];
+      if ([objI testIsEqual:obj])
+        {
+          return YES;
+        }
+    }
+  return NO;
+}
+@end
+
 int main(int argc,char **argv)
 {
   NSAutoreleasePool *pool = [NSAutoreleasePool new];
@@ -222,7 +255,7 @@ int main(int argc,char **argv)
     tmpQual = [EOKeyValueQualifier qualifierWithKey:@"date" 
     				operatorSelector:EOQualifierOperatorEqual
 				value:date];
-    result = [arr containsObject: tmpQual];
+    result = [arr testContainsObject: tmpQual];
     END_TEST(result, "-[EODisplayGroup qualifierFromQueryValues] 1");
     RELEASE(date);
      
@@ -230,7 +263,7 @@ int main(int argc,char **argv)
     tmpQual = [EOKeyValueQualifier qualifierWithKey:@"name" 
     				operatorSelector:EOQualifierOperatorGreaterThanOrEqualTo
 				value:@"bar"];
-    result = [arr containsObject: tmpQual];
+    result = [arr testContainsObject: tmpQual];
     END_TEST(result, "-[EODisplayGroup qualifierFromQueryValues] 2");
     
     [displayGroup setQueryOperatorValues:[NSDictionary dictionaryWithObject:@"!=" forKey:@"name"]];
@@ -238,7 +271,7 @@ int main(int argc,char **argv)
     tmpQual = [EOKeyValueQualifier qualifierWithKey:@"name" 
     				operatorSelector:EOQualifierOperatorLessThanOrEqualTo
 				value:@"foo"];
-    result = [arr containsObject:tmpQual];
+    result = [arr testContainsObject:tmpQual];
     END_TEST(result, "-[EODisplayGroup qualifierFromQueryValues] 3");
     
     START_TEST(YES)
@@ -246,7 +279,7 @@ int main(int argc,char **argv)
                                 operatorSelector:EOQualifierOperatorCaseInsensitiveLike
                                 value:@"hmm*"];
 
-    result = [arr containsObject:tmpQual];
+    result = [arr testContainsObject:tmpQual];
     END_TEST(result, "-[EODisplayGroup qualifierFromQueryValues] 4");
   }
   

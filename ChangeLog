@@ -1,3 +1,18 @@
+2006-10-01  Matt Rice  <ratmice@yahoo.com>
+
+	* gdl2/EORelationship/ToManyKeyPropagation.m: Call setupModel;
+	* gdl2/EORelationship/ToManyKeyPropagation.eomodel: Add adaptor
+	specific connection dictionary.
+	* gdl2/TSTTradingModel.eomodeld: Add SQLite connection
+	dictionary/prototypes.
+	* gdl2/EODisplayGroup/EODisplayGroup00.m: Replace isEqual: category
+	with testIsEqual:, add testContainsObject: NSArray category.
+	* gdl2/EOAdaptor/EOAdaptorTypes.eomodel: Add sqlite3 connection
+	dictionary.
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m: Add -testIsEqual: categorys
+	and some new tests.
+
+
 2006-09-29  Matt Rice  <ratmice@yahoo.com>
 	
 	* gdl2/GDL2Testing.h (setupModel): New function setup to check for

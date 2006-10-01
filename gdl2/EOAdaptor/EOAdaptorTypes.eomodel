@@ -7,6 +7,9 @@
     Postgres95ConnectionDictionary = {
       databaseName = gdl2test;
     };
+    SQLite3ConnectionDictionary = {
+      databasePath = /tmp/gdl2test;
+    };
   };
 
   entities = (
