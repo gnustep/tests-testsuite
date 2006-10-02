@@ -20,6 +20,8 @@
 #define PROCESSNAME @"info"
 #endif
 
+#include "TestingUtils.h"
+
 /*
  * Return the integer ID of this process
  */
@@ -43,7 +45,7 @@ int operating_system(void)
 
 NSString *os_name(void)
 {
-  NSString *thisOS = @"MS-Windows";
+  NSString *thisOS = @"Microsoft Windows";
 
   return thisOS;
 }
@@ -210,8 +212,12 @@ int main()
     {
       aString = [info operatingSystemVersionString];
       pass((aString != nil) &&
-           [aString isEqualToString: get_test_answer("OSVersion")],
+           [aString isEqualToString: AnswerForKey("OSVersion")],
            "operatingSystemVersionString correct: %s",[aString lossyCString]);
+    }
+  else
+    {
+      unsupported("operatingSystemVersionString not available");
     }
 
   DESTROY(arp);

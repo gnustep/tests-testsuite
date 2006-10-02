@@ -46,7 +46,7 @@ int main()
 #endif
 
   /* ----------------------------------------------------------------
-   * TEST 1:
+   * TEST 2:
    * The output from this should appear on the console or test.log
    *  if everything is working right...
    * ------------------------------------------------------------- */

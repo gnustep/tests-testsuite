@@ -1,3 +1,20 @@
+2006-10-02  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * runtest.sh:
+    Bugfix generated from custom makefile
+
+2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * selfcheck.sh:
+    Corrected expected summary
+    * base/NSString/utf16lebom.txt
+    * base/NSString/utf16bebom.txt
+    * base/NSString/utf32lebom.txt
+    * base/NSString/utf32bebom.txt
+    * base/NSString/bom.m
+    Added test cases for UTF-16 little & big endian byte order marks
+    Added test cases for UTF-32 little & big endian byte order marks
+
 2006-09-29  Sheldon Gill  <sheldon@westnet.net.au>
 
     * runtest.sh:

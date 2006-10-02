@@ -13,3 +13,9 @@
 HostName=ORION
 OSVersion=Version 5.0 (Build 2195: Service Pack 4)
 
+FullUserName=Tiamat SysAdmin
+UserHomeDirectory=E:\Documents and Settings\Administrator
+
+OtherUserName=Access
+OtherUserHomeDirectory=E:\Documents and Settings\Access
+

@@ -127,7 +127,8 @@ static char *get_test_answer(char *question_key)
 
   if (answers_file == NULL)
     {
-      printf("Environment not setup. Don't know where to find ANSWERS!");
+      printf("Environment not setup. Don't know where to find ANSWERS!\n");
+      return NULL;
     }
 
   if ((fs = fopen(answers_file,"r")) != NULL)
@@ -150,6 +151,12 @@ static char *get_test_answer(char *question_key)
         }
       fclose(fs);
     }
+  else
+    {
+      printf("PROBLEM: Can't open '%s'\n",answers_file);
+      return NULL;
+    }
+  printf("PROBLEM: Can't find answer to question \"%s\"\n",question_key);
   return NULL;
 }
 

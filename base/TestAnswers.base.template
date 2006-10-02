@@ -7,12 +7,18 @@
 # It is a simple key=string format
 #
 # Don't use quotation marks if the answer string has spaces
-#   They are read to end of line
+#   They are read to end of line anyway.
+# This file should be UTF8 encoded
 #
 # Rename this template file TestAnswers and fill in
 # the responses which are correct for your setup
 #
 
-HostName=ORION
-OSVersion=Version 5.0 (Build 2195: Service Pack 4)
+HostName=mybox
+OSVersion=GNU/Linux 2.6.17
 
+FullUserName=Full Name for current account
+UserHomeDirectory=/home/StepUser
+
+OtherUserName=TestAccount
+OtherUserHomeDirectory=/home/TestAccount
