@@ -14,7 +14,8 @@ int main()
   EOEntity *ent2;
   EOEntity *tmp1;
   EOEntity *tmp2;
-
+  NSString *filePath;
+  
   model = [[EOModel alloc] init];
   [model setName:@"foo"];
 
@@ -36,9 +37,11 @@ int main()
   END_TEST(result, "-subEntities 1");
   [model addEntity: ent1];
   [model addEntity: ent2];
-  
-  [model writeToFile:@"parentTest.eomodeld"];
-  model2 = [[EOModel alloc] initWithContentsOfFile:@"parentTest.eomodeld"];
+
+  filePath = NSTemporaryDirectory();
+  filePath = [filePath stringByAppendingPathComponent: [model name]];
+  [model writeToFile:filePath];
+  model2 = [[EOModel alloc] initWithContentsOfFile:filePath];
   tmp1 = [model2 entityNamed:@"ent1"];
   tmp2 = [model2 entityNamed:@"ent2"];
 
@@ -53,7 +56,7 @@ int main()
   RELEASE(tmp1);
   RELEASE(tmp2);
   /* same as the 2 tests above but with the child loaded before the parent. */
-  model2 = [[EOModel alloc] initWithContentsOfFile:@"parentTest.eomodeld"];
+  model2 = [[EOModel alloc] initWithContentsOfFile:filePath];
   tmp2 = [model2 entityNamed:@"ent2"];
   tmp1 = [model2 entityNamed:@"ent1"];
 
@@ -65,7 +68,7 @@ int main()
   END_TEST(result, "-subEntities 3");
 
   // similar to the 2 tests above but with the parent never specificially loaded
-  model2 = [[EOModel alloc] initWithContentsOfFile:@"parentTest.eomodeld"];
+  model2 = [[EOModel alloc] initWithContentsOfFile:filePath];
   tmp2 = [model2 entityNamed:@"ent2"];
 
   START_TEST(YES)
@@ -74,7 +77,8 @@ int main()
   START_TEST(YES)
   result = [[[tmp2 parentEntity] subEntities] containsObject:tmp2];
   END_TEST(result, "-subEntities 4");
-
+ 
+  [[NSFileManager defaultManager] removeFileAtPath:[model path] handler:nil];
   END_SET("EOModel parent tests");
 
   return 0; 

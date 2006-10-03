@@ -1,6 +1,9 @@
 2006-10-03  Matt Rice  <ratmice@yahoo.com>
 	
 	* gdl2/EOModel/test07.m: New tests for parent/sub entities.
+	
+	* gdl2/EOModel/test07.m: Use NSTemporaryDirectory(); and remove the
+	temporary file.
 
 2006-10-01  Matt Rice  <ratmice@yahoo.com>
 
