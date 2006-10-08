@@ -48,6 +48,7 @@ int main(int argc,char **argv)
 
   filePath = @"ToManyKeyPropagation.eomodel";
   model = [[EOModel alloc] initWithContentsOfFile: filePath];
+  setupModel(model);
   createDatabaseWithModel(model);
   
   [[EOModelGroup defaultGroup] addModel: model];

@@ -1,9 +1,16 @@
 {
   EOModelVersion   = 2;
-  adaptorClassName = PostgreSQLAdaptor;
-  adaptorName      = PostgreSQL;
-  connectionDictionary = {
+  
+  userInfo = {
+    PostgreSQLConnectionDictionary = {
     databaseName = gdl2test;
+    };
+    Postgres95ConnectionDictionary = {
+    databaseName = gdl2test;
+    };
+    SQLite3ConnectionDictionary = {
+    databasePath = /tmp/gdl2test;
+    };
   };
   
   entities = (
