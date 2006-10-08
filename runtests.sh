@@ -100,7 +100,7 @@ fi
 run_test_file ()
 {
 	echo >> tests.log
-	echo begin test $TESTFILE... >> tests.log
+	echo begin testblock $TESTFILE... >> tests.log
 	echo >> tests.sum
 	echo TEST: $TESTFILE... >> tests.sum
 

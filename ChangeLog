@@ -1,3 +1,18 @@
+2006-10-08  Sheldon Gill  <sheldon@westnet.net.au>
+
+    * gdl2\TSTTradingModel.eomodeld\EOSQLite3Prototypes.plist (added)
+    * gdl2\TSTTradingModel.eomodeld\index.eomodeld
+    * gdl2\EORelationship\ToManyKeyPropagation.m
+    * gdl2\EORelationship\ToManyKeyPropagation.eomodel
+    * gdl2\EOModel\test07.m (added)
+    * gdl2\EODisplayGroup\EODisplayGroup00.m
+    * gdl2\EOAdaptor\EOAdaptorTypes.eomodel
+    * gdl2\EOAdaptor\EOAdaptorTypes00.m
+    Merged Matt Rice's work from trunk
+
+    * runtests.sh:
+    Call them testblocks like the rest of the documentation
+
 2006-10-02  Sheldon Gill  <sheldon@westnet.net.au>
 
     * runtest.sh:
@@ -37,7 +52,7 @@
     Merged testsuite changes from HEAD being gdl2 tests from Matt Rice
 
 2006-09-29  Matt Rice  <ratmice@yahoo.com>
-	
+
 	* gdl2/GDL2Testing.h (setupModel): New function setup to check for
 	TEST_ADAPTOR environment variable or GDL2TestAdaptor default.
 
