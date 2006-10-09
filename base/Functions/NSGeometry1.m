@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "Testing.h"
 
-static BOOL	GSMacOSXCompatibleGeometry(void)
+static BOOL	MacOSXCompatibleGeometry()
 {
   NSUserDefaults *dflt = [NSUserDefaults standardUserDefaults];
   if ([dflt boolForKey: @"GSOldStyleGeometry"] == YES)
