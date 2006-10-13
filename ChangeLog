@@ -1,3 +1,7 @@
+2006-10-13  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/EOAdaptor/EOAdaptorEncoding.m: New tests.
+	
 2006-10-09  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/Functions/NSGeometry1.m: Remove use of priovate method from
