@@ -276,6 +276,14 @@ int main()
   pass([date2 testDateValues:2004 :10 :27 :00 :30 :00],
        "date year calculation check with %s",[[date2 description] cString]);
 
+  date2 = [NSCalendarDate dateWithYear: 2006 month: 10 day: 1
+			  hour:0 minute:0 second:0
+			  timeZone:nil];
+  date2 = [date2 dateByAddingYears: 0 months: 1 days: 0 
+		 hours: 2 minutes: 10 seconds: 0];
+  pass([date2 testDateValues:2006 :11 :1 :2 :10 :00],
+       "date year calculation check with %s",[[date2 description] cString]);
+
   DESTROY(arp);
   return 0;
 }

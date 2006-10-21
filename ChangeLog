@@ -1,3 +1,7 @@
+2006-10-21  David Ayers  <ayers@fsfe.org>
+
+	* base/NSCalendarDate/test00.m: New test which currently fails.
+	
 2006-10-19  Matt Rice <ratmice@yahoo.com>
 	
 	* gdl2/EOFault: New dir.
