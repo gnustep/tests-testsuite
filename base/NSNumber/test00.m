@@ -1,5 +1,6 @@
 #import "ObjectTesting.h"
 #import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSPropertyList.h>
 #import <Foundation/NSValue.h>
 
 int main()
@@ -56,6 +57,11 @@ int main()
        "signed char numbers - 200 < 100");
   pass([val1 compare:val2] == NSOrderedDescending,
        "signed char numbers - 100 > 200");
+
+  pass([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithInt:-10] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] intValue] == -10,
+    "store negative integer in property list works");
+  pass((int)([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithDouble:-1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] doubleValue]*10) == -12,
+    "store negative double in property list works");
 
   DESTROY(arp);
   return 0;

@@ -2,7 +2,13 @@
 #import <Foundation/Foundation.h>
 #import "Testing.h"
 
-extern BOOL	GSMacOSXCompatibleGeometry(void);	// Compatibility mode
+static BOOL	MacOSXCompatibleGeometry()
+{
+  NSUserDefaults *dflt = [NSUserDefaults standardUserDefaults];
+  if ([dflt boolForKey: @"GSOldStyleGeometry"] == YES)
+    return NO;
+  return [dflt boolForKey: @"GSMacOSXCompatible"];
+}
 
 /* Test the string functions */
 int
@@ -10,7 +16,7 @@ geom_string()
 {
 #if     defined(GNUSTEP_BASE_LIBRARY)
   NSUserDefaults *dflt = [NSUserDefaults standardUserDefaults];
-  BOOL compat_mode = GSMacOSXCompatibleGeometry();
+  BOOL compat_mode = MacOSXCompatibleGeometry();
 #endif
   NSPoint p, p2;
   NSRect r, r2;
@@ -27,7 +33,7 @@ geom_string()
       [dflt setBool: NO forKey: @"GSMacOSXCompatible"];
       [NSUserDefaults resetStandardUserDefaults];
     }
-  pass((GSMacOSXCompatibleGeometry() == NO), 
+  pass((MacOSXCompatibleGeometry() == NO), 
        "Not in MacOSX geometry compat mode");
 
   sp = NSStringFromPoint(p);
@@ -49,7 +55,7 @@ geom_string()
   dflt = [NSUserDefaults standardUserDefaults];
   [dflt setBool: YES forKey: @"GSMacOSXCompatible"];
   [NSUserDefaults resetStandardUserDefaults];
-  pass((GSMacOSXCompatibleGeometry() == YES), 
+  pass((MacOSXCompatibleGeometry() == YES), 
        "In MacOSX geometry compat mode");
 #endif
 
@@ -70,7 +76,7 @@ geom_string()
        "Can read output of NSStringFromSize (MacOSX compat)");
 
 #if     defined(GNUSTEP_BASE_LIBRARY)
-  if (compat_mode != GSMacOSXCompatibleGeometry())
+  if (compat_mode != MacOSXCompatibleGeometry())
     {
       [dflt setBool: NO forKey: @"GSMacOSXCompatible"];
     }

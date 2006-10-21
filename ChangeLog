@@ -1,13 +1,38 @@
+2006-10-18  Sheldon Gill  <sheldon@westnet.net.au>
+
+   * base/NSError/general.m
+   New test block to cover NSError class
+
+2006-10-18  Sheldon Gill  <sheldon@westnet.net.au>
+
+    merged HEAD changes (rfm,rfm,ayers)
+
+2006-10-17  Richard Frith-Macdonald  <rfm@gnu.org>
+
+    * base/NSNumber/test00.m: Add check for storing negative numbers in
+	property lists.
+
+2006-10-09  Richard Frith-Macdonald  <rfm@gnu.org>
+
+    * base/Functions/NSGeometry1.m: Remove use of private method from
+	base library.
+
+2006-10-13  David Ayers  <ayers@fsfe.org>
+
+    * gdl2/EOAdaptor/EOAdaptorEncoding.m: New tests.
+
 2006-10-08  Sheldon Gill  <sheldon@westnet.net.au>
 
-    * gdl2\TSTTradingModel.eomodeld\EOSQLite3Prototypes.plist (added)
-    * gdl2\TSTTradingModel.eomodeld\index.eomodeld
-    * gdl2\EORelationship\ToManyKeyPropagation.m
-    * gdl2\EORelationship\ToManyKeyPropagation.eomodel
-    * gdl2\EOModel\test07.m (added)
-    * gdl2\EODisplayGroup\EODisplayGroup00.m
-    * gdl2\EOAdaptor\EOAdaptorTypes.eomodel
-    * gdl2\EOAdaptor\EOAdaptorTypes00.m
+    * gdl2/TSTTradingModel.eomodeld/EOSQLite3Prototypes.plist (added)
+    * gdl2/TSTTradingModel.eomodeld/index.eomodeld
+    * gdl2/EORelationship/ToManyKeyPropagation.m
+    * gdl2/EORelationship/ToManyKeyPropagation.eomodel
+  	* gdl2/EOModel/test07.m: (added)New tests for parent/sub entities.
+	* gdl2/EOModel/test07.m: Use NSTemporaryDirectory(); and remove the
+	temporary file.
+    * gdl2/EODisplayGroup/EODisplayGroup00.m
+    * gdl2/EOAdaptor/EOAdaptorTypes.eomodel
+    * gdl2/EOAdaptor/EOAdaptorTypes00.m
     Merged Matt Rice's work from trunk
 
     * runtests.sh:
