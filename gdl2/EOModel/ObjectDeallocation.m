@@ -14,6 +14,8 @@ int main()
   EOEntity *e1 = [[EOEntity alloc] init];
   EOEntity *e2 = [[EOEntity alloc] init];
   EOEntity *e3 = [[EOEntity alloc] init];
+  EOEntity *e4 = [[EOEntity alloc] init];
+  EOEntity *e5 = [[EOEntity alloc] init];
   EOAttribute *a1 = [[EOAttribute alloc] init];
   EOAttribute *a2 = [[EOAttribute alloc] init];
   EOAttribute *a3 = [[EOAttribute alloc] init];
@@ -32,6 +34,8 @@ int main()
   [e1 setName:@"e1"];
   [e2 setName:@"e2"];
   [e3 setName:@"e3"];
+  [e4 setName:@"e4"];
+  [e5 setName:@"e5"];
   
   [r1 setName:@"r1"];
   [r2 setName:@"r2"];
@@ -52,6 +56,8 @@ int main()
   [r2 addJoin:j2];
   [e1 addRelationship:r1];
   [e2 addRelationship:r2];
+  [e4 addSubEntity:e5];
+
   [pool emptyPool];
 
   START_SET(YES);
@@ -121,7 +127,21 @@ int main()
   END_TEST(result, "relationship unretained pointers 5");
   
   END_SET("relationship unretained pointers");
+ 
+  START_SET(YES);
+
+  START_TEST(YES);
+  rc = [e4 retainCount];
+  result = rc == 1;
+  END_TEST(result, "parent entity will deallocate");
+
+  START_TEST(YES);
+  RELEASE(e4);
+  result = [e5 parentEntity] == nil;
+  END_TEST(result, "sub entities parent entity is now nil");
   
+  END_SET("parent/sub entities");
+ 
   RELEASE(pool);
   return 0;
 }
