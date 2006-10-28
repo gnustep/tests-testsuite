@@ -60,6 +60,8 @@ int main()
 
   pass([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithInt:-10] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] intValue] == -10,
     "store negative integer in property list works");
+  pass((int)([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithFloat:-1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] floatValue]*10) == -12,
+    "store negative float in property list works");
   pass((int)([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithDouble:-1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] doubleValue]*10) == -12,
     "store negative double in property list works");
 

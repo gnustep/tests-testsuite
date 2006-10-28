@@ -112,7 +112,7 @@ run_test_file ()
 
 	# Extract the summary information and add it to the summary file.
 #	grep "^[COMP|PAS|FAIL|TEST|UN|PROBLEM][_A-Z]*:" tests.tmp > tests.sum.tmp
-	egrep -a "^[A-Z0-9_]{4,20}[:-]" tests.tmp > tests.sum.tmp
+	egrep -a "^([A-Z0-9_]{4,20}[:-])|([A-Za-z]*[:] Uncaught)" tests.tmp > tests.sum.tmp
 	cat tests.sum.tmp >> tests.sum
 
 	# If there was anything other than PASS and COMPLETE in the summary...
