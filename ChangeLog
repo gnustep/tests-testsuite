@@ -1,3 +1,7 @@
+2006-10-29  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/GSMime/test02.m: Add missing tests for charset conversion.
+
 2006-10-23 Matt Rice <ratmice@yahoo.com>
 
 	* gdl2/EOModel/ObjectDeallocation.m: Add tests for parent entitys.
