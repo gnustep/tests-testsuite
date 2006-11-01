@@ -55,7 +55,7 @@ int main()
   pass([s4 compareObject: d3 toObject: d4] == NSOrderedDescending,
     "basic comparison works for descending descriptor");
 
-  array = [NSArray arrayWithObjects: s1, s3, nil];
+  array = [NSArray arrayWithObjects: s3, s1, nil];
   a1 = [NSArray arrayWithObjects: d1, d2, d3, d4, nil];
   a2 = [NSArray arrayWithObjects: d1, d3, d2, d4, nil];
   a3 = [a1 sortedArrayUsingDescriptors: array];
