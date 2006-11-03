@@ -218,12 +218,21 @@ int main()
   pass([GSMimeDocument encodingFromCharset: @"utf-16"]
     == NSUnicodeStringEncoding,
     "charset 'utf-16' is NSUnicodeStringEncoding");
+  pass([GSMimeDocument encodingFromCharset: @"utf16"]
+    == NSUnicodeStringEncoding,
+    "charset 'utf16' is NSUnicodeStringEncoding");
   pass([GSMimeDocument encodingFromCharset: @"utf-7"]
     == NSUTF7StringEncoding,
     "charset 'utf-7' is NSUTF7StringEncoding");
+  pass([GSMimeDocument encodingFromCharset: @"utf7"]
+    == NSUTF7StringEncoding,
+    "charset 'utf7' is NSUTF7StringEncoding");
   pass([GSMimeDocument encodingFromCharset: @"utf-8"]
     == NSUTF8StringEncoding,
     "charset 'utf-8' is NSUTF8StringEncoding");
+  pass([GSMimeDocument encodingFromCharset: @"utf8"]
+    == NSUTF8StringEncoding,
+    "charset 'utf8' is NSUTF8StringEncoding");
   pass([GSMimeDocument encodingFromCharset: @"windows-1250"]
     == NSWindowsCP1250StringEncoding,
     "charset 'windows-1250' is NSWindowsCP1250StringEncoding");
