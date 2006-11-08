@@ -1,3 +1,7 @@
+2006-11-08  Matt Rice <ratmice@gmail.com>
+
+	* base/NSMutableIndexSet/test0.m: New test which currently fails.
+
 2006-11-03  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/GSMime/test02.m: Add tests for new charset mappings.
