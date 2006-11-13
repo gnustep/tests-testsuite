@@ -10,7 +10,7 @@ int main()
   NSString *val;
   NSDate *date1,*date2;
 
-  val = @"2000-10-19";
+  val = @"2000-10-19 00:00:00 +0000";
   date1 = [NSDate date];
   pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+date works");

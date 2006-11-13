@@ -1,3 +1,13 @@
+2006-11-13  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSDate/create.m:
+	* base/NSCalendarDate/test00.m:
+	* base/NSCalendarDate/test01.m:
+	* base/NSCalendarDate/basic.m:
+	* base/NSCalendarDate/test02.m:
+	Fix a few errors, add a few tests for invalid strings,
+	tidy to be closer to coding standards.
+
 2006-11-08  Matt Rice <ratmice@gmail.com>
 
 	* base/NSMutableIndexSet/test0.m: New test which currently fails.
