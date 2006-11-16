@@ -25,32 +25,29 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 #include <Foundation/NSURL.h>
 #include <Foundation/NSValue.h>
 
-#include <AppKit/NSAffineTransform.h>
-#include <AppKit/NSApplication.h>
-#include <AppKit/NSTableView.h>
-
-
 @interface NSObject (DecodingTests)
-+(NSObject *) createTestInstance;
-+(BOOL) verifyTestInstance: (NSObject *)instance
++ (NSObject *) createTestInstance;
++ (BOOL) verifyTestInstance: (NSObject *)instance
 	ofVersion: (int)version;
--(BOOL) testEquality;
+- (BOOL) testEquality;
 @end
 
 @implementation NSObject (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
 	return [[self alloc] init];
 }
-+(BOOL) verifyTestInstance: (NSObject *)instance
-	ofVersion: (int)version
+
++ (BOOL) verifyTestInstance: (NSObject *)instance
+		  ofVersion: (int)version
 {
   
-  return instance!=nil &&
-    ( [instance testEquality] == NO 
+  return instance != nil
+    && ([instance testEquality] == NO 
       || [[self createTestInstance] isEqual: instance]);
 }
--(BOOL) testEquality
+
+- (BOOL) testEquality
 {
   static IMP impNSObject = 0;
   /* By default, assume that every class that overrides NSObject's
@@ -68,44 +65,44 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 @end
 
 @implementation NSCharacterSet (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
-	return [[self characterSetWithCharactersInString: @"qwertzuiop"] retain];
+  return [[self characterSetWithCharactersInString: @"qwertzuiop"] retain];
 }
 @end
 
 @implementation NSValue (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
-	return [[self valueWithSize: NSMakeSize(1.1,1.2)] retain];
+  return [[self valueWithSize: NSMakeSize(1.1, 1.2)] retain];
 }
 @end
 
 @implementation NSNumber (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
-	return [[self numberWithInt: 1] retain];
+  return [[self numberWithInt: 1] retain];
 }
 @end
 
 @implementation NSData (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
-	return [[@"We need constant data" dataUsingEncoding: NSUnicodeStringEncoding] retain];
+  return [[@"We need constant data" dataUsingEncoding: NSUnicodeStringEncoding] retain];
 }
 @end
 
 @implementation NSDate (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
-	return [[NSDate dateWithTimeIntervalSince1970: 4294967296.0] retain];
+  return [[NSDate dateWithTimeIntervalSince1970: 4294967296.0] retain];
 }
 @end
 
 @implementation NSURL (DecodingTests)
-+(NSObject *) createTestInstance
++ (NSObject *) createTestInstance
 {
-	return [[self alloc] initWithString: @"http://www.gnustep.org/"];
+  return [[self alloc] initWithString: @"http://www.gnustep.org/"];
 }
 @end
 
@@ -118,97 +115,94 @@ BOOL update;
 
 void test(Class class)
 {
-NS_DURING
-{
-	/*
-	In order to catch decoders that don't consume all the data that they
-	should, we decode/encode an array that includes the object and a string.
-	We verify that the string was correctly decoded, although any errors will
-	likely be caught by crashes in the unarchiver.
-	*/
-	NSString *sentinel=@"quux!";
+  NS_DURING
+    {
+      /*
+      In order to catch decoders that don't consume all the data that they
+      should, we decode/encode an array that includes the object and a string.
+      We verify that the string was correctly decoded, although any errors will
+      likely be caught by crashes in the unarchiver.
+      */
+      NSString	*sentinel = @"quux!";
 
-	int v=[class version];
-	NSObject *instance;
-	NSArray *decodedInstance;
-	NSData *d;
-	NSString *filename;
+      int	v = [class version];
+      NSObject	*instance;
+      NSArray	*decodedInstance;
+      NSData	*d;
+      NSString	*filename;
 
-	instance=[class createTestInstance];
+      instance = [class createTestInstance];
 
-	d=[NSArchiver archivedDataWithRootObject: [NSArray arrayWithObjects: instance,sentinel,nil]];
-	decodedInstance=[NSUnarchiver unarchiveObjectWithData: d];
+      d = [NSArchiver archivedDataWithRootObject:
+	[NSArray arrayWithObjects: instance, sentinel, nil]];
+      decodedInstance = [NSUnarchiver unarchiveObjectWithData: d];
 
-	assert([sentinel isEqual: [decodedInstance objectAtIndex: 1]]);
+      assert([sentinel isEqual: [decodedInstance objectAtIndex: 1]]);
 
-	pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
-			ofVersion: v],
-		"decoding current version of class %s", POBJECT(class));
+      pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
+	ofVersion: v], "decoding current version of class %s", POBJECT(class));
 
-	for (;v>=0;v--)
+      for (; v >= 0; v--)
 	{
-		filename=[NSString stringWithFormat: @"%@.%i.data",class,v];
-		d=[NSData dataWithContentsOfFile: filename];
-		if (!d)
+	  filename = [NSString stringWithFormat: @"%@.%i.data", class, v];
+	  d = [NSData dataWithContentsOfFile: filename];
+	  if (!d)
+	    {
+	      if (v == [class version])
 		{
-			if (v==[class version])
-			{
-				if (!update)
-					pass(0,"%s has reference data for the current version", POBJECT(class));
-				else
-					[NSArchiver archiveRootObject: [NSArray arrayWithObjects: instance,sentinel,nil]
-						toFile: filename];
-			}
-			continue;
+		  if (!update)
+		    pass(0, "%s has reference data for the current version",
+		      POBJECT(class));
+		  else
+		    [NSArchiver archiveRootObject:
+		      [NSArray arrayWithObjects: instance, sentinel, nil]
+					 toFile: filename];
 		}
+	      continue;
+	    }
 
-		decodedInstance=[NSUnarchiver unarchiveObjectWithData: d];
-		assert([sentinel isEqual: [decodedInstance objectAtIndex: 1]]);
-		pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
-				ofVersion: v],
-			"decoding version %i of class %s",v, POBJECT(class));
+	  decodedInstance = [NSUnarchiver unarchiveObjectWithData: d];
+	  assert([sentinel isEqual: [decodedInstance objectAtIndex: 1]]);
+	  pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
+	    ofVersion: v], "decoding version %i of class %s",
+	    v, POBJECT(class));
 	}
-}
-NS_HANDLER
-{
-	pass(0,"decoding class %s: %s", 
-	     POBJECT(class), POBJECT(localException));
-}
-NS_ENDHANDLER
+    }
+  NS_HANDLER
+    {
+      pass(0, "decoding class %s: %s", 
+	POBJECT(class), POBJECT(localException));
+    }
+  NS_ENDHANDLER
 }
 
 int main(int argc, char **argv)
 {
-	CREATE_AUTORELEASE_POOL(arp);
+  CREATE_AUTORELEASE_POOL(arp);
 
-	update=argc==2 && !strcmp(argv[1],"--update");
+  update = argc == 2 && !strcmp(argv[1], "--update");
 
 #define T(c) test([c class]);
-	T(NSArray)
-	T(NSAttributedString)
-	T(NSCharacterSet)
-	T(NSData)
-	T(NSMutableData)
-	T(NSDate)
-	T(NSDateFormatter)
-	T(NSDictionary)
-	T(NSException)
-	T(NSNotification)
-	T(NSNull)
-	T(NSObject)
-	T(NSSet)
-	T(NSString)
-	T(NSURL)
-	T(NSValue)
-	T(NSNumber)
+  T(NSArray)
+  T(NSAttributedString)
+  T(NSCharacterSet)
+  T(NSData)
+  T(NSMutableData)
+  T(NSDate)
+  T(NSDateFormatter)
+  T(NSDictionary)
+  T(NSException)
+  T(NSNotification)
+  T(NSNull)
+  T(NSObject)
+  T(NSSet)
+  T(NSString)
+  T(NSURL)
+  T(NSValue)
+  T(NSNumber)
 
+  DESTROY(arp);
 
-	[NSApplication sharedApplication];
-	T(NSAffineTransform)
-	T(NSTableView)
-
-	DESTROY(arp);
-
-	return 0;
+  return 0;
 }
 

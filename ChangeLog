@@ -1,3 +1,12 @@
+2006-11-16  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/coding/GNUmakefile.preamble:
+	* base/coding/NSAffineTransform.0.data:
+	* base/coding/decoding.m:
+	Remove gui library stuff ... just want base here.
+	* base/NSCalendarDate/GNUmakefile.preamble:
+	Removed unnecessary file.
+
 2006-11-13  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSDate/create.m:
