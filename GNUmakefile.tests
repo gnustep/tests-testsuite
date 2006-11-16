@@ -3,7 +3,6 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 -include ../GNUmakefile.super
--include Flags.mk
 
 TEST_TOOL_NAME = @TESTNAME@
 
@@ -13,6 +12,7 @@ ADDITIONAL_OBJCFLAGS += -I@INCLUDEDIR@ -Wall
 
 -include GNUmakefile.preamble
 include $(GNUSTEP_MAKEFILES)/test-tool.make
+-include GNUmakefile.postamble
 
 test:
 	./$(GNUSTEP_OBJ_DIR_NAME)/@TESTNAME@

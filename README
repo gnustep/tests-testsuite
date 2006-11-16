@@ -30,8 +30,72 @@ the project testsuite you with to test:
 
 ./runtests.sh base
 
-If you compiled the libraries with debug=yes, make sure to add the
---debug argument:
+You may run an individual test by using the runtest.sh script with the
+name of the Objective-C test source file:
 
-./runtests.sh --debug base
+./runtest.sh base/NSDate/general.m
+
+
+Writing Tests
+-------------
+
+A minimal test should be a file importing the header "Testing.h"
+(which defines standard test macros) and containing a main() function
+implementation which executes the actual test code.
+
+eg.
+
+#import "Testing.h"
+#import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSObject.h>
+int main()
+{
+  CREATE_AUTORELEASE_POOL(arp);
+
+  // The actual test is here ...
+  pass([NSObject alloc] != nil, "The NSObject class supports +alloc");
+
+  DESTROY(arp);
+  return 0;
+}
+
+You should examine Testing.h (and perhaps ObjectTesting.h) to see the range
+of macros provided as an aid to testing, but the main workhorse of the
+testing should be calls to the pass() macro with two arguments ... first a
+snippet of code which should evaluate to true or false (nonzero or zero),
+and secondly a string describing what is being tested.
+
+
+Writing advanced tests
+----------------------
+
+Where tests must make use of external resources or ensure that other tests
+have already been run before they are run, you can make use of the gnustep
+make package facilities to control dependencies etc.
+
+Normally each test is built and run by generating a makefile in the directory
+containing the test.  This makefile uses the standard conventions of including
+GNUmakefile.preamble before test-tool.make and including GNUmakefile.postamble
+after test-tool.make, which gives you a high degree of control over how the
+tests in the directory are built.
+
+In addition to the preamble/postamble mechanism, the file ../GNUmakefile.super
+is included at the start of the generated makefile (if it exists).  This allows
+all the tests in a suite to use a common makefile fragment which can (for
+instance) build common resources before any tests are run.
+
+For total control, the runtest.sh script checks to see if a 'Custom.mk' file
+exists in the directory, and if it does it uses that file to build the tests
+rather than generating its own make file.
+
+Ignoring directories
+--------------------
+
+If, when given the name of a test to be run, the runtest.sh script finds a
+file named 'IGNORE' in the same directory as the named file, it skips
+running of the test.  The effect of this is that the presence of an IGNORE
+file causes a directory to be ignored.  This is useful in conjunction
+with ../GNUmakefile.super so that projects to build resources for other tests
+can be ignored by the scripts running the tests, and just built as required
+by ../GNUmakefile.super
 

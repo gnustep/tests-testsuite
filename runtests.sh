@@ -33,14 +33,11 @@ do
       echo "Usage: ./runtests.sh [directory | test1.m [test2.m ...]]"
       echo "Options:"
       echo "  --help	- Print help"
-      echo "  --debug	- Compile using debug=yes"
       echo
       exit 0
       ;;
-      --debug | -d)
-      MAKEFLAGS="$MAKEFLAGS debug=yes"
-      export MAKEFLAGS
-      run_args="$run_args --debug";;
+      --debug | -d)	# ignore for backward compatibility.
+      ;;
     *)
       break
       ;;
@@ -49,79 +46,90 @@ do
 done
 
 if [ ! "$MAKE_CMD" ]
+then
+  if gmake --version > /dev/null 2>&1
   then
-    if gmake --version > /dev/null 2>&1
-    then
-      MAKE_CMD=gmake
-    else
-      MAKE_CMD=make
-    fi
+    MAKE_CMD=gmake
+  else
+    MAKE_CMD=make
+  fi
 fi
 export MAKE_CMD
 TEMP=`echo *`
 TESTDIRS=
-for file in $TEMP; do
-    if [ -d $file -a $file != CVS ]; then
-	TESTDIRS="$TESTDIRS $file"
-    fi
+for file in $TEMP
+do
+  if [ -d $file -a $file != CVS -a $file != obj ]
+  then
+    TESTDIRS="$TESTDIRS $file"
+  fi
 done
 
-if [ x$1 != x ]; then
-    if [ -d $1 ]; then
-	# Only find in the directories specified.
-	TESTDIRS=$*
-    else
-	TESTDIRS=
-	TESTS=$*
-    fi
+if [ x$1 != x ]
+then
+  if [ -d $1 ]
+  then
+    # Only find in the directories specified.
+    TESTDIRS=$*
+  else
+    TESTDIRS=
+    TESTS=$*
+  fi
 fi
 
 run_test_file ()
 {
-	echo >> tests.log
-	echo Testing $TESTFILE... >> tests.log
-	echo >> tests.sum
+  echo >> tests.log
+  echo Testing $TESTFILE... >> tests.log
+  echo >> tests.sum
 
-	# Run the test. Log everything to a temporary file.
-	./runtest.sh $run_args $TESTFILE > tests.tmp 2>&1
+  # Run the test. Log everything to a temporary file.
+  ./runtest.sh $run_args $TESTFILE > tests.tmp 2>&1
 
-	# Add the information to the detailed log.
-	cat tests.tmp >> tests.log
+  # Add the information to the detailed log.
+  cat tests.tmp >> tests.log
 
-	# Extract the summary information and add it to the summary file.
-	grep "^[A-Z]*:" tests.tmp > tests.sum.tmp
-	cat tests.sum.tmp >> tests.sum
+  # Extract the summary information and add it to the summary file.
+  grep "^[A-Z]*:" tests.tmp > tests.sum.tmp
+  cat tests.sum.tmp >> tests.sum
 
-	# If there was anything other than PASS and COMPLETE in the summary...
-	if grep -L -v "^\(PASS\|COMPLETED\)" tests.sum.tmp > /dev/null; then
-		# ... print them to stdout.
-		echo
-		echo $TESTFILE:
-		grep -v "^\(PASS\|COMPLETED\)" tests.sum.tmp
-	fi
+  # If there was anything other than PASS and COMPLETE in the summary...
+  if grep -L -v "^\(PASS\|COMPLETED\)" tests.sum.tmp > /dev/null; then
+    # ... print them to stdout.
+    echo
+    echo $TESTFILE:
+    grep -v "^\(PASS\|COMPLETED\)" tests.sum.tmp
+  fi
 }
 
 
 # Delete the old files.
 rm -f tests.log tests.sum
 
-if [ x"$TESTDIRS" = x ]; then
-    # I think we should depreciate this part, but for now...
-    for TESTFILE in $TESTS; do
-	run_test_file
-    done
+if [ x"$TESTDIRS" = x ]
+then
+  # I think we should depreciate this part, but for now...
+  for TESTFILE in $TESTS
+  do
+    run_test_file
+  done
 else
-    for dir in $TESTDIRS; do
-	echo "--- Running tests in $dir ---"
-	TESTS=`find $dir -name \*.m | sort | sed -e 's/\(^\| \)X[^ ]*//g'`
-	# If there is a top-level makefile, run it first
-	if [ -f $dir/GNUmakefile ]; then
-	    cd $dir; $MAKE_CMD $MAKEFLAGS 2>&1; cd ..
-	fi
-	for TESTFILE in $TESTS; do
-	    run_test_file
-	done
+  for dir in $TESTDIRS
+  do
+    echo "--- Running tests in $dir ---"
+    TESTS=`find $dir -name \*.m | sort | sed -e 's/\(^\| \)X[^ ]*//g'`
+    # If there is a top-level makefile, run it first
+    if [ -f $dir/GNUmakefile ]
+    then
+      cd $dir
+      $MAKE_CMD $MAKEFLAGS debug=yes 2>&1
+      cd ..
+    fi
+    for TESTFILE in $TESTS
+    do
+      run_test_file
     done
+  done
 fi
 
 # Make some stats.

@@ -6,6 +6,19 @@
 	Remove gui library stuff ... just want base here.
 	* base/NSCalendarDate/GNUmakefile.preamble:
 	Removed unnecessary file.
+	* runtests.sh:
+	* runtest.sh:
+	* gdl2/EOAssociation/Flags.mk:
+	* gdl2/EODisplayGroup/Flags.mk:
+	* GNUmakefile.tests:
+	* base/NSBundle/GNUmakefile.preamble:
+	Remove unused Flags.mk and add standard GNUmakefile.postamble support.
+	Remove --debug since the restructuring of gnustep-make means it's
+	no longer needed to differentaiate between debug and non-debug libs.
+	Always build actual testcases with debug.
+	* README:
+	Add documentation on how to write tests and how test meakefiles are
+	managed.
 
 2006-11-13  Richard Frith-Macdonald  <rfm@gnu.org>
 
