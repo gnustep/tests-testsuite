@@ -1,5 +1,22 @@
 2006-11-16  Richard Frith-Macdonald  <rfm@gnu.org>
 
+	* base/NSConnection/GNUmakefile.preamble:
+	* base/NSInvocation/GNUmakefile.preamble:
+	* base/NSBundle/load/GNUmakefile.preamble:
+	* base/NSBundle/GNUmakefile.preamble:
+	Add the GenericTests directory as the first of the list of
+	SUBPROJECTS to be built, so we ensure that it is built before
+	other stuff.  The previous code expected the line:
+	$(GNUSTEP_INSTANCE)_SUBPROJECTS = ../GenericTests
+	To build the subproject for us, but Nicola explains that, when handled
+	in the 'Master' pass of the make system the GNUSTEP_INSTANCE variable
+	is not defined, so this does not work ... however, in subsequent
+	'Instance' passes of the make system this would be defined as the
+	name of the actual tool being built, so the code from the
+	subproject gets incorporated into the tool as expected.
+
+2006-11-16  Richard Frith-Macdonald  <rfm@gnu.org>
+
 	* base/coding/GNUmakefile.preamble:
 	* base/coding/NSAffineTransform.0.data:
 	* base/coding/decoding.m:

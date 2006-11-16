@@ -3,7 +3,7 @@ ADDITIONAL_OBJCFLAGS += -I../GenericTests/ -I../../.. -Wall
 
 $(GNUSTEP_INSTANCE)_SUBPROJECTS = ../GenericTests
 
-SUBPROJECTS = Resources
+SUBPROJECTS = ../GenericTests Resources
 
 include $(GNUSTEP_MAKEFILES)/aggregate.make
 
