@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 static NSMutableArray *recordedObservers;
+static NSMutableArray *recordedObjects;
 static int reachedDealloc = 0;
 static int omniChangeCount = 0;
 
@@ -19,12 +20,43 @@ static int omniChangeCount = 0;
 @end
 
 @interface Foo : NSObject <EOObserving>
+{
+  unsigned _hash;
+}
 @end
 
 @implementation Foo
+- (void) setHash:(unsigned)hash
+{
+  _hash = hash; 
+}
+
+- (unsigned) hash;
+{
+  return _hash;
+}
+
+- (BOOL) isEqual:(id)obj;
+{
+  BOOL flag = NO;
+
+  if ([obj isKindOfClass:isa]
+      && _hash == ((Foo *)obj)->_hash)
+    {
+      flag = YES;
+    }
+  return flag;
+}
+
 - (void) objectWillChange:(id)sender
 {
   [recordedObservers addObject:self];
+  [recordedObjects addObject:sender];
+}
+
+- (NSString *)description
+{
+  return [NSString stringWithFormat:@"%i", self, _hash];
 }
 @end
 
@@ -62,6 +94,7 @@ static int omniChangeCount = 0;
   omniChangeCount++;
 }
 @end
+
 int main()
 {
   NSAutoreleasePool *pool = [NSAutoreleasePool new];
@@ -70,7 +103,9 @@ int main()
   id object;
   id takeupmemory;
   int i,tmpi1, tmpi2;
-  NSArray *tmp;
+  id tmp;
+  id tmp2;
+  id omnisc1, omnisc2;
   
   {
     int fds[2];
@@ -83,32 +118,38 @@ int main()
 
   
   recordedObservers = [NSMutableArray new];
+  recordedObjects = [NSMutableArray new];
 
   object = [NSObject new];
   
   for (i = 0; i < 64; i++)
     {
       observer = [Foo new];
+      [observer setHash:i];
       [EOObserverCenter addObserver:observer forObject:object];
       [observers addObject:observer];
       RELEASE(observer);
     }
   
-  tmp = [EOObserverCenter observersForObject:object];
-  pass([tmp isEqual:observers], "+observersForObject: works"); 
+  tmp = [NSSet setWithArray:[EOObserverCenter observersForObject:object]];
+  tmp2 = [NSSet setWithArray:observers];
+  pass([tmp isEqualToSet:tmp2], "+observersForObject: works"); 
   
   [object willChange];
-  pass([recordedObservers isEqual:observers],
+  tmp2 = [NSSet setWithArray:recordedObservers];
+  pass([tmp isEqualToSet:tmp2],
        "observers receive -objectWillChange:");
-  RELEASE(recordedObservers);
-  
+   
   [EOObserverCenter removeObserver:observer forObject:object];
   [observers removeObject:observer];
-  pass([observers isEqual: [EOObserverCenter observersForObject:object]],
+  tmp = [NSSet setWithArray:[EOObserverCenter observersForObject:object]];
+  tmp2 = [NSSet setWithArray:observers];
+  pass([tmp2 isEqualToSet: tmp],
        "+removeObserver:forObject: works");
-  for (i = 0; i < [observers count]; i++)
+  tmp = [EOObserverCenter observersForObject:object];
+  for (i = 0; i < [tmp count]; i++)
     {
-      [EOObserverCenter removeObserver:[observers objectAtIndex:i]
+      [EOObserverCenter removeObserver:[tmp objectAtIndex:i]
 	      		     forObject:object];
     }
   [observers removeAllObjects];
@@ -139,14 +180,16 @@ int main()
        "can add observer in -init and remove in -dealloc");
   
   object = [NSObject new];
-  observer = [OmniscientObserver new];
-  [observers addObject: observer];
-  [EOObserverCenter addOmniscientObserver:observer];
-  RELEASE(observer); 
-  observer = [OmniscientObserver new];
-  [observers addObject: observer];
-  [EOObserverCenter addOmniscientObserver:observer];
-  RELEASE(observer); 
+  
+  omnisc1 = [OmniscientObserver new];
+  [observers addObject: omnisc1];
+  RELEASE(omnisc1); 
+  [EOObserverCenter addOmniscientObserver:omnisc1];
+  
+  omnisc2 = [OmniscientObserver new];
+  [observers addObject: omnisc2];
+  RELEASE(omnisc2); 
+  [EOObserverCenter addOmniscientObserver:omnisc2];
    
   [object willChange];
   pass(omniChangeCount == 2,
@@ -156,6 +199,7 @@ int main()
   pass(omniChangeCount == 2 && tmpi1 == 2,
        "sending will change twice only sends to observers once");
   DESTROY(object); 
+  
   object = [NSObject new];
   omniChangeCount = 0;
   [object willChange];
@@ -185,14 +229,72 @@ int main()
   pass(omniChangeCount == 2, "+notifyObserversObjectWillChange notifies omniscient observers of a nil argument");
   
   object = [NSObject new];
-  [EOObserverCenter removeOmniscientObserver:[observers objectAtIndex:0]];  
-  [observers removeObjectAtIndex:0];
+  [EOObserverCenter removeOmniscientObserver:omnisc1];  
+  [observers removeObject:omnisc1];
   omniChangeCount = 0;
   [object willChange];
   pass(tmpi1 == 2 && omniChangeCount == 1,
        "+removeOmniscientObserver: works");
-  [EOObserverCenter removeOmniscientObserver:[observers objectAtIndex:0]];  
+  [EOObserverCenter removeOmniscientObserver:omnisc2];  
+  [observers removeObject:omnisc2];
+
+  {
+    id obj1 = [Foo new];
+    id obj2 = [Foo new];
+    id obj3 = [Foo new];
+
+    [recordedObservers removeAllObjects];
+    [observers removeAllObjects];
+
+    [obj1 setHash:99];
+    [obj2 setHash:99];
+    [obj3 setHash:11];
+    [observers addObject:obj1];
+    [observers addObject:obj2];
+
+    [EOObserverCenter addObserver:obj1 forObject:obj3];
+    [EOObserverCenter addObserver:obj2 forObject:obj3];
    
+    pass([obj1 hash] == [obj2 hash] && [obj1 isEqual:obj2],
+	 "internal test consistency");
+    tmp = [EOObserverCenter observersForObject:obj3];
+    pass([tmp indexOfObjectIdenticalTo:obj1] != NSNotFound,
+	 "+observersForObjects with observers responding YES to isEqual: 1");
+    pass([tmp indexOfObjectIdenticalTo:obj2] != NSNotFound,
+	 "+observersForObjects with observers responding YES to isEqual: 2");
+
+    [obj3 willChange];
+    pass([recordedObservers indexOfObjectIdenticalTo:obj1] != NSNotFound,
+	 "-willChange notifies -isEqual: objects 1");
+    pass([recordedObservers indexOfObjectIdenticalTo:obj2] != NSNotFound,
+	 "-willChange notifies -isEqual: objects 2");
+    
+    [EOObserverCenter removeObserver:obj1 forObject:obj3];
+    [observers removeObject:obj1];
+    tmp = [EOObserverCenter observersForObject:obj3];
+    pass([tmp indexOfObjectIdenticalTo:obj1] == NSNotFound
+	 && [tmp indexOfObjectIdenticalTo:obj2] == 0,
+	 "-removeObject: notifies -isEqual: objects");
+   
+    [recordedObservers removeAllObjects];
+    [EOObserverCenter addObserver:obj3 forObject:obj1];
+    [obj2 willChange];
+    pass([recordedObservers count] == 0, "false positives in -willChange");
+    
+    [recordedObservers removeAllObjects];
+    [recordedObjects removeAllObjects];
+    [EOObserverCenter addObserver:obj3 forObject:obj2];
+    [obj1 willChange];
+    [obj2 willChange];
+    pass([recordedObservers count] == 2
+	 && [recordedObservers objectAtIndex:0] == obj3
+	 && [recordedObservers objectAtIndex:1] == obj3,
+	 "observer for -isEqual: objects recieves 2 changes");
+    pass([recordedObjects indexOfObjectIdenticalTo:obj1] != NSNotFound
+         && [recordedObjects indexOfObjectIdenticalTo:obj2] != NSNotFound,
+	 "observed objects for -isEqual: objects");
+  }
+  
   RELEASE(observers);
   RELEASE(pool);
   return 0;
