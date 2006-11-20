@@ -63,6 +63,22 @@ int main()
   pass(date1 == nil,
     "+dateWithString:calendarFormat:locale: objects to missing hours");
 
+  date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00 GMT+0100" 
+                          calendarFormat: @"%Y-%m-%d %HL%M:%S %Z"];
+  pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: handles GMT+0100 timezone");
+
+  date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00 GMT-0100" 
+                          calendarFormat: @"%Y-%m-%d %HL%M:%S %Z"];
+  pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: handles GMT-0100 timezone");
+
+  date1 = [NSCalendarDate dateWithString:
+    @"1999-12-31 00:00:00 Africa/Addis_Ababa" 
+                          calendarFormat: @"%Y-%m-%d %HL%M:%S %Z"];
+  pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: handles Africa/Addis_Ababa");
+
   date1 = [NSCalendarDate dateWithString: @"1999-12-31 23:59:59" 
                           calendarFormat: val2];
   pass([date1 testDateValues: 1999 : 12 : 31 : 23 : 59 : 59],
