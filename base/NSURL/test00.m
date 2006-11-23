@@ -1,0 +1,111 @@
+#import <Foundation/Foundation.h>
+#import "Testing.h"
+#import "ObjectTesting.h"
+
+
+int main()
+{
+  CREATE_AUTORELEASE_POOL(arp);
+  unsigned	i;
+  NSURL		*url;
+  NSData	*data;
+  NSMutableData	*resp;
+  NSData	*cont;
+  NSString	*str;
+  NSTask	*t;
+  NSString	*helpers;
+  NSString	*capture;
+  NSString	*respond;
+  
+  helpers = [[NSFileManager defaultManager] currentDirectoryPath];
+  helpers = [helpers stringByAppendingPathComponent: @"Helpers"];
+  helpers = [helpers stringByAppendingPathComponent: @"obj"];
+  capture = [helpers stringByAppendingPathComponent: @"capture"];
+  respond = [helpers stringByAppendingPathComponent: @"respond"];
+
+  /* Ask the 'respond' helper to send back a response containing
+   * 'hello' and to shrink the write buffer size it uses on each
+   * request.  We do as many requests as the total response size
+   * so that on the last one, the 'respond' program writes data
+   * a byte at a time.
+   * This tests that the URL loading code can handle a request
+   * that arrives fragmented rather than in a single read.
+   */
+  cont = [@"hello" dataUsingEncoding: NSASCIIStringEncoding];
+  resp = AUTORELEASE([[@"HTTP/1.0 200\r\n\r\n"
+    dataUsingEncoding: NSASCIIStringEncoding] mutableCopy]);
+  [resp appendData: cont];
+  [resp writeToFile: @"SimpleResponse.dat" atomically: YES];
+
+  str = [NSString stringWithFormat: @"%u", [resp length]];
+  t = [NSTask launchedTaskWithLaunchPath: respond
+    arguments: [NSArray arrayWithObjects:
+    @"-FileName", @"SimpleResponse.dat",
+    @"-Shrink", @"YES",
+    @"-Count", str,
+    nil]];
+  url = [NSURL URLWithString: @"http://localhost:4321/"];
+  if (t != nil)
+    {
+      // Pause to allow server subtask to set up.
+      [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.5]];
+      i = [resp length];
+      while (i-- > 0)
+        {
+	  char	buf[128];
+
+          // Talk to server.
+          data = [url resourceDataUsingCache: NO];
+          // Get status code
+          str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
+	  sprintf(buf, "respond test %d OK", i);
+	  pass([data isEqual: cont], buf);
+	}
+      // Wait for server termination
+      [t waitUntilExit];
+    }
+  
+  /* Now build a response which pretends to be an HTTP1.1 server and should
+   * support connection keepalive ... so we can test that the keeplive code
+   * correctly handles the case where the remote end drops the connection.
+   */
+  cont = [@"hello" dataUsingEncoding: NSASCIIStringEncoding];
+  resp = AUTORELEASE([[@"HTTP/1.1 200\r\nContent-Length: 5\r\n\r\n"
+    dataUsingEncoding: NSASCIIStringEncoding] mutableCopy]);
+  [resp appendData: cont];
+  [resp writeToFile: @"SimpleResponse.dat" atomically: YES];
+
+  str = [NSString stringWithFormat: @"%u", [resp length]];
+  t = [NSTask launchedTaskWithLaunchPath: respond
+    arguments: [NSArray arrayWithObjects:
+    @"-FileName", @"SimpleResponse.dat",
+    @"-Count", @"4",
+    nil]];
+  url = [NSURL URLWithString: @"http://localhost:4321/"];
+  if (t != nil)
+    {
+      // Pause to allow server subtask to set up.
+      [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.5]];
+      for (i = 0; i < 4; i++)
+        {
+	  char	buf[128];
+
+          // Talk to server.
+          data = [url resourceDataUsingCache: NO];
+          // Get status code
+          str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
+	  sprintf(buf, "respond with keepalive %d OK", i);
+	  pass([data isEqual: cont], buf);
+	  /* Allow remote end time to close socket.
+	   */
+          [NSThread sleepUntilDate:
+	    [NSDate dateWithTimeIntervalSinceNow: 0.01]];
+	}
+      /* Kill helper task and wait for it to finish */
+      [t terminate];
+      [t waitUntilExit];
+    }
+  
+  DESTROY(arp);
+  return 0;
+}

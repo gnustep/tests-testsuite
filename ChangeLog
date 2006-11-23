@@ -1,3 +1,15 @@
+2006-11-22  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSURL/Helpers:
+	* base/NSURL/Helpers/IGNORE:
+	* base/NSURL/Helpers/respond.m:
+	* base/NSURL/Helpers/GNUmakefile:
+	* base/NSURL/Helpers/capture.m:
+	* base/NSURL/GNUmakefile.preamble:
+	* base/NSURL/test00.m:
+	Add some new tests for incremental read of URL resource data
+	and to test that the remote end closing the connection when
+	keepalive is in use is handled.
 
 2006-11-16  Matt Rice  <ratmice@gmail.com>
 
