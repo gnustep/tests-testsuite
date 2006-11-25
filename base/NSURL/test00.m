@@ -52,6 +52,7 @@ int main()
       i = [resp length];
       while (i-- > 0)
         {
+	  NSAutoreleasePool	*pool = [NSAutoreleasePool new];
 	  char	buf[128];
 
           // Talk to server.
@@ -60,6 +61,7 @@ int main()
           str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
 	  sprintf(buf, "respond test %d OK", i);
 	  pass([data isEqual: cont], buf);
+	  [pool release];
 	}
       // Wait for server termination
       [t waitUntilExit];
@@ -88,6 +90,7 @@ int main()
       [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.5]];
       for (i = 0; i < 4; i++)
         {
+	  NSAutoreleasePool	*pool = [NSAutoreleasePool new];
 	  char	buf[128];
 
           // Talk to server.
@@ -96,6 +99,7 @@ int main()
           str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
 	  sprintf(buf, "respond with keepalive %d OK", i);
 	  pass([data isEqual: cont], buf);
+	  [pool release];
 	  /* Allow remote end time to close socket.
 	   */
           [NSThread sleepUntilDate:

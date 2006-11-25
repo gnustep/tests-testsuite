@@ -63,20 +63,40 @@ int main()
   pass(date1 == nil,
     "+dateWithString:calendarFormat:locale: objects to missing hours");
 
-  date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00 GMT+0100" 
-                          calendarFormat: @"%Y-%m-%d %HL%M:%S %Z"];
+  date1 = [NSCalendarDate dateWithString: @"1999-12-00 00:00:00" 
+                          calendarFormat: val2];
   pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: objects to zero day");
+
+  date1 = [NSCalendarDate dateWithString: @"1999-00-01 00:00:00" 
+                          calendarFormat: val2];
+  pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: objects to zero month");
+
+  date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00" 
+                          calendarFormat: @"%Y-%m-%d %H:%M:%S %Z"];
+  pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: objects to missing timezone");
+
+  date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00 this_is_a_ridiculously_long_timezone_name_and_is_in_fact_designed_to_exceed_the_one_hundred_and_twenty_bytes_temporary_data_buffer_size_used_within_the_gnustep_base_method_which_parses_it" 
+                          calendarFormat: @"%Y-%m-%d %H:%M:%S %Z"];
+  pass(date1 == nil,
+    "+dateWithString:calendarFormat:locale: objects to long timezone");
+
+  date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00 GMT+0100" 
+                          calendarFormat: @"%Y-%m-%d %H:%M:%S %Z"];
+  pass(date1 != nil,
     "+dateWithString:calendarFormat:locale: handles GMT+0100 timezone");
 
   date1 = [NSCalendarDate dateWithString: @"1999-12-31 00:00:00 GMT-0100" 
-                          calendarFormat: @"%Y-%m-%d %HL%M:%S %Z"];
-  pass(date1 == nil,
+                          calendarFormat: @"%Y-%m-%d %H:%M:%S %Z"];
+  pass(date1 != nil,
     "+dateWithString:calendarFormat:locale: handles GMT-0100 timezone");
 
   date1 = [NSCalendarDate dateWithString:
     @"1999-12-31 00:00:00 Africa/Addis_Ababa" 
-                          calendarFormat: @"%Y-%m-%d %HL%M:%S %Z"];
-  pass(date1 == nil,
+                          calendarFormat: @"%Y-%m-%d %H:%M:%S %Z"];
+  pass(date1 != nil,
     "+dateWithString:calendarFormat:locale: handles Africa/Addis_Ababa");
 
   date1 = [NSCalendarDate dateWithString: @"1999-12-31 23:59:59" 

@@ -23,6 +23,12 @@
 # summary is written to tests.sum, a log to tests.log, and a brief summary
 # to stdout.
 
+if [ ! "$GNUSTEP_MAKEFILES" ]
+then
+  echo "You need to have GNUstep-make installed and set up."
+  echo "Did you remeber to source GNUstep.sh?"
+fi
+
 # Argument checking
 while test $# != 0
 do
