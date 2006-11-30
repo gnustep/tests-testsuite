@@ -11,6 +11,7 @@
   BOOL		writable;
   unsigned	writeLen;
   unsigned	count;
+  double        pause;
 }
 - (int) runTest;
 @end
@@ -42,7 +43,9 @@
   if (port == 0) port = 4321;
 
   count = [[defs stringForKey: @"Count"] intValue];
-  if (count == 0) count = 1;
+  if (count <= 0) count = 1;
+
+  pause = [defs floatForKey: @"Pause"];
 
   file = [defs stringForKey: @"FileName"];
   if (file == nil) file = @"Respond.dat";
@@ -72,7 +75,7 @@
   [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [serverStream open];
 
-  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 60]];
 
   return 0;
 }
@@ -100,11 +103,11 @@
 		[op removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 		op = nil;
 	      }
-	    written = 0;	// Nothing written yet on this connection.
             [(GSServerStream*)theStream acceptWithInputStream: &ip
 						 outputStream: &op];
             if (ip)   // it is ok to accept nothing
               {
+	        written = 0;	// Nothing written yet on this connection.
                 RETAIN(ip);
                 RETAIN(op);
                 [ip scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
@@ -113,6 +116,7 @@
                 [op setDelegate: self];
                 [ip open];
                 [op open];
+//		NSLog(@"Accept %d", count);
 		if (count > 0)
 		  {
 		    count--;
@@ -136,6 +140,10 @@
 		    writeLen--;
 		  }
               }
+	    else
+	      {
+	        NSLog(@"Accept returned nothing");
+	      }
           }
         else if (theStream == ip)
           {
@@ -170,12 +178,20 @@
 	        length = writeLen;
 	      }
 
-	    /* Just pause for a very short time to try to stop the operating
-	     * system from combining individual writes ... because we want
-	     * the remote end to have to deal with separate reads.
-	     */
-	    [NSThread sleepUntilDate:
-	      [NSDate dateWithTimeIntervalSinceNow: 0.0001]];
+	    /* We now pause for the time (in sec) specified.  Even if
+	     * the time is zero or less we still have a small pause, to try to
+	     * coerce the OS into separating the write events.
+             */
+	    if (pause <= 0)
+	      {
+		[NSThread sleepUntilDate:
+		  [NSDate dateWithTimeIntervalSinceNow: 0.0001]];
+	      }
+	    else
+	      {
+		[NSThread sleepUntilDate:
+		  [NSDate dateWithTimeIntervalSinceNow: pause]];
+	      }
 
 	    length = [op write: [content bytes] + written maxLength: length];
 	    if (length <= 0)
@@ -198,16 +214,19 @@
 		[ip removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 		ip = nil;
 	      }
+//	    NSLog(@"Done writing %d", count+1);
 	  }
         break;
       }
     case NSStreamEventEndEncountered: 
       {
+        NSAssert(ip == theStream || op == theStream,
+	  NSInternalInconsistencyException);
         [theStream close];
 	[theStream removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 	if (theStream == ip) ip = nil;
 	if (theStream == op) op = nil;
-//        NSLog(@"Server close %p", theStream);
+//      NSLog(@"Server close %p", theStream);
         break;
       }
 
@@ -215,15 +234,19 @@
       {
         int	code = [[theStream streamError] code];
 
+        NSLog(@"Error on %p code is %d", theStream, code);
         [theStream close];
 	[theStream removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 	if (theStream == ip) ip = nil;
 	if (theStream == op) op = nil;
-        NSAssert1(1, @"Error! code is %d", code);
         break;
       }  
 
+    case NSStreamEventOpenCompleted: 
+      break;
+
     default: 
+      NSLog(@"Unexpected event %d on %p", streamEvent, theStream);
       break;
     }
 } 

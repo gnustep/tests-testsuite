@@ -1,3 +1,12 @@
+2006-11-30  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSURL/Helpers/respond.m:
+	* base/NSURL/test00.m:
+	* base/NSURL/basic.m:
+	Add some more tests for some basic NSURL functionality and for
+	keepalives, mostly based on additional tests contributed by
+	Graham J Lee.
+
 2006-11-22  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSURL/Helpers:

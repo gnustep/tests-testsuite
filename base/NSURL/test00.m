@@ -6,7 +6,7 @@
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
-  unsigned	i;
+  unsigned	i, j;
   NSURL		*url;
   NSData	*data;
   NSMutableData	*resp;
@@ -22,6 +22,8 @@ int main()
   helpers = [helpers stringByAppendingPathComponent: @"obj"];
   capture = [helpers stringByAppendingPathComponent: @"capture"];
   respond = [helpers stringByAppendingPathComponent: @"respond"];
+
+  url = [NSURL URLWithString: @"http://localhost:4321/"];
 
   /* Ask the 'respond' helper to send back a response containing
    * 'hello' and to shrink the write buffer size it uses on each
@@ -44,7 +46,6 @@ int main()
     @"-Shrink", @"YES",
     @"-Count", str,
     nil]];
-  url = [NSURL URLWithString: @"http://localhost:4321/"];
   if (t != nil)
     {
       // Pause to allow server subtask to set up.
@@ -78,38 +79,42 @@ int main()
   [resp writeToFile: @"SimpleResponse.dat" atomically: YES];
 
   str = [NSString stringWithFormat: @"%u", [resp length]];
-  t = [NSTask launchedTaskWithLaunchPath: respond
-    arguments: [NSArray arrayWithObjects:
-    @"-FileName", @"SimpleResponse.dat",
-    @"-Count", @"4",
-    nil]];
-  url = [NSURL URLWithString: @"http://localhost:4321/"];
-  if (t != nil)
-    {
-      // Pause to allow server subtask to set up.
-      [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.5]];
-      for (i = 0; i < 4; i++)
-        {
-	  NSAutoreleasePool	*pool = [NSAutoreleasePool new];
-	  char	buf[128];
 
-          // Talk to server.
-          data = [url resourceDataUsingCache: NO];
-          // Get status code
-          str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
-	  sprintf(buf, "respond with keepalive %d OK", i);
-	  pass([data isEqual: cont], buf);
-	  [pool release];
-	  /* Allow remote end time to close socket.
-	   */
-          [NSThread sleepUntilDate:
-	    [NSDate dateWithTimeIntervalSinceNow: 0.01]];
-	}
-      /* Kill helper task and wait for it to finish */
-      [t terminate];
-      [t waitUntilExit];
+  for (j = 0; j < 13 ; j += 4)
+    {
+      NSString *delay = [NSString stringWithFormat: @"%u", j];
+
+      t = [NSTask launchedTaskWithLaunchPath: respond
+         arguments: [NSArray arrayWithObjects:
+	         @"-FileName", @"SimpleResponse.dat",
+		 @"-Count", @"4", @"-Pause", delay,
+		 nil]];      
+      if (t != nil)
+        {
+          // Pause to allow server subtask to set up.
+          [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.5]];
+          for (i = 0; i < 4; i++)
+            {
+	      NSAutoreleasePool	*pool = [NSAutoreleasePool new];
+	      char	buf[128];
+
+              // Talk to server.
+              data = [url resourceDataUsingCache: NO];
+              // Get status code
+              str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
+	      sprintf(buf, "respond with keepalive %d (pause %d) OK", i, j);
+	      pass([data isEqual: cont], buf);
+	      [pool release];
+	      /* Allow remote end time to close socket.
+	       */
+              [NSThread sleepUntilDate:
+	        [NSDate dateWithTimeIntervalSinceNow: 0.1]];
+	    }
+          /* Kill helper task and wait for it to finish */
+          [t terminate];
+          [t waitUntilExit];
+        }
     }
-  
   DESTROY(arp);
   return 0;
 }
