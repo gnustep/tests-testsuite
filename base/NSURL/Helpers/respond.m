@@ -185,7 +185,7 @@
 	    if (pause <= 0)
 	      {
 		[NSThread sleepUntilDate:
-		  [NSDate dateWithTimeIntervalSinceNow: 0.0001]];
+		  [NSDate dateWithTimeIntervalSinceNow: 0.00001]];
 	      }
 	    else
 	      {

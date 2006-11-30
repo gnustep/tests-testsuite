@@ -6,17 +6,18 @@
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
-  unsigned	i, j;
-  NSURL		*url;
-  NSURL		*u;
-  NSData	*data;
-  NSMutableData	*resp;
-  NSData	*cont;
-  NSString	*str;
-  NSTask	*t;
-  NSString	*helpers;
-  NSString	*capture;
-  NSString	*respond;
+  unsigned		i, j;
+  NSURL			*url;
+  NSURL			*u;
+  NSData		*data;
+  NSMutableData		*resp;
+  NSData		*cont;
+  NSString		*str;
+  NSMutableString	*m;
+  NSTask		*t;
+  NSString		*helpers;
+  NSString		*capture;
+  NSString		*respond;
   
   helpers = [[NSFileManager defaultManager] currentDirectoryPath];
   helpers = [helpers stringByAppendingPathComponent: @"Helpers"];
@@ -34,7 +35,12 @@ int main()
    * This tests that the URL loading code can handle a request
    * that arrives fragmented rather than in a single read.
    */
-  cont = [@"hello" dataUsingEncoding: NSASCIIStringEncoding];
+  m = [NSMutableString stringWithCapacity: 2048];
+  for (i = 0; i < 128; i++)
+    {
+      [m appendFormat: @"Hello %d\r\n", i];
+    }
+  cont = [m dataUsingEncoding: NSASCIIStringEncoding];
   resp = AUTORELEASE([[@"HTTP/1.0 200\r\n\r\n"
     dataUsingEncoding: NSASCIIStringEncoding] mutableCopy]);
   [resp appendData: cont];
@@ -57,12 +63,12 @@ int main()
 	  NSAutoreleasePool	*pool = [NSAutoreleasePool new];
 	  char	buf[128];
 
-	  /* Just to test caching of url handles, we use seventeen
+	  /* Just to test caching of url handles, we use eighteen
 	   * different URLs (we know the cache size is 16) to ensure
 	   * that loads work when handles are flushed from the cache.
 	   */
 	  u = [NSURL URLWithString: [NSString stringWithFormat:
-	    @"http://localhost:4321/%d", i%17]];
+	    @"http://localhost:4321/%d", i % 18]];
           // Talk to server.
           data = [u resourceDataUsingCache: NO];
           // Get status code
@@ -99,7 +105,7 @@ int main()
       if (t != nil)
         {
           // Pause to allow server subtask to set up.
-          [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 0.5]];
+          [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 1.0]];
           for (i = 0; i < 4; i++)
             {
 	      NSAutoreleasePool	*pool = [NSAutoreleasePool new];
