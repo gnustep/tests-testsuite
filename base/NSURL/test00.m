@@ -100,13 +100,13 @@ int main()
       t = [NSTask launchedTaskWithLaunchPath: respond
          arguments: [NSArray arrayWithObjects:
 	         @"-FileName", @"SimpleResponse.dat",
-		 @"-Count", @"4", @"-Pause", delay,
+		 @"-Count", @"2", @"-Pause", delay,
 		 nil]];      
       if (t != nil)
         {
           // Pause to allow server subtask to set up.
           [NSThread sleepUntilDate: [NSDate dateWithTimeIntervalSinceNow: 1.0]];
-          for (i = 0; i < 4; i++)
+          for (i = 0; i < 2; i++)
             {
 	      NSAutoreleasePool	*pool = [NSAutoreleasePool new];
 	      char	buf[128];
