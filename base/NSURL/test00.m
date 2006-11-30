@@ -8,6 +8,7 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
   unsigned	i, j;
   NSURL		*url;
+  NSURL		*u;
   NSData	*data;
   NSMutableData	*resp;
   NSData	*cont;
@@ -56,10 +57,16 @@ int main()
 	  NSAutoreleasePool	*pool = [NSAutoreleasePool new];
 	  char	buf[128];
 
+	  /* Just to test caching of url handles, we use seventeen
+	   * different URLs (we know the cache size is 16) to ensure
+	   * that loads work when handles are flushed from the cache.
+	   */
+	  u = [NSURL URLWithString: [NSString stringWithFormat:
+	    @"http://localhost:4321/%d", i%17]];
           // Talk to server.
-          data = [url resourceDataUsingCache: NO];
+          data = [u resourceDataUsingCache: NO];
           // Get status code
-          str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
+          str = [u propertyForKey: NSHTTPPropertyStatusCodeKey];
 	  sprintf(buf, "respond test %d OK", i);
 	  pass([data isEqual: cont], buf);
 	  [pool release];
