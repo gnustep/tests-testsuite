@@ -1,3 +1,10 @@
+2006-12-05  Graham J Lee <leeg@thaesofereode.info>
+
+	* base/NSURL/Helpers/keepalive.m: test for keepalive connection drops
+	* base/NSURL/Helpers/GNUmakefile: buiuld keepalive
+	* base/NSURL/test01.m: test keepalive connection drops
+	* base/NSURL/basic.m: test for return with bad url string
+
 2006-11-30  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSURL/Helpers/respond.m:

@@ -34,6 +34,9 @@ int main()
   pass([str isEqual: @"200"],
     "Status of load is 200 for www.w3.org");
 
+  url = [NSURL URLWithString:@"this isn't a URL"];
+  pass(url == nil, "URL with 'this isn't a URL' returns nil");
+
   url = [NSURL URLWithString: @"http://www.w3.org/silly-file-name"];
   data = [url resourceDataUsingCache: NO];
   str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
@@ -49,6 +52,7 @@ int main()
   str = [url path];
   pass([str isEqual: @"/silly-file-name"],
     "Path of http://www.w3.org/silly-file-name is /silly-file-name");
+
   DESTROY(arp);
   return 0;
 }
