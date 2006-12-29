@@ -51,6 +51,11 @@ int main()
 
   pass([str isEqual: @"NaN"], "notANumber special case");
 
+  [fmt setFormat: @"0"];
+  str = [fmt stringForObjectValue: num];
+
+  pass([str isEqual: @"-1235"], "format string of length 1");
+
   DESTROY(arp);
   return 0;
 }
