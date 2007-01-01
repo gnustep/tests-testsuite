@@ -1,3 +1,7 @@
+2007-01-01  Matt Rice  <ratmice@gmail.com>
+
+	* gdl2/README: New file.
+
 2006-12-29  Graham J Lee <leeg@thaesofereode.info>
 	* base/NSNumberFormatter/basic.m:
 	test for fix to issue with format strings of length 1, reported by

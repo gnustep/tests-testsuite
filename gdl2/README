@@ -1,0 +1,20 @@
+Currently the gdl2 testsuite requires multiple runs to test multiple adaptors
+by default it attempts to run with the 'PostgreSQL' adaptor.
+
+The adaptor can be set in 2 ways.
+From the toplevel testsuite directory:
+
+TEST_ADAPTOR="PostgreSQL" ./runtests.sh gdl2
+TEST_ADAPTOR="SQLite3" ./runtests.sh gdl2
+
+Additionally you can change the default adaptor with
+
+defaults write NSGlobalDomain GDL2TestAdaptorName 'SQLite3'
+./runtests.sh gdl2
+
+Ideally we would like to have the tests run dynamically with all available
+adaptors in a single run. So this can be considered an interim solution.
+
+Running the testsuite with third party EOAdaptors is not supported,
+you will at least need to add prototypes for the adaptor
+to TSTTradingModel.eomodeld.
