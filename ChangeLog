@@ -1,5 +1,9 @@
 2007-01-25  Graham Lee <leeg@thaesofereode.info>
 
+	* base/NSURLHandle/test00.m: simple tests of the NSURLHandleClient protocol
+
+2007-01-25  Graham Lee <leeg@thaesofereode.info>
+
 	* base/NSURLHandle/basic.m: new file, basic test of URL handles.
 
 2006-01-02  Matt Rice  <ratmice@gmail.com>
