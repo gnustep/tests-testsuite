@@ -1,6 +1,11 @@
+2006-02-19  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* runtests.sh: Use gnustep-config to set up build environment
+
 2007-01-25  Graham Lee <leeg@thaesofereode.info>
 
-	* base/NSURLHandle/test00.m: simple tests of the NSURLHandleClient protocol
+	* base/NSURLHandle/test00.m: simple tests of the NSURLHandleClient
+	protocol
 
 2007-01-25  Graham Lee <leeg@thaesofereode.info>
 
