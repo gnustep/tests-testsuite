@@ -24,14 +24,13 @@
 # to stdout.
 
 if test -z "$GNUSTEP_MAKEFILES"; then
-  GNUSTEP_MAKEFILES=`gnustep-config GNUSTEP_MAKEFILES 2>/dev/null`
-fi 
-
-if test -z "$GNUSTEP_MAKEFILES"; then
-  echo "You need to have GNUstep-make installed and set up."
-  echo "Did you remember to source GNUstep.sh?"
-else
-  . $GNUSTEP_MAKEFILES/GNUstep.sh
+  GNUSTEP_MAKEFILES=`gnustep-config --variable=GNUSTEP_MAKEFILES 2>/dev/null`
+  if test -z "$GNUSTEP_MAKEFILES"; then
+    echo "You need to have GNUstep-make installed and set up."
+    echo "Did you remember to source GNUstep.sh?"
+  else
+    . $GNUSTEP_MAKEFILES/GNUstep.sh
+  fi
 fi
 
 # Argument checking

@@ -1,3 +1,9 @@
+2006-02-20  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* runtests.sh: Update gnustep-config argument.  Only source
+	GNUstep.sh if GNUSTEP_MAKEFILES was not defined.
+	* runtest.sh: Ditto
+
 2006-02-19  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* runtests.sh: Use gnustep-config to set up build environment

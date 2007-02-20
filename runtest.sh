@@ -50,6 +50,16 @@ then
   echo ERROR: $0: No test given
 fi
 
+if test -z "$GNUSTEP_MAKEFILES"; then
+  GNUSTEP_MAKEFILES=`gnustep-config --variable=GNUSTEP_MAKEFILES 2>/dev/null`
+  if test -z "$GNUSTEP_MAKEFILES"; then
+    echo "You need to have GNUstep-make installed and set up."
+    echo "Did you remember to source GNUstep.sh?"
+  else
+    . $GNUSTEP_MAKEFILES/GNUstep.sh
+  fi
+fi
+
 DIR=`dirname $1`
 NAME=`basename $1`
 if [ ! "$MAKE_CMD" ]
