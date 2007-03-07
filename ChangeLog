@@ -1,5 +1,12 @@
 2007-03-07  Graham Lee <leeg@thaesofereode.info>
 
+	* base/NSURLHandle/Helpers/StatusServer.m: add support for HEAD
+	requests.  This is done in a deliberately loose fashion, so that
+	we can emulate a misconfigured server by passing a request like
+	"GET /200/HEAD", which will not return a body in the response.
+
+2007-03-07  Graham Lee <leeg@thaesofereode.info>
+
 	* base/NSURLHandle/test01.m: new file.  test of various HTTP
 	return codes.
 	* base/NSURLHandle/GNUmakefile.preamble: ditto

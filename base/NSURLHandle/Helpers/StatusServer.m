@@ -117,7 +117,7 @@
   NSStream       *serverStream;
   unsigned       port = [[defs stringForKey: @"Port"] intValue];
 
-  if (0 == port) port = 54321;
+  if (0 == port) port = PORT_LISTEN;
 
   serverStream = [GSServerStream serverStreamToAddr: [host address]
 				 port: port];
@@ -271,23 +271,26 @@
 	  }
 	[response appendBytes: "\r\n" length: 2];
 	//do we need to add the body part?
-	statusCode = [retCode intValue];
-	
-	switch (statusCode)
-	  {
-	  case 200:
-	  case 400:
-	  case 401:
-	  case 403:
-	  case 404:
-	  case 500:
-	  case 501:
-	    [response appendBytes: [body cString] length: [body length]];
-	    break;
-	  default:
-	    break;
-	  }
 
+	if([req rangeOfString: @"HEAD"].location == NSNotFound)
+	  {
+	    statusCode = [retCode intValue];
+	
+	    switch (statusCode)
+	      {
+	      case 200:
+	      case 400:
+	      case 401:
+	      case 403:
+	      case 404:
+	      case 500:
+	      case 501:
+		[response appendBytes: [body cString] length: [body length]];
+		break;
+	      default:
+		break;
+	      }
+	  }
 	// send this response and close the stream
 	[op write: [response bytes] maxLength: [response length]];
 	[op close];
