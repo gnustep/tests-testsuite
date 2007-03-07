@@ -1,3 +1,12 @@
+2007-03-07  Graham Lee <leeg@thaesofereode.info>
+
+	* base/NSURLHandle/test01.m: new file.  test of various HTTP
+	return codes.
+	* base/NSURLHandle/GNUmakefile.preamble: ditto
+	* base/NSURLHandle/Helpers/StatusServer.m: ditto
+	* base/NSURLHandle/Helpers/GNUmakefile: ditto
+	* base/NSURLHandle/Helpers/IGNORE: new file.
+	
 2006-02-20  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* runtests.sh: Update gnustep-config argument.  Only source
