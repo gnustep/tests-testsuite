@@ -50,7 +50,6 @@ int main(int argc, char **argv)
       rxd = [handle loadInForeground];
       pass([handle status] == NSURLHandleNotLoaded,
            "401 - status: Handle load not loaded (unanswered auth challenge)");
-      NSLog(@"WWW-Authenticate: %@", [handle propertyForKey: @"WWW-Authenticate"]);
     }
   
   DESTROY(arp) ;
