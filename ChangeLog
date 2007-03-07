@@ -1,4 +1,7 @@
 2007-03-07  Graham Lee <leeg@thaesofereode.info>
+	* base/NSURLHandle/test01.m: test for HTTP 404 status.
+
+2007-03-07  Graham Lee <leeg@thaesofereode.info>
 
 	* base/NSURLHandle/Helpers/StatusServer.m: add support for HEAD
 	requests.  This is done in a deliberately loose fashion, so that

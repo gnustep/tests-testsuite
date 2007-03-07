@@ -50,6 +50,12 @@ int main(int argc, char **argv)
       rxd = [handle loadInForeground];
       pass([handle status] == NSURLHandleNotLoaded,
            "401 - status: Handle load not loaded (unanswered auth challenge)");
+
+      url = [NSURL URLWithString: @"http://localhost:54321/404"];
+      handle = [[[cls alloc] initWithURL: url cached: NO] autorelease];
+      rxd = [handle loadInForeground];
+      pass([handle status] == NSURLHandleNotLoaded,
+	   "404 - status: Handle load not loaded (resource not found)");
     }
   
   DESTROY(arp) ;
