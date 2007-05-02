@@ -1,4 +1,9 @@
-2006-04-15  Richard Frith-Macdonald  <rfm@gnu.org>
+2007-05-02  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/EODataSource/test00.m: Add format for dates.
+	Remove adaptor iterarion stub code.
+	
+2007-04-15  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSBundle/resources.m: Add some checks for behavior with
 	nil/empty resource names and types.  Also tidied to coding standards.

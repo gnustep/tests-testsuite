@@ -22,7 +22,7 @@
   
  */
 
-#include <Foundation/NSAutoreleasePool.h>
+#include <Foundation/Foundation.h>
 #include <EOControl/EOControl.h>
 #include <EOAccess/EOAccess.h>
 
@@ -42,14 +42,8 @@ int main(int argc,char **argv)
   EODetailDataSource *detailDS = nil;
 
   id tmp = nil, tmp1 = nil, tmp2 = nil, tmp3 = nil;
-  unsigned i,c;
   volatile BOOL result = NO;
-  unsigned adaptorI, adaptorC;
-  NSArray *adaptors = [EOAdaptor availableAdaptorNames];
- 
-  for (adaptorI = 0, adaptorC = [adaptors count]; i < c; i++)
-  {
-    NSString *adaptorName = [adaptors objectAtIndex:adaptorI];
+
   START_SET(YES);
 
   /* Setup the database */
@@ -95,7 +89,8 @@ int main(int argc,char **argv)
   tmp = [orderEnt classDescriptionForInstances];
   tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
   [ec insertObject: tmp1];
-  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"] forKey: @"date"];
+  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"
+				   calendarFormat:@"%Y-%m-%d"] forKey: @"date"];
   START_TEST(YES);
   [masterDS insertObject: tmp1];
   START_SET(YES);
@@ -120,7 +115,8 @@ int main(int argc,char **argv)
   tmp1 = [tmp createInstanceWithEditingContext: ec globalID: nil zone: 0];
   [ec insertObject: tmp1];
   [tmp1 takeValue: @"HOWTOs" forKey: @"name"];
-  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"] forKey: @"date"];
+  [tmp1 takeValue: [NSCalendarDate dateWithString:@"2002-02-02"
+				   calendarFormat:@"%Y-%m-%d"] forKey: @"date"];
 
   productEnt = [model entityNamed: @"Product"];
   tmp = [productEnt classDescriptionForInstances];
@@ -168,7 +164,7 @@ int main(int argc,char **argv)
   dropDatabaseWithModel(model);
 
   END_SET("EODataSource/test00.m");
-  }
+
   [pool release];
   return (0);
 }
