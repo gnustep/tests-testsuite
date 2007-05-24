@@ -1,3 +1,8 @@
+2007-05-24  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSAffineTransform/basic.m
+	Add tests for translation and rotation.
+
 2007-05-02  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EODataSource/test00.m: Add format for dates.
