@@ -47,6 +47,16 @@ int main()
   p = [testObj transformPoint: NSMakePoint(10,10)];
   pass(p.x == 0.0 && p.y == 20.0, "translate and rotate works");
   
+  testObj = [NSAffineTransform transform];
+
+  [testObj rotateByDegrees: 90.0];
+  p = [testObj transformPoint: NSMakePoint(10,10)];
+  pass(p.x == -10.0 && p.y == 10.0, "simple rotate works");
+  
+  [testObj translateXBy: 5.0 yBy: 6.0];
+  p = [testObj transformPoint: NSMakePoint(10,10)];
+  pass(p.x == -16.0 && p.y == 15.0, "rotate and translate works");
+
   DESTROY(arp);
   return 0;
 }
