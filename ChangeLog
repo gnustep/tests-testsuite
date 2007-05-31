@@ -1,3 +1,7 @@
+2007-05-30  Chris Farber <chris@chrisfarber.net>
+
+        * base/KVC: New tests
+
 2007-05-24  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSAffineTransform/basic.m
