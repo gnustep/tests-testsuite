@@ -151,12 +151,22 @@ int main()
   TEST_EXCEPTION(
     [tester setValue:@"" forKey:@"nonexistent"],
     @"NSUnknownKeyException", YES,
-    "KVC properly throws NSUnknownKeyException");
+    "KVC properly throws @\"NSUnknownKeyException\"");
+
+  TEST_EXCEPTION(
+    [tester setValue:@"" forKey:@"nonexistent"],
+    NSUndefinedKeyException, YES,
+    "KVC properly throws NSUndefinedKeyException");
 
   TEST_EXCEPTION(
     [tester setValue:@"" forKeyPath:@"child.nonexistent"],
     @"NSUnknownKeyException", YES,
-    "KVC properly throws NSUnknownKeyException with key paths");
+    "KVC properly throws @\"NSUnknownKeyException\" with key paths");
+
+  TEST_EXCEPTION(
+    [tester setValue:@"" forKeyPath:@"child.nonexistent"],
+    NSUndefinedKeyException, YES,
+    "KVC properly throws NSUndefinedKeyException with key paths");
 
   DESTROY(arp);
   return 0;
