@@ -56,16 +56,29 @@ int main()
     if ([[localException name] isEqualToString:NSInvalidArgumentException])
       passed = YES;
   NS_ENDHANDLER
-  pass(passed, "NSKeyValueCoding handles setting nil for a scalar");
+  pass(passed, "KVC handles setting nil for a scalar");
+
+  NS_DURING
+    [defaultNil takeValue:nil forKey:@"num"];
+  NS_HANDLER
+    if ([[localException name] isEqualToString:NSInvalidArgumentException])
+      passed = YES;
+  NS_ENDHANDLER
+  pass(passed, "KVC handles setting nil for a scalar via takeValue:");
 
   [setNil setValue:nil forKey:@"num"];
   pass([[setNil valueForKey:@"num"] intValue] == 0,
-    "NSKeyValueCoding uses setNilValueForKey:");
+    "KVC uses setNilValueForKey:");
+
+  TEST_EXCEPTION(
+      [setNil takeValue:nil forKey:@"num"],
+      NSInvalidArgumentException, YES,
+      "KVC properly throws NSInvalidArgumentException for takeValue:nil");
+
 
   [deprecatedNil setValue:nil forKey:@"num"];
   pass([[deprecatedNil valueForKey:@"num"] intValue] == 0,
-    "NSKeyValueCoding uses deprecated unableToSetNilForKey:");
-
+    "KVC uses deprecated unableToSetNilForKey:");
 
   DESTROY(arp);
   return 0;

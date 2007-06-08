@@ -214,6 +214,10 @@ int main()
        [[dict objectForKey:@"world"] isEqual:@"hello"],
        "-setObject:forKey: is ok");
 
+  [dict setValue:@"hello" forKey:@"Lücke"];
+  pass([[dict valueForKey:@"Lücke"] isEqualToString:@"hello"],
+      "unicode keys work with setValue:forKey:");
+
   DESTROY(arp);
   return 0;
 }

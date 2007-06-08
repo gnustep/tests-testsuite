@@ -48,12 +48,76 @@
 }
 @end
 
+@interface UndefinedKey : NSObject
+{
+  int num1;
+  NSString * string;
+}
+@end
+
+@implementation UndefinedKey
+- (void)dealloc
+{
+  [string release];
+  [super dealloc];
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+  if ([key isEqualToString:@"Lücke"]) {
+    [string release];
+    string = [value copy];
+  }
+}
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+  if ([key isEqualToString:@"Lücke"]) {
+    return string;
+  }
+}
+
+@end
+
+@interface UndefinedKey2 : NSObject
+{
+  int num1;
+  NSString * string;
+}
+@end
+
+@implementation UndefinedKey2
+- (void)dealloc
+{
+  [string release];
+  [super dealloc];
+}
+
+- (void)handleTakeValue:(id)value forUnboundKey:(NSString *)key
+{
+  if ([key isEqualToString:@"Lücke"]) {
+    [string release];
+    string = [value copy];
+  }
+}
+
+- (id)handleQueryWithUnboundKey:(NSString *)key
+{
+  if ([key isEqualToString:@"Lücke"]) {
+    return string;
+  }
+}
+
+@end
+
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
 
-  TestClass * tester = [[TestClass alloc] init];
+  TestClass * tester = [[[TestClass alloc] init] autorelease];
   [tester setValue:[[[TestClass alloc] init] autorelease] forKey:@"child"];
+  UndefinedKey * undefinedKey = [[[UndefinedKey alloc] init] autorelease];
+  UndefinedKey2 * undefinedKey2 = [[[UndefinedKey2 alloc] init] autorelease];
 
   NSNumber * n = [NSNumber numberWithInt:8];
   NSNumber * adjustedN = [NSNumber numberWithInt:7];
@@ -61,27 +125,38 @@ int main()
 
   [tester setValue:@"tester" forKey:@"name"];
   pass([[tester valueForKey:@"name"] isEqualToString:@"tester"],
-      "NSKeyValueCoding works with strings");
+      "KVC works with strings");
   [tester setValue:n forKey:@"num1"];
   pass([[tester valueForKey:@"num1"] isEqualToNumber:n],
-      "NSKeyValueCoding works with ints");
+      "KVC works with ints");
   [tester setValue:n2 forKey:@"num2"];
   pass([[tester valueForKey:@"num2"] isEqualToNumber:n2],
-      "NSKeyValueCoding works with doubles");
-
-  [tester setValue:n2 forKeyPath:@"child.num2"];
-  pass([[tester valueForKeyPath:@"child.num2"] isEqualToNumber:n2],
-      "NSKeyValueCoding works with paths");
+      "KVC works with doubles");
 
   [tester setValue:n forKey:@"num3"];
   pass([[tester valueForKey:@"num3"] isEqualToNumber:adjustedN],
-      "NSKeyValueCoding works with setKey:");
+      "KVC works with setKey:");
   [tester setValue:n forKey:@"num4"];
   pass([[tester valueForKey:@"num4"] isEqualToNumber:adjustedN],
-      "NSKeyValueCoding works with _setKey:");
+      "KVC works with _setKey:");
 
+  [undefinedKey setValue:@"GNUstep" forKey:@"Lücke"];
+  pass([[undefinedKey valueForKey:@"Lücke"] isEqualToString:@"GNUstep"],
+      "KVC works with undefined keys");
 
-  [tester release];
+  [undefinedKey2 setValue:@"GNUstep" forKey:@"Lücke"];
+  pass([[undefinedKey2 valueForKey:@"Lücke"] isEqualToString:@"GNUstep"],
+      "KVC works with undefined keys (using deprecated methods)");
+
+  TEST_EXCEPTION(
+    [tester setValue:@"" forKey:@"nonexistent"],
+    @"NSUnknownKeyException", YES,
+    "KVC properly throws NSUnknownKeyException");
+
+  TEST_EXCEPTION(
+    [tester setValue:@"" forKeyPath:@"child.nonexistent"],
+    @"NSUnknownKeyException", YES,
+    "KVC properly throws NSUnknownKeyException with key paths");
 
   DESTROY(arp);
   return 0;
