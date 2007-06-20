@@ -1,3 +1,7 @@
+2007-06-20  Fred Kiefer <FredKiefer@gmx.de>
+
+	* base/NSPredicate: New tests based on code by Yen-Ju Chen.
+
 2007-06-08  Chris Farber <chris@chrisfarber.net>
 
         * base/KVC: More new tests
