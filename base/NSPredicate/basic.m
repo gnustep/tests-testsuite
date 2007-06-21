@@ -16,6 +16,17 @@ testKVC(NSDictionary *dict)
 }
 
 void
+testContains(NSDictionary *dict)
+{
+  NSPredicate *p;
+
+	p = [NSPredicate predicateWithFormat: @"%@ CONTAINS %@", @"AABBBAA", @"BBB"];
+	pass([p evaluateWithObject: dict], "%%@ CONTAINS %%@");
+	p = [NSPredicate predicateWithFormat: @"%@ IN %@", @"BBB", @"AABBBAA"];
+	pass([p evaluateWithObject: dict], "%%@ IN %%@");
+}
+
+void
 testString(NSDictionary *dict)
 {
   NSPredicate *p;
@@ -37,12 +48,34 @@ testInteger(NSDictionary *dict)
 
 	p = [NSPredicate predicateWithFormat: @"%K == %d", @"Record1.Age", 34];
 	pass([p evaluateWithObject: dict], "%%K == %%d");
+	p = [NSPredicate predicateWithFormat: @"%K = %@", @"Record1.Age", [NSNumber numberWithInt: 34]];
+	pass([p evaluateWithObject: dict], "%%K = %%@");
+	p = [NSPredicate predicateWithFormat: @"%K == %@", @"Record1.Age", [NSNumber numberWithInt: 34]];
+	pass([p evaluateWithObject: dict], "%%K == %%@");
 	p = [NSPredicate predicateWithFormat: @"%K < %d", @"Record1.Age", 40];
 	pass([p evaluateWithObject: dict], "%%K < %%d");
+	p = [NSPredicate predicateWithFormat: @"%K < %@", @"Record1.Age", [NSNumber numberWithInt: 40]];
+	pass([p evaluateWithObject: dict], "%%K < %%@");
+	p = [NSPredicate predicateWithFormat: @"%K <= %@", @"Record1.Age", [NSNumber numberWithInt: 40]];
+	pass([p evaluateWithObject: dict], "%%K <= %%@");
+	p = [NSPredicate predicateWithFormat: @"%K <= %@", @"Record1.Age", [NSNumber numberWithInt: 34]];
+	pass([p evaluateWithObject: dict], "%%K <= %%@");
+	p = [NSPredicate predicateWithFormat: @"%K > %@", @"Record1.Age", [NSNumber numberWithInt: 20]];
+	pass([p evaluateWithObject: dict], "%%K > %%@");
+	p = [NSPredicate predicateWithFormat: @"%K >= %@", @"Record1.Age", [NSNumber numberWithInt: 34]];
+	pass([p evaluateWithObject: dict], "%%K >= %%@");
+	p = [NSPredicate predicateWithFormat: @"%K >= %@", @"Record1.Age", [NSNumber numberWithInt: 20]];
+	pass([p evaluateWithObject: dict], "%%K >= %%@");
+	p = [NSPredicate predicateWithFormat: @"%K != %@", @"Record1.Age", [NSNumber numberWithInt: 20]];
+	pass([p evaluateWithObject: dict], "%%K != %%@");
+	p = [NSPredicate predicateWithFormat: @"%K <> %@", @"Record1.Age", [NSNumber numberWithInt: 20]];
+	pass([p evaluateWithObject: dict], "%%K <> %%@");
 	p = [NSPredicate predicateWithFormat: @"%K BETWEEN %@", @"Record1.Age", [NSArray arrayWithObjects: [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 40], nil]];
 	pass([p evaluateWithObject: dict], "%%K BETWEEN %%@");
 	p = [NSPredicate predicateWithFormat: @"(%K == %d) OR (%K == %d)", @"Record1.Age", 34, @"Record2.Age", 34];
 	pass([p evaluateWithObject: dict], "(%%K == %%d) OR (%%K == %%d)");
+
+
 }
 
 void
@@ -91,6 +124,7 @@ int main()
 	[dict setObject: d forKey: @"Record2"];
 
   testKVC(dict);
+  testContains(dict);
   testString(dict);
   testInteger(dict);
   testFloat(dict);
