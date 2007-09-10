@@ -1,3 +1,7 @@
+2007-09-10  Fred Kiefer <FredKiefer@gmx.de>
+
+	* gui/TextSystem/repeatedAttachmentCellHeight.m: Include NSAttributedString.h
+
 2007-07-11  Chris Farber <chris@chrisfarber.net>
 
 	* base/KVC/mutable.m: More tests.

@@ -8,6 +8,7 @@ the entire height of a line frag.
 #include <Foundation/NSAutoreleasePool.h>
 #include <Foundation/NSString.h>
 #include <AppKit/NSApplication.h>
+#include <AppKit/NSAttributedString.h>
 #include <AppKit/NSLayoutManager.h>
 #include <AppKit/NSTextContainer.h>
 #include <AppKit/NSTextStorage.h>
