@@ -3,10 +3,10 @@
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
-  test_alloc(@"NSKeyedArchiver");
-  test_NSObject(@"NSKeyedArchiver",[NSArray arrayWithObject:[[NSKeyedArchiver alloc] init]]);
-  test_alloc(@"NSKeyedUnarchiver");  
-  test_NSObject(@"NSKeyedUnarchiver",[NSArray arrayWithObject:[[NSKeyedUnarchiver alloc] init]]);
+  test_alloc_only(@"NSKeyedArchiver");
+  test_NSObject(@"NSKeyedArchiver",[NSArray arrayWithObject:[[NSKeyedArchiver alloc] initForWritingWithMutableData: [NSMutableData data]]]);
+  test_alloc_only(@"NSKeyedUnarchiver");  
+  test_NSObject(@"NSKeyedUnarchiver",[NSArray arrayWithObject:[[NSKeyedUnarchiver alloc] initForReadingWithData: [NSKeyedArchiver archivedDataWithRootObject: [NSData data]]]]);
   
   DESTROY(arp);
   return 0;

@@ -1,3 +1,10 @@
+2007-10-03  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSKeyedArchiver/basic.m:
+	* base/NSKeyedArchiver/create.m:
+	* ObjectTesting.h:
+	Fixups for testing classes which can't use -init
+
 2007-09-10  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/TextSystem/repeatedAttachmentCellHeight.m: Include NSAttributedString.h

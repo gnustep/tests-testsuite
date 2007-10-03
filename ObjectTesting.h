@@ -102,6 +102,7 @@ static void test_NSMutableCopying(NSString *iClassName,
 				  NSString *mClassName, 
 				  NSArray *objects) __attribute__ ((unused));
 static void test_alloc(NSString *className) __attribute__ ((unused));
+static void test_alloc_only(NSString *className) __attribute__ ((unused));
 static void test_NSObject(NSString *className,
                           NSArray *objects) __attribute__ ((unused));
 static void test_NSCopying(NSString *iClassName,
@@ -133,6 +134,29 @@ static void test_alloc(NSString *className)
   obj0 = [theClass new];
   pass([obj0 isKindOfClass:theClass], "%s has working new", prefix);
   
+  obj1 = [theClass allocWithZone:testZone];
+  pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
+  theZone = NSZoneFromPointer(obj1);
+  pass(theZone == testZone,"%s uses specified zone for allocWithZone",prefix);
+}
+/* perform basic allocation tests without initialisation*/
+static void test_alloc_only(NSString *className)
+{
+  Class theClass = NSClassFromString(className);
+  id obj0 = nil;
+  id obj1 = nil;
+  const char *prefix = [[NSString stringWithFormat:@"Class '%@'", className]
+    lossyCString];
+  NSZone *testZone = NSCreateZone(1024, 1024, 1);
+  NSZone *theZone;
+  pass(theClass != Nil, "%s exists", prefix);
+  
+  obj0 = [theClass alloc];
+  pass(obj0 != nil, "%s has working alloc", prefix);
+  pass([obj0 isKindOfClass:theClass],
+    "%s alloc gives the correct class", prefix);
+  TEST_EXCEPTION([obj0 init], NSInvalidArgumentException, YES,
+    "raises exception in init")
   obj1 = [theClass allocWithZone:testZone];
   pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
   theZone = NSZoneFromPointer(obj1);
