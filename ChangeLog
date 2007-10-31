@@ -1,3 +1,8 @@
+2007-05-02  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/GNUmakefile.super: Update to link against
+	libraries explicitly.
+	
 2007-10-03  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSKeyedArchiver/basic.m:

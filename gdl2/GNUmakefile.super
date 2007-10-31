@@ -1,1 +1,3 @@
 include $(GNUSTEP_MAKEFILES)/Auxiliary/gdl2.make
+ADDITIONAL_NATIVE_LIBS+=EOControl EOAccess
+ADDITIONAL_NATIVE_LIB_DIRS+=EOControl EOAccess
