@@ -7,6 +7,7 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   NSNumber *val1, *val2, *val3;
+  double d;
 
   val1 = [NSNumber numberWithBool:YES];
   pass(val1 != nil, "We can create a boolean (YES)");
@@ -60,7 +61,7 @@ int main()
 
   pass([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithInt:-10] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] intValue] == -10,
     "store negative integer in property list works");
-  pass((int)([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithDouble:-1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] doubleValue]*10) == -12,
+  pass((d = [[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithDouble:-1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] doubleValue]) > -1.21 && d < -1.19,
     "store negative double in property list works");
 
   DESTROY(arp);
