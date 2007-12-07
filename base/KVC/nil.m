@@ -70,11 +70,12 @@ int main()
   pass([[setNil valueForKey:@"num"] intValue] == 0,
     "KVC uses setNilValueForKey:");
 
+/* Don't think we want this case ...
   TEST_EXCEPTION(
       [setNil takeValue:nil forKey:@"num"],
       NSInvalidArgumentException, YES,
       "KVC properly throws NSInvalidArgumentException for takeValue:nil");
-
+ */
 
   [deprecatedNil setValue:nil forKey:@"num"];
   pass([[deprecatedNil valueForKey:@"num"] intValue] == 0,
