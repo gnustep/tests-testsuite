@@ -1,3 +1,8 @@
+2008-01-04  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSStream/socket_cs.m: A couple of tests for opening sockets
+	with blocking open.
+
 2007-05-02  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/GNUmakefile.super: Update to link against

@@ -253,30 +253,30 @@ int main()
   NSHost *host = [NSHost currentHost];
   ServerListener *sli;
   ClientListener *cli;
-
   NSString *path = @"socket_cs.m";
   NSString *socketPath = @"test-socket";
+
+  [[NSFileManager defaultManager] removeFileAtPath: socketPath handler: nil];
   NSLog(@"sending and receiving on %@: %@", host, [host address]);
   goldData = [NSData dataWithContentsOfFile: path];
-
-  sli = AUTORELEASE([ServerListener new]);
-  cli = AUTORELEASE([ClientListener new]);
   testData = [NSMutableData dataWithCapacity: 4096];
+
+  sli = [ServerListener new];
+  cli = [ClientListener new];
   serverStream = [GSServerStream serverStreamToAddr: [host address] port: 4321];
   [serverStream setDelegate: sli];
   [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [serverStream open];
-
   [NSStream getStreamsToHost: host
 			port: 4321
 		 inputStream: &clientInput
 		outputStream: &clientOutput];
+  NSLog(@"Client input stream is %p", clientInput);
+  NSLog(@"Client output stream is %p", clientOutput);
   [clientInput setDelegate: cli];
   [clientOutput setDelegate: cli];
   [clientInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
-  NSLog(@"Client input stream is %p", clientInput);
-  NSLog(@"Client output stream is %p", clientOutput);
   [clientInput open];
   [clientOutput open];
 
@@ -285,32 +285,102 @@ int main()
 
   DESTROY(serverInput);
   DESTROY(serverOutput);
+  clientInput = nil;
+  clientOutput = nil;
+  DESTROY(sli);
+  DESTROY(cli);
+  [testData setLength: 0];
 
-  sli = AUTORELEASE([ServerListener new]);
-  cli = AUTORELEASE([ClientListener new]);
-  testData = [NSMutableData dataWithCapacity: 4096];
+  sli = [ServerListener new];
+  cli = [ClientListener new];
+  serverStream = [GSServerStream serverStreamToAddr: [host address] port: 4321];
+  [serverStream setDelegate: sli];
+  [serverStream open];
+  [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [NSStream getStreamsToHost: host
+			port: 4321
+		 inputStream: &clientInput
+		outputStream: &clientOutput];
+  NSLog(@"Client input stream is %p", clientInput);
+  NSLog(@"Client output stream is %p", clientOutput);
+  [clientInput setDelegate: cli];
+  [clientOutput setDelegate: cli];
+  [clientInput open];
+  [clientOutput open];
+  [clientInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
+  pass([goldData isEqualToData: testData], "Local tcp (blocking open)");
+
+  DESTROY(serverInput);
+  DESTROY(serverOutput);
+  clientInput = nil;
+  clientOutput = nil;
+  DESTROY(sli);
+  DESTROY(cli);
+  [testData setLength: 0];
+
+  sli = [ServerListener new];
+  cli = [ClientListener new];
   serverStream = [GSServerStream serverStreamToAddr: socketPath];
   [serverStream setDelegate: sli];
   [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [serverStream open];
-  
-  [testData setLength: 0];
   [NSStream getLocalStreamsToPath: socketPath
 		      inputStream: &clientInput
 		     outputStream: &clientOutput];
+  NSLog(@"Client input stream is %p", clientInput);
+  NSLog(@"Client output stream is %p", clientOutput);
   [clientInput setDelegate: cli];
   [clientOutput setDelegate: cli];
   [clientInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
-  NSLog(@"Client input stream is %p", clientInput);
-  NSLog(@"Client output stream is %p", clientOutput);
   [clientInput open];
   [clientOutput open];
 
   [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
-  pass([goldData isEqualToData: testData], "Local unix domain socket");
+  pass([goldData isEqualToData: testData], "Local socket");
 
+  DESTROY(serverInput);
+  DESTROY(serverOutput);
+  clientInput = nil;
+  clientOutput = nil;
+  DESTROY(sli);
+  DESTROY(cli);
+  [testData setLength: 0];
+  [[NSFileManager defaultManager] removeFileAtPath: socketPath handler: nil];
+
+  sli = [ServerListener new];
+  cli = [ClientListener new];
+  serverStream = [GSServerStream serverStreamToAddr: socketPath];
+  [serverStream setDelegate: sli];
+  [serverStream open];
+  [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [NSStream getLocalStreamsToPath: socketPath
+		      inputStream: &clientInput
+		     outputStream: &clientOutput];
+  NSLog(@"Client input stream is %p", clientInput);
+  NSLog(@"Client output stream is %p", clientOutput);
+  [clientInput setDelegate: cli];
+  [clientOutput setDelegate: cli];
+  [clientInput open];
+  [clientOutput open];
+  [clientInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
+
+  pass([goldData isEqualToData: testData], "Local socket (blocking open)");
+
+  DESTROY(serverInput);
+  DESTROY(serverOutput);
+  clientInput = nil;
+  clientOutput = nil;
+  DESTROY(sli);
+  DESTROY(cli);
+  [testData setLength: 0];
   [[NSFileManager defaultManager] removeFileAtPath: socketPath handler: nil];
 
   RELEASE(arp);
