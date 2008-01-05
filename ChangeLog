@@ -1,3 +1,7 @@
+2008-01-05  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* base/NSStream/socket.m: Update to do trivial ssl test.
+
 2008-01-04  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSStream/socket_cs.m: A couple of tests for opening sockets

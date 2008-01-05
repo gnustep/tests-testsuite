@@ -9,6 +9,9 @@ static NSOutputStream *defaultOutput = nil;
 static NSInputStream *defaultInput = nil;
 static int byteCount = 0;
 
+static const uint8_t * rawstring = "GET / HTTP/1.0\r\n\r\n";
+static BOOL     done = NO;
+
 @interface Listener : NSObject
 @end
 
@@ -35,7 +38,6 @@ NSLog(@"Got %d on %p", streamEvent, theStream);
         NSAssert(theStream==defaultOutput, @"Wrong stream for reading");
         if (doneWrite == NO)
           {
-            const uint8_t * rawstring = "GET / HTTP/1.0\r\n\r\n";
             // there may be a problem so that write is not complete. 
             // However, since this is so short it is pretty much always ok.
 	    NSLog(@"Written request");
@@ -84,6 +86,7 @@ NSLog(@"Got %d on %p", streamEvent, theStream);
 	[theStream removeFromRunLoop: [NSRunLoop currentRunLoop]
 			     forMode: NSDefaultRunLoopMode];
         NSLog(@"Close %p", theStream);
+        done = YES;
         break;
       }
     default: 
@@ -100,6 +103,7 @@ int main()
   NSRunLoop *rl;
   NSHost *host;
   Listener *li;
+  NSDate *d;
 
   rl = [NSRunLoop currentRunLoop];
   host = [NSHost hostWithName: @"www.google.com"];
@@ -113,11 +117,44 @@ int main()
   [defaultOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [defaultInput open];
   [defaultOutput open];
-  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
+  
+  d = [NSDate dateWithTimeIntervalSinceNow: 30];
+  while (done == NO && [d timeIntervalSinceNow] > 0.0)
+    {
+      [rl runMode: NSDefaultRunLoopMode beforeDate: d];
+    }
 
   // I cannot verify the content at www.google.com,
   // so as long as it has something, that is passing
   pass(byteCount>0, "read www.google.com");
+
+
+  done = NO;
+  byteCount = 0;
+  defaultInput = nil;
+  defaultOutput = nil;
+  li = AUTORELEASE([Listener new]);
+  [NSStream getStreamsToHost: host port: 443
+    inputStream: &defaultInput outputStream: &defaultOutput];
+
+  [defaultInput setDelegate: li];
+  [defaultOutput setDelegate: li];
+  [defaultInput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [defaultOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+  [defaultInput setProperty: NSStreamSocketSecurityLevelNegotiatedSSL
+                     forKey: NSStreamSocketSecurityLevelKey];
+  [defaultOutput setProperty: NSStreamSocketSecurityLevelNegotiatedSSL
+                      forKey: NSStreamSocketSecurityLevelKey];
+  [defaultInput open];
+  [defaultOutput open];
+
+  d = [NSDate dateWithTimeIntervalSinceNow: 30];
+  while (done == NO && [d timeIntervalSinceNow] > 0.0)
+    {
+      [rl runMode: NSDefaultRunLoopMode beforeDate: d];
+    }
+
+  pass(byteCount>0, "read www.google.com https");
 
   RELEASE(arp);
   return 0;
