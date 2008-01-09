@@ -42,6 +42,8 @@ NSLog(@"Client %p %d", theStream, streamEvent);
             int writeReturn = [clientOutput write: [goldData bytes]+writePointer 
 	      maxLength: [goldData length]-writePointer];
 	    NSLog(@"Client %p wrote %d", clientOutput, writeReturn);
+            if (writeReturn < 0)
+              NSLog(@"Error ... %@", [clientOutput streamError]);
             writePointer += writeReturn;
           }          
         else
@@ -59,12 +61,12 @@ NSLog(@"Client %p %d", theStream, streamEvent);
         int readSize;
         NSAssert(theStream==clientInput, @"Wrong stream for reading");
         readSize = [clientInput read: buffer maxLength: 4096];
+        NSLog(@"Client %p read %d", clientInput, readSize);
         if (readSize < 0)
           {
+            NSLog(@"Error ... %@", [clientInput streamError]);
             // it is possible that readSize<0 but not an Error.
 	    // For example would block
-            NSAssert([clientInput streamError] == nil, @"read error");
-            NSLog(@"Client %p read %d", clientInput, readSize);
           }
         else if (readSize == 0)
 	  {
@@ -76,7 +78,6 @@ NSLog(@"Client %p %d", theStream, streamEvent);
         else
 	  {
             [testData appendBytes: buffer length: readSize];
-	    NSLog(@"Client %p read %d", clientInput, readSize);
 	  }
         break;
       }
@@ -90,7 +91,8 @@ NSLog(@"Client %p %d", theStream, streamEvent);
       }
     case NSStreamEventErrorOccurred: 
       {
-        NSAssert1(1, @"Error! code is %d", [[theStream streamError] code]);
+        NSLog(@"Error code is %d ... %@",
+          [[theStream streamError] code], [theStream streamError]);
         break;
       }  
     default: 
@@ -175,7 +177,8 @@ NSLog(@"Server %p %d", theStream, streamEvent);
       }
     case NSStreamEventErrorOccurred: 
       {
-        NSAssert1(1, @"Error! code is %d", [[theStream streamError] code]);
+        NSLog(@"Error code is %d ... %@",
+          [[theStream streamError] code], [theStream streamError]);
         break;
       }  
     default: 
@@ -204,6 +207,7 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	    }
 	  else if (readSize < 0)
 	    {
+              NSLog(@"Error ... %@", [clientInput streamError]);
 	      readSize = 0;
 	    }
 	}
@@ -226,6 +230,8 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	  else if (writeReturn > 0)
 	    {
 	      NSLog(@"Server %p wrote %d", serverOutput, writeReturn);
+              if (writeReturn < 0)
+                NSLog(@"Error ... %@", [serverOutput streamError]);
 	      writeSize += writeReturn;
 	    }
 
@@ -250,7 +256,7 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   NSRunLoop *rl = [NSRunLoop currentRunLoop];
-  NSHost *host = [NSHost currentHost];
+  NSHost *host = [NSHost hostWithAddress: @"127.0.0.1"];
   ServerListener *sli;
   ClientListener *cli;
   NSString *path = @"socket_cs.m";
