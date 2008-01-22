@@ -6,9 +6,8 @@
 #include "../ObjectTesting.h"
 #endif
 
+#include <Foundation/Foundation.h>
 #include <EOAccess/EOAccess.h>
-#include <Foundation/NSProcessInfo.h>
-#include <Foundation/NSUserDefaults.h>
 
 NSString *TSTTradingModelName = @"TSTTradingModel";
 

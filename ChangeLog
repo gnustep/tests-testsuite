@@ -1,3 +1,11 @@
+2008-01-22  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/GDL2Testing.h: Add include to build with current
+	versions of -base.
+	* gdl2/EOAdaptor/test00.m: Cleanup database at end of test.
+	* gdl2/Bug8993/test00.m,
+	* gdl2/Bug8993/Bug8993.eomodel:: New test case for bug report.
+	
 2008-01-05  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSStream/socket.m: Update to do trivial ssl test.

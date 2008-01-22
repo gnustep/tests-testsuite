@@ -1,0 +1,117 @@
+{
+  EOModelVersion   = 2;
+  userInfo = {
+    PostgreSQLConnectionDictionary = {
+      databaseName = gdl2test;
+    };
+    Postgres95ConnectionDictionary = {
+      databaseName = gdl2test;
+    };
+    SQLite3ConnectionDictionary = {
+      databasePath = /tmp/gdl2test;
+    };
+  };
+
+  entities = (
+    {
+      name                 = "Person";
+      externalName         = "person";
+      className            = "EOGenericRecord";
+      primaryKeyAttributes = ( personId );
+      
+      attributesUsedForLocking = (
+        personId
+      );
+
+      classProperties = (
+	name,
+	salaryHistory
+        );
+
+      attributes = (
+        {
+          name           = personId;
+          columnName     = personid;
+          valueClassName = NSNumber;
+          valueType      = i;
+        },
+        {
+          name           = name;
+          columnName     = pname;
+          valueClassName = NSString;
+          width          = 30;
+         }
+      );
+      relationships = (
+	{
+	  name = salaryHistory;
+	  destination = SalaryHistory;
+	  isToMany = Y;
+          ownsDestination = Y;
+          propagatesPrimaryKey = Y;
+	  joinSemantic = EOInnerJoin;
+	  deleteRule = EODeleteRuleCascade;
+	  joins = (
+            {
+              destinationAttribute = personId;
+              sourceAttribute = personId;
+            }
+	  );
+	}
+      );
+    },
+    {
+      name                 = "SalaryHistory";
+      externalName         = "salaryhistory";
+      className            = "EOGenericRecord";
+      primaryKeyAttributes = ( salHistId );
+      
+      attributesUsedForLocking = (
+        salHistId
+      );
+
+      classProperties = (
+	person,
+	salary
+        );
+
+      attributes = (
+        {
+          name           = salHistId;
+          columnName     = salhistid;
+          valueClassName = NSNumber;
+          valueType      = i;
+        },
+        {
+          name           = personId;
+          columnName     = personid;
+          valueClassName = NSNumber;
+          valueType      = i;
+        },
+        {
+          name           = salary;
+          columnName     = salary;
+          valueClassName = NSNumber;
+          valueType      = i;
+         }
+      );
+
+      relationships = (
+        {
+	  name = person;
+	  destination = Person;
+	  isToMany = N;
+	  isMandatory = Y;
+	  joinSemantic = EOInnerJoin;
+	  joins = (
+	    {
+	      destinationAttribute = personId;
+	      sourceAttribute = personId;
+	    }
+	  );
+	  deleteRule = EODeleteRuleNullify;
+        }
+      );
+    }
+  );
+}

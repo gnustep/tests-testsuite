@@ -266,6 +266,7 @@ int main(int argc,char **argv)
 	   [[readTableNames description] cString]);
   [currAdaptorChannel closeChannel];
 
+  dropDatabaseWithModel(model)
   END_SET("EOAdaptor/test00.m");
   [pool release];
   return (0);
