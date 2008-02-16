@@ -10,6 +10,9 @@ int main()
   NSStringEncoding enc = [GSMimeDocument encodingFromCharset: @"utf-8"];
   NSData *data;
   GSMimeDocument *doc = RETAIN([parser mimeDocument]);
+  GSMimeHeader  *hdr;
+  NSString      *val;
+  NSString      *raw;
 
   data = [@"Content-type: application/xxx\r\n" dataUsingEncoding: enc];
   pass([parser parse:data] && [parser isInHeaders] && (doc != nil),
@@ -54,6 +57,13 @@ int main()
   pass([[[doc headerNamed:@"content-type"] parameterForKey:@"charset"] isEqual:@"utf-8"],"charset is inferred");
 
   
+  val = @"by mail.turbocat.net (Postfix, from userid 1002) id 90885422ECBF; Sat, 22 Dec 2007 15:40:10 +0100 (CET)";
+  raw = @"Received: by mail.turbocat.net (Postfix, from userid 1002) id 90885422ECBF;\r\n\tSat, 22 Dec 2007 15:40:10 +0100 (CET)\r\n";
+  hdr = [[GSMimeHeader alloc] initWithName: @"Received" value: val];
+  data = [hdr rawMimeDataPreservingCase: YES];
+//NSLog(@"Header: '%*.*s'", [data length], [data length], [data bytes]);
+  pass([data isEqual: [raw dataUsingEncoding: NSASCIIStringEncoding]],
+    "raw mime data for long header is OK");
   
   DESTROY(arp);
   return 0;
