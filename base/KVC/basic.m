@@ -150,7 +150,7 @@ int main()
 
   TEST_EXCEPTION(
     [tester setValue:@"" forKey:@"nonexistent"],
-    @"NSUnknownKeyException", YES,
+    NSUndefinedKeyException, YES,
     "KVC properly throws @\"NSUnknownKeyException\"");
 
   TEST_EXCEPTION(

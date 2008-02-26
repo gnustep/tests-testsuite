@@ -4,6 +4,24 @@
 #import <Foundation/NSArray.h>
 #import <Foundation/NSSet.h>
 
+@interface Observer : NSObject
+- (void) observeValueForKeyPath: (NSString *)keyPath
+                       ofObject: (id)object
+                         change: (NSDictionary *)change
+                        context: (void *)context;
+@end
+
+@implementation Observer
+- (void) observeValueForKeyPath: (NSString *)keyPath
+                       ofObject: (id)object
+                         change: (NSDictionary *)change
+                        context: (void *)context
+{
+  NSLog(@"observeValueForKeyPath: %@\nofObject:%@\nchange:%@\ncontext:%p",
+    keyPath, object, change, context);
+}
+@end
+
 @interface Lists : NSObject
 {
   NSMutableArray * cities;
@@ -115,15 +133,19 @@ int main(void)
 {
   CREATE_AUTORELEASE_POOL(arp);
 
-  Lists * list = [[[Lists alloc] init] autorelease];
+  Lists *list = [[[Lists alloc] init] autorelease];
+  Observer *observer = [observer new];
   NSMutableArray * proxy;
   NSDictionary * temp;
+
+  [list addObserver: observer forKeyPath: @"numbers" options: 15 context: 0];
 
   proxy = [list mutableArrayValueForKey:@"numbers"];
   pass([proxy isKindOfClass:[NSMutableArray class]],
       "proxy is a kind of NSMutableArray");
   [proxy removeLastObject];
-  [proxy addObject:@"NaN"];
+  TEST_EXCEPTION([proxy addObject:@"NaN"];,
+    NSRangeException,YES,"bad removal causes range exception when observing");
   [proxy replaceObjectAtIndex:1 withObject:@"Seven"];
   [proxy addObject:@"Four"];
   [proxy removeObject:@"One"];
@@ -205,6 +227,7 @@ int main(void)
   pass([setProxy isKindOfClass:NSClassFromString(@"NSKeyValueMutableSet")],
        "mutableSetValueForKey: works");
 
+  [list removeObserver: observer forKeyPath: @"numbers"];
 
   DESTROY(arp);
   return 0;
