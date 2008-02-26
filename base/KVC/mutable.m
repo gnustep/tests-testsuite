@@ -134,7 +134,7 @@ int main(void)
   CREATE_AUTORELEASE_POOL(arp);
 
   Lists *list = [[[Lists alloc] init] autorelease];
-  Observer *observer = [observer new];
+  Observer *observer = [Observer new];
   NSMutableArray * proxy;
   NSDictionary * temp;
 

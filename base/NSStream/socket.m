@@ -106,7 +106,10 @@ int main()
   NSDate *d;
 
   rl = [NSRunLoop currentRunLoop];
-  host = [NSHost hostWithName: @"www.google.com"];
+  //host = [NSHost hostWithName: @"www.google.com"];
+  host = [NSHost hostWithName: @"localhost"];
+
+#if 0
   li = AUTORELEASE([Listener new]);
   [NSStream getStreamsToHost: host port: 80
     inputStream: &defaultInput outputStream: &defaultOutput];
@@ -127,8 +130,9 @@ int main()
   // I cannot verify the content at www.google.com,
   // so as long as it has something, that is passing
   pass(byteCount>0, "read www.google.com");
+#endif
 
-
+#if 1
   done = NO;
   byteCount = 0;
   defaultInput = nil;
@@ -155,6 +159,7 @@ int main()
     }
 
   pass(byteCount>0, "read www.google.com https");
+#endif
 
   RELEASE(arp);
   return 0;
