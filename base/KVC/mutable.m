@@ -27,6 +27,7 @@
   NSMutableArray * cities;
   NSMutableArray * numbers;
   NSMutableArray * third;
+  NSString *string;
 }
 
 @end
@@ -81,6 +82,17 @@
   [cities setArray:other];
 }
 
+- (void) didChangeValueForKey: (NSString*)k
+{
+  NSLog(@"%@ %@", NSStringFromSelector(_cmd), k);
+  [super didChangeValueForKey: k];
+}
+
+- (void) willChangeValueForKey: (NSString*)k
+{
+  [super willChangeValueForKey: k];
+  NSLog(@"%@ %@", NSStringFromSelector(_cmd), k);
+}
 @end
 
 @interface Sets : NSObject
@@ -139,6 +151,9 @@ int main(void)
   NSDictionary * temp;
 
   [list addObserver: observer forKeyPath: @"numbers" options: 15 context: 0];
+  [list addObserver: observer forKeyPath: @"string" options: 15 context: 0];
+
+  [list setValue: @"x" forKey: @"string"];
 
   proxy = [list mutableArrayValueForKey:@"numbers"];
   pass([proxy isKindOfClass:[NSMutableArray class]],
@@ -228,6 +243,7 @@ int main(void)
        "mutableSetValueForKey: works");
 
   [list removeObserver: observer forKeyPath: @"numbers"];
+  [list removeObserver: observer forKeyPath: @"string"];
 
   DESTROY(arp);
   return 0;
