@@ -1,3 +1,7 @@
+2008-03-05  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/EOGlobalID/EOTemporaryGlobalID00.m: New tests.
+	
 2008-02-13  David Ayers  <ayers@fsfe.org>
 
 	* base/NSString/boolValue.m: New tests.
