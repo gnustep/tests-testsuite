@@ -21,9 +21,9 @@
    Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
-#include <Foundation/Foundation.h>
-#include <EOControl/EOControl.h>
-#include <EOAccess/EOAccess.h>
+#import <Foundation/Foundation.h>
+#import <EOControl/EOControl.h>
+#import <EOAccess/EOAccess.h>
 
 #include "../GDL2Testing.h"
 
