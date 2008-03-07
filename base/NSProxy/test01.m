@@ -49,6 +49,25 @@ GSEqualBitFields(GSBitField aField, GSBitField bField)
           && (aField.second == bField.second)) ? YES : NO;
 }
 
+NSDecimal
+GSMakeDecimal(unsigned long long mantissa, short exponent, BOOL negative)
+{
+  NSDecimal dec;
+  NSDecimalFromComponents(&dec, mantissa, exponent, negative);
+  return dec;
+}
+NSDecimal
+GSDecimalMultiply(NSDecimal left,NSDecimal right)
+{
+  NSDecimal dec;
+  NSDecimalMultiply(&dec,&left,&right,NSRoundPlain);
+  return dec;
+}
+BOOL
+GSDecimalCompare(NSDecimal left,NSDecimal right)
+{
+  return NSDecimalCompare(&left,&right);
+}
 
 @interface TypeTester : NSObject
 {
@@ -72,6 +91,7 @@ GSEqualBitFields(GSBitField aField, GSBitField bField)
 -(NSStringEncoding)enumPenum:(NSStringEncoding)v;
 -(NSRange)rangePrange:(NSRange)v;
 -(NSPoint)pointPpoint:(NSPoint)v;
+-(NSDecimal)decimalPdecimal:(NSDecimal)v;
 
 -(GSFinePoint)finePointPfinePoint:(GSFinePoint)v;
 -(GSBitField)bitFieldPbitField:(GSBitField)v;
@@ -98,7 +118,9 @@ GSEqualBitFields(GSBitField aField, GSBitField bField)
 -(NSStringEncoding)enumPenum:(NSStringEncoding)v { return v == NSSymbolStringEncoding ? NSNEXTSTEPStringEncoding : GSUndefinedEncoding; }
 -(NSRange)rangePrange:(NSRange)v { return NSMakeRange(v.length,v.location); }
 -(NSPoint)pointPpoint:(NSPoint)v { return NSMakePoint(v.y,v.x); }
--(GSFinePoint)finePointPfinePoint:(GSFinePoint)v { return GSMakeFinePoint(v.y,v.x); } 
+-(NSDecimal)decimalPdecimal:(NSDecimal)v { return GSDecimalMultiply(v,v); }
+
+-(GSFinePoint)finePointPfinePoint:(GSFinePoint)v { return GSMakeFinePoint((double)v.y,(double)v.x); } 
 -(GSBitField)bitFieldPbitField:(GSBitField)v { return GSMakeBitField(v.second,v.first); }
 
 @end
@@ -172,10 +194,11 @@ main(int argc, char *argv[])
 
   pass([obj idPid: [NSProcessInfo processInfo]] == [NSNull null], "Proxy id");
   pass([obj enumPenum: NSSymbolStringEncoding] == NSNEXTSTEPStringEncoding, "Proxy enum");
-  pass(NSEqualRanges([obj rangePrange: NSMakeRange(243,432)],NSMakeRange(432,243)), "Proxy NSRange");
-  pass(NSEqualPoints([obj pointPpoint: NSMakePoint(243.0F,432.0F)],NSMakePoint(432.0F,243.0F)), "Proxy NSPoint");
-  pass(GSEqualFinePoints([obj finePointPfinePoint: GSMakeFinePoint(243.0L,432.0L)],GSMakeFinePoint(432.0L,243.0L)), "Proxy GSFinePoint");
-  pass(GSEqualBitFields([obj bitFieldPbitField: GSMakeBitField(0,1)],GSMakeBitField(1,0)), "Proxy GSFinePoint");
+  pass(NSEqualRanges([obj rangePrange: NSMakeRange(243,437)],NSMakeRange(437,243)), "Proxy NSRange");
+  pass(NSEqualPoints([obj pointPpoint: NSMakePoint(243.0F,437.0F)],NSMakePoint(437.0F,243.0F)), "Proxy NSPoint");
+  pass(GSDecimalCompare([obj decimalPdecimal: GSMakeDecimal(321,7,YES)],GSDecimalMultiply(GSMakeDecimal(321,7,YES),GSMakeDecimal(321,7,YES)))==0, "Proxy NSDecimal");
+  pass(GSEqualFinePoints([obj finePointPfinePoint: GSMakeFinePoint(243.0L,437.0L)],GSMakeFinePoint(437.0L,243.0L)), "Proxy GSFinePoint");
+  pass(GSEqualBitFields([obj bitFieldPbitField: GSMakeBitField(0,1)],GSMakeBitField(1,0)), "Proxy GSBitField");
   
   DESTROY(arp);
   return 0;
