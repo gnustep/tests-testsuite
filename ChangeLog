@@ -1,4 +1,8 @@
-2008-03-05  David Ayers  <ayers@fsfe.org>
+2008-03-07  David Ayers  <ayers@fsfe.org>
+
+	* base/NSProxy/test01.m: New stress tests for NSInvocation.
+	
+2008-03-06  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOFault/EOFault01.m: New tests.
 	
