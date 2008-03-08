@@ -11,6 +11,7 @@ int main()
   EORelationship *rel;
   EOAttribute *attrib;
   EOAttribute *attrib2;
+  EOJoin *join;
 
   rel = [EORelationship new];
   ent = [EOEntity new];
@@ -39,8 +40,12 @@ int main()
 	"-referencesToProperty: with no references (to source)");
   pass([[model referencesToProperty:attrib2] count] == 0,
 	"-referencesToProperty: with no references (to destination)");
-  [rel addJoin:[EOJoin joinWithSourceAttribute:attrib destinationAttribute:attrib2]];
+  
+  join = [EOJoin joinWithSourceAttribute:attrib destinationAttribute:attrib2];
+  [rel addJoin: join];
 
+  pass ([[rel joins] containsObject:join], "-joins contains join");
+  
   pass([[model referencesToProperty:attrib] containsObject:rel],
 	"-referencesToProperty: contains references (to source attribute)");
   pass([[model referencesToProperty:attrib2] containsObject:rel],
