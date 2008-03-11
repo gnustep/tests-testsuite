@@ -1,0 +1,48 @@
+{
+    EOModelVersion = 2;
+    entities = (
+	{
+	    attributes = (
+		{
+		    columnName = pkId;
+		    externalType = integer;
+		    name = Attribute;
+		    valueClassName = NSNumber;
+		}
+	    );
+	    attributesUsedForLocking = (
+		Attribute
+	    );
+	    className = EOGenericRecord;
+	    externalName = foo;
+	    name = Entity;
+	    primaryKeyAttributes = (
+		Attribute
+	    );
+	    relationships = (
+	    );
+	},
+	{
+	    attributes = (
+		{
+		    columnName = pkId;
+		    externalType = integer;
+		    name = Attribute;
+		    valueClassName = NSNumber;
+		}
+	    );
+	    attributesUsedForLocking = (
+		Attribute
+	    );
+	    className = EOGenericRecord;
+	    externalName = bar;
+	    name = Entity;
+	    primaryKeyAttributes = (
+		Attribute
+	    );
+	    relationships = (
+	    );
+	}
+    );
+    name = bad;
+}

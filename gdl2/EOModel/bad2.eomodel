@@ -1,0 +1,143 @@
+{
+    EOModelVersion = 2;
+    entities = (
+	{
+	    attributes = (
+		{
+		    columnName = pkId;
+		    externalType = integer;
+		    name = Attribute;
+		    valueClassName = NSNumber;
+		},
+		{
+		    columnName = pkId;
+		    externalType = integer;
+		    name = Attribute;
+		    valueClassName = NSNumber;
+		},
+	    );
+	    attributesUsedForLocking = (
+		Attribute
+	    );
+	    className = EOGenericRecord;
+	    externalName = foo;
+	    name = test1;
+	    primaryKeyAttributes = (
+		Attribute
+	    );
+	    relationships = (
+	    );
+	},
+	{
+	    attributes = (
+		{
+		    allowsNull = Y;
+		    columnName = one;
+		    externalType = integer;
+		    name = Attribute;
+		    valueClassName = NSNumber;
+		},
+		{
+		    allowsNull = Y;
+		    columnName = two;
+		    externalType = integer;
+		    name = Attribute1;
+		    valueClassName = NSNumber;
+		}
+	    );
+	    attributesUsedForLocking = (
+		Attribute
+	    );
+	    className = EOGenericRecord;
+	    classProperties = (
+		Attribute1,
+		Relationship,
+		Relationship1
+	    );
+	    externalName = bad;
+	    name = test2;
+	    primaryKeyAttributes = (
+		Attribute
+	    );
+	    relationships = (
+		{
+		    destination = Entity;
+		    isToMany = N;
+		    joinSemantic = EOInnerJoin;
+		    joins = (
+			{
+			    destinationAttribute = Attribute;
+			    sourceAttribute = Attribute;
+			}
+		    );
+		    name = Relationship;
+		},
+		{
+		    destination = Entity;
+		    isToMany = N;
+		    joinSemantic = EOInnerJoin;
+		    joins = (
+			{
+			    destinationAttribute = Attribute;
+			    sourceAttribute = Attribute;
+			}
+		    );
+		    name = Relationship;
+		}
+	    );
+	},
+	{
+	    attributes = (
+		{
+		    allowsNull = Y;
+		    columnName = one;
+		    externalType = integer;
+		    name = Attribute;
+		    valueClassName = NSNumber;
+		},
+		{
+		    allowsNull = Y;
+		    columnName = two;
+		    externalType = integer;
+		    name = AttribAndRelationshipName;
+		    valueClassName = NSNumber;
+		}
+	    );
+	    attributesUsedForLocking = (
+		Attribute
+	    );
+	    className = EOGenericRecord;
+	    classProperties = (
+		Attribute1,
+		Relationship,
+		Relationship1
+	    );
+	    externalName = bad;
+	    name = test3;
+	    primaryKeyAttributes = (
+		Attribute
+	    );
+	    relationships = (
+		{
+		    destination = Entity;
+		    isToMany = N;
+		    joinSemantic = EOInnerJoin;
+		    joins = (
+			{
+			    destinationAttribute = Attribute;
+			    sourceAttribute = Attribute;
+			}
+		    );
+		    name = AttribAndRelationshipName;
+		}
+	    );
+	}
+    );
+    name = bad2;
+    userInfo = { 
+	test1 = "entity with 2 attributes with the same name";
+	test2 = "entity with 2 relationships with the same name";
+	test3 = "entity with an attribute and relationship with the same name"; 
+    };
+
+}

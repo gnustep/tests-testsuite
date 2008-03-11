@@ -1,3 +1,12 @@
+2008-03-11  Matt Rice  <ratmice@gmail.com>
+
+	* gdl2/EOModel/badmodels.m: Tests for loading .eomodel files which
+	should fail validation.
+	* gdl2/EOModel/bad1.eomodel: model with duplicate entity names.
+	* gdl2/EOModel/bad2.eomodel: model with various attribute and
+	relationship duplicate names.
+
+
 2008-03-07  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOModel/test06.m: test that the join got added.
