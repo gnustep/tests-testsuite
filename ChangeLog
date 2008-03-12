@@ -1,3 +1,8 @@
+2008-03-12  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/EOKeyValueCoding/EOKeyValueCoding01.m: Add test to
+	handle NSArray KVC additions when used in key path.
+	
 2008-03-12  Matt Rice  <ratmice@gmail.com>
 
 	* GNUmakefile.tests: Add flag for running with gcov.
@@ -9,7 +14,6 @@
 	* gdl2/EOModel/bad1.eomodel: model with duplicate entity names.
 	* gdl2/EOModel/bad2.eomodel: model with various attribute and
 	relationship duplicate names.
-
 
 2008-03-07  Matt Rice  <ratmice@gmail.com>
 
