@@ -2,6 +2,8 @@
 
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding01.m: Add test to
 	handle NSArray KVC additions when used in key path.
+	* gdl2/EOKeyValueCoding/EOKeyValueCoding02.m: Add tests for
+	extended NSArray aggregate key paths.
 	
 2008-03-12  Matt Rice  <ratmice@gmail.com>
 
