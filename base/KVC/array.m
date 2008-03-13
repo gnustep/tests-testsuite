@@ -9,7 +9,7 @@ int main(int argc,char **argv)
   id tmp = nil;
 
   NSArray *array = [@"({value=10;},{value=12;})" propertyList];
-  NSString *plist = @"{displayGroup={allObjects=({detailArray=({value=4;},{value=2;});},{detailArray=({value=8;},{value=10;});});}}";
+  NSString *plist = @"{displayGroup={allObjects=({detailArray=({value=4;},{value=2;});},{detailArray=({value=8;},{value=10;});});};}";
   NSDictionary *root = [plist propertyList];
 
   result = [[array valueForKeyPath:@"@sum.value"] intValue] == 22;
