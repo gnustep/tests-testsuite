@@ -1,3 +1,7 @@
+2008-03-13  David Ayers  <ayers@fsfe.org>
+
+	* base/KVC/array.m: Add tests for aggregate key paths.
+	
 2008-03-12  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding01.m: Add test to
