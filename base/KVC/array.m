@@ -1,4 +1,5 @@
-#include <Foundation/Foundation.h>
+#import "ObjectTesting.h"
+#import <Foundation/Foundation.h>
 
 int main(int argc,char **argv)
 {
