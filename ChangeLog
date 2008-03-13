@@ -1,6 +1,7 @@
 2008-03-13  David Ayers  <ayers@fsfe.org>
 
 	* base/KVC/array.m: Add tests for aggregate key paths.
+	* gdl2/EOFault/EOFault0.m: New EOFault tests to insure fault doesn't fire.
 	
 2008-03-12  David Ayers  <ayers@fsfe.org>
 
