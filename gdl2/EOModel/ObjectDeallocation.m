@@ -58,7 +58,8 @@ int main()
   [e2 addRelationship:r2];
   [e4 addSubEntity:e5];
 
-  [pool emptyPool];
+  RELEASE(pool);
+  pool = [[NSAutoreleasePool alloc] init];
 
   START_SET(YES);
   

@@ -34,7 +34,8 @@ int main()
 
   [foo autorelease];
   rc1 = [foo retainCount];
-  [pool emptyPool];
+  RELEASE(pool);
+  pool = [[NSAutoreleasePool alloc] init];
   rc2 = [foo retainCount];
   pass(rc1 - 1 == rc2, "EOFault -autorelease %i, %i", rc1, rc2);
   

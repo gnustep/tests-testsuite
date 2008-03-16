@@ -1,3 +1,30 @@
+2008-03-16  Matt Rice  <ratmice@gmail.com>
+
+	* gdl2/EOModel/ModelEditing.m:
+	* gdl2/EOEditingContext/notif.m:
+	* gdl2/EOEditingContext/TemporaryGlobalID.m:
+	* gdl2/EOObserverCenter/test00.m:
+	* base/NSRunLoop/performers.m: Use an NSFileHandle instead of
+	GSWatcher api, to add an input source.
+	* gdl2/EOAssociation/test00.m: Disable mutable array check under
+	NeXT_Foundation_LIBRARY
+
+2008-03-16  Blake Nicholson  <blaken@umich.edu>
+
+	* gdl2/Bug8993/test00.m: Create the directory if it doesn't exist.
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m: Ditto.
+	* gdl2/EOModel/ObjectDeallocation.m: Don't rely on -emptyPool GNUstep
+	extension.
+	* gdl2/EOFault/EOFault0.m: Ditto.
+	* gdl2/EORelationship/ToManyKeyPropagation.eomodel: Add trailing
+	semi-colon to plists.
+	* gdl2/EOKeyValueCoding/EOKeyValueCoding02.m: Ditto.
+
+	* gdl2/EOAdaptor/EOAdaptorEncoding.m: Disable encoding under previous
+	osx versions.
+	* gdl2/EOAssociation/GNUmakefile.preamble:
+	* gdl2/EODisplayGroup/GNUmakefile.preamble: Add GUI_LIBS for apple.
+
 2008-03-13  David Ayers  <ayers@fsfe.org>
 
 	* base/KVC/array.m: Add tests for aggregate key paths.

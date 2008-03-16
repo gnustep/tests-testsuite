@@ -34,6 +34,7 @@ int main(int argc,char **argv)
   NSString  *currAdaptorName;
   EOAdaptor *currAdaptor = nil;
 
+  NSFileManager *mgr = [NSFileManager defaultManager];
   EOModel *model;
   EOEntity *entityP;
   EOEntity *entityS;
@@ -58,6 +59,10 @@ int main(int argc,char **argv)
   [[currAdaptor class] assignExternalInfoForEntireModel: model];
   filePath = NSTemporaryDirectory();
   filePath = [filePath stringByAppendingPathComponent: currAdaptorName];
+  if (! [mgr fileExistsAtPath: filePath])
+    {
+      [mgr createDirectoryAtPath: filePath attributes: nil];
+    }
   filePath = [filePath stringByAppendingPathComponent: [model name]];
   [model writeToFile: filePath];
   createDatabaseWithModel(model);

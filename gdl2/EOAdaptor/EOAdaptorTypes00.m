@@ -58,6 +58,7 @@ int main(int argc,char **argv)
   NSAutoreleasePool *pool = [NSAutoreleasePool new];
   NSArray   *adaptorNamesArr = nil;
 
+  NSFileManager *mgr = [NSFileManager defaultManager];
   NSString  *currAdaptorName;
   EOAdaptor *currAdaptor = nil;
   EOAdaptorContext *currAdaptorContext = nil;
@@ -103,6 +104,10 @@ int main(int argc,char **argv)
       [[currAdaptor class] assignExternalInfoForEntireModel: model];
       filePath = NSTemporaryDirectory();
       filePath = [filePath stringByAppendingPathComponent: currAdaptorName];
+      if (! [mgr fileExistsAtPath: filePath] )
+        {
+          [mgr createDirectoryAtPath: filePath attributes: nil];
+        }
       filePath = [filePath stringByAppendingPathComponent: [model name]];
       [model writeToFile: filePath];
       createDatabaseWithModel(model);

@@ -29,24 +29,8 @@
   		   selector: @selector(objectsChangedInEditingContext:)
 		       name: EOObjectsChangedInEditingContextNotification
 		     object: nil];
-  /* For perhaps not entirely good reasons, a run loop with no input sources
-  does nothing when you tell it to run. Thus, we open a pipe to ourself and
-  add the reading end to the run loop's list of sources. */
-  {
-    int fds[2];
-    pipe(fds);
-    [[NSRunLoop currentRunLoop] addEvent: (void *)fds[0]
-        type: ET_RDESC
-        watcher: [Test self]
-        forMode: NSDefaultRunLoopMode];
-  }
+
   return self;
-}
-+(void) receivedEvent: (void *)data
-    type: (RunLoopEventType)type
-    extra: (void *)extra
-    forMode: (NSString *)mode
-{
 }
 
 - (BOOL) recvObjsChangedNotif
@@ -85,6 +69,10 @@ int main()
   EOEntity *ent;
   EOAttribute *attrib = [EOAttribute new];
   id testObject; 
+  NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
+
+  RETAIN(fh);
+  [fh readInBackgroundAndNotify];
 
   ec = [EOEditingContext new];
   ent = [[EOEntity alloc] init];
@@ -101,7 +89,10 @@ int main()
   [testObject performTestWithObject:ec selector:@selector(insertObject:) argument:attrib];
   [testObject performTestWithObject:attrib selector:@selector(setName:) argument:@"anAttribute"];
   [testObject performTestWithObject:ent selector:@selector(addAttribute:) argument:attrib];
-  
+
+  [fh closeFile];
+  RELEASE(fh);
+
   RELEASE(pool);
   return 0;
 }

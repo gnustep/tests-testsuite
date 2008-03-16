@@ -1,4 +1,3 @@
-#if	defined(GNUSTEP_BASE_LIBRARY)
 #import "Testing.h"
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSDate.h>
@@ -8,43 +7,21 @@
 
 #include <unistd.h>
 
-@interface Watcher : NSObject
-@end
-@implementation Watcher
-+(void) receivedEvent: (void *)data
-    type: (RunLoopEventType)type
-    extra: (void *)extra
-    forMode: (NSString *)mode
-{
-}
-@end
-
 int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   NSRunLoop *run;
   NSDate *date;
   NSMutableString *str;
+  NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
+
+  RETAIN(fh);
+  [fh readInBackgroundAndNotify];
    
   run = [NSRunLoop currentRunLoop];
-  
+
   /* A run loop with no input sources does nothing when you tell it to run.
      Thus, we need to provide at least one input source ... */
-#if	defined(__MINGW__)
-  [run addEvent: (void *)0
-      type: ET_WINMSG
-      watcher: [Watcher self]
-      forMode: NSDefaultRunLoopMode];
-#else
-  {
-    int fds[2];
-    pipe(fds);
-    [run addEvent: (void *)fds[0]
-	type: ET_RDESC
-	watcher: [Watcher self]
-	forMode: NSDefaultRunLoopMode];
-  }
-#endif
 
   str = [[NSMutableString alloc] init]; 
   [run performSelector:@selector(appendString:)
@@ -124,13 +101,10 @@ int main()
   date = [NSDate dateWithTimeIntervalSinceNow:0.1];
   [run runUntilDate:date];
   pass([str isEqualToString:@""], "-cancelPerformSelectorsWithTarget: works %s",[str cString]); 
-  
+
+  [fh closeFile];
+  RELEASE(fh);
+
   DESTROY(arp);
   return 0;
 }
-#else
-int main()
-{
-  return 0;
-}
-#endif

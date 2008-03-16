@@ -8,17 +8,6 @@ static NSMutableArray *recordedObjects;
 static int reachedDealloc = 0;
 static int omniChangeCount = 0;
 
-@interface Watcher : NSObject
-@end
-@implementation Watcher
-+(void) receivedEvent: (void *)data
-    type: (RunLoopEventType)type
-    extra: (void *)extra
-    forMode: (NSString *)mode
-{
-}
-@end
-
 @interface Foo : NSObject <EOObserving>
 {
   unsigned _hash;
@@ -106,17 +95,11 @@ int main()
   id tmp;
   id tmp2;
   id omnisc1, omnisc2;
-  
-  {
-    int fds[2];
-    pipe(fds);
-    [[NSRunLoop currentRunLoop] addEvent: (void *)fds[0]
-        type: ET_RDESC
-        watcher: [Watcher self]
-        forMode: NSDefaultRunLoopMode];
-  }
+  NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
 
-  
+  RETAIN(fh);
+  [fh readInBackgroundAndNotify];
+
   recordedObservers = [NSMutableArray new];
   recordedObjects = [NSMutableArray new];
 
@@ -296,6 +279,9 @@ int main()
   }
   
   RELEASE(observers);
+
+  [fh closeFile];
+  RELEASE(fh);
   RELEASE(pool);
   return 0;
 }

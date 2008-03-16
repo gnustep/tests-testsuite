@@ -57,7 +57,7 @@
 	      sourceAttribute = grpid;
 	      destinationAttribute = pid;
 	    }
-	  )
+	  );
 	}
       );
     },
@@ -96,9 +96,9 @@
 	      sourceAttribute = pid;
 	      destinationAttribute = grpid;
 	    }
-	  )
+	  );
 	}
-      )
+      );
     }
-  )
+  );
 }

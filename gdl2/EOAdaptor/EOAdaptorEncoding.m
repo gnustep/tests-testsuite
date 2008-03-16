@@ -23,6 +23,7 @@
 
 #include <Foundation/Foundation.h>
 #include <EOAccess/EOAccess.h>
+#include <GNUstepBase/GSVersionMacros.h>
 
 #include "../GDL2Testing.h"
 
@@ -61,7 +62,9 @@ int main(int argc,char **argv)
 	  @"NSWindowsCP1250StringEncoding = 15;"
 	  @"NSISO2022JPStringEncoding = 21;"
 	  @"NSMacOSRomanStringEncoding = 30;"
+#if defined(GNUSTEP_BASE_LIBRARY) || OS_API_VERSION(GS_API_NONE,MAC_OS_X_VERSION_10_5)
 	  @"NSProprietaryStringEncoding = 31;"
+#endif
 	  @"NSKOI8RStringEncoding = 50;"
 	  @"NSISOLatin3StringEncoding = 51;"
 	  @"NSISOLatin4StringEncoding = 52;"

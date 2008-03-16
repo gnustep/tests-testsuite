@@ -4,31 +4,6 @@
 #include <Foundation/NSRunLoop.h>
 #include <unistd.h>
 
-@interface Test : NSObject
-
-@end
-@implementation Test 
-- (id) init
-{
-  self = [super init];
-  {
-    int fds[2];
-    pipe(fds);
-    [[NSRunLoop currentRunLoop] addEvent: (void *)fds[0]
-        type: ET_RDESC
-        watcher: [Test self]
-        forMode: NSDefaultRunLoopMode];
-  }
-  return self;
-}
-+(void) receivedEvent: (void *)data
-    type: (RunLoopEventType)type
-    extra: (void *)extra
-    forMode: (NSString *)mode
-{
-}
-@end
-
 int main()
 {
   EODatabaseDataSource *ds1;
@@ -37,8 +12,11 @@ int main()
   EOEditingContext *ec1 = nil;
   EOClassDescription *cd;
   id tmp1;
-  
-  [[Test alloc] init];  /* hack for NSRunLoop */
+  NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
+
+  RETAIN(fh);
+  [fh readInBackgroundAndNotify];
+
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
   setupModel(model);
   createDatabaseWithModel(model);
@@ -63,6 +41,8 @@ int main()
   pass([[ds1 fetchObjects] isEqual: [NSArray arrayWithObject: tmp1]], "save/fetch still works"); 
   dropDatabaseWithModel(model);
 
+  [fh closeFile];
+  RELEASE(fh);
   DESTROY(pool);
   return 0;
 }

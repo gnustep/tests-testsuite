@@ -42,7 +42,13 @@ int main(int argc,char **argv)
   START_TEST(YES);
   tmp = [EOAssociation aspects];
   result = [tmp isKindOfClass: [NSArray class]];
+#ifndef NeXT_Foundation_LIBRARY
+  /*
+   * its not possible to cleanly test the mutability under Cocoa
+   * so just disable this
+   */
   result = result && [tmp isKindOfClass: [NSMutableArray class]] == NO;
+#endif
   END_TEST(result, "+[EOAssociation aspects]");
 
   START_TEST(YES);
