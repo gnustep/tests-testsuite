@@ -1,3 +1,10 @@
+2008-03-17  David Ayers  <ayers@fsfe.
+
+	* gdl2/EOKeyValueCoding/EOKeyValueCoding00.m: Adapt filteredArray
+	tests to more compound aggregate methods.
+	Make WO45 special count handling test UNSUPPORTED for now.
+	Mark tests that fail unter WO45.
+
 2008-03-16  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOModel/ModelEditing.m:

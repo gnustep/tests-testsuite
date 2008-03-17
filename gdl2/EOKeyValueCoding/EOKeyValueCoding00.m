@@ -226,7 +226,11 @@ int main(int argc,char **argv)
   result = result && [[arr2 computeMaxForKey: @"intValue"] intValue] == 20;
   END_TEST(result, "-[NSArray(EOKeyValueCoding) computeMaxForKey: ]");
 
-  START_TEST(YES);
+  /* This test passes on WO45 and seems justifiable with respect to KVC
+     but it adds extra handling which can be avoided if the application
+     can change the key to @count which works just the same with WO45.
+     So until the need arises we will skip this test.  */
+  START_TEST(NO); 
   result = [[arr0 valueForKey: @"count"] intValue] == 0;
   result = result && [[arr1 valueForKey: @"count"] intValue] == 1;
   result = result && [[arr2 valueForKey: @"count"] intValue] == 2;
@@ -290,22 +294,20 @@ int main(int argc,char **argv)
   START_TEST(YES);
   result = [[arr2 valueForKey: @"@filteredArray"] isEqual: arr2];
   result = result && [[arr2 valueForKey: @"@filteredArray.10"] isEqual: arr1];
-  result = result 
-    && [[arr2 valueForKeyPath: @"@filteredArray"] isEqual: arr2];
-  result = result 
-    && [[arr2 valueForKeyPath: @"@filteredArray.10"] isEqual: arr1];
-  tmp = @"@filteredArray.10.@count.ignore_me.intValue";
-  result = result
-    && [[arr2 valueForKeyPath: tmp] intValue] == 1;
-  END_TEST(result,
-	   "-[NSArray(EOKeyValueCoding) valueForKey: @\"filteredArray\"]");
+  result = result && [[arr2 valueForKeyPath: @"@filteredArray"] isEqual: arr2];
+  result = result && [[arr2 valueForKeyPath: @"@filteredArray.10"] isEqual: arr1];
+  tmp = @"@count.self.@filteredArray.10";
+  result = result && [[arr2 valueForKeyPath: tmp] intValue] == 1;
+  END_TEST(result,"-[NSArray(EOKeyValueCoding) valueForKey: @\"filteredArray\"]");
 
+  /* Fails on WO45 */
   START_TEST(YES);
   result = [[dic0 valueForKey: @"allValues"] isEqual: arr0];
   result = result && [[dic1 valueForKey: @"allValues"] isEqual: arr1];
   END_TEST(result,
 	   "-[NSDictionary(EOKeyValueCoding) valueForKey:@\"allValues\"]");
 
+  /* Fails on WO45 */
   START_TEST(YES);
   tmp = [NSArray arrayWithObject: @"k1"];
   result = [[dic0 valueForKey: @"allKeys"] isEqual: arr0];
@@ -313,6 +315,7 @@ int main(int argc,char **argv)
   END_TEST(result,
 	   "-[NSDictionary(EOKeyValueCoding) valueForKey:@\"allKeys\"]");
 
+  /* Fails on WO45 */
   START_TEST(YES);
   result = [[dic0 valueForKey: @"count"] intValue] == 0;
   result = result && [[dic1 valueForKey: @"count"] intValue] == 1;
@@ -323,6 +326,7 @@ int main(int argc,char **argv)
   result = [[mdic0 valueForKey: @"key"] isEqual: @"val"];
   END_TEST(result, "-[NSDictionary(EOKeyValueCoding) take/valueForKey:]");
 
+  /* Fails on WO45 */
   START_TEST(YES);
   result = [[dic0 storedValueForKey: @"allValues"] isEqual: arr0];
   result = result && [[dic1 storedValueForKey: @"allValues"] isEqual: arr1];
@@ -330,6 +334,7 @@ int main(int argc,char **argv)
 	   "-[NSDictionary(EOKeyValueCoding) "
 	   "storedValueForKey:@\"allValues\"]");
 
+  /* Fails on WO45 */
   START_TEST(YES);
   tmp = [NSArray arrayWithObject: @"k1"];
   result = [[dic0 storedValueForKey: @"allKeys"] isEqual: arr0];
@@ -338,6 +343,7 @@ int main(int argc,char **argv)
 	   "-[NSDictionary(EOKeyValueCoding) "
 	   "storedValueForKey:@\"allKeys\"]");
 
+  /* Fails on WO45 */
   START_TEST(YES);
   result = [[dic0 storedValueForKey: @"count"] intValue] == 0;
   result = [[dic1 storedValueForKey: @"count"] intValue] == 1;
