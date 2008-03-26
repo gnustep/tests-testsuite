@@ -71,6 +71,14 @@ then
   fi
 fi
 
+# There are no tests in the '.' directory, but if someone types
+# 'runtest.sh xxx' we might be called in that way.  Avoid creating a
+# confusing non-working top-level GNUmakefile in that case.
+if [ "$DIR" = "." ]
+then
+ exit 1
+fi
+
 if [ ! -e $DIR/IGNORE ] 
 then
   # Remove the extension, if there is one. If there is no extension, add
