@@ -1,4 +1,11 @@
-2008-03-17  David Ayers  <ayers@fsfe.
+2008-03-26  Nicola Pero  <nicola.pero@meta-innovation.com>
+
+	* GNUmakefile: Undo accidental changes.  Also added 'all' target
+	that prints some helpful messages and runs 'runtests.sh base'.
+	* runtest.sh: Added check to avoid it accidentally editing
+	GNUmakefile again.
+
+2008-03-17  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding00.m: Adapt filteredArray
 	tests to more compound aggregate methods.
