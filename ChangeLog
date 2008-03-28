@@ -1,3 +1,9 @@
+2008-03-28  Matt Rice  <ratmice@gmail.com>
+
+	* gdl2/EOQualifier/EOQualifier00.m: Add some tests for bindings.
+	* gdl2/EOQualifier/BadFormats.m: Test some invalid qualifier
+	formats.
+
 2008-03-26  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* GNUmakefile: Undo accidental changes.  Also added 'all' target

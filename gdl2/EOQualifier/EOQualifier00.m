@@ -39,6 +39,7 @@ int main(int argc,char **argv)
   id qual;
   NSSet *keys;
   Class qCls = [EOQualifier class];
+  NSDictionary *dict = [[NSMutableDictionary alloc] init];
 
   START_SET(YES);
 
@@ -350,6 +351,71 @@ int main(int argc,char **argv)
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = nil_'");
 
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"foo = '$bar'"];
+  result = [qual isKindOfClass: [EOKeyValueQualifier class]];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat: "
+	   "@'foo = $bar'");
+  
+  START_TEST(YES);
+  qual = [qCls qualifierWithQualifierFormat: @"foo = $bar"];
+  result = [qual isKindOfClass: [EOKeyValueQualifier class]];
+  result = result && [[qual value] isKindOfClass:[EOQualifierVariable class]]; 
+  result = result && [[qual bindingKeys] containsObject:@"bar"];
+  END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat: "
+	   "@'foo = $bar'");
+  
+  START_TEST(YES);
+  {
+    NS_DURING
+      [qual qualifierWithBindings:dict requiresAllVariables:YES];
+      result = NO;
+    NS_HANDLER
+      result = YES;
+    NS_ENDHANDLER    
+  }
+  END_TEST(result, "-[EOQualifier qualifierWithBindings:empty requiresAllVariables:YES]"); 
+
+
+  START_TEST(YES);
+  {
+    NSDictionary *dict2 = [[NSMutableDictionary alloc] init];
+    NSArray *arr;
+    EOQualifier *q2;
+    NSArray *arr2;
+
+    [dict setObject:@"quux" forKey:@"bar"];
+    [dict setObject:@"bar" forKey:@"foo"];
+    [dict2 setObject:@"quux" forKey:@"foo"];
+
+    arr = [NSArray arrayWithObjects:dict, dict2, [dict2 copy], nil];
+    q2 = [qual qualifierWithBindings:dict requiresAllVariables:YES];
+
+    arr2 = [arr filteredArrayUsingQualifier:q2];     
+    result = [arr2 count] == 2;
+    result = result && [arr2 containsObject:dict2];
+    result = result && ([arr2 containsObject:dict] == NO);  
+  }
+  END_TEST(result, "-[EOQualifier qualifierWithBindings:requiresAllVariables:]"); 
+ 
+  START_TEST(YES)
+  {
+    NS_DURING
+    qual = [EOQualifier qualifierWithQualifierFormat:@"%@", @"name = 'test'"];
+    result = NO;
+    NS_HANDLER
+    result = YES;
+    NS_ENDHANDLER 
+  }
+  END_TEST(result, "-qualifier parse errors");
+
+  START_TEST(YES)
+  {
+    qual = [EOQualifier qualifierWithQualifierFormat:@"name = '%@'"];
+    result = [[qual value] isKindOfClass:[NSString class]];
+  }
+  END_TEST(result, "-qualifier parse weird format  (name = '%%@')");
+ 
   END_SET("EOQualifier/EOQualifier00.m");
 
   [pool release];
