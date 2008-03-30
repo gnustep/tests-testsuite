@@ -87,7 +87,7 @@ int main(int argc,char **argv)
 		    EOQualifierOperatorEqual] isEqual: @"="];
   
   result = result && [[qCls stringForOperatorSelector: 
-			      EOQualifierOperatorNotEqual] isEqual: @"!="];
+			      EOQualifierOperatorNotEqual] isEqual: @"<>"];
   
   result = result && [[qCls stringForOperatorSelector: 
 			      EOQualifierOperatorLessThan] isEqual: @"<"];

@@ -1,3 +1,11 @@
+2008-03-30  Matt Rice  <ratmice@gmail.com>
+
+	* gdl2/EOQualifier/EOQualifier00.m: Update operator string for not
+	equals. 
+	* gdl2/EOQualifier/EOQualifier03.m: New tests for qualifierWithFormat:
+	and qualifierWithFormat:arguments:, using formats that require
+	arguments.
+
 2008-03-28  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOQualifier/EOQualifier00.m: Add some tests for bindings.
