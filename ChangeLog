@@ -1,3 +1,8 @@
+2008-03-31  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/EOQualifier/EOQualifierFormats.m: New tests for '%%' literals.
+	* gdl2/EOQualifier/BadFormats.m: Remove valid test for '%%' literals.
+	
 2008-03-30  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOQualifier/EOQualifier00.m: Update operator string for not

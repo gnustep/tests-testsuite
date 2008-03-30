@@ -11,7 +11,6 @@ int main()
 	@"foo = (NSString)$bar", // casting binding variable
 	@"foo = (NSString)%@", // casting format
 	@"foo = $%@", // bad binding variable
-	@"foo = %%foo", // bad unquoted key 
 	@"foo = %bar", // bad format
 	@"foo = $%%", // bad binding variable
 	@"foo = $'foo'", // ditto.
