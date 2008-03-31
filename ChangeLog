@@ -1,3 +1,7 @@
+2008-03-31  Matt Rice  <ratmice@gmail.com>
+
+	* gdl2/TSTTradingModel.eomodeld: Save with DBModeler (whitespace).
+
 2008-03-31  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOQualifier/EOQualifierFormats.m: New tests for '%%' literals.

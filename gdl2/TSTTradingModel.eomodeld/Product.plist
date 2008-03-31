@@ -1,19 +1,19 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    name = pid;
+	    columnName = GRPID;
+	    name = grpid;
 	    prototypeName = integer;
 	},
 	{
 	    columnName = NAME;
-	    prototypeName = char;
 	    name = name;
+	    prototypeName = char;
 	},
 	{
-	    columnName = GRPID;
+	    columnName = PID;
+	    name = pid;
 	    prototypeName = integer;
-	    name = grpid;
 	}
     );
     className = EOGenericRecord;

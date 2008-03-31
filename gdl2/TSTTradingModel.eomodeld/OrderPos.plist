@@ -1,13 +1,18 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    name = pid;
-	    prototypeName = integer;
+	    columnName = AMOUNT;
+	    name = amount;
+	    prototypeName = decimal;
 	},
 	{
 	    columnName = ORDID;
 	    name = ordid;
+	    prototypeName = integer;
+	},
+	{
+	    columnName = PID;
+	    name = pid;
 	    prototypeName = integer;
 	},
 	{
@@ -16,19 +21,14 @@
 	    prototypeName = integer;
 	},
 	{
+	    allowsNull = Y;
 	    columnName = PRDID;
 	    name = prdid;
-	    allowsNull = Y;
 	    prototypeName = integer;
 	},
 	{
 	    columnName = PRICE;
 	    name = price;
-	    prototypeName = decimal;
-	},
-	{
-	    columnName = AMOUNT;
-	    name = amount;
 	    prototypeName = decimal;
 	},
 	{
@@ -38,40 +38,45 @@
 	}
     );
     className = EOGenericRecord;
+    classProperties = (
+	order,
+	posnr,
+	product,
+	price,
+	amount,
+	value
+    );
     externalName = TST_ORDERPOS;
     name = OrderPos;
-    classProperties = (order, posnr, product, price, amount, value); 
     primaryKeyAttributes = (
 	pid
     );
     relationships = (
-        {
-            deleteRule = EODeleteRuleNullify; 
-            destination = Product; 
-            isMandatory = Y; 
-            isToMany = N; 
-            joinSemantic = EOInnerJoin; 
-            joins = (
+	{
+	    destination = Product;
+	    isMandatory = Y;
+	    isToMany = N;
+	    joinSemantic = EOInnerJoin;
+	    joins = (
 		{
 		    destinationAttribute = pid;
-		    sourceAttribute = prdid; 
+		    sourceAttribute = prdid;
 		}
-	    ); 
-            name = product; 
-        },
-        {
-            deleteRule = EODeleteRuleDeny; 
-            destination = Order; 
-            isMandatory = Y; 
-            isToMany = N; 
-            joinSemantic = EOInnerJoin; 
-            joins = (
+	    );
+	    name = product;
+	},
+	{
+	    destination = Order;
+	    isMandatory = Y;
+	    isToMany = N;
+	    joinSemantic = EOInnerJoin;
+	    joins = (
 		{
 		    destinationAttribute = pid;
 		    sourceAttribute = ordid;
 		}
-	    ); 
-            name = order; 
-        }
+	    );
+	    name = order;
+	}
     );
 }

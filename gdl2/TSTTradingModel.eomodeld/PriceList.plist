@@ -1,14 +1,14 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    name = pid;
-	    prototypeName = integer;
-	},
-	{
 	    columnName = NAME;
 	    name = name;
 	    prototypeName = char;
+	},
+	{
+	    columnName = PID;
+	    name = pid;
+	    prototypeName = integer;
 	}
     );
     className = EOGenericRecord;

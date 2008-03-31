@@ -1,43 +1,44 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    name = pid;
-	    prototypeName = integer;
-	},
-	{
+	    allowsNull = Y;
 	    columnName = CSTID;
 	    name = cstid;
 	    prototypeName = integer;
-	    allowsNull = Y;
 	},
 	{
 	    columnName = DATE;
 	    name = date;
 	    prototypeName = date;
+	},
+	{
+	    columnName = PID;
+	    name = pid;
+	    prototypeName = integer;
 	}
     );
     className = EOGenericRecord;
+    classProperties = (
+	date,
+	orderPos
+    );
     externalName = TST_ORDER;
     name = Order;
-    classProperties = (date, orderPos); 
     primaryKeyAttributes = (
 	pid
     );
     relationships = (
-        {
-            deleteRule = EODeleteRuleCascade; 
-            destination = OrderPos; 
-            isToMany = Y; 
-            joinSemantic = EOInnerJoin; 
-            joins = (
-                {
-                    destinationAttribute = ordid;
-                    sourceAttribute = pid; 
-                }
-            ); 
-            name = orderPos; 
-            ownsDestination = Y; 
-        }
+	{
+	    destination = OrderPos;
+	    isToMany = Y;
+	    joinSemantic = EOInnerJoin;
+	    joins = (
+		{
+		    destinationAttribute = ordid;
+		    sourceAttribute = pid;
+		}
+	    );
+	    name = orderPos;
+	}
     );
 }

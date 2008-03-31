@@ -1,15 +1,5 @@
 {
-  className = EOGenericRecord;
-  name = EOSQLite3Prototypes;
-  isAbstractEntity = YES;
-  
-  attributes = (
-	{
-	  name = integer;
-	  externalType = INTEGER;
-	  valueClassName = NSNumber;
-	  valueType = i;
-	},
+    attributes = (
 	{
 	    externalType = TEXT;
 	    name = char;
@@ -17,16 +7,27 @@
 	    width = 30;
 	},
 	{
-            externalType = DATE;
-	    valueClassName = NSCalendarDate;
+	    externalType = DATE;
 	    name = date;
+	    valueClassName = NSCalendarDate;
 	},
 	{
-            externalType = decimal;
-            name = decimal;
-            precision = 12;
-            scale = 2;
-            valueClassName = NSDecimalNumber;
+	    externalType = decimal;
+	    name = decimal;
+	    precision = 12;
+	    scale = 2;
+	    valueClassName = NSDecimalNumber;
 	},
-  );
+	{
+	    externalType = INTEGER;
+	    name = integer;
+	    valueClassName = NSNumber;
+	    valueType = i;
+	}
+    );
+    className = EOGenericRecord;
+    isAbstractEntity = Y;
+    name = EOSQLite3Prototypes;
+    relationships = (
+    );
 }

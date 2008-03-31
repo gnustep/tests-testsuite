@@ -1,13 +1,13 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    name = pid;
+	    columnName = CSTID;
+	    name = cstid;
 	    prototypeName = integer;
 	},
 	{
-	    columnName = PRLID;
-	    name = prlid;
+	    columnName = PID;
+	    name = pid;
 	    prototypeName = integer;
 	},
 	{
@@ -16,15 +16,14 @@
 	    prototypeName = integer;
 	},
 	{
-	    columnName = CSTID;
-	    name = cstid;
-	    prototypeName = integer;
+	    columnName = PRICE;
+	    name = price;
+	    prototypeName = decimal;
 	},
 	{
-	    columnName = PRICE;
-	    prototypeName = decimal;
-	    name = price;
-	    scale = "%\U00ED";
+	    columnName = PRLID;
+	    name = prlid;
+	    prototypeName = integer;
 	}
     );
     className = EOGenericRecord;

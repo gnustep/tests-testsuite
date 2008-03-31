@@ -1,19 +1,19 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    prototypeName = integer;
-	    name = pid;
+	    columnName = DATE;
+	    name = date;
+	    prototypeName = date;
 	},
 	{
 	    columnName = NAME;
-	    prototypeName = char;
 	    name = name;
+	    prototypeName = char;
 	},
 	{
-	    columnName = DATE;
-	    prototypeName = date;
-	    name = date;
+	    columnName = PID;
+	    name = pid;
+	    prototypeName = integer;
 	}
     );
     className = EOGenericRecord;
@@ -29,7 +29,6 @@
     );
     relationships = (
 	{
-	    name = products;
 	    destination = Product;
 	    isToMany = Y;
 	    joinSemantic = EOInnerJoin;
@@ -39,7 +38,7 @@
 		    sourceAttribute = pid;
 		}
 	    );
-	    deleteRule = EODeleteRuleCascade;
+	    name = products;
 	}
     );
 }

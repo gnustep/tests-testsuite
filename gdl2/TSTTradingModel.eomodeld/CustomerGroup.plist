@@ -1,8 +1,8 @@
 {
     attributes = (
 	{
-	    columnName = PID;
-	    name = pid;
+	    columnName = GRPID;
+	    name = grpid;
 	    prototypeName = integer;
 	},
 	{
@@ -11,8 +11,8 @@
 	    prototypeName = char;
 	},
 	{
-	    columnName = GRPID;
-	    name = grpid;
+	    columnName = PID;
+	    name = pid;
 	    prototypeName = integer;
 	}
     );
