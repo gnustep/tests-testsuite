@@ -99,13 +99,56 @@
 @end
 
 @implementation NSArray (EOKeyValueCodingTesting)
+-(id)computeStandardDeviationForKey: (NSString *)key
+{
+  NSNumber       *ret = nil;
+  NSDecimal      mean, result, left, right;
+  NSRoundingMode mode;
+  unsigned int   count = 0;
+  double         d;
+
+  mode = [[NSDecimalNumber defaultBehavior] roundingMode];
+  count = [self count];
+  NSDecimalFromComponents(&result, 0, 0, NO);
+
+  if (count>0)
+    {
+      unsigned int i;
+
+      mean = [[self computeAvgForKey: key] decimalValue];
+      
+      for (i=0; i<count; i++)
+        {
+	  NSDecimal val, variance;
+          val = [[[self objectAtIndex:i] valueForKeyPath: key] decimalValue];
+          NSDecimalSubtract(&variance, &mean, &val, mode);
+	  NSDecimalPower(&variance, &variance, 2, mode);
+	  NSDecimalAdd(&result, &result, &variance, mode);
+        }
+    }
+  else
+    {
+      return [NSDecimalNumber zero];
+    }
+
+  left = result;
+
+  NSDecimalFromComponents(&right, (unsigned long long) count, 0, NO);
+  NSDecimalDivide(&result, &left, &right, mode);
+  d = NSDecimalDouble(&result);
+  d = sqrt(d);
+
+  ret = [NSNumber numberWithDouble: d];
+
+  return ret;
+}
 -(id)computeFilteredArrayForKey: (NSString *)key
 {
   unsigned int i, cnt;
   NSMutableArray *arr;
   id obj;
 
-  if (key == nil)
+  if ([key length] == 0)
     {
       return self;
     }
@@ -115,7 +158,7 @@
   for (i=0; i<cnt;i++)
     {
       obj = [self objectAtIndex: i];
-      if ([obj isEqual: key])
+      if ([obj intValue] == [key intValue])
         {
           [arr addObject: obj];
         }
@@ -226,11 +269,8 @@ int main(int argc,char **argv)
   result = result && [[arr2 computeMaxForKey: @"intValue"] intValue] == 20;
   END_TEST(result, "-[NSArray(EOKeyValueCoding) computeMaxForKey: ]");
 
-  /* This test passes on WO45 and seems justifiable with respect to KVC
-     but it adds extra handling which can be avoided if the application
-     can change the key to @count which works just the same with WO45.
-     So until the need arises we will skip this test.  */
-  START_TEST(NO); 
+  /* This special case key is often used in WO key bindings.   */
+  START_TEST(YES); 
   result = [[arr0 valueForKey: @"count"] intValue] == 0;
   result = result && [[arr1 valueForKey: @"count"] intValue] == 1;
   result = result && [[arr2 valueForKey: @"count"] intValue] == 2;
@@ -292,13 +332,14 @@ int main(int argc,char **argv)
   END_TEST(result, "-[NSArray(EOKeyValueCoding) valueForKeyPath:]");
 
   START_TEST(YES);
-  result = [[arr2 valueForKey: @"@filteredArray"] isEqual: arr2];
-  result = result && [[arr2 valueForKey: @"@filteredArray.10"] isEqual: arr1];
-  result = result && [[arr2 valueForKeyPath: @"@filteredArray"] isEqual: arr2];
+  result =           [[arr2 valueForKey: @"@standardDeviation.doubleValue"] intValue] == 5;
+  result = result && [[arr2 valueForKeyPath: @"@standardDeviation.doubleValue"] intValue] == 5;
+  END_TEST(result,"-[NSArray(EOKeyValueCoding) valueForKey: @\"@standardDeviation.decimalValue\"]");
+
+  START_TEST(YES);
+  result =           [[arr2 valueForKey: @"@filteredArray.10"] isEqual: arr1];
   result = result && [[arr2 valueForKeyPath: @"@filteredArray.10"] isEqual: arr1];
-  tmp = @"@count.self.@filteredArray.10";
-  result = result && [[arr2 valueForKeyPath: tmp] intValue] == 1;
-  END_TEST(result,"-[NSArray(EOKeyValueCoding) valueForKey: @\"filteredArray\"]");
+  END_TEST(result,"-[NSArray(EOKeyValueCoding) valueForKey: @\"@filteredArray.10\"]");
 
   /* Fails on WO45 */
   START_TEST(YES);

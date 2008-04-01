@@ -26,8 +26,51 @@
 
 #include "../GDL2Testing.h"
 
-void mybreak (void)
-{}
+@implementation NSArray (EOKeyValueCodingTesting)
+-(id)computeStandardDeviationForKey: (NSString *)key
+{
+  NSNumber       *ret = nil;
+  NSDecimal      mean, result, left, right;
+  NSRoundingMode mode;
+  unsigned int   count = 0;
+  double         d;
+
+  mode = [[NSDecimalNumber defaultBehavior] roundingMode];
+  count = [self count];
+  NSDecimalFromComponents(&result, 0, 0, NO);
+
+  if (count>0)
+    {
+      unsigned int i;
+
+      mean = [[self computeAvgForKey: key] decimalValue];
+      
+      for (i=0; i<count; i++)
+        {
+	  NSDecimal val, variance;
+          val = [[[self objectAtIndex:i] valueForKeyPath: key] decimalValue];
+          NSDecimalSubtract(&variance, &mean, &val, mode);
+	  NSDecimalPower(&variance, &variance, 2, mode);
+	  NSDecimalAdd(&result, &result, &variance, mode);
+        }
+    }
+  else
+    {
+      return [NSDecimalNumber zero];
+    }
+
+  left = result;
+
+  NSDecimalFromComponents(&right, (unsigned long long) count, 0, NO);
+  NSDecimalDivide(&result, &left, &right, mode);
+  d = NSDecimalDouble(&result);
+  d = sqrt(d);
+
+  ret = [NSNumber numberWithDouble: d];
+
+  return ret;
+}
+@end
 
 int main(int argc,char **argv)
 {
@@ -42,7 +85,6 @@ int main(int argc,char **argv)
   START_SET(YES);
 
   START_TEST(YES);
-  mybreak();
   result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@avg.value"] intValue] == 12;
   END_TEST(result, "-[NSArray(EOKeyValueCoding) valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@avg.value\"]");
 
@@ -53,6 +95,14 @@ int main(int argc,char **argv)
   START_TEST(YES);
   result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@count"] intValue] == 4;
   END_TEST(result, "-[NSArray(EOKeyValueCoding) valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@count\"]");
+
+  START_TEST(YES);
+  result = [[root valueForKeyPath:@"displayGroup.allObjects.@standardDeviation.detailArray.@avg.value"] intValue] == 3;
+  END_TEST(result, "-[NSArray(EOKeyValueCoding) valueForKeyPath: @\"displayGroup.allObjects.@standardDeviation.detailArray.@avg.value\"]");
+
+  START_TEST(YES);
+  result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@standardDeviation.value"] intValue] == 2;
+  END_TEST(result, "-[NSArray(EOKeyValueCoding) valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@standardDeviation.value\"]");
 
   END_SET("EOKeyValueCoding" __FILE__);
 
