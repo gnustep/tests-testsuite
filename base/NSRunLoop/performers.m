@@ -4,6 +4,7 @@
 #import <Foundation/NSRunLoop.h>
 #import <Foundation/NSString.h>
 #import <Foundation/NSArray.h>
+#import <Foundation/NSFileHandle.h>
 
 #include <unistd.h>
 

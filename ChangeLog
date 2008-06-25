@@ -1,3 +1,7 @@
+2008-06-26  Fred Kiefer <FredKiefer@gmx.de>
+
+	* base/NSRunLoop/performers.m: Add missing include.
+	
 2008-04-01  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding00.m: Add tests for more classical
