@@ -13,6 +13,7 @@ int main()
   GSMimeHeader  *hdr;
   NSString      *val;
   NSString      *raw;
+  BOOL		complete;
 
   data = [@"Content-type: application/xxx\r\n" dataUsingEncoding: enc];
   pass([parser parse:data] && [parser isInHeaders] && (doc != nil),
@@ -65,6 +66,11 @@ int main()
   pass([data isEqual: [raw dataUsingEncoding: NSASCIIStringEncoding]],
     "raw mime data for long header is OK");
   
+  data = [NSData dataWithContentsOfFile: @"HTTP1.dat"];
+  parser = [GSMimeParser mimeParser];
+  pass ([parser parse: data] == NO, "can parse HTTP 200 reponse in one go");
+  pass ([parser isComplete], "parse is complete");
+
   DESTROY(arp);
   return 0;
 }
