@@ -1,3 +1,9 @@
+2008-11-13  Fred Kiefer <FredKiefer@gmx.de>
+
+	* gui/NSView/NSView_frame_bounds.m: New test code for frame and
+	bounds adjustment on trnaformations.
+	* gui/NSView/NSView_frame_rotation.m: Make check a bit more stable.
+	
 2008-06-26  Fred Kiefer <FredKiefer@gmx.de>
 
 	* base/NSRunLoop/performers.m: Add missing include.

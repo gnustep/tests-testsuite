@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 
 #define CHECK(f) \
 	if (fabs(f-[view frameRotation])>0.0001 \
+	 && fabs(f-[view frameRotation]-360.0)>0.0001 \
 	 && fabs(f-[view frameRotation]+360.0)>0.0001) \
 	{ \
 		passed=0; \
