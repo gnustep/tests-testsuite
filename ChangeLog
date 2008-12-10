@@ -1,3 +1,8 @@
+2008-12-10  David Ayers  <ayers@fsfe.org>
+
+	* base/NSProxy/test01.m: Deactivate bit field test since is it segfaults,
+	it's a corner case and documented to not be supported by libffi currently.
+	
 2008-11-13  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/NSView/NSView_frame_bounds.m: New test code for frame and
