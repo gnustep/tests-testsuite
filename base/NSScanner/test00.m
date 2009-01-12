@@ -55,6 +55,6 @@ int main()
   pass(scanThreeWords(str,charSet), 
        "scanning three words separated by spaces and semi-colons");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

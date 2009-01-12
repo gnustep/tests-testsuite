@@ -9,6 +9,6 @@ int main()
   NSInvocation *testObj = [NSInvocation invocationWithMethodSignature:testSig];
   test_alloc(@"NSInvocation");
   test_NSObject(@"NSInvocation", [NSArray arrayWithObject:testObj]);
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

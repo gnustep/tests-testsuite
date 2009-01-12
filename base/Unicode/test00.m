@@ -22,7 +22,7 @@ int main()
   pass((cstr != nil && [cstr isKindOfClass: [NSString class]]),
        "We can convert to UTF8 Encoding");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

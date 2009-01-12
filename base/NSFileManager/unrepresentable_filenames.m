@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	NSString *s=[NSString stringWithCString: test];
 	printf("s=%s\n", [s lossyCString]);*/
 
-	DESTROY(arp);
+	IF_NO_GC(DESTROY(arp));
 
 	return 0;
 }

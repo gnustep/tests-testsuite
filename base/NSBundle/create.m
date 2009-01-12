@@ -38,6 +38,6 @@ int main()
     pass(arr != nil && [arr isKindOfClass:[NSArray class]] && [arr count] != 0,
          "+allBundles returns an array");
   }
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

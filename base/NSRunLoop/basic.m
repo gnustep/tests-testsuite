@@ -14,6 +14,6 @@ int main()
   ASSIGN(testObj, [NSTimer new]);
   test_NSObject(@"NSTimer", [NSArray arrayWithObject:testObj]);
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -131,6 +131,6 @@ int main()
   testAttregate(dict);
 
   RELEASE(dict);
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

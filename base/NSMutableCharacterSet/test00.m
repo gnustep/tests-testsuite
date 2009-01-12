@@ -21,7 +21,7 @@ int main()
        ![testMutableNamedSet2 characterIsMember:[@"." characterAtIndex:0]],
        "Test whether we always get a clean mutable set"); 
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

@@ -245,6 +245,6 @@ int main(void)
   [list removeObserver: observer forKeyPath: @"numbers"];
   [list removeObserver: observer forKeyPath: @"string"];
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

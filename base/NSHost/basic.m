@@ -8,6 +8,6 @@ int main()
 {
   CREATE_AUTORELEASE_POOL(arp);
   test_NSObject(@"NSHost",[NSArray arrayWithObject:[NSHost currentHost]]); 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

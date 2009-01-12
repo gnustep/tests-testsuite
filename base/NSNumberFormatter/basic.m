@@ -56,7 +56,7 @@ int main()
 
   pass([str isEqual: @"-1235"], "format string of length 1");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

@@ -27,7 +27,7 @@ int main()
   pass ([date1 isEqualToDate:date2], "-isEqualToDate works");
 
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

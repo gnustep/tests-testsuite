@@ -80,6 +80,6 @@ int main()
   pass([[gstepBundle pathForResource: @"NSTimeZones" ofType: nil]
     testForString], 
     "-pathForResource:ofType: finds a file");
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

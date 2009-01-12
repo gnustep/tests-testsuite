@@ -53,6 +53,6 @@ int main()
   pass([str isEqual: @"/silly-file-name"],
     "Path of http://www.w3.org/silly-file-name is /silly-file-name");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

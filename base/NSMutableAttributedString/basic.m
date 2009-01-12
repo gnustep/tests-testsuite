@@ -12,7 +12,7 @@ int main()
   test_NSCopying(@"NSAttributedString",@"NSMutableAttributedString",arr,NO, NO);
   test_NSMutableCopying(@"NSAttributedString",@"NSMutableAttributedString",arr);
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

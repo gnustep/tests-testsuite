@@ -71,7 +71,7 @@ int main()
   pass ([parser parse: data] == NO, "can parse HTTP 200 reponse in one go");
   pass ([parser isComplete], "parse is complete");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 #else

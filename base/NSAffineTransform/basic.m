@@ -65,6 +65,6 @@ int main()
   p = [testObj transformPoint: NSMakePoint(10,10)];
   pass(eq(p.x, -16.0) && eq(p.y, 15.0), "rotate and translate works");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

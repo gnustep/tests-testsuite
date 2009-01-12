@@ -391,6 +391,6 @@ int main()
   pass([[date2 timeZone] isEqual: tz],
     "date year calculation preserves timezone");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

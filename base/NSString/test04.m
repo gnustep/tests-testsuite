@@ -14,6 +14,6 @@ int main()
     pass(1,"bar");
   NS_ENDHANDLER
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

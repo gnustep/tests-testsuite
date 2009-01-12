@@ -25,6 +25,6 @@ int main()
   d = [@"                                1.2" doubleValue];
   pass(d > 1.199999 && d < 1.200001, "doubleValue with leading space works");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

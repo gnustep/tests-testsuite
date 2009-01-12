@@ -42,6 +42,6 @@ int main()
        "-operatingSystemName works");
   val = [info operatingSystem];
   pass(val != 0, "-operatingSystem works"); 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

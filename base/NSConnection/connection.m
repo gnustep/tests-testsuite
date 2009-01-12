@@ -31,6 +31,6 @@ int main()
       pass(0, "NSConnection can do a simple connection");
     NS_ENDHANDLER
   }
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

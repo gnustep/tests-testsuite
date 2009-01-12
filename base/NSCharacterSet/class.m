@@ -62,6 +62,6 @@ int main()
   pass([NSCharacterSet whitespaceCharacterSet] == theSet,
        "NSCharacterSet uniques [+whitespaceCharacterSet]");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

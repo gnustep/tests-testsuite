@@ -97,6 +97,6 @@ int main()
 	 "-sortedArrayUsingSelector: seems ok");
 
   }
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

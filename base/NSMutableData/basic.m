@@ -16,7 +16,7 @@ int main()
                         @"NSMutableData",
 		        [NSArray arrayWithObject:testObject]);
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

@@ -61,6 +61,6 @@ int main()
   a3 = [a1 sortedArrayUsingDescriptors: array];
   pass([a2 isEqual: a3], "simple multilevel sort works");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

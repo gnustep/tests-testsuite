@@ -147,6 +147,6 @@ int main()
   testWriteBasicType_short("ushort", &us);
   testReadBasicType_short("ushort", &us, &us2);
   
-  DESTROY(pool);
+  IF_NO_GC(DESTROY(pool));
   return 0;
 }

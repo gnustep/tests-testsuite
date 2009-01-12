@@ -39,7 +39,7 @@ int main()
   obj = [NSArray arrayWithArray:old];
   pass(obj != nil && [old isEqual:obj], "+arrayWithArray: copies array");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

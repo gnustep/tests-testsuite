@@ -68,7 +68,7 @@ int main()
        [data2 bytes] == str1, 
        "+dataWithBytesNoCopy:length:freeWhenDone: works");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   
   { 
     BOOL didNotSegfault = YES;

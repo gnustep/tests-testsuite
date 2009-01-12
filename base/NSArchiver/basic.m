@@ -8,6 +8,6 @@ int main()
   test_alloc(@"NSUnarchiver");  
   test_NSObject(@"NSUnarchiver",[NSArray arrayWithObject:[[NSUnarchiver alloc] init]]);
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

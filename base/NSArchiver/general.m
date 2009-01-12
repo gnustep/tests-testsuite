@@ -39,6 +39,6 @@ int main()
 
   [[NSFileManager  defaultManager] removeFileAtPath: val1 handler: nil];
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -13,6 +13,6 @@ int main()
 
   test_NSObject(@"NSStream", [NSArray arrayWithObjects:t1, t2, nil]); 
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -27,6 +27,6 @@ int main()
   pass(NSZoneFromPointer(obj1) == testZone, "%s uses zone for alloc",prefix);
   pass([obj1 zone] == testZone, "%s -zone works",prefix);
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

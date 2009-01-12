@@ -42,6 +42,6 @@ int main()
        && [current isDaylightSavingTime] == NO,
        "can set default time zone");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

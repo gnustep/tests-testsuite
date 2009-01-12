@@ -46,6 +46,6 @@ int main()
   pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+distantPast works");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

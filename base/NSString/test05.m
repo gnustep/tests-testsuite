@@ -23,6 +23,6 @@ int main()
     pass(1,"bar2");
   NS_ENDHANDLER
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

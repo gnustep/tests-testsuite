@@ -190,6 +190,6 @@ int main()
   pass([[NSString pathWithComponents:result] isEqual:@"/nicola/core"],
        "+pathWithComponents works works for absolute path");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -90,7 +90,7 @@ int main()
 
   geom_string();
   
-  DESTROY(pool);
+  IF_NO_GC(DESTROY(pool));
  
   return 0;
 }

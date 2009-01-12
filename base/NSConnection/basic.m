@@ -15,6 +15,6 @@ int main()
   pass(testObject != nil && [testObject isKindOfClass:[NSConnection class]],
        "NSConnection +defaultConnection works");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

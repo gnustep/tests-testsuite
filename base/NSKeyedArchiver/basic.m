@@ -8,6 +8,6 @@ int main()
   test_alloc_only(@"NSKeyedUnarchiver");  
   test_NSObject(@"NSKeyedUnarchiver",[NSArray arrayWithObject:[[NSKeyedUnarchiver alloc] initForReadingWithData: [NSKeyedArchiver archivedDataWithRootObject: [NSData data]]]]);
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

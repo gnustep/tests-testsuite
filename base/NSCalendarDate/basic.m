@@ -13,6 +13,6 @@ int main()
   test_NSCopying(@"NSCalendarDate", @"NSCalendarDate",
     [NSArray arrayWithObject: testObj], NO, NO);
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

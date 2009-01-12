@@ -201,7 +201,7 @@ int main(int argc, char **argv)
   T(NSValue)
   T(NSNumber)
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
 
   return 0;
 }

@@ -23,6 +23,6 @@ int main()
   test_NSMutableCopying(@"NSSet", @"NSMutableSet", testObjs);
   
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

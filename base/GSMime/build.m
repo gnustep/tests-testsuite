@@ -20,7 +20,7 @@ int main(int argc,char **argv)
 				
   data = [NSData dataWithContentsOfFile: @"mime8.dat"];
   pass([[doc rawMimeData] isEqual: data], "Can make a simple document");
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 #else

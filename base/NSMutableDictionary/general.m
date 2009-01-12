@@ -218,6 +218,6 @@ int main()
   pass([[dict valueForKey:@"Lücke"] isEqualToString:@"hello"],
       "unicode keys work with setValue:forKey:");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -13,6 +13,6 @@ int main()
                  [NSArray arrayWithObject:testObj],NO,NO);
   test_NSMutableCopying(@"NSSet",@"NSMutableSet",
                         [NSArray arrayWithObject:testObj]);
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

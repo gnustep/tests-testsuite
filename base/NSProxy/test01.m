@@ -212,6 +212,6 @@ main(int argc, char *argv[])
   pass(GSEqualBitFields([obj bitFieldPbitField: GSMakeBitField(0,1)],GSMakeBitField(1,0)), "Proxy GSBitField");
 #endif
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -75,7 +75,7 @@ int main()
   NS_HANDLER
     pass(0,"NSRecycleZone seems to operate");
   NS_ENDHANDLER
-  DESTROY(pool);
+  IF_NO_GC(DESTROY(pool));
  
   return 0;
 }

@@ -348,6 +348,6 @@ int main()
   pass([@"4.5E6" floatValue] == 4.5e6, "Simple float conversion works");
 
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

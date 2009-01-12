@@ -73,6 +73,6 @@ int main()
   pass(identifierBundle == nil,
     "+bundleWithIdentifier returns nil for non-existent identifier");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

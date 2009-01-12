@@ -39,7 +39,7 @@ int main()
   pass(astr2 != nil && [astr1 isEqualToAttributedString:astr2],
        "extract and compare using -isEqualToAttributedString works");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

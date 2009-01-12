@@ -49,6 +49,6 @@ int main()
       [task waitUntilExit];
     }
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

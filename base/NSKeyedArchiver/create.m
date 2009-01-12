@@ -20,6 +20,6 @@ int main()
                  @"NSInvalidArgumentException", YES,
 		 "Creating an NSUnarchiver with nil data throws an exception");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0; 
 }

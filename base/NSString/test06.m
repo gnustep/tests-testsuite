@@ -1293,6 +1293,6 @@ int main()
   e = [s stringByAddingPercentEscapesUsingEncoding: NSISOLatin1StringEncoding];
   pass([e isEqual: @"%FF"], "character 255 is escaped");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

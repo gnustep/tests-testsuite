@@ -50,6 +50,6 @@ int main()
   pass(![[NicolaTest new] conformsToProtocol:@protocol(NSCoding)],
        "-conformsToProtocol returns NO on an unimplemented protocol");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

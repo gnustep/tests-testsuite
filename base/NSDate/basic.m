@@ -11,6 +11,6 @@ int main()
   test_NSCoding([NSArray arrayWithObject:testObj]);
   test_NSCopying(@"NSDate",@"NSDate",[NSArray arrayWithObject:testObj],NO,NO);
    
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -52,6 +52,6 @@ int main()
 		 NSRangeException,YES,"-replaceBytesInRange:withBytes out of range raises exception");
                  
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

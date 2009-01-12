@@ -87,7 +87,7 @@ int main()
   pass([wData isEqual: rData],
        "NSFileHandle -writeData:/-availableData match with socket");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 #else

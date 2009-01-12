@@ -36,6 +36,6 @@ int main()
   pass(current != nil && [current isKindOfClass: [NSTimeZone class]],
        "+timeZoneWithName works");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

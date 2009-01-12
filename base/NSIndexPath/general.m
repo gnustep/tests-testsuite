@@ -70,7 +70,7 @@ int main()
   pass([index2 compare: index1] == NSOrderedDescending,
        "longer index2 comparison the other way works");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   { 
     BOOL didNotSegfault = YES;
     pass(didNotSegfault, "+indexPathWithIndex: doesn't mess up memory");

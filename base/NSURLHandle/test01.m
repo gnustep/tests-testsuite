@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	   "404 - status: Handle load not loaded (resource not found)");
     }
   
-  DESTROY(arp) ;
+  IF_NO_GC(DESTROY(arp)) ;
   
   return 0;
 }

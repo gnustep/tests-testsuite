@@ -66,6 +66,6 @@ int main()
   pass([obj remote] == rem, "Can set the remote object for the proxy");
   pass([obj length] == [rem length], "Can get the length of the remote object");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

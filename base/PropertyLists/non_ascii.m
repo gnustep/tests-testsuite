@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	plist=[[NSString stringWithContentsOfFile: @"non_ascii_utf16.strings"] propertyListFromStringsFileFormat];
 	pass(plist!=nil, "utf16 strings file works");
 
-	DESTROY(arp);
+	IF_NO_GC(DESTROY(arp));
 
 	return 0;
 }

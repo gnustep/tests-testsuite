@@ -120,6 +120,6 @@ int main()
     "custom string replacement works at end of string");
 
   [testObj release];
-  DESTROY(arp); 
+  IF_NO_GC(DESTROY(arp)); 
   return 0;
 }

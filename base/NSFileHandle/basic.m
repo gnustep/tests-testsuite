@@ -30,6 +30,6 @@ int main()
   CREATE_AUTORELEASE_POOL(arp);
   test_NSObject(@"NSFileHandle", 
                 [NSArray arrayWithObject:[NSFileHandle fileHandleWithStandardInput]]);
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

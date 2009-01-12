@@ -33,6 +33,6 @@ int main()
     && ![s isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for unicode");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

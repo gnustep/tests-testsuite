@@ -132,7 +132,7 @@ int main(int argc, char **argv)
 
   CREATE_AUTORELEASE_POOL(arp);
   status = [[[[TestObject alloc] init] autorelease] runTest];
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
 
   return status;
 }

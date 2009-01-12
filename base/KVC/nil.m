@@ -81,6 +81,6 @@ int main()
   pass([[deprecatedNil valueForKey:@"num"] intValue] == 0,
     "KVC uses deprecated unableToSetNilForKey:");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -58,6 +58,6 @@ int main()
       "formatting milliseconds works");
   }
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -8,6 +8,6 @@ int main()
    
   test_alloc(@"NSBundle");
   test_NSObject(@"NSBundle", [NSArray arrayWithObject:[NSBundle new]]); 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -58,6 +58,6 @@ int main()
        [obj isEqual:old],
        "+arrayWithArray: copies array");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 } 

@@ -64,6 +64,6 @@ int main()
 			  startingAtIndex:1] isEqual:@"helloyxy"],
        "'hello' stringByPaddingToLength:8 withString:'xy' startingAtIndex:0 == 'helloyxy'");
    
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

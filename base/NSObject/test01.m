@@ -58,6 +58,6 @@ int main()
        [NSString isKindOfClass:[NSObject class]],
        "+isKindOfClass: works");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

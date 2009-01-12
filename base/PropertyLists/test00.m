@@ -94,7 +94,7 @@ int main()
 					 forKey: @"author"],nil]),
        "We can parse an array containing an array and a dictionary");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

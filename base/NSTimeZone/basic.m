@@ -9,6 +9,6 @@ int main()
 
   test_NSObject(@"NSTimeZone", [NSArray arrayWithObject:testObj]); 
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

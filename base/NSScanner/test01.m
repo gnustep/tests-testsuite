@@ -119,6 +119,6 @@ int main()
        && scanDouble(@"1e-1", 1e-1, &dret)
        && scanDouble(@"1e-10", 1e-10, &dret),
        "NSScanner scans double with exponents");
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

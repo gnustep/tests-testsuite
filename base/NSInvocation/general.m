@@ -198,6 +198,6 @@ int main()
        lsret.f == 11.0,
        "Can send/return large structs");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

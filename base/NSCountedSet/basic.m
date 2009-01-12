@@ -16,7 +16,7 @@ int main()
                         @"NSCountedSet",
 		        [NSArray arrayWithObject:testObject]);
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

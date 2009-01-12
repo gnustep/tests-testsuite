@@ -228,6 +228,6 @@ int main()
        [obj isEqual:dict],
        "data/number/data are ok in serialized property-list");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

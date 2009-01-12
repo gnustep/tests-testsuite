@@ -21,6 +21,6 @@ int main()
   test_NSCopying(@"NSArray",@"NSMutableArray",testObjs,YES,NO);
   test_NSMutableCopying(@"NSArray",@"NSMutableArray",testObjs);
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -28,6 +28,6 @@ int main()
   test_NSCopying(@"NSDictionary", @"NSMutableDictionary", testObjs, YES, NO);
   test_NSMutableCopying(@"NSDictionary", @"NSMutableDictionary", testObjs);
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

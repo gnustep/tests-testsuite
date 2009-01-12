@@ -158,6 +158,6 @@ NSLog(@"'%@', '%@'", NSUserName(), [attr fileOwnerAccountName]);
     isDir = NO;
   }
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

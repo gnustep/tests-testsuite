@@ -31,6 +31,6 @@ int main()
 
   pass(cls == Nil, "Nil class returned for unknown URL scheme");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

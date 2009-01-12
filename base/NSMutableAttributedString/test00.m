@@ -245,7 +245,7 @@ int main()
        [attrStr checkAttributes:red range:NSMakeRange(3,7)], 
        "-setAttributes:range: works with nearby attributes"); 
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

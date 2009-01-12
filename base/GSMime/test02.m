@@ -344,7 +344,7 @@ int main()
   pass([[GSMimeDocument charsetFromEncoding: NSWindowsCP1254StringEncoding]
     isEqualToString: @"windows-1254"],
     "NSWindowsCP1254StringEncoding canonical charset is windows-1254");
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 #else

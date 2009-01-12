@@ -37,7 +37,7 @@ int main()
   pass(ret == NO, "Recursive lockBeforeDate: with NSLock returns NO");
 #endif
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 

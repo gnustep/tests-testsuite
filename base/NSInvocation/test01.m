@@ -93,6 +93,6 @@ int main()
   TEST_EXCEPTION([inv getReturnValue:&ret];,NSGenericException,YES,"Exception getting return value #2");
     
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

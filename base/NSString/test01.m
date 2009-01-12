@@ -66,6 +66,6 @@ int main()
        "'/usr/' stringByAppendingPathComponent: 'bin/'");
   pass([[@"/usr/" stringByAppendingPathComponent:@"/bin/"] isEqual:@"/usr/bin"],
        "'/usr/' stringByAppendingPathComponent: '/bin/'");
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

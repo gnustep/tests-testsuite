@@ -38,6 +38,6 @@ int main()
   localPath = [path stringByAppendingPathComponent: @"Resources/English.lproj/TextRes.txt"];
   pass([arr containsObject: localPath], "Returned array contains localized resource");
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

@@ -32,6 +32,6 @@ int main()
   pass(tmp != nil && [tmp isEqualToHost:localh], 
        "NSHost understands [+hostWithName: 127.0.0.1]");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

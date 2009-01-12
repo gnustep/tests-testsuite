@@ -18,6 +18,6 @@ int main()
   
   test_NSMutableCopying(@"NSDictionary",@"NSMutableDictionary", 
                         [NSArray arrayWithObject:testObj]);
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

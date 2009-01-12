@@ -9,6 +9,6 @@ int main()
   test_alloc(@"NSProcessInfo");
   pi = [NSProcessInfo processInfo];
   test_NSObject(@"NSProcessInfo", [NSArray arrayWithObject:pi]);
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

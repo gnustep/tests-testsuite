@@ -185,6 +185,6 @@ int main()
                      locale: myLocale] isEqualToString: @"01:00:00 PM"],
        "%r format works in description");
   
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }

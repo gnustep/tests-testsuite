@@ -145,7 +145,7 @@ int main()
     "Can parse a method call with a date");
 
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return 0;
 }
 #else
