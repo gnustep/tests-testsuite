@@ -338,6 +338,6 @@ int main (int argc, char **argv)
   
   result = [[[[StatusServer alloc] init] autorelease] runTest];
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
   return result;
 }
