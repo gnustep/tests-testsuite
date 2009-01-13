@@ -315,6 +315,6 @@ void TestNSStringClass(Class aStringClass)
 
   test_return_self_optimizations();
 
-  DESTROY(arp);
+  IF_NO_GC(DESTROY(arp));
 }
 
