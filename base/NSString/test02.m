@@ -152,6 +152,11 @@ int main()
 	                stringByStandardizingPath] cString],resultPath) == 0,
        "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
   
+  testPath = "/home/user/.";
+  pass(strcmp([[[NSString stringWithCString:testPath] 
+	                stringByStandardizingPath] cString],resultPath) == 0,
+       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  
   testPath = "/home/.//././user";
   pass(strcmp([[[NSString stringWithCString:testPath] 
 	                stringByStandardizingPath] cString],resultPath) == 0,
@@ -160,6 +165,24 @@ int main()
   pass([[@"home/../nicola" stringByStandardizingPath]
   				isEqual:@"home/../nicola"],
        "'home/../nicola' stringByStandardizingPath == 'home/../nicola'");
+  
+  testPath = "/.";
+  resultPath = "/";
+  pass(strcmp([[[NSString stringWithCString:testPath] 
+	                stringByStandardizingPath] cString],resultPath) == 0,
+       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  
+  testPath = "c:\\.";
+  resultPath = "c:\\";
+  pass(strcmp([[[NSString stringWithCString:testPath] 
+	                stringByStandardizingPath] cString],resultPath) == 0,
+       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  
+  testPath = "c:\\...";
+  resultPath = "c:\\...";
+  pass(strcmp([[[NSString stringWithCString:testPath] 
+	                stringByStandardizingPath] cString],resultPath) == 0,
+       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
   
   result = [NSArray arrayWithObjects:@"nicola",@"core",nil];
   result = [@"home" stringsByAppendingPaths:result];
