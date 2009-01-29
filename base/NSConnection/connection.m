@@ -8,7 +8,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSBundle *bundle;
   NSString *bundlePath = [[NSFileManager defaultManager] currentDirectoryPath];
   bundlePath = [bundlePath stringByAppendingPathComponent: @"Resources"];
@@ -31,6 +31,6 @@ int main()
       pass(0, "NSConnection can do a simple connection");
     NS_ENDHANDLER
   }
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

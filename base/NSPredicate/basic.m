@@ -104,7 +104,7 @@ int main()
 {
 	NSMutableDictionary *dict;
 	NSDictionary *d;
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   dict = [[NSMutableDictionary alloc] init];
 	[dict setObject: @"A Title" forKey: @"title"];
@@ -130,7 +130,7 @@ int main()
   testFloat(dict);
   testAttregate(dict);
 
-  RELEASE(dict);
-  IF_NO_GC(DESTROY(arp));
+  [dict release];
+  [arp release]; arp = nil;
   return 0;
 }

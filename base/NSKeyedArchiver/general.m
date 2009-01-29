@@ -10,7 +10,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *val1, *val2, *val3, *s;
   NSNumber *val4;
   NSArray  *vals1, *vals2;
@@ -55,14 +55,14 @@ int main()
 
   // decode...
   unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData: data2];
-  s = RETAIN([unarchiver decodeObjectForKey: @"string"]);
+  s = [[unarchiver decodeObjectForKey: @"string"] retain];
   pass((s != nil && [s isKindOfClass:[NSString class]] && [s isEqual: val3]),
     "encodeObject:forKey: seems okay");
-  RELEASE(data2);
+  [data2 release];
 
   NSLog(@"Original string: %@, unarchived string: %@",val3, s);
 
   [[NSFileManager  defaultManager] removeFileAtPath: val1 handler: nil];
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -6,7 +6,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *bstr = @"\"Hello---@?pP-l\\U00a6&\\U00e4\\U00a6\"";
   NSData   *adat;
   NSString *cstr;
@@ -22,7 +22,7 @@ int main()
   pass((cstr != nil && [cstr isKindOfClass: [NSString class]]),
        "We can convert to UTF8 Encoding");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

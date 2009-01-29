@@ -27,7 +27,7 @@ static BOOL scanThreeWords(NSString *string,NSCharacterSet *separators)
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *str = nil;
   id charSet = nil;
   
@@ -55,6 +55,6 @@ int main()
   pass(scanThreeWords(str,charSet), 
        "scanning three words separated by spaces and semi-colons");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

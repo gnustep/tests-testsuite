@@ -165,6 +165,6 @@ int main()
   [um endUndoGrouping];
   pass(gotCheckPoint == YES,"-endUndoGroup sends a NSUndoManagerCheckPointNotification");
   
-  IF_NO_GC(DESTROY(pool));
+  [pool release]; pool = nil;
   return 0;
 }

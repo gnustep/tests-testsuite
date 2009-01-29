@@ -7,7 +7,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id obj;
   NSMutableData     *data1;
 
@@ -20,6 +20,6 @@ int main()
                  @"NSInvalidArgumentException", YES,
 		 "Creating an NSUnarchiver with nil data throws an exception");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0; 
 }

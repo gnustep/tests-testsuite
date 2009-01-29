@@ -14,7 +14,7 @@ int main()
   id tmp1;
   NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
 
-  RETAIN(fh);
+  [fh retain];
   [fh readInBackgroundAndNotify];
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
@@ -42,7 +42,7 @@ int main()
   dropDatabaseWithModel(model);
 
   [fh closeFile];
-  RELEASE(fh);
+  [fh release];
   DESTROY(pool);
   return 0;
 }

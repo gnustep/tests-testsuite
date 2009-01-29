@@ -44,7 +44,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSInvocation *inv = nil; 
   NSObject <InvokeTarget>*tar;
   NSObject <InvokeProxy,InvokeTarget>*pxy;
@@ -198,6 +198,6 @@ int main()
        lsret.f == 11.0,
        "Can send/return large structs");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

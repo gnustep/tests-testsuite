@@ -7,7 +7,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id obj = [NSArchiver new];
   NSMutableData     *data1;
 
@@ -25,6 +25,6 @@ int main()
   
   
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0; 
 }

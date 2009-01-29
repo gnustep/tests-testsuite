@@ -298,6 +298,6 @@ int main()
   [pool dealloc];
   pool = [NSAutoreleasePool new];
   pass((rc == [bar retainCount]),"-undo causes NSUndoManager to release its argument object");
-  IF_NO_GC(DESTROY(pool));
+  [pool release]; pool = nil;
   return 0;
 }

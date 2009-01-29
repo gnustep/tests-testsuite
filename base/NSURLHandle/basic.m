@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   Class cls;
   NSURL *httpURL, *foobarURL;
   id handle1, handle2;
@@ -31,6 +31,6 @@ int main()
 
   pass(cls == Nil, "Nil class returned for unknown URL scheme");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

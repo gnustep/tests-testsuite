@@ -4,7 +4,7 @@
 #import <Foundation/NSString.h>
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSTimeInterval time1, time2, time3, time4, time5, time6, time7, time8, time9;
   NSCalendarDate *date1;
 
@@ -58,6 +58,6 @@ int main()
       "formatting milliseconds works");
   }
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

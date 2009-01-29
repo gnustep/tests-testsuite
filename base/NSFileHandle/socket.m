@@ -54,7 +54,7 @@ NSFileHandle *rFH = nil;
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSFileHandle *sFH, *cFH;
   NSData *wData = [@"Socket Test" dataUsingEncoding:NSASCIIStringEncoding];
   NSData *rData;
@@ -87,7 +87,7 @@ int main()
   pass([wData isEqual: rData],
        "NSFileHandle -writeData:/-availableData match with socket");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 #else

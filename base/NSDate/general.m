@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSDate *cdate, *date1, *date2;
   NSComparisonResult comp;
   
@@ -27,7 +27,7 @@ int main()
   pass ([date1 isEqualToDate:date2], "-isEqualToDate works");
 
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

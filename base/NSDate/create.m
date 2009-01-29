@@ -6,7 +6,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *val;
   NSDate *date1,*date2;
 
@@ -46,6 +46,6 @@ int main()
   pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+distantPast works");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

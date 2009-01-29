@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSNumberFormatter *fmt;
   NSNumber *num;
   NSString *str;
@@ -56,7 +56,7 @@ int main()
 
   pass([str isEqual: @"-1235"], "format string of length 1");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

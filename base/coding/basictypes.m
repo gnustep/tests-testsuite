@@ -41,7 +41,7 @@ void testReadBasicType_##testName (char *pre, testType *expect, testType *toDeco
   NSUnarchiver *unArch; \
   NSString *str2; \
   NSArray *encodedFiles; \
-  NSString *prefix = RETAIN([NSString stringWithCString:pre]); \
+  NSString *prefix = [[NSString stringWithCString:pre] retain]; \
   unsigned int i, c; \
   encodedFiles = [[NSBundle bundleWithPath: [fm currentDirectoryPath]] \
 	  		pathsForResourcesOfType:@"type" inDirectory:nil]; \
@@ -147,6 +147,6 @@ int main()
   testWriteBasicType_short("ushort", &us);
   testReadBasicType_short("ushort", &us, &us2);
   
-  IF_NO_GC(DESTROY(pool));
+  [pool release]; pool = nil;
   return 0;
 }

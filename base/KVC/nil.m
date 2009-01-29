@@ -41,7 +41,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   DefaultNil * defaultNil = [DefaultNil new];
   DeprecatedNil * deprecatedNil = [DeprecatedNil new];
@@ -81,6 +81,6 @@ int main()
   pass([[deprecatedNil valueForKey:@"num"] intValue] == 0,
     "KVC uses deprecated unableToSetNilForKey:");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

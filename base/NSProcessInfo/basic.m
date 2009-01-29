@@ -4,11 +4,11 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSProcessInfo *pi;
   test_alloc(@"NSProcessInfo");
   pi = [NSProcessInfo processInfo];
   test_NSObject(@"NSProcessInfo", [NSArray arrayWithObject:pi]);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

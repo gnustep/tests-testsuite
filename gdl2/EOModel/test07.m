@@ -52,9 +52,9 @@ int main()
   result = [[tmp1 subEntities] containsObject:tmp2];
   END_TEST(result, "-subEntities 2");
 
-  RELEASE(model2);
-  RELEASE(tmp1);
-  RELEASE(tmp2);
+  [model2 release];
+  [tmp1 release];
+  [tmp2 release];
   /* same as the 2 tests above but with the child loaded before the parent. */
   model2 = [[EOModel alloc] initWithContentsOfFile:filePath];
   tmp2 = [model2 entityNamed:@"ent2"];

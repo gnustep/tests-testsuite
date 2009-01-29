@@ -99,7 +99,7 @@ NSLog(@"Got %d on %p", streamEvent, theStream);
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSRunLoop *rl;
   NSHost *host;
   Listener *li;
@@ -110,7 +110,7 @@ int main()
   host = [NSHost hostWithName: @"localhost"];
 
 #if 0
-  li = AUTORELEASE([Listener new]);
+  li = AUTO[[Listener new] release];
   [NSStream getStreamsToHost: host port: 80
     inputStream: &defaultInput outputStream: &defaultOutput];
 
@@ -137,7 +137,7 @@ int main()
   byteCount = 0;
   defaultInput = nil;
   defaultOutput = nil;
-  li = AUTORELEASE([Listener new]);
+  li = AUTO[[Listener new] release];
   [NSStream getStreamsToHost: host port: 443
     inputStream: &defaultInput outputStream: &defaultOutput];
 
@@ -161,7 +161,7 @@ int main()
   pass(byteCount>0, "read www.google.com https");
 #endif
 
-  RELEASE(arp);
+  [arp release];
   return 0;
 }
 

@@ -5,7 +5,7 @@
 #import "ObjectTesting.h"
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   GSXMLDocument *doc;
   volatile GSXMLNamespace *namespace;
   NSMutableArray *iparams;
@@ -145,7 +145,7 @@ int main()
     "Can parse a method call with a date");
 
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 #else

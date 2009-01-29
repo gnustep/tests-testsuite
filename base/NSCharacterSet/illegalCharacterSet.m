@@ -54,6 +54,6 @@ main (int argc, char**argv)
   pass([s length],"legal UCS-2 set can be represented in an NSString.");
   [s release];
 
-  RELEASE(pool);
+  [pool release];
   return (0);
 }

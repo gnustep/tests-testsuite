@@ -66,7 +66,7 @@ static int omniChangeCount = 0;
 - (void) dealloc
 {
   [EOObserverCenter removeObserver:self forObject:_foo];
-  RELEASE(_foo);
+  [_foo release];
   reachedDealloc = 1;
   [super dealloc];
 }
@@ -97,7 +97,7 @@ int main()
   id omnisc1, omnisc2;
   NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
 
-  RETAIN(fh);
+  [fh retain];
   [fh readInBackgroundAndNotify];
 
   recordedObservers = [NSMutableArray new];
@@ -111,7 +111,7 @@ int main()
       [observer setHash:i];
       [EOObserverCenter addObserver:observer forObject:object];
       [observers addObject:observer];
-      RELEASE(observer);
+      [observer release];
     }
   
   tmp = [NSSet setWithArray:[EOObserverCenter observersForObject:object]];
@@ -151,14 +151,14 @@ int main()
        "EOObserverCenter +removeObserver:forObject doesn't release object");
   pass(tmpi2 == 1 && [observer retainCount] == 1,
        "EOObserverCenter +addObserver:forObject doesn't release observer");
-  RELEASE(observer);
-  RELEASE(object);
+  [observer release];
+  [object release];
   
 
   object = [NSObject new];
   observer = [[SuperflousExample alloc] initWithFoo:object];
-  RELEASE(object);
-  RELEASE(observer);
+  [object release];
+  [observer release];
   pass(reachedDealloc == 1,
        "can add observer in -init and remove in -dealloc");
   
@@ -166,12 +166,12 @@ int main()
   
   omnisc1 = [OmniscientObserver new];
   [observers addObject: omnisc1];
-  RELEASE(omnisc1); 
+  [omnisc1 release]; 
   [EOObserverCenter addOmniscientObserver:omnisc1];
   
   omnisc2 = [OmniscientObserver new];
   [observers addObject: omnisc2];
-  RELEASE(omnisc2); 
+  [omnisc2 release]; 
   [EOObserverCenter addOmniscientObserver:omnisc2];
    
   [object willChange];
@@ -278,10 +278,10 @@ int main()
 	 "observed objects for -isEqual: objects");
   }
   
-  RELEASE(observers);
+  [observers release];
 
   [fh closeFile];
-  RELEASE(fh);
-  RELEASE(pool);
+  [fh release];
+  [pool release];
   return 0;
 }

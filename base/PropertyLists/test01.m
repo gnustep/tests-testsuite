@@ -45,6 +45,7 @@ test_parse_unparse_binary(id object)
   return [u isEqual: object];
 }
 
+#if     defined(GNUSTEP_BASE_LIBRARY)
 static BOOL
 test_parse_unparse_binary_old(id object)
 {
@@ -60,14 +61,15 @@ test_parse_unparse_binary_old(id object)
     errorDescription: 0];
   return [u isEqual: object];
 }
+#endif
 
 int main()
 {
   BOOL	(*func)(id);
   int	i;
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 3; i++)
     {
       switch (i)
         {
@@ -80,10 +82,11 @@ int main()
 	  case 2:
 	    func = test_parse_unparse_binary;
 	    break;
-	  case 3:
-	    func = test_parse_unparse_binary_old;
-	    break;
 	}
+
+#if     defined(GNUSTEP_BASE_LIBRARY)
+      func = test_parse_unparse_binary_old;
+#endif
 
       pass(func(@"ariosto"),
 	   "We can generate a property list from a string");
@@ -249,7 +252,7 @@ int main()
       }
     }
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

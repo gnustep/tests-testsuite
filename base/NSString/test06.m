@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   char		c[2];
   unsigned	i;
   NSString	*s;
@@ -1293,6 +1293,6 @@ int main()
   e = [s stringByAddingPercentEscapesUsingEncoding: NSISOLatin1StringEncoding];
   pass([e isEqual: @"%FF"], "character 255 is escaped");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

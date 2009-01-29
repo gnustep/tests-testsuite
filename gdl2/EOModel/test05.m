@@ -69,6 +69,6 @@ int main()
 	"no attribute with removed attributes name");
   pass([[entity attributes] containsObject:attrib] == NO,
 	"entity does not contain removed attribute");
-  RELEASE(pool);
+  [pool release];
   return 0;
 }

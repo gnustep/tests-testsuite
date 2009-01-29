@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *key1, *val1, *str1;
   NSRange r = NSMakeRange(0,6);
   NSAttributedString *astr1, *astr2;
@@ -39,7 +39,7 @@ int main()
   pass(astr2 != nil && [astr1 isEqualToAttributedString:astr2],
        "extract and compare using -isEqualToAttributedString works");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

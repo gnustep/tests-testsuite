@@ -24,7 +24,7 @@ int main()
   arp = [[NSAutoreleasePool alloc] init];
 
   task = [[NSTask alloc] init];
-  outPipe = RETAIN([NSPipe pipe]);
+  outPipe = [[NSPipe pipe] retain];
   [task setLaunchPath: [NSString stringWithString: COMMAND]];
   [task setArguments: [NSArray arrayWithObjects: ARGUMENTS]];
   [task setStandardOutput: outPipe]; 
@@ -47,10 +47,10 @@ int main()
 
   [task terminate];
 
-  RELEASE(outPipe);
-  RELEASE(task);
+  [outPipe release];
+  [task release];
 
-  RELEASE(arp);
+  [arp release];
 
   return 0;
 }

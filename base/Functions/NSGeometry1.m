@@ -86,11 +86,11 @@ geom_string()
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(pool);
+  NSAutoreleasePool   *pool = [NSAutoreleasePool new];
 
   geom_string();
   
-  IF_NO_GC(DESTROY(pool));
+  [pool release]; pool = nil;
  
   return 0;
 }

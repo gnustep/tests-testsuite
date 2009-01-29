@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSMutableDictionary *testObj;
   
   testObj = [NSMutableDictionary new];
@@ -18,6 +18,6 @@ int main()
   
   test_NSMutableCopying(@"NSDictionary",@"NSMutableDictionary", 
                         [NSArray arrayWithObject:testObj]);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

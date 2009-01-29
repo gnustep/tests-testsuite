@@ -7,7 +7,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSFileManager *mgr = [NSFileManager defaultManager];
   NSString *dir = @"NSFileManagerTestDir"; 
   NSString *str1,*str2;
@@ -158,6 +158,6 @@ NSLog(@"'%@', '%@'", NSUserName(), [attr fileOwnerAccountName]);
     isDir = NO;
   }
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

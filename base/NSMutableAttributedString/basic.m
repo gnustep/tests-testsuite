@@ -3,7 +3,7 @@
 #import "ObjectTesting.h"
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSArray *arr = [NSArray arrayWithObject:[NSMutableAttributedString new]];
   
   test_alloc(@"NSMutableAttributedString");
@@ -12,7 +12,7 @@ int main()
   test_NSCopying(@"NSAttributedString",@"NSMutableAttributedString",arr,NO, NO);
   test_NSMutableCopying(@"NSAttributedString",@"NSMutableAttributedString",arr);
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

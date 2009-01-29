@@ -28,7 +28,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   /* We invert the order so that we really test the FD values when they
      are not opened in order.  */
   NSFileHandle *stdErrFH = [NSFileHandle fileHandleWithStandardError];
@@ -82,6 +82,6 @@ int main()
 
   [[NSFileManager defaultManager] removeFileAtPath: tPath handler: nil];
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -62,9 +62,9 @@ static NSMutableData *testData;
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSRunLoop *rl = [NSRunLoop currentRunLoop];
-  Listener *li = AUTORELEASE([Listener new]);
+  Listener *li = AUTO[[Listener new] release];
   NSString *path = @"pipe.m";
   
   [NSStream pipeWithInputStream:&defaultInput outputStream:&defaultOutput];
@@ -79,7 +79,7 @@ int main()
   [rl run];
 
   pass([goldData isEqualToData:testData], "Local pipe");
-  RELEASE(arp);
+  [arp release];
   return 0;
 }
 #else

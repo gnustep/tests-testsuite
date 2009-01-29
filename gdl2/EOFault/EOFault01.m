@@ -212,6 +212,6 @@ int main()
   dropDatabaseWithModel(model);
   END_SET("EOFault/" __FILE__);
 
-  RELEASE(pool);
+  [pool release];
   return 0;
 }

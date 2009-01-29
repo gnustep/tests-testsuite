@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *theString;
   unichar theUniChar[1] = {0xdd00};
   theString = [NSString stringWithCharacters:theUniChar length:1];
@@ -14,6 +14,6 @@ int main()
     pass(1,"bar");
   NS_ENDHANDLER
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

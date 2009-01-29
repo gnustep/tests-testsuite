@@ -46,14 +46,14 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSMutableAttributedString *as;
   NSString *base1 = @"base-1";
   NSString *base2 = @"base-2";
   NSDictionary *attrE, *attr1, *attr2;
   int start,length,index;
   
-  [AUTORELEASE([NSMutableAttributedString new]) _sanity]; 
+  [AUTO[[NSMutableAttributedString new] release] _sanity]; 
 
   as = [[NSMutableAttributedString alloc] initWithString:base1 attributes:nil];
   [as replaceCharactersInRange:NSMakeRange(2,2) withString:@""];
@@ -157,6 +157,6 @@ int main()
 	}
     }
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

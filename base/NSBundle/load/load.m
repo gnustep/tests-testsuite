@@ -6,7 +6,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *path;
   NSBundle *bundle;
   Class aClass;
@@ -51,6 +51,6 @@ int main()
   
   RELEASE(bundle);
   RELEASE(path);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

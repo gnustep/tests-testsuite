@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id current;
   id localh;
 
@@ -36,6 +36,6 @@ int main()
   pass(current != nil && [current isKindOfClass: [NSTimeZone class]],
        "+timeZoneWithName works");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

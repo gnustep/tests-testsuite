@@ -34,7 +34,7 @@ int main()
 
   [foo autorelease];
   rc1 = [foo retainCount];
-  RELEASE(pool);
+  [pool release];
   pool = [[NSAutoreleasePool alloc] init];
   rc2 = [foo retainCount];
   pass(rc1 - 1 == rc2, "EOFault -autorelease %i, %i", rc1, rc2);
@@ -73,6 +73,6 @@ int main()
   rc2 = [foo retainCount];
   pass(rc1 == rc2, "faulted object has faults retains %i, %i", rc1, rc2);
   
-  RELEASE(pool);
+  [pool release];
   return 0;
 }

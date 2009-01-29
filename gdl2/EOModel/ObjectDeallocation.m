@@ -58,7 +58,7 @@ int main()
   [e2 addRelationship:r2];
   [e4 addSubEntity:e5];
 
-  RELEASE(pool);
+  [pool release];
   pool = [[NSAutoreleasePool alloc] init];
 
   START_SET(YES);
@@ -66,7 +66,7 @@ int main()
   START_TEST(YES);
   rc = [model retainCount]; 
   END_TEST(rc == 1, "model will deallocate %i", [model retainCount]);
-  RELEASE(model);
+  [model release];
   
   START_TEST(YES);
   result = [e1 model] == nil;
@@ -86,12 +86,12 @@ int main()
   
   START_TEST(YES);
   rc = [e1 retainCount];
-  RELEASE(e1);
+  [e1 release];
   END_TEST(rc == 1, "Entity will deallocate 1");
 
   START_TEST(YES);
   rc = [e2 retainCount];
-  RELEASE(e2);
+  [e2 release];
   END_TEST(rc == 1, "Entity will deallocate 2");
   
   START_TEST(YES);
@@ -120,7 +120,7 @@ int main()
 
   START_TEST(YES);
   rc = [e3 retainCount];
-  RELEASE(e3);
+  [e3 release];
   END_TEST(rc == 1, "Entity will deallocate 3");
   
   START_TEST(YES);
@@ -137,13 +137,13 @@ int main()
   END_TEST(result, "parent entity will deallocate");
 
   START_TEST(YES);
-  RELEASE(e4);
+  [e4 release];
   result = [e5 parentEntity] == nil;
   END_TEST(result, "sub entities parent entity is now nil");
   
   END_SET("parent/sub entities");
  
-  RELEASE(pool);
+  [pool release];
   return 0;
 }
 

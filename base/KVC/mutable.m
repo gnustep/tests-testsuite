@@ -143,7 +143,7 @@
 
 int main(void)
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   Lists *list = [[[Lists alloc] init] autorelease];
   Observer *observer = [Observer new];
@@ -245,6 +245,6 @@ int main(void)
   [list removeObserver: observer forKeyPath: @"numbers"];
   [list removeObserver: observer forKeyPath: @"string"];
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

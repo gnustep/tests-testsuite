@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   // Test charset conversions.
   pass([GSMimeDocument encodingFromCharset: @"ansi_x3.4-1968"]
@@ -344,7 +344,7 @@ int main()
   pass([[GSMimeDocument charsetFromEncoding: NSWindowsCP1254StringEncoding]
     isEqualToString: @"windows-1254"],
     "NSWindowsCP1254StringEncoding canonical charset is windows-1254");
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 #else

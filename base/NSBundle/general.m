@@ -9,7 +9,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSBundle *classBundle, *gnustepBundle, *identifierBundle, *bundle;
   NSFileManager *fm = [NSFileManager defaultManager];
   NSString *path, *exepath;
@@ -73,6 +73,6 @@ int main()
   pass(identifierBundle == nil,
     "+bundleWithIdentifier returns nil for non-existent identifier");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

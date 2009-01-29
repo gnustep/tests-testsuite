@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSMutableCharacterSet *testMutableNamedSet, *testMutableNamedSet1, *testMutableNamedSet2;
   NSCharacterSet *testNamedSet;
   testMutableNamedSet = [NSMutableCharacterSet letterCharacterSet];
@@ -21,7 +21,7 @@ int main()
        ![testMutableNamedSet2 characterIsMember:[@"." characterAtIndex:0]],
        "Test whether we always get a clean mutable set"); 
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

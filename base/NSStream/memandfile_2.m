@@ -110,7 +110,7 @@ static NSInputStream *defaultInput = nil;
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSRunLoop *rl = [NSRunLoop currentRunLoop];
 
   // first test, file to memory copy
@@ -118,7 +118,7 @@ int main()
   NSData *goldData = [NSData dataWithContentsOfFile: path];
   NSInputStream *input = [NSInputStream inputStreamWithFileAtPath: path];
   NSOutputStream *output = [NSOutputStream outputStreamToMemory];
-  Listener1 *l1 = AUTORELEASE([Listener1 new]);
+  Listener1 *l1 = AUTO[[Listener1 new] release];
 
   [input setDelegate: l1];
   [input scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
@@ -134,7 +134,7 @@ int main()
   NSString *pathO = @"temp";
   NSInputStream *input2 = [NSInputStream inputStreamWithData: goldData];
   NSOutputStream *output2 = [NSOutputStream outputStreamToFileAtPath: pathO append: NO];
-  Listener1 *l2 = AUTORELEASE([Listener2 new]);
+  Listener1 *l2 = AUTO[[Listener2 new] release];
 
   [output2 setDelegate: l2];
   [output2 scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
@@ -148,7 +148,7 @@ int main()
 
   [[NSFileManager defaultManager] removeFileAtPath: pathO handler: nil];
     
-  RELEASE(arp);
+  [arp release];
   return 0;
 }
 

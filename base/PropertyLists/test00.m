@@ -13,7 +13,7 @@ test_parse(NSString *string, id result)
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   pass(test_parse(@"ariosto",@"ariosto"),
        "We can parse a string");
@@ -94,7 +94,7 @@ int main()
 					 forKey: @"author"],nil]),
        "We can parse an array containing an array and a dictionary");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

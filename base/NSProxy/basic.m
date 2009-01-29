@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   char *prefix = "Class 'NSProxy'";
   Class theClass = Nil;
   id obj0;
@@ -27,6 +27,6 @@ int main()
   pass(NSZoneFromPointer(obj1) == testZone, "%s uses zone for alloc",prefix);
   pass([obj1 zone] == testZone, "%s -zone works",prefix);
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *key1, *key2, *key3, *val1, *val2, *val3;
   NSArray *keys1, *keys2, *keys3, *vals1, *vals2, *vals3;
   NSDictionary *obj,*old;
@@ -74,6 +74,6 @@ int main()
   pass(obj != nil &&
        [obj isEqual: old], "+dictionaryWithDictionary: copies dictionary");
    
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

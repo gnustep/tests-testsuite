@@ -11,7 +11,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSInvocation *inv = nil; 
   NSObject <InvokeTarget>*tar;
   NSMethodSignature *sig;
@@ -93,6 +93,6 @@ int main()
   TEST_EXCEPTION([inv getReturnValue:&ret];,NSGenericException,YES,"Exception getting return value #2");
     
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

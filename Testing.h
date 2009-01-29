@@ -54,7 +54,7 @@ static void unsupported(const char *description, ...)
 }
 
 /* Pass an object as a string to a print function.  */
-#define POBJECT(obj)      [[obj description] lossyCString]
+#define POBJECT(obj)      [[obj description] UTF8String]
 
 /* some good macros to compare floating point numbers */
 #import <math.h>

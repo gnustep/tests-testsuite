@@ -8,7 +8,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *key1, *key2, *key3, *val1, *val2, *val3;
   NSArray *keys1, *keys2, *keys3, *vals1, *vals2, *vals3;
   id obj;
@@ -97,7 +97,7 @@ int main()
        [obj count] == 0,
        "-description gives us a text property-list");
   
-  dict = RETAIN([NSMutableDictionary dictionaryWithObjects:vals1 forKeys:keys1]);
+  dict = [[NSMutableDictionary dictionaryWithObjects:vals1 forKeys:keys1] retain];
   pass(dict != nil && 
        [dict isKindOfClass:[NSMutableDictionary class]] && 
        [dict count] == 2,
@@ -218,6 +218,6 @@ int main()
   pass([[dict valueForKey:@"Lücke"] isEqualToString:@"hello"],
       "unicode keys work with setValue:forKey:");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

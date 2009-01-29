@@ -334,10 +334,10 @@
 int main (int argc, char **argv)
 {
   int result;
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   
   result = [[[[StatusServer alloc] init] autorelease] runTest];
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return result;
 }

@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   NSUserDefaults *defs;
 
@@ -43,6 +43,6 @@ int main()
   pass([[defs stringForKey: @"Test Suite Str"] isEqual: @"SetString"],
        "NSUserDefaults can set/get a string");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

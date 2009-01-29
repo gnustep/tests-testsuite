@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSArray *result;
   char *testPath = NULL;
   char *resultPath = NULL;
@@ -213,6 +213,6 @@ int main()
   pass([[NSString pathWithComponents:result] isEqual:@"/nicola/core"],
        "+pathWithComponents works works for absolute path");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -4,7 +4,7 @@
 #import "Testing.h"
 int main(int argc,char **argv)
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *data = nil;
   GSMimeDocument *doc = [[GSMimeDocument alloc] init];
   NSMutableDictionary *par = [[NSMutableDictionary alloc] init];
@@ -20,7 +20,7 @@ int main(int argc,char **argv)
 				
   data = [NSData dataWithContentsOfFile: @"mime8.dat"];
   pass([[doc rawMimeData] isEqual: data], "Can make a simple document");
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 #else

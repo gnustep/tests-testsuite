@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSData *data;
   GSMimeParser *parser;
   GSMimeDocument *doc;
@@ -26,7 +26,7 @@ int main()
    
    
   data = [NSData dataWithContentsOfFile:@"mime4.dat"];
-  doc = RETAIN([GSMimeParser documentFromData:data]);
+  doc = [[GSMimeParser documentFromData:data] retain];
   pass(([[[[doc content] objectAtIndex:0] content] isEqual: @"hello\n"] &&
        [[[[doc content] objectAtIndex:1] content] isEqual: @"there\n"]),
        "can parse multi-part text mime4.dat");
@@ -39,7 +39,7 @@ int main()
   
   pass(([[[[doc content] objectAtIndex:0] contentSubtype] isEqual: @"plain"]),
        "can extract content sub type from mime4.dat");
-  RELEASE(doc);
+  [doc release];
     
   data = [NSData dataWithContentsOfFile:@"mime5.dat"];
   doc = [GSMimeParser documentFromData:data];
@@ -57,7 +57,7 @@ int main()
 
   
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 #else

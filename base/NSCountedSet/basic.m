@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id testObject = [NSCountedSet new];
   test_alloc(@"NSCountedSet");
   test_NSObject(@"NSCountedSet",[NSArray arrayWithObject:testObject]);
@@ -16,7 +16,7 @@ int main()
                         @"NSCountedSet",
 		        [NSArray arrayWithObject:testObject]);
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

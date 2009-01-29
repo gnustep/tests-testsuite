@@ -7,7 +7,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSBundle *bundle;
   NSBundle *gstepBundle;
   NSArray  *arr;
@@ -80,6 +80,6 @@ int main()
   pass([[gstepBundle pathForResource: @"NSTimeZones" ofType: nil]
     testForString], 
     "-pathForResource:ofType: finds a file");
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

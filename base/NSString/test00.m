@@ -254,7 +254,7 @@ static void testLineRange(char *s, NSRange range, NSRange want)
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   
   TEST_EXCEPTION([@"Hello" substringWithRange:NSMakeRange(6,4)];,
   		 NSRangeException, YES, 
@@ -348,6 +348,6 @@ int main()
   pass([@"4.5E6" floatValue] == 4.5e6, "Simple float conversion works");
 
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

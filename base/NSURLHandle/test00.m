@@ -130,9 +130,9 @@ int main(int argc, char **argv)
 {
   int status;
 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   status = [[[[TestObject alloc] init] autorelease] runTest];
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
 
   return status;
 }

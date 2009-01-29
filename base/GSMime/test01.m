@@ -5,11 +5,11 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   GSMimeParser *parser = [GSMimeParser mimeParser];
   NSStringEncoding enc = [GSMimeDocument encodingFromCharset: @"utf-8"];
   NSData *data;
-  GSMimeDocument *doc = RETAIN([parser mimeDocument]);
+  GSMimeDocument *doc = [[parser mimeDocument] retain];
   GSMimeHeader  *hdr;
   NSString      *val;
   NSString      *raw;
@@ -71,7 +71,7 @@ int main()
   pass ([parser parse: data] == NO, "can parse HTTP 200 reponse in one go");
   pass ([parser isComplete], "parse is complete");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 #else

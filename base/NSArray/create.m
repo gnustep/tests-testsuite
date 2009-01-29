@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id val1,val2,val3;
   id ptrvals[3];
   NSArray *obj, *old;
@@ -20,7 +20,7 @@ int main()
   obj = [NSArray new];
   pass((obj != nil && [obj isKindOfClass:[NSArray class]] && [obj count] == 0),
        "+new creates an empty array");
-  RELEASE(obj);
+  [obj release];
   obj = [NSArray array];
   pass((obj != nil && [obj isKindOfClass:[NSArray class]] && [obj count] == 0),
        "+array creates an empty array");
@@ -39,7 +39,7 @@ int main()
   obj = [NSArray arrayWithArray:old];
   pass(obj != nil && [old isEqual:obj], "+arrayWithArray: copies array");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

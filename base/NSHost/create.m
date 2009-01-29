@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSHost *current;
   NSHost *localh;
   NSHost *tmp; 
@@ -32,6 +32,6 @@ int main()
   pass(tmp != nil && [tmp isEqualToHost:localh], 
        "NSHost understands [+hostWithName: 127.0.0.1]");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

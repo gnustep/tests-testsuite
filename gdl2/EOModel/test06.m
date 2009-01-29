@@ -60,6 +60,6 @@ int main()
   pass([rel referencesProperty:attrib] == YES,
   	"relationship -referencesProperty: source attribute");
 
-  RELEASE(pool);
+  [pool release];
   return 0;
 }

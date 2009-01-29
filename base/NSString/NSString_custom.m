@@ -43,7 +43,7 @@ implementations of the NSString methods in NSString itself.
 	  l = [s length] * sizeof(unichar);
 	  characters = malloc(l);
 	  [s getCharacters: characters];
-	  RELEASE(s);
+	  [s release];
 	}
     }
   length = l / sizeof(unichar);

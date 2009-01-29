@@ -135,8 +135,8 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 					forMode: NSDefaultRunLoopMode];
 		NSLog(@"Server input stream is %p", serverInput);
 		NSLog(@"Server output stream is %p", serverOutput);
-                RETAIN(serverInput);
-                RETAIN(serverOutput);
+                [serverInput retain];
+                [serverOutput retain];
                 [serverInput setDelegate: self];
                 [serverOutput setDelegate: self];
                 [serverInput open];
@@ -254,7 +254,7 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSRunLoop *rl = [NSRunLoop currentRunLoop];
   NSHost *host = [NSHost hostWithAddress: @"127.0.0.1"];
   ServerListener *sli;
@@ -389,7 +389,7 @@ int main()
   [testData setLength: 0];
   [[NSFileManager defaultManager] removeFileAtPath: socketPath handler: nil];
 
-  RELEASE(arp);
+  [arp release];
   return 0;
 }
 #else

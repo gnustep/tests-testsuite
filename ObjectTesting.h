@@ -41,9 +41,9 @@
 #define START_SET(supported) if ((supported)) { NS_DURING 
 #define END_SET(desc, args...) NS_HANDLER \
   fprintf(stderr, "EXCEPTION: %s %s %s\n", \
-    [[localException name] lossyCString], \
-    [[localException reason] lossyCString], \
-    [[[localException userInfo] description] lossyCString]); \
+    [[localException name] UTF8String], \
+    [[localException reason] UTF8String], \
+    [[[localException userInfo] description] UTF8String]); \
   unresolved (desc, ## args); \
  NS_ENDHANDLER } \
  else unsupported (desc, ## args)
@@ -59,9 +59,9 @@
   pass(result, desc, ## args); \
   NS_HANDLER \
     fprintf(stderr, "EXCEPTION: %s %s %s\n", \
-      [[localException name] lossyCString], \
-      [[localException reason] lossyCString], \
-      [[[localException userInfo] description] lossyCString]); \
+      [[localException name] UTF8String], \
+      [[localException reason] UTF8String], \
+      [[[localException userInfo] description] UTF8String]); \
     pass (NO, desc, ## args); NS_ENDHANDLER } \
   else unsupported (desc, ## args)
 
@@ -94,8 +94,8 @@
   NS_HANDLER \
     pass(0, description); \
     if (cond == NO) \
-      printf("%s: %s", [[localException name] lossyCString], \
-        [[localException description] lossyCString]); \
+      printf("%s: %s", [[localException name] UTF8String], \
+        [[localException description] UTF8String]); \
   NS_ENDHANDLER
 
 static void test_NSMutableCopying(NSString *iClassName,
@@ -119,7 +119,7 @@ static void test_alloc(NSString *className)
   id obj0 = nil;
   id obj1 = nil;
   const char *prefix = [[NSString stringWithFormat:@"Class '%@'", className]
-    lossyCString];
+    UTF8String];
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
   NSZone *theZone;
   pass(theClass != Nil, "%s exists", prefix);
@@ -146,7 +146,7 @@ static void test_alloc_only(NSString *className)
   id obj0 = nil;
   id obj1 = nil;
   const char *prefix = [[NSString stringWithFormat:@"Class '%@'", className]
-    lossyCString];
+    UTF8String];
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
   NSZone *theZone;
   pass(theClass != Nil, "%s exists", prefix);
@@ -169,7 +169,7 @@ static void test_NSObject(NSString *className, NSArray *objects)
   int i;
   Class theClass = Nil;
   theClass = NSClassFromString(className);
-  pass(theClass != Nil, "%s is a known className", [className lossyCString]);
+  pass(theClass != Nil, "%s is a known className", [className UTF8String]);
   
   for (i = 0; i < [objects count]; i++)
     {
@@ -184,7 +184,7 @@ static void test_NSObject(NSString *className, NSArray *objects)
       id r;
 
       prefix = [[NSString stringWithFormat:@"Object %i of class '%@'",
-        i, className] lossyCString];
+        i, className] UTF8String];
       pass([theObj conformsToProtocol:@protocol(NSObject)],
 	"%s conforms to NSObject", prefix);
       mySelf = [theObj self];
@@ -193,7 +193,7 @@ static void test_NSObject(NSString *className, NSArray *objects)
       pass(myClass != Nil, "%s can return own class", prefix);
       pass([theObj isKindOfClass:theClass],
 	"%s object %.160s is of correct class", prefix,
-	[[theObj description] lossyCString]);
+	[[theObj description] UTF8String]);
       pass(mySelf == myClass ? ![theObj isMemberOfClass:myClass]
 	: [theObj isMemberOfClass:myClass], "%s isMemberOfClass works", prefix);
       sup = [theObj superclass];
@@ -238,7 +238,7 @@ static void test_NSCoding(NSArray *objects)
         "I can extract a class name for object");
 
       prefix = [[NSString stringWithFormat:@"Object %i of class '%s'", i,
-        [NSStringFromClass([obj class]) lossyCString]] lossyCString];
+        [NSStringFromClass([obj class]) UTF8String]] UTF8String];
       pass([obj conformsToProtocol:@protocol(NSCoding)], 
 	"conforms to NSCoding protocol");
       data = (NSMutableData *)[NSMutableData data]; 
@@ -265,8 +265,8 @@ static void test_NSCopying(NSString *iClassName,
   NSZone *defZone = NSDefaultMallocZone();
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
 
-  pass(iClass != Nil, "%s is a known class", [iClassName lossyCString]);
-  pass(mClass != Nil, "%s is a known class", [mClassName lossyCString]);
+  pass(iClass != Nil, "%s is a known class", [iClassName UTF8String]);
+  pass(mClass != Nil, "%s is a known class", [mClassName UTF8String]);
   
   for (i = 0; i < [objects count]; i++)
     {
@@ -291,7 +291,7 @@ static void test_NSCopying(NSString *iClassName,
 	}
      
       prefix = [[NSString stringWithFormat: @"Object %i of class '%s'",
-	i, [theName lossyCString]] lossyCString];
+	i, [theName UTF8String]] UTF8String];
       pass([theObj conformsToProtocol:@protocol(NSCopying)], 
 	"conforms to NSCopying");
       if (mustCopy)
@@ -370,10 +370,10 @@ static void test_NSMutableCopying(NSString *iClassName,
   Class mClass = Nil;
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
   iClass = NSClassFromString(iClassName);
-  pass(iClass != Nil, "%s is a known class", [iClassName lossyCString]);
+  pass(iClass != Nil, "%s is a known class", [iClassName UTF8String]);
   
   mClass = NSClassFromString(mClassName);
-  pass(mClass != Nil, "%s is a known class", [mClassName lossyCString]);
+  pass(mClass != Nil, "%s is a known class", [mClassName UTF8String]);
   
   for (i = 0; i < [objects count]; i++)
     {
@@ -401,7 +401,7 @@ static void test_NSMutableCopying(NSString *iClassName,
 	}
       
       prefix = [[NSString stringWithFormat:
-	@"Object %i of class '%s'", i, [theName lossyCString]] lossyCString];
+	@"Object %i of class '%s'", i, [theName UTF8String]] UTF8String];
       pass([theObj conformsToProtocol:@protocol(NSMutableCopying)],
 	"%s conforms to NSMutableCopying protocol", prefix);
       theCopy = [theObj mutableCopy];
@@ -411,13 +411,13 @@ static void test_NSMutableCopying(NSString *iClassName,
       pass([theCopy isEqual:theObj], "%s copy equals original", prefix);
       pass(theCopy != theObj,
 	"%s not retained by mutable copy in the same zone",
-	[mClassName lossyCString]);
+	[mClassName UTF8String]);
       
       theCopy = [theObj mutableCopyWithZone:testZone];
       pass(theCopy != nil,
-	"%s understands mutableCopyWithZone", [mClassName lossyCString]);
+	"%s understands mutableCopyWithZone", [mClassName UTF8String]);
       pass(theCopy != theObj, "%s not retained by mutable copy in other zone",
-	[mClassName lossyCString]);
+	[mClassName UTF8String]);
     }
 }
 

@@ -33,7 +33,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSMutableAttributedString *attrStr;
   NSString *baseString = @"0123456789";
   NSDictionary *red, *gray, *blue;
@@ -245,7 +245,7 @@ int main()
        [attrStr checkAttributes:red range:NSMakeRange(3,7)], 
        "-setAttributes:range: works with nearby attributes"); 
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

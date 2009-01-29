@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-  CREATE_AUTORELEASE_POOL(arp) ;
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new] ;
   
   NSString *helpers;
   NSString *statusServer;
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	   "404 - status: Handle load not loaded (resource not found)");
     }
   
-  IF_NO_GC(DESTROY(arp)) ;
+  [arp release]; arp = nil ;
   
   return 0;
 }

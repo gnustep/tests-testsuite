@@ -5,7 +5,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSIndexPath	*index1;
   NSIndexPath	*index2;
   unsigned	i0[2];
@@ -70,7 +70,7 @@ int main()
   pass([index2 compare: index1] == NSOrderedDescending,
        "longer index2 comparison the other way works");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   { 
     BOOL didNotSegfault = YES;
     pass(didNotSegfault, "+indexPathWithIndex: doesn't mess up memory");

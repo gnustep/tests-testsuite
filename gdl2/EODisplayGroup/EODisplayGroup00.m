@@ -205,7 +205,7 @@ int main(int argc,char **argv)
   END_TEST(result, "-[EODisplayGroup greaterThanQueryValues]");
   
   START_TEST(YES);
-  date = RETAIN([NSCalendarDate calendarDate]);
+  date = [[NSCalendarDate calendarDate] retain];
   
   [displayGroup setValue:[date description] forObject:nil key:@"@query=.date"];
   result = [[[displayGroup equalToQueryValues] objectForKey:@"date"]
@@ -257,7 +257,7 @@ int main(int argc,char **argv)
 				value:date];
     result = [arr testContainsObject: tmpQual];
     END_TEST(result, "-[EODisplayGroup qualifierFromQueryValues] 1");
-    RELEASE(date);
+    [date release];
      
     START_TEST(YES)
     tmpQual = [EOKeyValueQualifier qualifierWithKey:@"name" 

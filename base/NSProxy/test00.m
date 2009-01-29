@@ -20,7 +20,7 @@
 }
 - (void) dealloc
 {
-  RELEASE(_remote);
+  [_remote release];
 }
 -(void) setRemote:(id)remote
 {
@@ -50,7 +50,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   char *prefix = "The class 'NSProxy' ";
   Class theClass = NSClassFromString(@"NSProxy");
   id obj = nil;
@@ -66,6 +66,6 @@ int main()
   pass([obj remote] == rem, "Can set the remote object for the proxy");
   pass([obj length] == [rem length], "Can get the length of the remote object");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

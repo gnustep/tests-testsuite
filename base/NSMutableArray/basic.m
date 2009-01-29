@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSArray *testObj = [NSMutableArray arrayWithCapacity:1];
   test_alloc(@"NSMutableArray");
   test_NSObject(@"NSMutableArray", [NSArray arrayWithObject:testObj]); 
@@ -13,6 +13,6 @@ int main()
                  [NSArray arrayWithObject:testObj], NO, NO); 
   test_NSMutableCopying(@"NSArray",@"NSMutableArray", 
                  [NSArray arrayWithObject:testObj]); 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

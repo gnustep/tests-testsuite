@@ -8,7 +8,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *path, *localPath;
   NSBundle *bundle;
   NSArray  *arr, *carr;
@@ -38,6 +38,6 @@ int main()
   localPath = [path stringByAppendingPathComponent: @"Resources/English.lproj/TextRes.txt"];
   pass([arr containsObject: localPath], "Returned array contains localized resource");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

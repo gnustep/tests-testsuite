@@ -9,7 +9,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *val1, *val2, *val3;
   NSArray  *vals1, *vals2;
   NSData   *data1;
@@ -39,6 +39,6 @@ int main()
 
   [[NSFileManager  defaultManager] removeFileAtPath: val1 handler: nil];
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

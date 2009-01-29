@@ -71,7 +71,7 @@ int main()
   id testObject; 
   NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
 
-  RETAIN(fh);
+  [fh retain];
   [fh readInBackgroundAndNotify];
 
   ec = [EOEditingContext new];
@@ -91,9 +91,9 @@ int main()
   [testObject performTestWithObject:ent selector:@selector(addAttribute:) argument:attrib];
 
   [fh closeFile];
-  RELEASE(fh);
+  [fh release];
 
-  RELEASE(pool);
+  [pool release];
   return 0;
 }
 

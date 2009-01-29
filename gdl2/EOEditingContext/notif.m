@@ -59,7 +59,7 @@ int main()
   id testObject; 
   NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
 
-  RETAIN(fh);
+  [fh retain];
   [fh readInBackgroundAndNotify];
 
   ent = [model entityNamed: @"Product"];
@@ -79,8 +79,8 @@ int main()
   pass([testObject recvObjsChangedNotif] == YES, "EOObserving causes EOObjectsChangedInEditingContextNotification");
 
   [fh closeFile];
-  RELEASE(fh);
-  RELEASE(pool);
+  [fh release];
+  [pool release];
   return 0;
 }
 

@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   unichar	u0 = 'a';
   unichar	u1 = 0xfe66;
   NSString	*s;
@@ -33,6 +33,6 @@ int main()
     && ![s isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for unicode");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

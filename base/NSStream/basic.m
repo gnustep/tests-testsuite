@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSInputStream *t1;
   NSOutputStream *t2;
   NSHost *host = [NSHost hostWithName:@"localhost"];
@@ -13,6 +13,6 @@ int main()
 
   test_NSObject(@"NSStream", [NSArray arrayWithObjects:t1, t2, nil]); 
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -10,7 +10,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 
 int main(int argc, char **argv)
 {
-	CREATE_AUTORELEASE_POOL(arp);
+	NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 	NSFileManager *fm=[NSFileManager defaultManager];
 	NSArray *files;
 	int i;
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	NSString *s=[NSString stringWithCString: test];
 	printf("s=%s\n", [s lossyCString]);*/
 
-	IF_NO_GC(DESTROY(arp));
+	[arp release]; arp = nil;
 
 	return 0;
 }

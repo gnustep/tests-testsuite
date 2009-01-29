@@ -3,9 +3,9 @@
 #import <Foundation/NSObject.h>
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   test_alloc(@"NSObject");
   test_NSObject(@"NSObject", [NSArray arrayWithObject:[[NSObject new] autorelease]]);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   BOOL ret;
   
   NSLock *lock = [NSLock new];
@@ -37,7 +37,7 @@ int main()
   pass(ret == NO, "Recursive lockBeforeDate: with NSLock returns NO");
 #endif
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

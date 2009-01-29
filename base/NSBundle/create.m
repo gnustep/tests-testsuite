@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *path;
   NSBundle *bundle;
   
@@ -16,7 +16,7 @@ int main()
        "+mainBundle returns non-nil if the tool has no bundle");
   
   bundle = [NSBundle bundleWithPath:path];
-  RETAIN(bundle);
+  [bundle retain];
 
   TEST_FOR_CLASS(@"NSBundle", bundle, "+bundleWithPath returns a bundle");
   
@@ -38,6 +38,6 @@ int main()
     pass(arr != nil && [arr isKindOfClass:[NSArray class]] && [arr count] != 0,
          "+allBundles returns an array");
   }
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

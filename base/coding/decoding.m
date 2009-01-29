@@ -178,7 +178,7 @@ void test(Class class)
 
 int main(int argc, char **argv)
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   update = argc == 2 && !strcmp(argv[1], "--update");
 
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
   T(NSValue)
   T(NSNumber)
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
 
   return 0;
 }

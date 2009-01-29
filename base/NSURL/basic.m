@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSURL		*url;
   NSData	*data;
   NSString	*str;
@@ -53,6 +53,6 @@ int main()
   pass([str isEqual: @"/silly-file-name"],
     "Path of http://www.w3.org/silly-file-name is /silly-file-name");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

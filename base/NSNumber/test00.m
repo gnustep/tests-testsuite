@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSNumber *val1, *val2, *val3;
   double d;
 
@@ -59,11 +59,13 @@ int main()
   pass([val1 compare:val2] == NSOrderedDescending,
        "signed char numbers - 100 > 200");
 
+#if     defined(GNUSTEP_BASE_LIBRARY)
   pass([[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithInt:-10] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] intValue] == -10,
     "store negative integer in property list works");
   pass((d = [[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithDouble:-1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] doubleValue]) > -1.21 && d < -1.19,
     "store negative double in property list works");
+#endif
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

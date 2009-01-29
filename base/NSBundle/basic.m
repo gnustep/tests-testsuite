@@ -4,10 +4,10 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
    
   test_alloc(@"NSBundle");
   test_NSObject(@"NSBundle", [NSArray arrayWithObject:[NSBundle new]]); 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

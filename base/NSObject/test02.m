@@ -36,7 +36,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   pass([NicolaTest conformsToProtocol:@protocol(DoingNothing)],
        "+conformsToProtocol returns YES on an implemented protocol");
   pass([NicolaTest conformsToProtocol:@protocol(DoingNothingCategory)],
@@ -50,6 +50,6 @@ int main()
   pass(![[NicolaTest new] conformsToProtocol:@protocol(NSCoding)],
        "-conformsToProtocol returns NO on an unimplemented protocol");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

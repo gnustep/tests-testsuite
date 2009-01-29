@@ -6,7 +6,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id testObject = nil;
   test_alloc(@"NSConnection");
   testObject = [NSConnection new];
@@ -15,6 +15,6 @@ int main()
   pass(testObject != nil && [testObject isKindOfClass:[NSConnection class]],
        "NSConnection +defaultConnection works");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

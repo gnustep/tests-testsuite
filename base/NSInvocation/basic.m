@@ -4,11 +4,11 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSMethodSignature *testSig = [NSMethodSignature signatureWithObjCTypes:"@@::"];
   NSInvocation *testObj = [NSInvocation invocationWithMethodSignature:testSig];
   test_alloc(@"NSInvocation");
   test_NSObject(@"NSInvocation", [NSArray arrayWithObject:testObj]);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

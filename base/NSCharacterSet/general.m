@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSCharacterSet *theSet,*iSet;
   NSData *data1 = nil;
   theSet = [NSCharacterSet alphanumericCharacterSet];
@@ -87,7 +87,7 @@ int main()
 
 
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }
 

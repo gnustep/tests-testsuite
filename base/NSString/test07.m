@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   double d;
 
   pass([@"12" intValue] == 12, "simple intValue works");
@@ -25,6 +25,6 @@ int main()
   d = [@"                                1.2" doubleValue];
   pass(d > 1.199999 && d < 1.200001, "doubleValue with leading space works");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

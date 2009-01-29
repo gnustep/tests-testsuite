@@ -5,7 +5,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   pass([[@"" pathComponents] count] == 0, "pathComponents ''");
   pass([[@"usr" pathComponents] count] == 1, "pathComponents 'usr'");
   pass([[@"usr/" pathComponents] count] == 2, "pathComponents 'usr/'");
@@ -66,6 +66,6 @@ int main()
        "'/usr/' stringByAppendingPathComponent: 'bin/'");
   pass([[@"/usr/" stringByAppendingPathComponent:@"/bin/"] isEqual:@"/usr/bin"],
        "'/usr/' stringByAppendingPathComponent: '/bin/'");
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSArray		*array;
   NSSortDescriptor	*s1;
   NSSortDescriptor	*s2;
@@ -61,6 +61,6 @@ int main()
   a3 = [a1 sortedArrayUsingDescriptors: array];
   pass([a2 isEqual: a3], "simple multilevel sort works");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

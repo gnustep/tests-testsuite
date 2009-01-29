@@ -6,7 +6,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   char *str1,*str2;
   NSData *data1, *data2;
   NSMutableData *mutable;
@@ -68,7 +68,7 @@ int main()
        [data2 bytes] == str1, 
        "+dataWithBytesNoCopy:length:freeWhenDone: works");
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   
   { 
     BOOL didNotSegfault = YES;

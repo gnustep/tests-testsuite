@@ -4,9 +4,9 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   test_NSObject(@"NSFileManager", 
                 [NSArray arrayWithObject:[NSFileManager defaultManager]]);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

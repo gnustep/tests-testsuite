@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id testObj = [NSRunLoop new];
   
   test_alloc(@"NSRunLoop");
@@ -14,6 +14,6 @@ int main()
   ASSIGN(testObj, [NSTimer new]);
   test_NSObject(@"NSTimer", [NSArray arrayWithObject:testObj]);
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

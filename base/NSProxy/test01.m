@@ -115,7 +115,7 @@ GSDecimalCompare(NSDecimal left,NSDecimal right)
 -(long double)longdoublePlongdouble:(long double)v { return v - 1.0; }
 -(id)idPid:(id)v { return v == [NSProcessInfo processInfo] ? [NSNull null] : nil; }
 
--(NSStringEncoding)enumPenum:(NSStringEncoding)v { return v == NSSymbolStringEncoding ? NSNEXTSTEPStringEncoding : GSUndefinedEncoding; }
+-(NSStringEncoding)enumPenum:(NSStringEncoding)v { return v == NSSymbolStringEncoding ? NSNEXTSTEPStringEncoding : 0; }
 -(NSRange)rangePrange:(NSRange)v { return NSMakeRange(v.length,v.location); }
 -(NSPoint)pointPpoint:(NSPoint)v { return NSMakePoint(v.y,v.x); }
 -(NSDecimal)decimalPdecimal:(NSDecimal)v { return GSDecimalMultiply(v,v); }
@@ -139,7 +139,7 @@ GSDecimalCompare(NSDecimal left,NSDecimal right)
 }
 - (void) dealloc
 {
-  RELEASE(_remote);
+  [_remote release];
   [super dealloc];
 }
 -(void) setRemote:(id)remote
@@ -171,7 +171,7 @@ GSDecimalCompare(NSDecimal left,NSDecimal right)
 int
 main(int argc, char *argv[])
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id obj = nil;
   id rem = [TypeTester new];
   
@@ -212,6 +212,6 @@ main(int argc, char *argv[])
   pass(GSEqualBitFields([obj bitFieldPbitField: GSMakeBitField(0,1)],GSMakeBitField(1,0)), "Proxy GSBitField");
 #endif
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

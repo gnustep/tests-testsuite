@@ -35,7 +35,7 @@
 	  l = [s length] * sizeof(unichar);
 	  characters = malloc(l);
 	  [s getCharacters: characters];
-	  RELEASE(s);
+	  [s release];
 	}
     }
   length = l / sizeof(unichar);
@@ -66,7 +66,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   unichar	u0 = 'a';
   unichar	u1 = 0xfe66;
   NSMutableString *testObj,*base,*ext,*want;
@@ -120,6 +120,6 @@ int main()
     "custom string replacement works at end of string");
 
   [testObj release];
-  IF_NO_GC(DESTROY(arp)); 
+  [arp release]; arp = nil; 
   return 0;
 }

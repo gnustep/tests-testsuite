@@ -6,7 +6,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   char *str1,*str2,*tmp;
   NSData *data1, *data2;
   NSMutableData *mutable;
@@ -52,6 +52,6 @@ int main()
 		 NSRangeException,YES,"-replaceBytesInRange:withBytes out of range raises exception");
                  
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

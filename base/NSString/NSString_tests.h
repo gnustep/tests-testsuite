@@ -305,7 +305,7 @@ void test_return_self_optimizations(void)
 
 void TestNSStringClass(Class aStringClass)
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   stringClass = aStringClass;
 
@@ -315,6 +315,6 @@ void TestNSStringClass(Class aStringClass)
 
   test_return_self_optimizations();
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
 }
 

@@ -3,16 +3,16 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id val1,val2,val3,obj;
   NSArray *arr,*vals1,*vals2,*vals3;
 
   val1 = @"Hello";
   val2 = @"A Goodbye";
   val3 = @"Testing all strings";
-  vals1 = RETAIN([[NSArray arrayWithObject:val1] arrayByAddingObject:val2]);
-  vals2 = RETAIN([vals1 arrayByAddingObject:val2]);
-  vals3 = RETAIN([vals1 arrayByAddingObject:val3]);
+  vals1 = [[[NSArray arrayWithObject:val1] arrayByAddingObject:val2] retain];
+  vals2 = [[vals1 arrayByAddingObject:val2] retain];
+  vals3 = [[vals1 arrayByAddingObject:val3] retain];
   
   obj = [NSArray new];
   arr = obj;
@@ -86,6 +86,6 @@ int main()
 	 "-sortedArrayUsingSelector: seems ok");
 
   }
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

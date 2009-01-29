@@ -173,7 +173,7 @@ int
 main(int argc, char **argv)
 {
   int	result;
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   result = [[[[TestClass alloc] init] autorelease] runTest];
 

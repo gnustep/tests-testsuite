@@ -7,11 +7,14 @@
 #import <Foundation/NSData.h>
 #import <Foundation/NSDate.h>
 #import <Foundation/NSEnumerator.h>
+
+#if     defined(GNUSTEP_BASE_LIBRARY)
 #import <Foundation/NSSerialization.h>
+#endif
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *key1, *key2, *key3, *val1, *val2, *val3;
   NSArray *keys1, *keys2, *keys3, *keys4, *vals1, *vals2, *vals3, *vals4;
   id obj;
@@ -106,7 +109,7 @@ int main()
        [obj count] == 0,
        "-description gives us a text property-list");
   
-  dict = RETAIN([NSDictionary dictionaryWithObjects:vals1 forKeys:keys1]);
+  dict = [[NSDictionary dictionaryWithObjects:vals1 forKeys:keys1] retain];
   pass(dict != nil && 
        [dict isKindOfClass:[NSDictionary class]] && 
        [dict count] == 2,
@@ -220,6 +223,7 @@ int main()
   ASSIGN(dict,[NSDictionary dictionaryWithObjects:vals4 forKeys:keys4]);
   pass(dict != nil, "we can create a dictionary with several keys");
   
+#if     defined(GNUSTEP_BASE_LIBRARY)
   obj = [NSSerializer serializePropertyList:dict];
   obj = [NSDeserializer deserializePropertyListFromData:obj
                                       mutableContainers:YES];
@@ -227,7 +231,8 @@ int main()
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj isEqual:dict],
        "data/number/data are ok in serialized property-list");
+#endif
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

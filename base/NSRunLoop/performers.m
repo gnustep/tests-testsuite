@@ -10,13 +10,13 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSRunLoop *run;
   NSDate *date;
   NSMutableString *str;
   NSFileHandle *fh = [NSFileHandle fileHandleWithStandardInput];
 
-  RETAIN(fh);
+  [fh retain];
   [fh readInBackgroundAndNotify];
    
   run = [NSRunLoop currentRunLoop];
@@ -104,8 +104,8 @@ int main()
   pass([str isEqualToString:@""], "-cancelPerformSelectorsWithTarget: works %s",[str cString]); 
 
   [fh closeFile];
-  RELEASE(fh);
+  [fh release];
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

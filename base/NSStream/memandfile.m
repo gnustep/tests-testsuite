@@ -28,7 +28,7 @@ static void copyStream(NSInputStream *input, NSOutputStream *output)
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   // first test, file to memory copy
   NSString *path = @"memandfile.m";
@@ -53,6 +53,6 @@ int main()
 
   [[NSFileManager defaultManager] removeFileAtPath: pathO handler: nil];
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

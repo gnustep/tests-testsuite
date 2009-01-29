@@ -12,7 +12,7 @@ static BOOL eq(double d1, double d2)
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSAffineTransform *testObj;
   NSAffineTransformStruct flip = {1.0,0.0,0.0,-1.0,0.0,0.0};
   NSMutableArray *testObjs = [NSMutableArray new];
@@ -65,6 +65,6 @@ int main()
   p = [testObj transformPoint: NSMakePoint(10,10)];
   pass(eq(p.x, -16.0) && eq(p.y, 15.0), "rotate and translate works");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

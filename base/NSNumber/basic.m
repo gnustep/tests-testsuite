@@ -4,7 +4,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSNumber *testObj;
   test_alloc(@"NSNumber");
   testObj = [NSNumber new];
@@ -12,6 +12,6 @@ int main()
   test_NSCoding([NSArray arrayWithObject:testObj]);
   test_NSCopying(@"NSNumber", @"NSNumber", 
   		 [NSArray arrayWithObject:testObj],YES,NO);
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

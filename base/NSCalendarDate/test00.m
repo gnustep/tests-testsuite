@@ -20,7 +20,7 @@
 @end
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSString *val1, *val2;
   NSCalendarDate *date1, *date2;
   NSDictionary	*locale;
@@ -391,6 +391,6 @@ int main()
   pass([[date2 timeZone] isEqual: tz],
     "date year calculation preserves timezone");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

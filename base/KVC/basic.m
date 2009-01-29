@@ -112,7 +112,7 @@
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   TestClass * tester = [[[TestClass alloc] init] autorelease];
   [tester setValue:[[[TestClass alloc] init] autorelease] forKey:@"child"];
@@ -168,6 +168,6 @@ int main()
     NSUndefinedKeyException, YES,
     "KVC properly throws NSUndefinedKeyException with key paths");
 
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

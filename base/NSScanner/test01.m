@@ -63,7 +63,7 @@ static BOOL scanDouble(NSString *str,
 
 int main()
 {
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   int ret;
   double dret;
   int intmax = 2147483647;
@@ -119,6 +119,6 @@ int main()
        && scanDouble(@"1e-1", 1e-1, &dret)
        && scanDouble(@"1e-10", 1e-10, &dret),
        "NSScanner scans double with exponents");
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

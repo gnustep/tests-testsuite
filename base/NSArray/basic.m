@@ -7,7 +7,7 @@ int main()
   NSArray *obj;
   NSMutableArray *testObjs = [[NSMutableArray alloc] init];
   NSString *str;
-  CREATE_AUTORELEASE_POOL(arp);
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   test_alloc(@"NSArray"); 
   obj = [NSArray new];
   pass((obj != nil && [obj count] == 0),"can create an empty array");
@@ -21,6 +21,6 @@ int main()
   test_NSCopying(@"NSArray",@"NSMutableArray",testObjs,YES,NO);
   test_NSMutableCopying(@"NSArray",@"NSMutableArray",testObjs);
   
-  IF_NO_GC(DESTROY(arp));
+  [arp release]; arp = nil;
   return 0;
 }

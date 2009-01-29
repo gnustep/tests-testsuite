@@ -3,7 +3,7 @@
 
 int main()
 { 
-  CREATE_AUTORELEASE_POOL(pool);
+  NSAutoreleasePool   *pool = [NSAutoreleasePool new];
   NSZone *aZone;
   char *vp; 
   void *ovp;
@@ -75,7 +75,7 @@ int main()
   NS_HANDLER
     pass(0,"NSRecycleZone seems to operate");
   NS_ENDHANDLER
-  IF_NO_GC(DESTROY(pool));
+  [pool release]; pool = nil;
  
   return 0;
 }

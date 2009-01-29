@@ -20,17 +20,17 @@ int main()
 					  @"@foo",
 					  @"_foo",
 					  nil];
-  RETAIN(validNames);
+  [validNames retain];
   /* nil is also an invalid name but can't go into the array
      it is tested too. */
   invalidNames = [NSArray arrayWithObjects: @"",
   					    @"foo&",
 					    @"$foo",
 					    nil];
-  RETAIN(invalidNames);
+  [invalidNames retain];
   objectsToTest = [NSArray arrayWithObjects: entity, attribute,
   					     relationship, nil];
-  RETAIN(objectsToTest);
+  [objectsToTest retain];
 
   
   for (j = 0; j < [objectsToTest count]; j++)
@@ -121,7 +121,7 @@ int main()
     [model addEntity:entity2];
     result = ([[entity2 validateName:aName] isKindOfClass:[NSException class]] == YES);
     [model removeEntity:entity2];
-    RELEASE(entity2);
+    [entity2 release];
     END_TEST(result, "EOEntity -validateName: returns exception when entity with same name exists in model");
   }
 
@@ -143,7 +143,7 @@ int main()
     [entity addAttribute: attribute2];
     result = ([[attribute2 validateName:aName] isKindOfClass:[NSException class]] == YES);
     [entity removeAttribute:attribute2];
-    RELEASE(attribute2);
+    [attribute2 release];
     END_TEST(result, "EOAttribute -validateName returns exception when entity with same name exists in model");
   }
  
@@ -165,14 +165,14 @@ int main()
     [entity addRelationship:relationship2];
     result = ([[relationship2 validateName:aName] isKindOfClass:[NSException class]] == YES);
     [entity removeRelationship:relationship2];
-    RELEASE(relationship2);
+    [relationship2 release];
     END_TEST(result, "EORelationship -validateName: returns exception when relationship with same name exists in model");
   }
 
   END_SET("-validateName return values");
   
-  RELEASE(validNames);
-  RELEASE(invalidNames);
+  [validNames release];
+  [invalidNames release];
   
   DESTROY(pool); 
   return 0;
