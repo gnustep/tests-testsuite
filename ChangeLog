@@ -1,3 +1,18 @@
+2009-01-30  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* gui/GNUmakefile.tests: Renamed from GNUmakefile
+	* gdl2/GNUmakefile.tests: Renamed from GNUmakefile
+	* SelfContainedHeaders/GNUmakefile.tests: Renamed from GNUmakefile
+	* README: Document changes
+	* runtests.sh:
+	* runtest.sh:
+	Alter to walk up the directory tree to find the top level, so that we
+	can run tests from anywhere inside the testsuite hierarchy easily.
+	Change to run GNUmakefile.test rather than GNUmakefile in a directory,
+	to avoid confusion between automatically generated makefiles and
+	static ones. Thus, in any directory where tests are to be run,
+	GNUmakefile is ONLY generated automatically.
+
 2009-01-29  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* Testing.h:

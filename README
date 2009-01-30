@@ -30,11 +30,19 @@ the project testsuite you with to test:
 
 ./runtests.sh base
 
+or where a group of tests within a project is to be run:
+
+./runtests.sh base/NSArray
+
 You may run an individual test by using the runtest.sh script with the
 name of the Objective-C test source file:
 
 ./runtest.sh base/NSDate/general.m
 
+Alternatively, you may run tests from within a progecy. eg.
+
+cd base
+../runtests.sh .
 
 Writing Tests
 -------------
@@ -87,6 +95,10 @@ instance) build common resources before any tests are run.
 For total control, the runtest.sh script checks to see if a 'Custom.mk' file
 exists in the directory, and if it does it uses that file to build the tests
 rather than generating its own make file.
+
+You may also specify a GNUmakefile.tests in a project level directory (ie one
+containing subdirectories of tests), and that makefile will be executed when
+you run tests on the project.
 
 Ignoring directories
 --------------------

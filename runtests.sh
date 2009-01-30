@@ -87,28 +87,41 @@ then
   fi
 fi
 
+CWD=`pwd`
+TOP=$CWD
+while [ ! -e runtests.sh ]; do
+  if [ $TOP = / ]; then
+    echo "Unable to locate top-level directory"
+    exit 1;
+  fi
+  TOP=`dirname $TOP`
+  cd $TOP
+done
+RUNCMD=$TOP/runtest.sh
+cd $CWD
+
 run_test_file ()
 {
-  echo >> tests.log
-  echo Testing $TESTFILE... >> tests.log
-  echo >> tests.sum
+  echo >> $CWD/tests.log
+  echo Testing $TESTFILE... >> $CWD/tests.log
+  echo >> $CWD/tests.sum
 
   # Run the test. Log everything to a temporary file.
-  ./runtest.sh $run_args $TESTFILE > tests.tmp 2>&1
+  $RUNCMD $run_args $TESTFILE > $CWD/tests.tmp 2>&1
 
   # Add the information to the detailed log.
-  cat tests.tmp >> tests.log
+  cat $CWD/tests.tmp >> $CWD/tests.log
 
   # Extract the summary information and add it to the summary file.
-  grep "^[A-Z]*:" tests.tmp > tests.sum.tmp
-  cat tests.sum.tmp >> tests.sum
+  grep "^[A-Z]*:" $CWD/tests.tmp > $CWD/tests.sum.tmp
+  cat $CWD/tests.sum.tmp >> $CWD/tests.sum
 
   # If there was anything other than PASS and COMPLETE in the summary...
-  if grep -L -v "^\(PASS\|COMPLETED\)" tests.sum.tmp > /dev/null; then
+  if grep -L -v "^\(PASS\|COMPLETED\)" $CWD/tests.sum.tmp > /dev/null; then
     # ... print them to stdout.
     echo
     echo $TESTFILE:
-    grep -v "^\(PASS\|COMPLETED\)" tests.sum.tmp
+    grep -v "^\(PASS\|COMPLETED\)" $CWD/tests.sum.tmp
   fi
 }
 
@@ -128,13 +141,20 @@ else
   do
     echo "--- Running tests in $dir ---"
     TESTS=`find $dir -name \*.m | sort | sed -e 's/\(^\| \)X[^ ]*//g'`
-    # If there is a top-level makefile, run it first
-    if [ -f $dir/GNUmakefile ]
+    # If there is a GNUmakefile.tests in the directory, run it first.
+    # Unless ... we are at the top level, in which case that file is
+    # our template.
+    cd $dir
+    if [ $TOP != `pwd` ]
     then
-      cd $dir
-      $MAKE_CMD $MAKEFLAGS debug=yes 2>&1
-      cd ..
+      if [ -f GNUmakefile.tests ]
+      then
+        cp GNUmakefile.tests GNUmakefile
+        $MAKE_CMD $MAKEFLAGS debug=yes 2>&1
+	rm -f GNUmakefile
+      fi
     fi
+    cd $CWD
     for TESTFILE in $TESTS
     do
       run_test_file

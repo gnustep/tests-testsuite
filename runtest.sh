@@ -60,7 +60,31 @@ if test -z "$GNUSTEP_MAKEFILES"; then
   fi
 fi
 
+# Move to the test's directory.
 DIR=`dirname $1`
+if [ ! -d $DIR ]; then
+  echo "Unable to proceed ... $DIR is not a directory"
+  exit 1
+fi
+cd $DIR
+DIR=`pwd`
+TOP=$DIR
+while [ ! -e runtest.sh ]; do
+  if [ $TOP = / ]; then
+    echo "Unable to locate top-level directory"
+    exit 1;
+  fi
+  TOP=`dirname $TOP`
+  cd $TOP
+done
+# Check that we are not in the top level ... where creating a GNUmakefile
+# would trash an existing makefile.
+cd $DIR
+if [ -e runtest.sh ]; then
+  echo "Unable to proceed ... test file is in top level directory"
+  exit 1
+fi
+
 NAME=`basename $1`
 if [ ! "$MAKE_CMD" ]
 then
@@ -71,36 +95,25 @@ then
   fi
 fi
 
-# There are no tests in the '.' directory, but if someone types
-# 'runtest.sh xxx' we might be called in that way.  Avoid creating a
-# confusing non-working top-level GNUmakefile in that case.
-if [ "$DIR" = "." ]
-then
- exit 1
-fi
-
-if [ ! -e $DIR/IGNORE ] 
+if [ ! -e IGNORE ] 
 then
   # Remove the extension, if there is one. If there is no extension, add
   # .obj .
   TESTNAME=`echo $NAME | sed -e"s/^\([^.]*\)$/\1.obj./;s/\.[^.]*//g"`
-  CWD=`pwd`
 
   # Check for a custom makefile, if it exists use it.
-  if [ -r $DIR/Custom.mk ]
+  if [ -r Custom.mk ]
   then
     if [ $NAME = "Custom.mk" ] 
     then
-      echo "include Custom.mk" >>$DIR/GNUmakefile
+      echo "include Custom.mk" >>GNUmakefile
     else
       exit 0
     fi
   else
     # Create the GNUmakefile by filling in the name of the test.
-    sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$CWD^" < GNUmakefile.tests > $DIR/GNUmakefile
+    sed -e "s/@TESTNAME@/$TESTNAME/;s/@FILENAME@/$NAME/;s^@INCLUDEDIR@^$TOP^" < $TOP/GNUmakefile.tests > GNUmakefile
   fi
-  # Move to the test's directory.
-  cd $DIR
 
   # Clean up to avoid contamination by previous tests. (Optimistically) assume
   # that	this will never fail in any interesting way.
@@ -132,6 +145,8 @@ then
       echo COMPLETED: $1 >&2
     fi
   fi
+
+  rm -f GNUmakefile
 
   # Clean up to avoid contaminating later tests. (Optimistically) assume that
   # this will never fail in any interesting way.
