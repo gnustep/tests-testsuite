@@ -1,4 +1,4 @@
-#if	defined(GNUSTEP_BASE_LIBRARY)
+#if	GNUSTEP
 #include	<Foundation/Foundation.h>
 
 @interface	TestClass : NSObject

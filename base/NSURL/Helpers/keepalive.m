@@ -1,3 +1,4 @@
+#if     GNUSTEP
 #include <Foundation/Foundation.h>
 
 @interface TestClass : NSObject
@@ -237,3 +238,10 @@ int main(int argc, char **argv)
   [arp release];
   return result;
 }
+#else
+int main()
+{
+  return 0;
+}
+#endif
+

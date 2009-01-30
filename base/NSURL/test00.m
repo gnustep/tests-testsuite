@@ -5,6 +5,7 @@
 
 int main()
 {
+#if     GNUSTEP
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   unsigned		i, j;
   NSURL			*url;
@@ -129,5 +130,6 @@ int main()
         }
     }
   [arp release]; arp = nil;
+#endif
   return 0;
 }
