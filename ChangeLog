@@ -1,5 +1,9 @@
 2009-01-30  Richard Frith-Macdonald  <rfm@gnu.org>
 
+	* base/NSLock/doubleLocking.m: Add new tests based on Greg's code.
+
+2009-01-30  Richard Frith-Macdonald  <rfm@gnu.org>
+
 	* gui/GNUmakefile.tests: Renamed from GNUmakefile
 	* gdl2/GNUmakefile.tests: Renamed from GNUmakefile
 	* SelfContainedHeaders/GNUmakefile.tests: Renamed from GNUmakefile

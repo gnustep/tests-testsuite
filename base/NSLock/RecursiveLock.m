@@ -25,8 +25,6 @@ int main()
     [lock unlock];
   pass(ret, "NSRecursiveLock lockBeforeDate: with NSRecursiveLock returns YES");
 
-
-  
   [arp release]; arp = nil;
   return 0;
 }
