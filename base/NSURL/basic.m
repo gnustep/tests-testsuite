@@ -8,6 +8,7 @@ int main()
   NSURL		*url;
   NSData	*data;
   NSString	*str;
+  NSNumber      *num;
   unichar	u = 163;
   
   TEST_FOR_CLASS(@"NSURL", [NSURL alloc],
@@ -32,8 +33,8 @@ int main()
   data = [url resourceDataUsingCache: NO];
   pass(data != nil,
     "Can load a page from www.w3.org");
-  str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
-  pass([str intValue] == 200,
+  num = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
+  pass([num isKindOfClass: [NSNumber class]] && [num intValue] == 200,
     "Status of load is 200 for www.w3.org");
 
   url = [NSURL URLWithString:@"this isn't a URL"];
@@ -41,8 +42,8 @@ int main()
 
   url = [NSURL URLWithString: @"http://www.w3.org/silly-file-name"];
   data = [url resourceDataUsingCache: NO];
-  str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
-  pass([str intValue] == 404,
+  num = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
+  pass([num isKindOfClass: [NSNumber class]] && [num intValue] == 404,
     "Status of load is 404 for www.w3.org/silly-file-name");
 
   str = [url scheme];
