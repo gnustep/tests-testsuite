@@ -106,8 +106,8 @@ int main()
   NSDate *d;
 
   rl = [NSRunLoop currentRunLoop];
-  //host = [NSHost hostWithName: @"www.google.com"];
-  host = [NSHost hostWithName: @"localhost"];
+  host = [NSHost hostWithName: @"www.google.com"];
+  //host = [NSHost hostWithName: @"localhost"];
 
 #if 0
   li = [[Listener new] autorelease];
