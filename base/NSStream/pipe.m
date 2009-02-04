@@ -64,7 +64,7 @@ int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSRunLoop *rl = [NSRunLoop currentRunLoop];
-  Listener *li = AUTO[[Listener new] release];
+  Listener *li = [[Listener new] autorelease];
   NSString *path = @"pipe.m";
   
   [NSStream pipeWithInputStream:&defaultInput outputStream:&defaultOutput];

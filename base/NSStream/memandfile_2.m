@@ -118,7 +118,7 @@ int main()
   NSData *goldData = [NSData dataWithContentsOfFile: path];
   NSInputStream *input = [NSInputStream inputStreamWithFileAtPath: path];
   NSOutputStream *output = [NSOutputStream outputStreamToMemory];
-  Listener1 *l1 = AUTO[[Listener1 new] release];
+  Listener1 *l1 = [[Listener1 new] autorelease];
 
   [input setDelegate: l1];
   [input scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
@@ -134,7 +134,7 @@ int main()
   NSString *pathO = @"temp";
   NSInputStream *input2 = [NSInputStream inputStreamWithData: goldData];
   NSOutputStream *output2 = [NSOutputStream outputStreamToFileAtPath: pathO append: NO];
-  Listener1 *l2 = AUTO[[Listener2 new] release];
+  Listener1 *l2 = [[Listener2 new] autorelease];
 
   [output2 setDelegate: l2];
   [output2 scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];

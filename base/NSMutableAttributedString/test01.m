@@ -53,7 +53,7 @@ int main()
   NSDictionary *attrE, *attr1, *attr2;
   int start,length,index;
   
-  [AUTO[[NSMutableAttributedString new] release] _sanity]; 
+  [[[NSMutableAttributedString new] autorelease] _sanity]; 
 
   as = [[NSMutableAttributedString alloc] initWithString:base1 attributes:nil];
   [as replaceCharactersInRange:NSMakeRange(2,2) withString:@""];

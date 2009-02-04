@@ -110,7 +110,7 @@ int main()
   host = [NSHost hostWithName: @"localhost"];
 
 #if 0
-  li = AUTO[[Listener new] release];
+  li = [[Listener new] autorelease];
   [NSStream getStreamsToHost: host port: 80
     inputStream: &defaultInput outputStream: &defaultOutput];
 
@@ -137,7 +137,7 @@ int main()
   byteCount = 0;
   defaultInput = nil;
   defaultOutput = nil;
-  li = AUTO[[Listener new] release];
+  li = [[Listener new] autorelease];
   [NSStream getStreamsToHost: host port: 443
     inputStream: &defaultInput outputStream: &defaultOutput];
 
