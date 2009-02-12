@@ -33,6 +33,10 @@ int main()
     && ![s isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for unicode");
 
+  TEST_EXCEPTION([[NSString alloc] initWithString: nil];,
+  		 NSInvalidArgumentException, YES, 
+		 "NSString -initWithString: does not allow nil argument");
+
   [arp release]; arp = nil;
   return 0;
 }
