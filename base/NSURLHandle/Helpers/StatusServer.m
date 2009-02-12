@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+#if     GNUSTEP
+
 #define PORT_LISTEN 54321
 #define LOCATION200 @"http://localhost:54321/200"
 
@@ -341,3 +343,17 @@ int main (int argc, char **argv)
   [arp release]; arp = nil;
   return result;
 }
+
+#else
+
+int main (int argc, char **argv)
+{
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  
+  NSLog(@"StatesServer not implemented on non-GNUstep systems");
+
+  [arp release]; arp = nil;
+  return 0;
+}
+
+#endif
