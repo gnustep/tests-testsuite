@@ -22,6 +22,7 @@
 #import <Foundation/NSException.h>
 #import <Foundation/NSData.h>
 #import <Foundation/NSArchiver.h>
+#import <Foundation/NSGarbageCollector.h>
 #import "Testing.h"
 
 #define TEST_FOR_CLASS(aClassName, aClass, TestDescription) \
@@ -83,20 +84,20 @@
       [localException raise]; \
   NS_ENDHANDLER
 
-/* dunno if i like this one... */
 /* test a condition fail if any exceptions are thrown */
-#define TEST_COND (cond, description) \
+#define PASS (cond, args...) \
   NS_DURING \
     { \
-      BOOL testCondition = cond; \
-      pass(cond, description); \
+      [[NSGarbageCollector defaultCollector] collectUnconditionally]; \
+      pass(cond, ## args); \
+      [[NSGarbageCollector defaultCollector] collectUnconditionally]; \
     } \
   NS_HANDLER \
-    pass(0, description); \
-    if (cond == NO) \
-      printf("%s: %s", [[localException name] UTF8String], \
-        [[localException description] UTF8String]); \
+    pass(0, ## args); \
+    printf("%s: %s", [[localException name] UTF8String], \
+      [[localException description] UTF8String]); \
   NS_ENDHANDLER
+
 
 static void test_NSMutableCopying(NSString *iClassName,
 				  NSString *mClassName, 
@@ -136,8 +137,12 @@ static void test_alloc(NSString *className)
   
   obj1 = [theClass allocWithZone:testZone];
   pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
-  theZone = NSZoneFromPointer(obj1);
-  pass(theZone == testZone,"%s uses specified zone for allocWithZone",prefix);
+  if ([NSGarbageCollector defaultCollector] == nil)
+    {
+      theZone = NSZoneFromPointer(obj1);
+      pass(theZone == testZone,
+        "%s uses specified zone for allocWithZone",prefix);
+    }
 }
 /* perform basic allocation tests without initialisation*/
 static void test_alloc_only(NSString *className)
@@ -234,6 +239,7 @@ static void test_NSCoding(NSArray *objects)
       NSArchiver *archiver;
       id decoded;
 
+      START_SET(YES);
       pass([[[obj class] description] length],
         "I can extract a class name for object");
 
@@ -251,8 +257,10 @@ static void test_NSCoding(NSArray *objects)
       decoded = [NSUnarchiver unarchiveObjectWithData:data];
       pass(decoded != nil, "can be decoded");
       pass([decoded isEqual:obj], "decoded object equals the original");
+      END_SET("test_NSCoding object %u", i);
     }
 }
+
 static void test_NSCopying(NSString *iClassName,
 			   NSString *mClassName,
 			   NSArray *objects,
@@ -277,6 +285,8 @@ static void test_NSCopying(NSString *iClassName,
       Class theClass = Nil;
       BOOL shouldRetain; 
       id theObj = [objects objectAtIndex: i];
+
+      START_SET(YES);
       if (iClass != mClass && [theObj isKindOfClass: mClass])
         { 
 	  immutable = NO;
@@ -357,6 +367,7 @@ static void test_NSCopying(NSString *iClassName,
      if (theClass != iClass)
        pass(![theCopy isKindOfClass:theClass],
 	 "%s result of copyWithZone: is not immutable", prefix);
+      END_SET("test_NSCopying object %u", i);
     }
 }
 
@@ -384,6 +395,7 @@ static void test_NSMutableCopying(NSString *iClassName,
       id theCopy = nil;
       Class theClass = Nil;
           
+      START_SET(YES);
       if (iClass == mClass && [theObj isKindOfClass:mClass])
         immutable = NO;
       else
@@ -418,6 +430,7 @@ static void test_NSMutableCopying(NSString *iClassName,
 	"%s understands mutableCopyWithZone", [mClassName UTF8String]);
       pass(theCopy != theObj, "%s not retained by mutable copy in other zone",
 	[mClassName UTF8String]);
+      END_SET("test_NSMutableCopying object %u", i);
     }
 }
 
