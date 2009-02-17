@@ -1,3 +1,9 @@
+2009-02-17  David Ayers  <ayers@fsfe.org>
+
+	* gdl2/EORelationship/ToManyKeyPropagation.m,
+	* gdl2/EORelationship/ToManyKeyPropagation.eomodel:
+	Add test for editing relationships in memory and db.
+	
 2009-01-30  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSLock/doubleLocking.m: Add new tests based on Greg's code.

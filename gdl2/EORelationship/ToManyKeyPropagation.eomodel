@@ -99,6 +99,92 @@
 	  );
 	}
       );
+    },
+    {
+      name                 = Customer;
+      externalName         = CUSTOMER;
+      className            = EOGenericRecord;
+      primaryKeyAttributes = ( pid );
+      attributesUsedForLocking = ( pid );
+      classProperties = ( name, customerGroup );
+
+      attributes = (
+        {
+          name           = pid;
+          columnName     = PID;
+          externalType   = integer;
+          valueClassName = NSNumber;
+          valueType      = i;
+        },
+        {
+          name           = name;
+          columnName     = NAME;
+          externalType   = char;
+          valueClassName = NSString;
+          width          = 30;
+         },
+        {
+          name           = grpid;
+          columnName     = GRPID;
+          externalType   = integer;
+          valueClassName = NSNumber;
+          allowsNull     = Y;
+          valueType      = i;
+        }
+      );
+      relationships = (
+        {
+	  name = customerGroup;
+	  destination = CustomerGroup;
+	  isToMany = N;
+	  joinSemantic = EOInnerJoin;
+	  joins = (
+	    {
+	      sourceAttribute = grpid;
+	      destinationAttribute = pid;
+	    }
+	  )
+	}
+      );
+    },
+    {
+      name                 = CustomerGroup;
+      externalName         = CUSTOMERGRP;
+      className            = EOGenericRecord;
+      primaryKeyAttributes = ( pid );
+      attributesUsedForLocking = ( pid );
+      classProperties = ( name, customers );
+
+      attributes = (
+        {
+          name           = pid;
+          columnName     = PID;
+          externalType   = integer;
+          valueClassName = NSNumber;
+          valueType      = i;
+        },
+        {
+          name           = name;
+          columnName     = NAME;
+          externalType   = char;
+          valueClassName = NSString;
+          width          = 30;
+         }
+      );
+      relationships = (
+        {
+	  name = customers;
+	  destination = Customer;
+	  isToMany = Y;
+	  joinSemantic = EOInnerJoin;
+	  joins = (
+	    {
+	      sourceAttribute = pid;
+	      destinationAttribute = grpid;
+	    }
+	  )
+	}
+      )
     }
   );
 }
