@@ -61,6 +61,16 @@ int main()
   [pool release];
   pool = [[NSAutoreleasePool alloc] init];
 
+
+  /* 
+   * this code is evil you should always call 
+   * -referencesToProperty: before removing or causing the deallocation 
+   * any model object.  This code does not because we want to test that there
+   * are no retain cycles so things can be released, and test the clean up
+   * of the things which can be cleaned up.
+   *
+   * not every pointer will be set to nil.
+   */
   START_SET(YES);
   
   START_TEST(YES);
@@ -77,7 +87,7 @@ int main()
   END_TEST(result, "EOEntity -model has no dangling pointer 2");
   
   START_TEST(YES);
-  result = [e2 model] == nil;
+  result = [e3 model] == nil;
   END_TEST(result, "EOEntity -model has no dangling pointer 3");
   
   END_SET("entity unretained pointers");
@@ -107,25 +117,13 @@ int main()
   END_TEST(result, "relationship unretained pointers 1");
   
   START_TEST(YES);
-  result = [r1 destinationEntity] == nil;
-  END_TEST(result, "relationship unretained pointers 2");
-  
-  START_TEST(YES);
   result = [r2 entity] == nil;
   END_TEST(result, "relationship unretained pointers 3");
-
-  START_TEST(YES);
-  result = [r2 destinationEntity] == e3;
-  END_TEST(result, "relationship unretained pointers 4");
 
   START_TEST(YES);
   rc = [e3 retainCount];
   [e3 release];
   END_TEST(rc == 1, "Entity will deallocate 3");
-  
-  START_TEST(YES);
-  result = [r2 destinationEntity] == nil;
-  END_TEST(result, "relationship unretained pointers 5");
   
   END_SET("relationship unretained pointers");
  
