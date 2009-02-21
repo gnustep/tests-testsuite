@@ -8,8 +8,8 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSIndexPath	*index1;
   NSIndexPath	*index2;
-  unsigned	i0[2];
-  unsigned	i1[2];
+  NSUInteger	i0[2];
+  NSUInteger	i1[2];
   
   i0[0] = i1[1] = 0;
   i0[1] = i1[0] = 1;

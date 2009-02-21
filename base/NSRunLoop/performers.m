@@ -25,83 +25,83 @@ int main()
      Thus, we need to provide at least one input source ... */
 
   str = [[NSMutableString alloc] init]; 
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"foo"
-	order:0
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  [run runUntilDate:date];
-  pass([str isEqual:@"foo"], 
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"foo"
+	order: 0
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+  [run runUntilDate: date];
+  pass([str isEqual: @"foo"], 
        "-performSelector:target:argument:order:modes: works for one performer");
   
   str = [[NSMutableString alloc] init]; 
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"foo"
-	order:0
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  [run runUntilDate:date];
-  [run runUntilDate:date];
-  pass([str isEqual:@"foo"],
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"foo"
+	order: 0
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+  [run runUntilDate: date];
+  [run runUntilDate: date];
+  pass([str isEqual: @"foo"],
        "-performSelector:target:argument:order:modes: only sends the message once");
   
   str = [[NSMutableString alloc] init]; 
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"bar"
-	order:11
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"foo"
-	order:10
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  [run runUntilDate:date];
-  pass([str isEqual:@"foobar"],
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"bar"
+	order: 11
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"foo"
+	order: 10
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+  [run runUntilDate: date];
+  pass([str isEqual: @"foobar"],
        "-performSelector:target:argument:order:modes: orders performers correctly");
   
   str = [[NSMutableString alloc] init]; 
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"foo"
-	order:10
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"bar"
-	order:11
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"zot"
-	order:11
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  [run cancelPerformSelector:@selector(appendString:)
-  	target:str
-	argument:@"bar"];
-  date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  [run runUntilDate:date];
-  pass([str isEqual:@"foozot"],
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"foo"
+	order: 10
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"bar"
+	order: 11
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"zot"
+	order: 11
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  [run cancelPerformSelector: @selector(appendString:)
+  	target: str
+	argument: @"bar"];
+  date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+  [run runUntilDate: date];
+  pass([str isEqual: @"foozot"],
        "-cancelPerformSelector:target:argument: works");
   
   str = [[NSMutableString alloc] init]; 
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"foo"
-	order:10
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  [run performSelector:@selector(appendString:)
-  	target:str
-	argument:@"zot"
-	order:11
-	modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-  [run cancelPerformSelectorsWithTarget:str];
-  date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-  [run runUntilDate:date];
-  pass([str isEqualToString:@""], "-cancelPerformSelectorsWithTarget: works %s",[str cString]); 
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"foo"
+	order: 10
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  [run performSelector: @selector(appendString:)
+  	target: str
+	argument: @"zot"
+	order: 11
+	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
+  [run cancelPerformSelectorsWithTarget: str];
+  date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+  [run runUntilDate: date];
+  pass([str isEqualToString: @""], "-cancelPerformSelectorsWithTarget: works %s",[str cString]); 
 
   [fh closeFile];
   [fh release];
