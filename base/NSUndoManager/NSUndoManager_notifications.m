@@ -109,11 +109,12 @@ int main()
   seven = @"seven";
   eight = @"eight";
 
+  [um setGroupsByEvent: NO];
+
   pass(([um groupingLevel] == 0), "level 0 before any grouping");
   [um beginUndoGrouping]; 
   [obj setFooReg:one];
   [um endUndoGrouping];
-  pass(([um groupingLevel] == 1), "level 1 after making one group");
   
   gotWillUndo = NO;
   willdidUndo = YES;
@@ -121,7 +122,6 @@ int main()
   pass((gotWillUndo == YES),
        "-undo posts NSUndoManagerWillUndoChangeNotification");
   willdidUndo = NO;
-  pass(([um groupingLevel] == 0), "level 0 after undoing one group");
   
   gotWillRedo = NO;
   willdidRedo = YES;
@@ -129,7 +129,6 @@ int main()
   pass((gotWillRedo == YES),
        "-undo posts NSUndoManagerWillRedoChangeNotification");
   willdidRedo = NO;
-  pass(([um groupingLevel] == 0), "level 0 after redoing one group");
   
   gotDidUndo = NO;
   willdidUndo = YES;
@@ -137,7 +136,6 @@ int main()
   pass((gotDidUndo == YES),
        "-undo posts NSUndoManagerDidUndoChangeNotification");
   willdidUndo = NO;
-  pass(([um groupingLevel] == 0), "level 0 after undoing again");
   
   gotDidRedo = YES; 
   willdidRedo = YES;
@@ -145,7 +143,6 @@ int main()
   pass((gotDidRedo == YES), 
        "-undo posts NSUndoManagerDidRedoChangeNotification");
   willdidRedo = NO;
-  pass(([um groupingLevel] == 0), "level 0 after redoing again");
   
   gotOpenUndoGroup = NO;
   openUndoGroup = YES;
@@ -154,7 +151,6 @@ int main()
   pass((gotOpenUndoGroup == YES), 
        "-beginUndoGroup sends a NSUndoManagerDidOpenUndoGroupNotification");
   
-  pass(([um groupingLevel] == 2), "level 2 after beginning a group");
   [obj setFooReg:two];
   
   closeUndoGroup = YES;
@@ -163,19 +159,17 @@ int main()
   pass((gotCloseUndoGroup == YES),
        "-endUndoGroup sends a NSUndoManagerDidCloseUndoGroupNotification");
   
-  pass(([um groupingLevel] == 1), "level 1 after ending a group");
+  pass([um groupingLevel] == 0,"we are at level zero");
 
   gotCheckPoint = NO;
   checkPoint = YES;
   [um beginUndoGrouping];
   pass(gotCheckPoint == YES,"-beginUndoGroup sends a NSUndoManagerCheckPointNotification");
-  pass(([um groupingLevel] == 2), "level 2 after beginning another group");
   [obj setFooReg:three];
   gotCheckPoint = NO;
   [um endUndoGrouping];
   pass(gotCheckPoint == YES,"-endUndoGroup sends a NSUndoManagerCheckPointNotification");
   
-  pass(([um groupingLevel] == 1), "level 1 after ending another group");
   [pool release]; pool = nil;
   return 0;
 }

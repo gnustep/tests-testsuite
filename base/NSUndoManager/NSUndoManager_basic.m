@@ -1,4 +1,5 @@
 #import "Testing.h"
+#import "ObjectTesting.h"
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSUndoManager.h>
 #import <Foundation/NSNotification.h>
@@ -34,6 +35,7 @@ static void checkSanity()
 
 - (void) setFooReg:(id)newFoo
 { 
+NSLog(@"setFooReg: %@", newFoo);
   checkSanity();
   [um registerUndoWithTarget:self selector:@selector(setFooReg:) object:_foo];
   ASSIGN(_foo,newFoo);
@@ -112,6 +114,14 @@ int main()
   seven = @"seven";
   eight = @"eight";
 
+  pass([um levelsOfUndo] == 0, "initial levels of undo is zero");
+  pass([um groupingLevel] == 0, "initial grouping level is zero");
+  pass([um isUndoRegistrationEnabled] == YES, "undo registration is enabled");
+  pass([um groupsByEvent] == YES, " groups by event enabled");
+  pass([um isUndoing] == NO, "undoing not in progress");
+  pass([um isRedoing] == NO, "redoing not in progress");
+  [um setGroupsByEvent: NO];
+
   [um beginUndoGrouping]; 
   isUndoing = NO;
   isRedoing = NO;
@@ -128,10 +138,12 @@ int main()
   isRedoing = NO;
   [obj setFooReg:two];
   [um endUndoGrouping];
+  pass([obj foo] == two && sane, "set two");
   
   [um beginUndoGrouping];
   [obj setFooReg:three];
   [um endUndoGrouping];
+  pass([obj foo] == three && sane, "set three");
   
   pass(([obj fooUndo] == two && sane
   	&& [obj fooUndo] == one && sane 
@@ -244,6 +256,7 @@ int main()
        "undo grouping works with redo");
   DESTROY(um);  
   um = [[NSUndoManager alloc] init];
+  [um setGroupsByEvent: NO];
   [um setLevelsOfUndo: 2];
   pass(([um levelsOfUndo] == 2), "setLevelsOfUndo: is sane.");
   
@@ -288,16 +301,20 @@ int main()
  
   bar = [[NSObject alloc] init];
   rc = [bar retainCount];
+  
+  TEST_EXCEPTION([um registerUndoWithTarget:obj selector:@selector(setFooReg:) object:nil], nil, YES, "can't register undo outside any group");
+
+  [um beginUndoGrouping];
   [um registerUndoWithTarget:obj selector:@selector(setFooReg:) object:bar];
+  [um endUndoGrouping];
   pass(([bar retainCount] == (rc + 1)),"registerUndoWithTarget:selector:object: retains its argument object");
   isRedoing = NO;
   isUndoing = YES;
   
-  rc = [bar retainCount];
   [um undo];  /* setFooReg: should cause a retain. */
-  [pool dealloc];
+  [pool release];
   pool = [NSAutoreleasePool new];
-  pass((rc == [bar retainCount]),"-undo causes NSUndoManager to release its argument object");
+  pass((rc+1== [bar retainCount]),"-undo causes NSUndoManager to release its argument object");
   [pool release]; pool = nil;
   return 0;
 }
