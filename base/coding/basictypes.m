@@ -25,14 +25,23 @@
   nsint = -1234567890;
   nsuint = 1234567890;
 }
--(BOOL)isEqual:(id)o
+- (BOOL)testCInt:(Model *)o
 {
-  Model *other = o;
-  return (cint == other->cint) 
-    && (cuint == other->cuint) 
-    && (nsint == other->nsint)
-    && (nsuint == other->nsuint);
+  return (cint == o->cint);
 }
+- (BOOL)testCUInt:(Model *)o
+{
+  return (cuint == o->cuint);
+}
+- (BOOL)testNSInteger:(Model *)o
+{
+  return (nsint == o->nsint);
+}
+- (BOOL)testNSUInteger:(Model *)o
+{
+  return (nsuint == o->nsuint);
+}
+
 -(void)encodeWithCoder:(NSCoder *)coder
 {
   [coder encodeValueOfObjCType:@encode(int) at:&cint];
@@ -42,17 +51,14 @@
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
-#if 0
-  [coder decodeValueOfObjCType: @encode(int) at: &cint];
-  [coder decodeValueOfObjCType: @encode(unsigned int) at: &nsuint];
+  /* encoded as int - decoded as NSInteger. */
   [coder decodeValueOfObjCType: @encode(NSInteger) at: &cint];
-  [coder decodeValueOfObjCType: @encode(NSUInteger) at: &cuint];
-#else
-  [coder decodeValueOfObjCType: @encode(NSInteger) at: &cint];
+  /* encoded as unsinged int - decoded as NSUInteger. */
   [coder decodeValueOfObjCType: @encode(NSUInteger) at: &nsuint];
+  /* encoded as NSInteger - decoded as int. */
   [coder decodeValueOfObjCType: @encode(int) at: &cint];
+  /* encoded as NSUInteger - decoded as unsigned int. */
   [coder decodeValueOfObjCType: @encode(unsigned int) at: &cuint];
-#endif
   return self;
 }
 @end
@@ -199,10 +205,12 @@ int main()
   testReadBasicType_short("ushort", &us, &us2);
   
   obj1 = [Model new];
-
   data = [NSArchiver archivedDataWithRootObject: obj1];
   obj2 = [NSUnarchiver unarchiveObjectWithData: data];
-  pass([obj1 isEqual:obj2], "archiving with NSInteger  and NSUInteger works");
+  pass([obj1 testCInt:obj2],       "archiving as int - dearchiving as NSInteger");
+  pass([obj1 testCUInt:obj2],      "archiving as unsigned int - dearchiving as NSUInteger");
+  pass([obj1 testNSInteger:obj2],  "archiving as NSInteger - dearchiving as int");
+  pass([obj1 testNSUInteger:obj2], "archiving as NSUInteger - dearchiving as unsigned int");
   
   [pool release]; pool = nil;
   return 0;

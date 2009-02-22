@@ -1,3 +1,8 @@
+2009-02-22  David Ayers  <ayers@fsfe.org>
+	
+	* base/coding/basictypes.m: Add test to archive as int/unsigned int
+	while dearchiving as NSInteger/NSUInteger and vice versa.
+	
 2009-02-18  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOModel/ObjectDeallocation.m: remove invalid tests.
