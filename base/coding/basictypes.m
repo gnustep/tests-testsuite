@@ -9,6 +9,55 @@
 #include <Foundation/NSString.h>
 #include <limits.h>
 
+@interface Model : NSObject <NSCoding>
+{
+  int cint;
+  unsigned int cuint;
+  NSInteger nsint;
+  NSUInteger nsuint;
+}
+@end
+@implementation Model
+-(void)setValues
+{
+  cint = -1234567890;
+  cuint = 1234567890;
+  nsint = -1234567890;
+  nsuint = 1234567890;
+}
+-(BOOL)isEqual:(id)o
+{
+  Model *other = o;
+  return (cint == other->cint) 
+    && (cuint == other->cuint) 
+    && (nsint == other->nsint)
+    && (nsuint == other->nsuint);
+}
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+  [coder encodeValueOfObjCType:@encode(int) at:&cint];
+  [coder encodeValueOfObjCType:@encode(unsigned int) at:&cuint];
+  [coder encodeValueOfObjCType:@encode(NSInteger) at:&nsint];
+  [coder encodeValueOfObjCType:@encode(NSUInteger) at:&nsuint];
+}
+-(id)initWithCoder:(NSCoder *)coder
+{
+#if 0
+  [coder decodeValueOfObjCType: @encode(int) at: &cint];
+  [coder decodeValueOfObjCType: @encode(unsigned int) at: &nsuint];
+  [coder decodeValueOfObjCType: @encode(NSInteger) at: &cint];
+  [coder decodeValueOfObjCType: @encode(NSUInteger) at: &cuint];
+#else
+  [coder decodeValueOfObjCType: @encode(NSInteger) at: &cint];
+  [coder decodeValueOfObjCType: @encode(NSUInteger) at: &nsuint];
+  [coder decodeValueOfObjCType: @encode(int) at: &cint];
+  [coder decodeValueOfObjCType: @encode(unsigned int) at: &cuint];
+#endif
+  return self;
+}
+@end
+
+
 static NSFileManager *fm;
 NSString *str = @"Do not taunt happy fun ball";
 #define TEST_DECL(testType,testName) \
@@ -84,6 +133,8 @@ TEST_DECL(double, double);
 int main()
 {
   NSAutoreleasePool *pool = [NSAutoreleasePool new];
+  id obj1, obj2;
+  NSData *data;
   int i = 2147483647;
   int i2;
   unsigned int ui = 4294967295U;
@@ -146,6 +197,12 @@ int main()
   
   testWriteBasicType_short("ushort", &us);
   testReadBasicType_short("ushort", &us, &us2);
+  
+  obj1 = [Model new];
+
+  data = [NSArchiver archivedDataWithRootObject: obj1];
+  obj2 = [NSUnarchiver unarchiveObjectWithData: data];
+  pass([obj1 isEqual:obj2], "archiving with NSInteger  and NSUInteger works");
   
   [pool release]; pool = nil;
   return 0;
