@@ -27,6 +27,25 @@ geom_string()
   r = NSMakeRect(23.45, -3.45, 2044.3, 2033);
   s = NSMakeSize(0.5, 0.22);
 
+  pass(NSEqualPoints(p, NSMakePoint(23.45, -3.45)),
+    "identical points are equal");
+  pass(NSEqualPoints(p, NSMakePoint(23.450001, -3.45)),
+    "near identical points are equal");
+  pass(!NSEqualPoints(p, NSMakePoint(23.4500019, -3.45)),
+    "moderately similar points are not equal");
+  pass(NSEqualSizes(s, NSMakeSize(0.5, 0.22)),
+    "identical sizes are equal");
+  pass(NSEqualSizes(s, NSMakeSize(0.50000001, 0.22)),
+    "near identical sizes are equal");
+  pass(!NSEqualSizes(s, NSMakeSize(0.50000003, 0.22)),
+    "moderately similar sizes are not equal");
+  pass(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033)),
+    "identical rects are equal");
+  pass(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.00001)),
+    "near identical rects are equal");
+  pass(!NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.0001)),
+    "moderately similar rects are not equal");
+
 #if     defined(GNUSTEP_BASE_LIBRARY)
   if (compat_mode == YES)
     {
