@@ -60,12 +60,14 @@ BOOL gotCloseUndoGroup;
 }
 - (void) checkPoint:(NSNotification *)notif
 {
+NSLog(@"%@ %d", notif, [um groupingLevel]);
   if (checkPointCounter<sizeof(groupingLevels))
     groupingLevels[checkPointCounter++] = [um groupingLevel];
   gotCheckPoint = (checkPoint == YES); 
 }
 - (void) openUndoGroup:(NSNotification *)notif
 {
+NSLog(@"%@ %d", notif, [um groupingLevel]);
   gotOpenUndoGroup = (openUndoGroup == YES);
   openGroupCount++;
 }
@@ -87,6 +89,7 @@ BOOL gotCloseUndoGroup;
 }
 - (void) closeUndoGroup:(NSNotification *)notif
 {
+NSLog(@"%@ %d", notif, [um groupingLevel]);
   gotCloseUndoGroup = (closeUndoGroup == YES);
   openGroupCount--;
 }
@@ -121,7 +124,7 @@ int main()
   pass([um groupingLevel] == 0, "start at top level");
   [um beginUndoGrouping]; 
   pass(groupingLevels[0] == 1, "grouping level during 1. check point");
-  pass(groupingLevels[1] == 2, "grouping level during 2. check point");
+  pass(checkPointCounter == 1, "beginUndoGrouping causes one check point");
   pass(openGroupCount == 2 && [um groupingLevel] == 2,
     "implicit open when grouping by events");
   [um endUndoGrouping];
