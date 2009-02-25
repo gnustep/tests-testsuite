@@ -7,6 +7,8 @@
 static NSUndoManager *um;
 
 unsigned        openGroupCount;
+unsigned        groupingLevels[32] = {0};
+unsigned        checkPointCounter = 0;
 
 BOOL shouldBeUndoing; 
 BOOL shouldBeRedoing;
@@ -58,6 +60,8 @@ BOOL gotCloseUndoGroup;
 }
 - (void) checkPoint:(NSNotification *)notif
 {
+  if (checkPointCounter<sizeof(groupingLevels))
+    groupingLevels[checkPointCounter++] = [um groupingLevel];
   gotCheckPoint = (checkPoint == YES); 
 }
 - (void) openUndoGroup:(NSNotification *)notif
@@ -116,6 +120,8 @@ int main()
   openGroupCount = 0;
   pass([um groupingLevel] == 0, "start at top level");
   [um beginUndoGrouping]; 
+  pass(groupingLevels[0] == 1, "grouping level during 1. check point");
+  pass(groupingLevels[1] == 2, "grouping level during 2. check point");
   pass(openGroupCount == 2 && [um groupingLevel] == 2,
     "implicit open when grouping by events");
   [um endUndoGrouping];
