@@ -6,6 +6,8 @@
 
 static NSUndoManager *um;
 
+unsigned        openGroupCount;
+
 BOOL shouldBeUndoing; 
 BOOL shouldBeRedoing;
 
@@ -61,6 +63,7 @@ BOOL gotCloseUndoGroup;
 - (void) openUndoGroup:(NSNotification *)notif
 {
   gotOpenUndoGroup = (openUndoGroup == YES);
+  openGroupCount++;
 }
 - (void) didUndo:(NSNotification *)notif
 {
@@ -81,6 +84,7 @@ BOOL gotCloseUndoGroup;
 - (void) closeUndoGroup:(NSNotification *)notif
 {
   gotCloseUndoGroup = (closeUndoGroup == YES);
+  openGroupCount--;
 }
 - (void) setFooReg:(id)newFoo
 { 
@@ -108,6 +112,13 @@ int main()
   six = @"six";
   seven = @"seven";
   eight = @"eight";
+
+  openGroupCount = 0;
+  [um beginUndoGrouping]; 
+  pass(openGroupCount == 2, "implicit open when grouping by events");
+  [um endUndoGrouping];
+  pass(openGroupCount == 1, "no implicit close when grouping by events");
+  [um endUndoGrouping];
 
   [um setGroupsByEvent: NO];
 
