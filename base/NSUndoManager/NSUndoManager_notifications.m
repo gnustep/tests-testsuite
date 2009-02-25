@@ -114,11 +114,16 @@ int main()
   eight = @"eight";
 
   openGroupCount = 0;
+  pass([um groupingLevel] == 0, "start at top level");
   [um beginUndoGrouping]; 
-  pass(openGroupCount == 2, "implicit open when grouping by events");
+  pass(openGroupCount == 2 && [um groupingLevel] == 2,
+    "implicit open when grouping by events");
   [um endUndoGrouping];
-  pass(openGroupCount == 1, "no implicit close when grouping by events");
+  pass(openGroupCount == 1 && [um groupingLevel] == 1,
+    "no implicit close when grouping by events");
   [um endUndoGrouping];
+  pass(openGroupCount == 0 && [um groupingLevel] == 0,
+    "grouping level matched notifications");
 
   [um setGroupsByEvent: NO];
 
