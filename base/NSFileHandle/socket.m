@@ -48,6 +48,7 @@ NSFileHandle *rFH = nil;
 - (void)connect:(NSNotification *)notif
 {
   NSDictionary *d = [notif userInfo];
+NSLog(@"%@", notif);
   rFH = [[d objectForKey: NSFileHandleNotificationFileHandleItem] retain];
 }
 @end
@@ -55,6 +56,7 @@ NSFileHandle *rFH = nil;
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  Handler *h;
   NSFileHandle *sFH, *cFH;
   NSData *wData = [@"Socket Test" dataUsingEncoding:NSASCIIStringEncoding];
   NSData *rData;
@@ -62,7 +64,7 @@ int main()
      socket send buffer otherwise we risk being blocked in this single
      threaded process.  */
 
-  [[Handler new] autorelease];
+  h = [[Handler new] autorelease];
 
   sFH = [NSFileHandle fileHandleAsServerAtAddress: @"127.0.0.1"
 		       service: GST_PORT
