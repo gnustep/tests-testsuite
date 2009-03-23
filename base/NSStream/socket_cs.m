@@ -269,12 +269,13 @@ int main()
 
   sli = [ServerListener new];
   cli = [ClientListener new];
-  serverStream = [GSServerStream serverStreamToAddr: [host address] port: 4321];
+  serverStream
+    = [GSServerStream serverStreamToAddr: [host address] port: 54321];
   [serverStream setDelegate: sli];
   [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [serverStream open];
   [NSStream getStreamsToHost: host
-			port: 4321
+			port: 54321
 		 inputStream: &clientInput
 		outputStream: &clientOutput];
   NSLog(@"Client input stream is %p", clientInput);
@@ -299,12 +300,13 @@ int main()
 
   sli = [ServerListener new];
   cli = [ClientListener new];
-  serverStream = [GSServerStream serverStreamToAddr: [host address] port: 4321];
+  serverStream
+    = [GSServerStream serverStreamToAddr: [host address] port: 54321];
   [serverStream setDelegate: sli];
   [serverStream open];
   [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [NSStream getStreamsToHost: host
-			port: 4321
+			port: 54321
 		 inputStream: &clientInput
 		outputStream: &clientOutput];
   NSLog(@"Client input stream is %p", clientInput);
