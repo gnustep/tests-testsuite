@@ -39,7 +39,7 @@
   NSString		*file;
   int			port = [[defs stringForKey: @"Port"] intValue];
 
-  if (port == 0) port = 4321;
+  if (port == 0) port = 54321;
 
   file = [defs stringForKey: @"FileName"];
   if (file == nil) file = @"Capture.dat";

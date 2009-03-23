@@ -26,7 +26,7 @@ int main()
   capture = [helpers stringByAppendingPathComponent: @"capture"];
   respond = [helpers stringByAppendingPathComponent: @"respond"];
 
-  url = [NSURL URLWithString: @"http://localhost:4321/"];
+  url = [NSURL URLWithString: @"http://localhost:54321/"];
 
   /* Ask the 'respond' helper to send back a response containing
    * 'hello' and to shrink the write buffer size it uses on each
@@ -69,7 +69,7 @@ int main()
 	   * that loads work when handles are flushed from the cache.
 	   */
 	  u = [NSURL URLWithString: [NSString stringWithFormat:
-	    @"http://localhost:4321/%d", i % 18]];
+	    @"http://localhost:54321/%d", i % 18]];
           // Talk to server.
           data = [u resourceDataUsingCache: NO];
           // Get status code
