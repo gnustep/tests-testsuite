@@ -96,8 +96,8 @@ int main()
   
   pass([[@"/home/nicola/" stringByDeletingLastPathComponent] isEqual:@"/home"],
        "'/home/nicola/' stringByDeletingLastPathComponent == '/home'");
-  pass([[@"/home/" stringByDeletingLastPathComponent] isEqual:@"/"],
-       "'/home/nicola/' stringByDeletingLastPathComponent == '/'");
+  pass([[@"/home/nicola" stringByDeletingLastPathComponent] isEqual:@"/home"],
+       "'/home/nicola' stringByDeletingLastPathComponent == '/'");
   pass([[@"/home/" stringByDeletingLastPathComponent] isEqual:@"/"],
        "'/home/' stringByDeletingLastPathComponent == '/'");
   pass([[@"/home" stringByDeletingLastPathComponent] isEqual:@"/"],
@@ -106,6 +106,46 @@ int main()
        "'/' stringByDeletingLastPathComponent == '/'");
   pass([[@"hello" stringByDeletingLastPathComponent] isEqual:@""],
        "'hello' stringByDeletingLastPathComponent == ''");
+
+/* Check behavior for UNC absolute and relative paths.
+ */
+#ifdef	GNUSTEP
+  GSPathHandling("gnustep");
+  // UNC
+  pass([[@"//host/share/file.jpg" stringByDeletingLastPathComponent]
+    isEqual:@"//host/share/"],
+    "'//host/file.jpg' stringByDeletingLastPathComponent == '//host/'");
+  // UNC
+  pass([[@"//host/share/" stringByDeletingLastPathComponent]
+    isEqual:@"//host/share/"],
+    "'//host/share/' stringByDeletingLastPathComponent == '//host/share/'");
+  // Not UNC
+  pass([[@"//host/share" stringByDeletingLastPathComponent] isEqual:@"//host"],
+   "'//host/share' stringByDeletingLastPathComponent == '//host'");
+  // Not UNC
+  pass([[@"//dir/" stringByDeletingLastPathComponent] isEqual:@"/"],
+   "'//dir/' stringByDeletingLastPathComponent == '/'");
+  GSPathHandling("unix");
+#endif
+
+/* Check behavior when UNC paths are not supported.
+ */
+  pass([[@"//host/share/file.jpg" stringByDeletingLastPathComponent]
+    isEqual:@"//host/share"],
+    "'//host/file.jpg' stringByDeletingLastPathComponent == '//host/share'");
+  pass([[@"//host/share/" stringByDeletingLastPathComponent]
+    isEqual:@"//host"],
+    "'//host/share/' stringByDeletingLastPathComponent == '//host'");
+  pass([[@"//host/share" stringByDeletingLastPathComponent]
+   isEqual:@"//host"],
+   "'//host/share' stringByDeletingLastPathComponent == '//host'");
+  pass([[@"//dir/" stringByDeletingLastPathComponent] isEqual:@"/"],
+   "'//dir/' stringByDeletingLastPathComponent == '/'");
+
+#ifdef	GNUSTEP
+  GSPathHandling("gnustep");
+#endif
+
   /* delete path extension tests */
   pass([[@"/home/nicola.jpg" stringByDeletingPathExtension] isEqual:@"/home/nicola"],
        "'/home/nicola.jpg' stringByDeletingPathExtension == '/home/nicola'");
