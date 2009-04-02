@@ -57,7 +57,8 @@ done
 
 if [ ! "$MAKE_CMD" ]
 then
-  if gmake --version > /dev/null 2>&1
+  gmake --version > /dev/null 2>&1
+  if [ $? = 0 ]
   then
     MAKE_CMD=gmake
   else
@@ -89,7 +90,7 @@ fi
 
 CWD=`pwd`
 TOP=$CWD
-while [ ! -e runtests.sh ]; do
+while [ ! -f runtests.sh ]; do
   if [ $TOP = / ]; then
     echo "Unable to locate top-level directory"
     exit 1;

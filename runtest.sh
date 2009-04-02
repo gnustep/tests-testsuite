@@ -69,7 +69,7 @@ fi
 cd $DIR
 DIR=`pwd`
 TOP=$DIR
-while [ ! -e runtest.sh ]; do
+while [ ! -f runtest.sh ]; do
   if [ $TOP = / ]; then
     echo "Unable to locate top-level directory"
     exit 1;
@@ -80,7 +80,7 @@ done
 # Check that we are not in the top level ... where creating a GNUmakefile
 # would trash an existing makefile.
 cd $DIR
-if [ -e runtest.sh ]; then
+if [ -f runtest.sh ]; then
   echo "Unable to proceed ... test file is in top level directory"
   exit 1
 fi
@@ -89,13 +89,14 @@ NAME=`basename $1`
 if [ ! "$MAKE_CMD" ]
 then
   MAKE_CMD=gmake
-  if ( ! $MAKE_CMD --version > /dev/null 2>&1 )
+  $MAKE_CMD --version > /dev/null 2>&1
+  if [ $? != 0 ]
   then
     MAKE_CMD=make
   fi
 fi
 
-if [ ! -e IGNORE ] 
+if [ ! -f IGNORE ] 
 then
   # Remove the extension, if there is one. If there is no extension, add
   # .obj .
@@ -121,7 +122,8 @@ then
 
   # Compile it. Redirect errors to stdout so it shows up in the log, but not
   # in the summary.
-  if ! ( $MAKE_CMD $MAKEFLAGS debug=yes 2>&1 )
+  $MAKE_CMD $MAKEFLAGS debug=yes 2>&1
+  if [ $? != 0 ]
   then
     echo COMPILEFAIL: $1 >&2
   else
