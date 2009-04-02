@@ -140,7 +140,8 @@ then
 
     echo Running $1...
     # Run it. If it terminates abnormally, mark it as a crash.
-    if ! $MAKE_CMD -s test
+    $MAKE_CMD -s test
+    if [ $? != 0 ]
     then
       echo FAIL: $1 >&2
     else
