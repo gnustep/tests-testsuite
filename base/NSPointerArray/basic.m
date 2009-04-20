@@ -11,9 +11,9 @@ int main()
   [testObj addPointer: @"hello"];
   test_alloc(@"NSPointerArray");
   test_NSObject(@"NSPointerArray", [NSArray arrayWithObject: testObj]); 
-  test_NSCoding([NSArray arrayWithObject: testObj]); 
   test_NSCopying(@"NSPointerArray",@"NSPointerArray", 
-   [NSArray arrayWithObject: testObj], NO, NO); 
+   [NSArray arrayWithObject: testObj], NO, YES); 
+  test_NSCoding([NSArray arrayWithObject: testObj]); 
 
   [arp release]; arp = nil;
   return 0;

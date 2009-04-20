@@ -171,7 +171,7 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	    [serverOutput close];
 	    [serverOutput removeFromRunLoop: [NSRunLoop currentRunLoop]
 				    forMode: NSDefaultRunLoopMode];
-	    NSLog(@"Server close %p", serverOutput);
+	    NSLog(@"Server output close %p", serverOutput);
 	  }
         break;
       }
@@ -199,11 +199,11 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	      [serverInput close];
 	      [serverInput removeFromRunLoop: [NSRunLoop currentRunLoop]
 				     forMode: NSDefaultRunLoopMode];
-	      NSLog(@"Server close %p", serverInput);
+	      NSLog(@"Server input close %p", serverInput);
 	      [serverOutput close];
 	      [serverOutput removeFromRunLoop: [NSRunLoop currentRunLoop]
 				      forMode: NSDefaultRunLoopMode];
-	      NSLog(@"Server close %p", serverOutput);
+	      NSLog(@"Server output close %p", serverOutput);
 	    }
 	  else if (readSize < 0)
 	    {
@@ -215,6 +215,7 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	{
 	  int writeReturn = [serverOutput write: buffer+writeSize 
 					  maxLength: readSize-writeSize];
+	  NSLog(@"Server %p wrote %d", serverOutput, writeReturn);
 	  writable = NO;
 	  if (writeReturn == 0)
 	    {
@@ -225,14 +226,15 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	      [serverInput close];
 	      [serverInput removeFromRunLoop: [NSRunLoop currentRunLoop]
 				     forMode: NSDefaultRunLoopMode];
-	      NSLog(@"Server close %p", serverInput);
+	      NSLog(@"Server input close %p", serverInput);
 	    }
 	  else if (writeReturn > 0)
 	    {
-	      NSLog(@"Server %p wrote %d", serverOutput, writeReturn);
-              if (writeReturn < 0)
-                NSLog(@"Error ... %@", [serverOutput streamError]);
 	      writeSize += writeReturn;
+	    }
+	  else if (writeReturn < 0)
+	    {
+	      NSLog(@"Error ... %@", [serverOutput streamError]);
 	    }
 
 	  /* If we have finished writing and there is no more data coming,
@@ -244,7 +246,7 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 	      [serverOutput close];
 	      [serverOutput removeFromRunLoop: [NSRunLoop currentRunLoop]
 				      forMode: NSDefaultRunLoopMode];
-	      NSLog(@"Server close %p", serverOutput);
+	      NSLog(@"Server output close %p", serverOutput);
 	    }
 	}
     }

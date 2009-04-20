@@ -55,6 +55,12 @@ int main()
   pass(([[[[doc content] objectAtIndex:1] content] isEqual: data]),
        "mime6.dat binary data part matches mime7.dat");
 
+  data = [NSData dataWithContentsOfFile:@"mime9.dat"];
+  doc = [GSMimeParser documentFromData:data];
+//NSLog(@"'%@'", [[doc headerNamed: @"Long"] value]);
+  pass(([[[doc headerNamed: @"Long"] value] isEqual: @"first\tsecond\tthird"]),
+       "mime9.dat folded header unfolds correctly");
+
   
   
   [arp release]; arp = nil;

@@ -84,7 +84,7 @@
 {
   NSRunLoop	*rl = [NSRunLoop currentRunLoop];
 
-//NSLog(@"Server %p %d", theStream, streamEvent);
+NSLog(@"Server %p %d", theStream, streamEvent);
   switch (streamEvent) 
     {
     case NSStreamEventHasBytesAvailable: 
@@ -116,7 +116,7 @@
                 [op setDelegate: self];
                 [ip open];
                 [op open];
-//		NSLog(@"Accept %d", count);
+		NSLog(@"Accept %d", count);
 		if (count > 0)
 		  {
 		    count--;
@@ -214,7 +214,7 @@
 		[ip removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 		ip = nil;
 	      }
-//	    NSLog(@"Done writing %d", count+1);
+	    NSLog(@"Done writing %d", count+1);
 	  }
         break;
       }
@@ -226,7 +226,7 @@
 	[theStream removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 	if (theStream == ip) ip = nil;
 	if (theStream == op) op = nil;
-//      NSLog(@"Server close %p", theStream);
+      NSLog(@"Server close %p", theStream);
         break;
       }
 
