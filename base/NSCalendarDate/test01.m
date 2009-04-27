@@ -47,15 +47,19 @@ int main()
        "-addTimeInterval: works on a NSCalendarDate parsed with no timezone");
 
   {
-    NSString *fmt = [NSString 
-      stringWithFormat: @"%%Y-%%m-%%d %%H:%%M:%%S:%%F"];
-    NSString *dateString = [NSString 
-      stringWithFormat: @"2006-04-22 22:22:22:901"];
+    NSString *fmt = @"%Y-%m-%d %H:%M:%S:%F";
+    NSString *fmt2 = @"%Y-%m-%e %H:%M:%S:%F";
+    NSString *dateString = @"2006-04-22 22:22:22:901";
+    NSString *dateString2 = @"2006-04- 2 22:22:22:901";
     NSCalendarDate *date = [NSCalendarDate 
       dateWithString:dateString calendarFormat:fmt];
+    NSCalendarDate *date2 = [NSCalendarDate 
+      dateWithString:dateString2 calendarFormat:fmt2];
     NSLog(@"%@\n%@", dateString, [date descriptionWithCalendarFormat:fmt]);
     pass([dateString isEqual: [date descriptionWithCalendarFormat:fmt]],
       "formatting milliseconds works");
+    pass([dateString2 isEqual: [date2 descriptionWithCalendarFormat:fmt2]],
+      "formatting with %%e works");
   }
 
   [arp release]; arp = nil;
