@@ -8,7 +8,8 @@
 #import <Foundation/NSRunLoop.h>
 
 @interface ThreadTest : NSObject {
-  char  acceptBlocks;
+  char  acceptEmptyBlocks;
+  char  acceptTimerBlocks;
   char  blockForEmpty;
   char  blockForInput;
   char  blockForTimer;
@@ -62,9 +63,9 @@
   start = [NSDate date];
   [loop acceptInputForMode: NSDefaultRunLoopMode beforeDate: end];
   if (fabs([start timeIntervalSinceNow]) < 0.01)
-    acceptBlocks = 'N';
+    acceptEmptyBlocks = 'N';
   else
-    acceptBlocks = 'Y';
+    acceptEmptyBlocks = 'Y';
   
   timer = [NSTimer timerWithTimeInterval: 2.0
                                   target: self
@@ -83,11 +84,20 @@
     moreForTimer = 'Y';
   else
     moreForTimer = 'N';
-  [timer invalidate];
   if (fabs([start timeIntervalSinceNow]) < 0.01)
     blockForTimer = 'N';
   else
     blockForTimer = 'Y';
+
+  end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  start = [NSDate date];
+  [loop acceptInputForMode: NSDefaultRunLoopMode beforeDate: end];
+  if (fabs([start timeIntervalSinceNow]) < 0.01)
+    acceptTimerBlocks = 'N';
+  else
+    acceptTimerBlocks = 'Y';
+  
+  [timer invalidate];
 
   fh = [NSFileHandle fileHandleWithStandardInput];
   [fh readInBackgroundAndNotify];
@@ -166,7 +176,8 @@
       [[NSRunLoop currentRunLoop] runUntilDate: until];
     }
 
-  pass(acceptBlocks == 'N', "Accept with no inputs or timers will exit");
+  pass(acceptEmptyBlocks == 'N', "Accept with no inputs or timers will exit");
+  pass(acceptTimerBlocks == 'Y', "Accept with timers will not exit");
   pass(blockForEmpty == 'N', "A loop with no inputs or timers will exit");
   pass(blockForInput == 'Y', "A loop with an input source will block");
   pass(blockForTimer == 'Y', "A loop with a timer will block");
