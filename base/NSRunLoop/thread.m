@@ -8,6 +8,7 @@
 #import <Foundation/NSRunLoop.h>
 
 @interface ThreadTest : NSObject {
+  char  acceptBlocks;
   char  blockForEmpty;
   char  blockForInput;
   char  blockForTimer;
@@ -36,7 +37,7 @@
   NSFileHandle          *fh;
   NSTimer               *timer;
   NSDate                *end;
-  NSDate                *now;
+  NSDate                *start;
  
   loop = [NSRunLoop currentRunLoop];
 
@@ -45,16 +46,25 @@
     limitForEmpty = 'N';
   else
     limitForEmpty = 'Y';
+
   end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  start = [NSDate date];
   if ([loop runMode: NSDefaultRunLoopMode beforeDate: end] == YES)
     moreForEmpty = 'Y';
   else
     moreForEmpty = 'N';
-  now = [NSDate date];
-  if ([end earlierDate: now] == now)
+  if (fabs([start timeIntervalSinceNow]) < 0.01)
     blockForEmpty = 'N';
   else
     blockForEmpty = 'Y';
+  
+  end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  start = [NSDate date];
+  [loop acceptInputForMode: NSDefaultRunLoopMode beforeDate: end];
+  if (fabs([start timeIntervalSinceNow]) < 0.01)
+    acceptBlocks = 'N';
+  else
+    acceptBlocks = 'Y';
   
   timer = [NSTimer timerWithTimeInterval: 2.0
                                   target: self
@@ -63,18 +73,18 @@
                                  repeats: NO];
   [loop addTimer: timer forMode: NSDefaultRunLoopMode];
   end = [loop limitDateForMode: NSDefaultRunLoopMode];
-  if (abs([end timeIntervalSinceDate: [timer fireDate]]) < 0.01)
+  if (fabs([end timeIntervalSinceDate: [timer fireDate]]) < 0.01)
     limitForTimer = 'Y';
   else
     limitForTimer = 'N';
   end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  start = [NSDate date];
   if ([loop runMode: NSDefaultRunLoopMode beforeDate: end] == YES)
     moreForTimer = 'Y';
   else
     moreForTimer = 'N';
   [timer invalidate];
-  now = [NSDate date];
-  if ([end earlierDate: now] == now)
+  if (fabs([start timeIntervalSinceNow]) < 0.01)
     blockForTimer = 'N';
   else
     blockForTimer = 'Y';
@@ -87,13 +97,13 @@
   else
     limitForInput = 'N';
   end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  start = [NSDate date];
   if ([loop runMode: NSDefaultRunLoopMode beforeDate: end] == YES)
     moreForInput = 'Y';
   else
     moreForInput = 'N';
   [timer invalidate];
-  now = [NSDate date];
-  if ([end earlierDate: now] == now)
+  if (fabs([start timeIntervalSinceNow]) < 0.01)
     blockForInput = 'N';
   else
     blockForInput = 'Y';
@@ -156,6 +166,7 @@
       [[NSRunLoop currentRunLoop] runUntilDate: until];
     }
 
+  pass(acceptBlocks == 'N', "Accept with no inputs or timers will exit");
   pass(blockForEmpty == 'N', "A loop with no inputs or timers will exit");
   pass(blockForInput == 'Y', "A loop with an input source will block");
   pass(blockForTimer == 'Y', "A loop with a timer will block");
