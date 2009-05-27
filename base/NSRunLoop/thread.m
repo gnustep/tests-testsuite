@@ -8,9 +8,15 @@
 #import <Foundation/NSRunLoop.h>
 
 @interface ThreadTest : NSObject {
-  char  exitImmediately;
+  char  blockForEmpty;
   char  blockForInput;
   char  blockForTimer;
+  char  limitForEmpty;
+  char  limitForInput;
+  char  limitForTimer;
+  char  moreForEmpty;
+  char  moreForInput;
+  char  moreForTimer;
   char  performed;
 }
 - (void) timeout: (NSTimer*)t;
@@ -34,13 +40,21 @@
  
   loop = [NSRunLoop currentRunLoop];
 
-  end = [NSDate dateWithTimeIntervalSinceNow: 1.0];
-  [loop runUntilDate: end];
+  end = [loop limitDateForMode: NSDefaultRunLoopMode];
+  if (end == nil)
+    limitForEmpty = 'N';
+  else
+    limitForEmpty = 'Y';
+  end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  if ([loop runMode: NSDefaultRunLoopMode beforeDate: end] == YES)
+    moreForEmpty = 'Y';
+  else
+    moreForEmpty = 'N';
   now = [NSDate date];
   if ([end earlierDate: now] == now)
-    exitImmediately = 'Y';
+    blockForEmpty = 'N';
   else
-    exitImmediately = 'N';
+    blockForEmpty = 'Y';
   
   timer = [NSTimer timerWithTimeInterval: 2.0
                                   target: self
@@ -48,8 +62,16 @@
                                 userInfo: nil
                                  repeats: NO];
   [loop addTimer: timer forMode: NSDefaultRunLoopMode];
-  end = [NSDate dateWithTimeIntervalSinceNow: 1.0];
-  [loop runUntilDate: end];
+  end = [loop limitDateForMode: NSDefaultRunLoopMode];
+  if (abs([end timeIntervalSinceDate: [timer fireDate]]) < 0.01)
+    limitForTimer = 'Y';
+  else
+    limitForTimer = 'N';
+  end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  if ([loop runMode: NSDefaultRunLoopMode beforeDate: end] == YES)
+    moreForTimer = 'Y';
+  else
+    moreForTimer = 'N';
   [timer invalidate];
   now = [NSDate date];
   if ([end earlierDate: now] == now)
@@ -59,8 +81,16 @@
 
   fh = [NSFileHandle fileHandleWithStandardInput];
   [fh readInBackgroundAndNotify];
-  end = [NSDate dateWithTimeIntervalSinceNow: 1.0];
-  [loop runUntilDate: end];
+  end = [loop limitDateForMode: NSDefaultRunLoopMode];
+  if ([end isEqual: [NSDate distantFuture]] == YES)
+    limitForInput = 'Y';
+  else
+    limitForInput = 'N';
+  end = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+  if ([loop runMode: NSDefaultRunLoopMode beforeDate: end] == YES)
+    moreForInput = 'Y';
+  else
+    moreForInput = 'N';
   [timer invalidate];
   now = [NSDate date];
   if ([end earlierDate: now] == now)
@@ -79,13 +109,13 @@
  
   loop = [NSRunLoop currentRunLoop];
 
-  [NSTimer scheduledTimerWithTimeInterval: 5.0
+  [NSTimer scheduledTimerWithTimeInterval: 2.0
                                    target: self
                                  selector: @selector(timeout:)
                                  userInfo: nil
                                   repeats: NO];
 
-  end = [NSDate dateWithTimeIntervalSinceNow: 6.0];
+  end = [NSDate dateWithTimeIntervalSinceNow: 2.0];
   while ([end timeIntervalSinceNow] > 0)
     {
       [loop runUntilDate: end];
@@ -100,10 +130,10 @@
 
 - (void) run
 {
-  NSDate                *until = [NSDate dateWithTimeIntervalSinceNow: 15];
+  NSDate                *until = [NSDate dateWithTimeIntervalSinceNow: 5.0];
   NSThread              *t;
   
-  [NSTimer scheduledTimerWithTimeInterval: 10.0
+  [NSTimer scheduledTimerWithTimeInterval: 5.0
                                    target: self
                                  selector: @selector(timeout:)
                                  userInfo: nil
@@ -126,9 +156,15 @@
       [[NSRunLoop currentRunLoop] runUntilDate: until];
     }
 
-  pass(exitImmediately == 'Y', "A loop with no inputs or timers will exit");
+  pass(blockForEmpty == 'N', "A loop with no inputs or timers will exit");
   pass(blockForInput == 'Y', "A loop with an input source will block");
   pass(blockForTimer == 'Y', "A loop with a timer will block");
+  pass(limitForEmpty == 'N', "A loop with no inputs or timers has no limit");
+  pass(limitForInput == 'Y', "A loop with an input source has distant future");
+  pass(limitForTimer == 'Y', "A loop with a timer has timer fire date");
+  pass(moreForEmpty == 'N', "A loop with no inputs or timers has no more");
+  pass(moreForInput == 'Y', "A loop with an input source has more");
+  pass(moreForTimer == 'Y', "A loop with a timer has more");
   pass(performed == 'Y', "Methods will be performed in a loop without inputs");
 }
 
