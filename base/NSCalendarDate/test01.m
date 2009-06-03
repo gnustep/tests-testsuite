@@ -50,7 +50,7 @@ int main()
     NSString *fmt = @"%Y-%m-%d %H:%M:%S:%F";
     NSString *fmt2 = @"%Y-%m-%e %H:%M:%S:%F";
     NSString *dateString = @"2006-04-22 22:22:22:901";
-    NSString *dateString2 = @"2006-04- 2 22:22:22:901";
+    NSString *dateString2 = @"2006-04-2 22:22:22:901";
     NSCalendarDate *date = [NSCalendarDate 
       dateWithString:dateString calendarFormat:fmt];
     NSCalendarDate *date2 = [NSCalendarDate 

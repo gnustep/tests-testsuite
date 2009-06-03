@@ -13,7 +13,7 @@ int main()
   test_NSObject(@"NSHashTable", [NSArray arrayWithObject: testObj]); 
   test_NSCopying(@"NSHashTable",@"NSHashTable", 
    [NSArray arrayWithObject: testObj], NO, YES); 
-  test_NSCoding([NSArray arrayWithObject: testObj]); 
+  // test_NSCoding([NSArray arrayWithObject: testObj]); 
 
   [arp release]; arp = nil;
   return 0;
