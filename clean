@@ -1,0 +1,34 @@
+#!/bin/sh
+echo "Cleaning top level"
+rm -rf obj tests.log tests.sum tests.sum.tmp tests.tmp
+for i in *
+do
+  if [ -d $i ]
+  then
+    cd $i
+    echo "Cleaning $i"
+    rm -rf obj tests.log tests.sum tests.sum.tmp tests.tmp
+    for j in *
+    do
+      if [ -d $j ]
+      then
+	cd $j
+        echo "Cleaning $i/$j"
+	rm -rf obj tests.log tests.sum tests.sum.tmp tests.tmp
+	for k in *
+	do
+	  if [ -d $k ]
+	  then
+	    cd $k
+            echo "Cleaning $i/$j/$k"
+	    rm -rf obj tests.log tests.sum tests.sum.tmp tests.tmp
+	    cd ..
+	  fi
+	done
+	cd ..
+      fi
+    done
+    cd ..
+  fi
+done
+echo "Cleaning complete."
