@@ -58,7 +58,7 @@ int main()
   data = [NSData dataWithContentsOfFile:@"mime9.dat"];
   doc = [GSMimeParser documentFromData:data];
 //NSLog(@"'%@'", [[doc headerNamed: @"Long"] value]);
-  pass(([[[doc headerNamed: @"Long"] value] isEqual: @"first\tsecond\tthird"]),
+  pass(([[[doc headerNamed: @"Long"] value] isEqual: @"first second third"]),
        "mime9.dat folded header unfolds correctly");
 
   
