@@ -79,6 +79,7 @@ int main()
 	  [pool release];
 	}
       // Wait for server termination
+      [t terminate];
       [t waitUntilExit];
     }
   

@@ -180,25 +180,40 @@
 	  }
 	else if (theStream == ip)
 	  {
-	    //BOOL canRead = YES;
-	    uint8_t buf[1024];
-	    unsigned len=0;
+	    uint8_t	buf[1024];
+	    unsigned	len;
+	    BOOL	done = NO;
+
 	    if (nil != request)
 	      {
 		[request release];
 	      }
 	    request = [[NSMutableData alloc] initWithCapacity: sizeof(buf)];
-	    //while (canRead)
+	    len = [ip read: buf maxLength: sizeof(buf)];
+	    if (len > 0)
 	      {
-		len = [ip read: buf maxLength: sizeof(buf)];
-		//if (len <= 0) canRead = NO;
-		[request appendBytes: buf length: len];
+		const char	*bytes;
+
+	        [request appendBytes: buf length: len];
+	        len = [request length];
+		bytes = (const char*)[request bytes];
+		if (len > 3 && memcmp(bytes+len-4, "\r\n\r\n", 4) == 0)
+		  {
+		    done = YES;
+		  }
 	      }
-	    [op open];
-	    [op scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
-	    [ip close];
-	    [ip removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
-	    ip = nil;
+	    else
+	      {
+		done = YES; 	// EOF or error
+	      }
+	    if (done == YES)
+	      {
+		[op open];
+		[op scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
+		[ip close];
+		[ip removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
+		ip = nil;
+	      }
 	  }
 	break;
       }
@@ -227,8 +242,8 @@
 	// the actual request is the first line
 	req = [components objectAtIndex: 0];
 
-	if ([req rangeOfString: @"GET"].location == NSNotFound &&
-	    [req rangeOfString: @"HEAD"].location == NSNotFound)
+	if ([req rangeOfString: @"GET"].location == NSNotFound
+	  && [req rangeOfString: @"HEAD"].location == NSNotFound)
 	  {
 	    retCode = @"501"; // HTTP 501: Not Implemented
 	  }

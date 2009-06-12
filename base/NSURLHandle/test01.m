@@ -56,6 +56,8 @@ int main(int argc, char **argv)
       rxd = [handle loadInForeground];
       pass([handle status] == NSURLHandleNotLoaded,
 	   "404 - status: Handle load not loaded (resource not found)");
+      [t terminate];
+      [t waitUntilExit];
     }
   
   [arp release]; arp = nil ;
