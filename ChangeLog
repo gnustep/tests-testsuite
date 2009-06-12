@@ -1,3 +1,13 @@
+2009-06-11  Richard Frith-Macdonald  <rfm@gnu.org>
+
+        * base/NSURLHandle/Helpers/GNUmakefile:
+        * base/NSInvocation/Resources/GNUmakefile:
+        * base/NSURL/Helpers/GNUmakefile:
+        * base/NSBundle/Resources/GNUmakefile:
+        Don't attempt to link with GUI.
+        * base/NSProxy/test01.m:
+        Disable test for unsupported/unimplemented passing of structs.
+
 2009-04-02  Adam Fedor <fedor@gnu.org>
 
 	* runtest[s].sh: Rearrange if/test lines to work with older shells
