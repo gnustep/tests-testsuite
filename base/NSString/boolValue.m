@@ -14,14 +14,14 @@ int main(int argc, char **argv)
   NSString *constantStringY[]={
     @"y",@"Y",@"t",@"T",@"1",@"9",
     @"-y",@"-Y",@"-t",@"-T",@"-1",@"-9",
-    @"Yes",@"YES",@"yes",
-    @"0.1",@"0,1"
+    @"Yes",@"YES",@"yes"
   };
   NSString *constantStringN[]={
     @"n",@"N",@"f",@"F",@"0",@"00",
     @"-n",@"-N",@"-f",@"-F",@"-0",@"-00",
     @"No",@"NO",@"no",
-    @"0.0",@"0,0"
+    @"0.0",@"0,0",
+    @"0.1",@"0,1"
   };
   NSString *normalString;
   NSMutableString *mutableString;
