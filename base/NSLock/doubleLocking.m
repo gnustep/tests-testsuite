@@ -8,8 +8,8 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSLock *lock = nil;
 
-#if	!defined(GNUSTEP_BASE_LIBRARY)
-  pass(NO, "Recursive lock with NSLock raises an exception ... this is not a real test, just a reminder of an apple deadlock/bug ... you may want to check to see if it has been fixed");
+#if	1
+  pass(NO, "Recursive lock with NSLock deadlocks ... this is not a real test, just a reminder that recursively locking should dedlock the thread after printing a diagnostic message");
 #else
   ASSIGN(lock,[NSLock new]);
   [lock lock];
@@ -18,8 +18,8 @@ int main()
   [lock unlock];
 #endif
 
-#if	!defined(GNUSTEP_BASE_LIBRARY)
-  pass(NO, "Recursive lock with NSConditionLock raises an exception ... this is not a real test, just a reminder of an apple deadlock/bug ... you may want to check to see if it has been fixed");
+#if	1
+  pass(NO, "Recursive lock with NSConditionLock deadlocks ... this is not a real test, just a reminder that recursively locking should dedlock the thread after printing a diagnostic message");
 #else
   ASSIGN(lock,[NSConditionLock new]);
   [lock lock];
