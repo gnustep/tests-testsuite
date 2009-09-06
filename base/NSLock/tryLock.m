@@ -18,24 +18,48 @@ int main()
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive locking with NSLock should return NO"); 
+  pass(ret == NO, "Recursive try lock with NSLock should return NO"); 
+  
+  ASSIGN(lock,[NSConditionLock new]);
+  [lock tryLock];
+  ret = [lock tryLock];
+  if (ret)
+    [lock unlock];
+  pass(ret == NO, "Recursive try lock with NSConditionLock should return NO"); 
+  
+  ASSIGN(lock,[NSRecursiveLock new]);
+  [lock tryLock];
+  ret = [lock tryLock];
+  if (ret)
+    [lock unlock];
+  pass(ret == YES, "Recursive try lock with NSRecursiveLock should return YES"); 
   
   ASSIGN(lock,[NSLock new]);
-  ret = [lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:5]];
+  ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
   pass(ret, "NSLock lockBeforeDate: works");
   
-#if	!defined(GNUSTEP_BASE_LIBRARY)
-  pass(NO, "Recursive lockBeforeDate: with NSLock returns NO ... this is not a real test, just a reminder of an apple bug ... you may want to check to see if it has been fixed");
-#else
   ASSIGN(lock,[NSLock new]);
   [lock tryLock];
-  ret = [lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:5]];
+  ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
   pass(ret == NO, "Recursive lockBeforeDate: with NSLock returns NO");
-#endif
+  
+  ASSIGN(lock,[NSConditionLock new]);
+  [lock tryLock];
+  ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
+  if (ret)
+    [lock unlock];
+  pass(ret == NO, "Recursive lockBeforeDate: with NSConditionLock returns NO");
+  
+  ASSIGN(lock,[NSConditionLock new]);
+  [lock tryLock];
+  ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
+  if (ret)
+    [lock unlock];
+  pass(ret == NO, "Recursive lockBeforeDate: with NSRecursiveLock returns YES");
   
   [arp release]; arp = nil;
   return 0;
