@@ -54,12 +54,12 @@ int main()
     [lock unlock];
   pass(ret == NO, "Recursive lockBeforeDate: with NSConditionLock returns NO");
   
-  ASSIGN(lock,[NSConditionLock new]);
+  ASSIGN(lock,[NSRecursiveLock new]);
   [lock tryLock];
   ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive lockBeforeDate: with NSRecursiveLock returns YES");
+  pass(ret == YES, "Recursive lockBeforeDate: with NSRecursiveLock returns YES");
   
   [arp release]; arp = nil;
   return 0;
