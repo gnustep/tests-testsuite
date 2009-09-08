@@ -80,15 +80,15 @@ int main(void)
         [sent addObject: obj];
         if (i % 10 == 0)
           {
-            sched_yield();
+            [NSThread sleepForTimeInterval: 0.0];
           }
         if (i % 1000 == 0)
           {
-            sleep(1);
+            [NSThread sleepForTimeInterval: 1.0];
           }
         [q enqueue: obj];
       }
-    sleep(2);
+    [NSThread sleepForTimeInterval: 2.0];
     pass([sent isEqual: received], "Condition lock");
   }
   return 0;
