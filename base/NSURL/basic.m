@@ -6,6 +6,7 @@ int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSURL		*url;
+  NSURL		*rel;
   NSData	*data;
   NSString	*str;
   NSNumber      *num;
@@ -56,11 +57,60 @@ int main()
   pass([str isEqual: @"/silly-file-name"],
     "Path of http://www.w3.org/silly-file-name is /silly-file-name");
 
+  url = [NSURL URLWithString: @"http://www.w3.org/silly-file-path/"];
+  str = [url path];
+  pass([str isEqual: @"/silly-file-path"],
+    "Path of http://www.w3.org/silly-file-path/ is /silly-file-path");
+
+  str = [url absoluteString];
+  pass([str isEqual: @"http://www.w3.org/silly-file-path/"],
+    "Abs of http://www.w3.org/silly-file-path/ is correct");
+
   url = [NSURL fileURLWithPath: @"/usr"];
   str = [url path];
   pass([str isEqual: @"/usr"], "Path of file URL /usr is /usr");
   pass([[url description] isEqual: @"file://localhost/usr/"],
     "File URL /usr is file://localhost/usr/");
+
+  url = [NSURL URLWithString: @"http://here.and.there/testing/one.html"];
+  rel = [NSURL URLWithString: @"aaa/bbb/ccc/" relativeToURL: url];
+  pass([[rel absoluteString]
+    isEqual: @"http://here.and.there/testing/aaa/bbb/ccc/"],
+    "Simple relative URL absoluteString works");
+  pass([[rel path]
+    isEqual: @"/testing/aaa/bbb/ccc"],
+    "Simple relative URL path works");
+  pass([[rel fullPath]
+    isEqual: @"/testing/aaa/bbb/ccc/"],
+    "Simple relative URL fullPath works");
+
+  url = [NSURL URLWithString: @"http://here.and.there/testing/one.html"];
+  rel = [NSURL URLWithString: @"/aaa/bbb/ccc/" relativeToURL: url];
+  pass([[rel absoluteString]
+    isEqual: @"http://here.and.there/aaa/bbb/ccc/"],
+    "Root relative URL absoluteString works");
+  pass([[rel path]
+    isEqual: @"/aaa/bbb/ccc"],
+    "Root relative URL path works");
+  pass([[rel fullPath]
+    isEqual: @"/aaa/bbb/ccc/"],
+    "Root relative URL fullPath works");
+
+  url = [NSURL URLWithString: @"/aaa/bbb/ccc/"];
+  pass([[url absoluteString] isEqual: @"/aaa/bbb/ccc/"],
+    "absolute root URL absoluteString works");
+  pass([[url path] isEqual: @"/aaa/bbb/ccc"],
+    "absolute root URL path works");
+  pass([[url fullPath] isEqual: @"/aaa/bbb/ccc/"],
+    "absolute root URL fullPath works");
+
+  url = [NSURL URLWithString: @"aaa/bbb/ccc/"];
+  pass([[url absoluteString] isEqual: @"aaa/bbb/ccc/"],
+    "absolute URL absoluteString works");
+  pass([[url path] isEqual: @"aaa/bbb/ccc"],
+    "absolute URL path works");
+  pass([[url fullPath] isEqual: @"aaa/bbb/ccc/"],
+    "absolute URL fullPath works");
 
   [arp release]; arp = nil;
   return 0;
