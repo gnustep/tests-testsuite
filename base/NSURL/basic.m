@@ -112,6 +112,20 @@ int main()
   pass([[url fullPath] isEqual: @"aaa/bbb/ccc/"],
     "absolute URL fullPath works");
 
+  url = [NSURL URLWithString: @"http://127.0.0.1/"];
+  pass([[url absoluteString] isEqual: @"http://127.0.0.1/"],
+    "absolute http URL absoluteString works");
+  pass([[url path] isEqual: @"/"],
+    "absolute http URL path works");
+  pass([[url fullPath] isEqual: @"/"],
+    "absolute http URL fullPath works");
+
+  url = [NSURL URLWithString: @"http://127.0.0.1/ hello"];
+  pass(url == nil, "space is illegal");
+
+  url = [NSURL URLWithString: @""];
+  pass(url == nil, "empty string gives nil URL");
+
   [arp release]; arp = nil;
   return 0;
 }
