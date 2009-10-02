@@ -9,7 +9,7 @@ int main()
   NSLock *lock = nil;
 
 #if	1
-  pass(NO, "Recursive lock with NSLock deadlocks ... this is not a real test, just a reminder that recursively locking should dedlock the thread after printing a diagnostic message");
+  pass(NO, "Recursive lock with NSLock deadlocks ... this is not a real test, just a reminder that recursively locking should deadlock the thread after printing a diagnostic message");
 #else
   ASSIGN(lock,[NSLock new]);
   [lock lock];
@@ -19,7 +19,7 @@ int main()
 #endif
 
 #if	1
-  pass(NO, "Recursive lock with NSConditionLock deadlocks ... this is not a real test, just a reminder that recursively locking should dedlock the thread after printing a diagnostic message");
+  pass(NO, "Recursive lock with NSConditionLock deadlocks ... this is not a real test, just a reminder that recursively locking should deadlock the thread after printing a diagnostic message");
 #else
   ASSIGN(lock,[NSConditionLock new]);
   [lock lock];
