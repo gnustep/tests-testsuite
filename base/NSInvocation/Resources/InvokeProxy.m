@@ -27,7 +27,7 @@
 {
   return v+1;
 }
-- (large) loopLarge: (large)v
+- (largeStruct) loopLarge: (largeStruct)v
 {
   v.i += 1;
   return v;
@@ -36,7 +36,7 @@
 {
   return v+1;
 }
-- (large) loopLargePtr: (large*)v
+- (largeStruct) loopLargePtr: (largeStruct*)v
 {
   return *v;
 }
@@ -48,12 +48,12 @@
 {
   return v+1;
 }
-- (small) loopSmall: (small)v
+- (smallStruct) loopSmall: (smallStruct)v
 {
   v.i += 1;
   return v;
 }
-- (small) loopSmallPtr: (small*)v
+- (smallStruct) loopSmallPtr: (smallStruct*)v
 {
   return *v;
 }
@@ -79,10 +79,10 @@
 {
   return 123456;
 }
-- (large) retLarge
+- (largeStruct) retLarge
 {
-  static large l = {
-    99, "large", 99.99
+  static largeStruct l = {
+    99, "largeStruct", 99.99
   };
   return l;
 }
@@ -98,9 +98,9 @@
 {
   return 12345;
 }
-- (small) retSmall
+- (smallStruct) retSmall
 {
-  static small s = {
+  static smallStruct s = {
     11, 22
   };
   return s;

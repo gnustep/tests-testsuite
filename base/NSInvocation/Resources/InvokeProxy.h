@@ -7,37 +7,37 @@
 typedef struct {
   char	c;
   int	i;
-} small;
+} smallStruct;
 
 typedef struct {
     int		i;
     char	*s;
     float	f;
-} large;
+} largeStruct;
 
 @interface InvokeTarget: NSObject
 - (char) loopChar: (char)v;
 - (double) loopDouble: (double)v;
 - (float) loopFloat: (float)v;
 - (int) loopInt: (int)v;
-- (large) loopLarge: (large)v;
+- (largeStruct) loopLarge: (largeStruct)v;
 - (long) loopLong: (long)v;
-- (large) loopLargePtr: (large*)v;
+- (largeStruct) loopLargePtr: (largeStruct*)v;
 - (id) loopObject: (id)v;
 - (short) loopShort: (short)v;
-- (small) loopSmall: (small)v;
-- (small) loopSmallPtr: (small*)v;
+- (smallStruct) loopSmall: (smallStruct)v;
+- (smallStruct) loopSmallPtr: (smallStruct*)v;
 - (char*) loopString: (char*)v;
 
 - (char) retChar;
 - (double) retDouble;
 - (float) retFloat;
 - (int) retInt;
-- (large) retLarge;
+- (largeStruct) retLarge;
 - (long) retLong;
 - (id) retObject;
 - (short) retShort;
-- (small) retSmall;
+- (smallStruct) retSmall;
 - (char*) retString;
 @end
 

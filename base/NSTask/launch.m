@@ -33,8 +33,8 @@ int main()
   [task launch];
 
   data = [outHandle readDataToEndOfFile];
-
-  // test data?
+  pass([data length] > 0, "was able to read data from subtask");
+  NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
 
   [task terminate];
 

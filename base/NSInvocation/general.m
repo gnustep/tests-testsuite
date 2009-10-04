@@ -56,8 +56,8 @@ int main()
   double dret,darg;
   id oret,oarg;
   char *cpret,*cparg,*cparg2;
-  small ssret,ssarg;
-  large lsret,lsarg;
+  smallStruct ssret,ssarg;
+  largeStruct lsret,lsarg;
   Class tClass = Nil;
   Class pClass = Nil;
   NSString *bundlePath;
