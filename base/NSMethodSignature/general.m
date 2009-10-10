@@ -101,7 +101,6 @@ typedef struct _MySmallStruct MySmallStruct;
 		   smallStruct:(MySmallStruct)_sstr;
 
 -(const char *)runtimeSignatureForSelector:(SEL)selector;
--(const char *)mframeSignatureForSelector:(SEL)selector;
 @end
 
 @implementation MyClass
@@ -186,51 +185,10 @@ typedef struct _MySmallStruct MySmallStruct;
   return meth->method_types;
 }
 
--(const char *)mframeSignatureForSelector:(SEL)selector
-{
-  const char *types = [self runtimeSignatureForSelector: selector];
-  NSMethodSignature *sig = [NSMethodSignature signatureWithObjCTypes: types];
-  return [sig methodType];
-}
 @end
 
 /*------------------------------------*/
 
-
-void
-test_mframe_build_signature(void)
-{
-  const char *mf_types;
-  void *it = 0;
-  GSMethod meth;
-  GSMethodList list;
-  Class cls = [MyClass class];
-  NSMethodSignature *sig;
-  unsigned int i;
-
-  for (it = 0, list = class_nextMethodList(cls, &it);
-       list != 0;
-       list = class_nextMethodList(cls, &it))
-    {
-      id pool = [NSAutoreleasePool new];
-
-      for (i = 0; i < list->method_count; i++)
-	{
-	  const char	*msg;
-
-	  meth = &list->method_list[i];
-	  sig = [NSMethodSignature signatureWithObjCTypes: meth->method_types];
-	  mf_types = [sig methodType];
-	  msg = [[NSString stringWithFormat: @"Build sel: %s\nrts:%s\nmfs:%s",
-	    GSNameFromSelector(meth->method_name),
-	    meth->method_types, mf_types] UTF8String];
-	  pass(strcmp(meth->method_types, mf_types) == 0, msg);
-	}
-
-      [pool release];
-    }
-
-}
 
 /*
    This test is useful if the nsmethodsignatureserver is running which
@@ -253,11 +211,6 @@ test_compare_server_signature(void)
       lclSig = [objct runtimeSignatureForSelector: @selector(SELNAME)]; \
       rmtSig = [proxy runtimeSignatureForSelector: @selector(SELNAME)]; \
       msg = [[NSString stringWithFormat: @"runtime: sel:%s\nlcl:%s\nrmt:%s", \
-	GSNameFromSelector(@selector(SELNAME)), lclSig, rmtSig] UTF8String]; \
-      pass(GSSelectorTypesMatch(lclSig, rmtSig), msg); \
-      lclSig = [objct mframeSignatureForSelector: @selector(SELNAME)]; \
-      rmtSig = [proxy mframeSignatureForSelector: @selector(SELNAME)]; \
-      msg = [[NSString stringWithFormat: @"mframe: sel:%s\nlcl:%s\nrmt:%s", \
 	GSNameFromSelector(@selector(SELNAME)), lclSig, rmtSig] UTF8String]; \
       pass(GSSelectorTypesMatch(lclSig, rmtSig), msg); \
       }
@@ -383,7 +336,6 @@ main(int argc, char *argv[])
 
   NS_DURING
     {
-      test_mframe_build_signature();
       test_compare_server_signature();
       test_GSSelectorTypesMatch();
     }
