@@ -1,3 +1,7 @@
+2009-10-21  Adam Fedor <fedor@gnu.org>
+
+	* runtest.sh: Simplify variable setting to work with brain-dead shells
+
 2009-06-11  Richard Frith-Macdonald  <rfm@gnu.org>
 
         * base/NSURLHandle/Helpers/GNUmakefile:

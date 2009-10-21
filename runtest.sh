@@ -131,12 +131,14 @@ then
 
     # Tell glibc to check for malloc errors, and to crash if it detects
     # any.
-    export MALLOC_CHECK_=2
+    MALLOC_CHECK_=2
+    export MALLOC_CHECK
 
     # Tell GNUstep-base to check for messages sent to deallocated objects
     # and crash if it happens.
-    export NSZombieEnabled=YES
-    export CRASH_ON_ZOMBIE=YES
+    NSZombieEnabled=YES
+    CRASH_ON_ZOMBIE=YES
+    export NSZombieEnabled CRASH_ON_ZOMBIE
 
     echo Running $1...
     # Run it. If it terminates abnormally, mark it as a crash.
