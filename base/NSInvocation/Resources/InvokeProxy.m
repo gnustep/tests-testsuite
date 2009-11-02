@@ -53,6 +53,10 @@
   v.i += 1;
   return v;
 }
+- (NSRect) loopRect: (NSRect)v
+{
+  return v;
+}
 - (smallStruct) loopSmallPtr: (smallStruct*)v
 {
   return *v;

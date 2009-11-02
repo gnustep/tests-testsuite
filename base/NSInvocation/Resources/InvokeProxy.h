@@ -3,6 +3,7 @@
    Written By: Adam Fedor <fedor@gnu.org>
 */
 #include <Foundation/NSObject.h>
+#include <Foundation/NSGeometry.h>
 
 typedef struct {
   char	c;
@@ -25,6 +26,7 @@ typedef struct {
 - (largeStruct) loopLargePtr: (largeStruct*)v;
 - (id) loopObject: (id)v;
 - (short) loopShort: (short)v;
+- (NSRect) loopRect: (NSRect)v;
 - (smallStruct) loopSmall: (smallStruct)v;
 - (smallStruct) loopSmallPtr: (smallStruct*)v;
 - (char*) loopString: (char*)v;

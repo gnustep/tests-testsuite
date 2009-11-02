@@ -1,5 +1,4 @@
 #import "Testing.h"
-#import "InvokeProxyProtocol.h"
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSException.h>
@@ -9,6 +8,8 @@
 #import <Foundation/NSObject.h>
 #import <Foundation/NSProxy.h>
 #import <Foundation/NSString.h>
+#import <Foundation/NSGeometry.h>
+#import "InvokeProxyProtocol.h"
 
 /* these macros should only be used in the scope of main */
 #define TEST_INVOKE(selx) \
@@ -54,6 +55,7 @@ int main()
   long lret,larg;
   float fret,farg;
   double dret,darg;
+  NSRect rret, rarg, rprx;
   id oret,oarg;
   char *cpret,*cparg,*cparg2;
   smallStruct ssret,ssarg;
@@ -197,6 +199,13 @@ int main()
        lsret.s == "Hello" &&
        lsret.f == 11.0,
        "Can send/return large structs");
+  
+  rarg = NSMakeRect(1,2,3,4);
+  TEST_INVOKE_ARG(@selector(loopRect:),&rarg);
+  [inv getReturnValue:&rret];
+  rprx = [pxy loopRect:rarg];
+  pass(NSEqualRects(rret, rarg) && NSEqualRects(rprx, rarg),
+       "Can send/return NSRect");
   
   [arp release]; arp = nil;
   return 0;

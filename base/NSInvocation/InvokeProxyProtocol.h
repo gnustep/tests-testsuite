@@ -24,6 +24,7 @@ typedef struct {
 - (long) loopLong: (long)v;
 - (largeStruct) loopLargePtr: (largeStruct*)v;
 - (id) loopObject: (id)v;
+- (NSRect) loopRect: (NSRect)v;
 - (short) loopShort: (short)v;
 - (smallStruct) loopSmall: (smallStruct)v;
 - (smallStruct) loopSmallPtr: (smallStruct*)v;
