@@ -11,7 +11,8 @@ main(int argc, char **argv)
   printf("argc %d\n", argc);
   for (i = 0; i < argc; i++)
     printf("argv[%d] %s\n", i, argv[i]);
-  printf("pgrp %d\n", getpgrp());
+  printf("getpgrp %d\n", getpgrp());
+  printf("getsid %d\n", getsid(0));
   printf("result of open of /dev/tty is %d\n", open("/dev/tty", O_RDONLY));
 */
   if (atoi(argv[1]) == getpgrp())
