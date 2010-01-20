@@ -1,4 +1,7 @@
 #include	<Foundation/Foundation.h>
+#if	!defined(__MINGW32__)
+#include	<sys/file.h>
+#endif
 
 /* Test that the process group has been changed (not the same as that of our
  * parent) and that we have been detached from any controlling terminal.

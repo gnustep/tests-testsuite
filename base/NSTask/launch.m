@@ -30,7 +30,7 @@ int main()
   helpers = [mgr currentDirectoryPath];
   helpers = [helpers stringByAppendingPathComponent: @"Helpers"];
   helpers = [helpers stringByAppendingPathComponent: @"obj"];
-
+#if 0
   task = [[NSTask alloc] init];
   outPipe = [[NSPipe pipe] retain];
   [task setLaunchPath: [NSString stringWithString: COMMAND]];
@@ -48,7 +48,7 @@ int main()
     "raised exception on failed launch") 
   [outPipe release];
   [task release];
-
+#endif
 #if	!defined(__MINGW32__)
   task = [[NSTask alloc] init];
   [task setLaunchPath:
