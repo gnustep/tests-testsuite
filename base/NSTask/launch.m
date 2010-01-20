@@ -49,6 +49,7 @@ int main()
   [outPipe release];
   [task release];
 
+#if	!defined(__MINGW32__)
   task = [[NSTask alloc] init];
   [task setLaunchPath:
     [helpers stringByAppendingPathComponent: @"processgroup"]];
@@ -59,6 +60,7 @@ int main()
   [task waitUntilExit];
   pass([task terminationStatus] == 0, "subtask changes process group");
   [task release];
+#endif
 
   [arp release];
 

@@ -6,6 +6,7 @@ main(int argc, char **argv)
   int	i = 0;
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
+#if	!defined(__MINGW32__)
 /*
   printf("argc %d\n", argc);
   for (i = 0; i < argc; i++)
@@ -14,6 +15,8 @@ main(int argc, char **argv)
 */
   if (atoi(argv[1]) == getpgrp())
     i = 1;
+#endif  /* __MINGW32__ */
+
   [arp release];
   return i;
 }
