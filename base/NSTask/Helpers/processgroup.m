@@ -1,5 +1,8 @@
 #include	<Foundation/Foundation.h>
 
+/* Test that the process group has been changed (not the same as that of our
+ * parent) and that we have been detached from any controlling terminal.
+ */
 int
 main(int argc, char **argv)
 {
@@ -13,12 +16,14 @@ main(int argc, char **argv)
     printf("argv[%d] %s\n", i, argv[i]);
   printf("getpgrp %d\n", getpgrp());
   printf("getsid %d\n", getsid(0));
-  printf("result of open of /dev/tty is %d\n", open("/dev/tty", O_RDONLY));
+  printf("result of open of /dev/tty is %d\n", open("/dev/tty", O_WRONLY));
 */
   if (atoi(argv[1]) == getpgrp())
-    i = 1;
+    i = 1;                                      /* pgrp not set properly */
+  else if (open("/dev/tty", O_WRONLY) >= 0)
+    i = 2;                                      /* not detached from tty */
   else
-    i = 0;
+    i = 0;                                      /* OK */
 #endif  /* __MINGW32__ */
 
   [arp release];
