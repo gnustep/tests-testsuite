@@ -1,6 +1,6 @@
 #import "Testing.h"
 #import "ObjectTesting.h"
-#import <Foundation/NScalendardate.h>
+#import <Foundation/NSCalendarDate.h>
 #import <Foundation/NSAutoreleasePool.h>
 
 int main()
