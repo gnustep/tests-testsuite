@@ -138,12 +138,6 @@ static void test_alloc(NSString *className)
   
   obj1 = [theClass allocWithZone:testZone];
   pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
-  if ([NSGarbageCollector defaultCollector] == nil)
-    {
-      theZone = NSZoneFromPointer(obj1);
-      pass(theZone == testZone,
-        "%s uses specified zone for allocWithZone",prefix);
-    }
 }
 /* perform basic allocation tests without initialisation*/
 static void test_alloc_only(NSString *className)
