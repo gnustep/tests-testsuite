@@ -8,7 +8,7 @@
 @implementation MyClass
 + (void) testAbc
 {
-  [NSException raise: NSGenericException format: @"In MyClass" userInfo: nil];
+  [NSException raise: NSGenericException format: @"In MyClass"];
 }
 @end
 
