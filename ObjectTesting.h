@@ -159,8 +159,6 @@ static void test_alloc_only(NSString *className)
     NSInvalidArgumentException, YES, "returns nil or raises exception in init")
   obj1 = [theClass allocWithZone:testZone];
   pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
-  theZone = NSZoneFromPointer(obj1);
-  pass(theZone == testZone,"%s uses specified zone for allocWithZone",prefix);
 }
 /* test for the NSObject protocol */
 /* TODO move to ProtocolTesting.h? */
