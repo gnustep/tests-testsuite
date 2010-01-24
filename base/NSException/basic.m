@@ -16,7 +16,6 @@ int main()
 {
   NSException *obj;
   NSMutableArray *testObjs = [[NSMutableArray alloc] init];
-  NSString *str;
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   test_alloc_only(@"NSException"); 
@@ -39,7 +38,7 @@ int main()
       NSEnumerator *e = [a objectEnumerator];
       NSString  *s = nil;
 
-//NSLog(@"%@ %@", localException, a);
+NSLog(@"%@ %@", localException, a);
 
       while ((s = [e nextObject]) != nil)
         if ([s rangeOfString: @"testAbc"].length > 0)

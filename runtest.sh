@@ -118,11 +118,11 @@ then
 
   # Clean up to avoid contamination by previous tests. (Optimistically) assume
   # that	this will never fail in any interesting way.
-  #make clean >/dev/null 2>&1
+  $MAKE_CMD clean >/dev/null 2>&1
 
   # Compile it. Redirect errors to stdout so it shows up in the log, but not
   # in the summary.
-  $MAKE_CMD $MAKEFLAGS debug=yes 2>&1
+  $MAKE_CMD $MAKEFLAGS messages=yes debug=yes 2>&1
   if [ $? != 0 ]
   then
     echo COMPILEFAIL: $1 >&2
@@ -156,5 +156,5 @@ then
   # Clean up to avoid contaminating later tests. (Optimistically) assume that
   # this will never fail in any interesting way.
   rm -f core
-  #make clean >/dev/null 2>&1
+  #$MAKE_CMD clean >/dev/null 2>&1
 fi

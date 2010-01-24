@@ -123,7 +123,6 @@ static void test_alloc(NSString *className)
   const char *prefix = [[NSString stringWithFormat:@"Class '%@'", className]
     UTF8String];
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
-  NSZone *theZone;
   pass(theClass != Nil, "%s exists", prefix);
   
   obj0 = [theClass alloc];
@@ -148,7 +147,6 @@ static void test_alloc_only(NSString *className)
   const char *prefix = [[NSString stringWithFormat:@"Class '%@'", className]
     UTF8String];
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
-  NSZone *theZone;
   pass(theClass != Nil, "%s exists", prefix);
   
   obj0 = [theClass alloc];
