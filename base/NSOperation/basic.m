@@ -1,4 +1,5 @@
 #import <Foundation/NSOperation.h>
+#import <Foundation/NSThread.h>
 #import <Foundation/NSAutoreleasePool.h>
 #import "ObjectTesting.h"
 
@@ -51,7 +52,8 @@ int main()
   [testObjs replaceObjectAtIndex: 0 withObject: obj];
   [obj2 addDependency: obj];
   [obj start];
-  sleep(1);
+
+  [NSThread sleepForTimeInterval: 1.0];
   pass(([obj isFinished] == YES), "operation is finished");
   pass(([obj isReady] == YES), "a finished operation is ready");
   pass(([[obj2 dependencies] isEqual: testObjs]),

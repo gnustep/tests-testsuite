@@ -111,7 +111,7 @@ int main()
   [NSThread detachNewThreadSelector: @selector(start)
                            toTarget: obj
                          withObject: nil];
-  sleep(1);
+  [NSThread sleepForTimeInterval: 1.0];
   pass(([cnt count] == 1), "operation ran in other thread");
   pass(([obj isFinished] == YES), "operation finished");
   pass(([obj ran] == YES), "operation ran");
@@ -123,7 +123,7 @@ int main()
   [NSThread detachNewThreadSelector: @selector(start)
                            toTarget: obj
                          withObject: nil];
-  sleep(1);
+  [NSThread sleepForTimeInterval: 1.0];
   pass(([cnt count] == 1), "operation ran in other thread");
   pass(([obj isFinished] == NO), "operation exited");
   pass(([obj ran] == YES), "operation ran");

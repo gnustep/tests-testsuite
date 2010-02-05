@@ -30,7 +30,8 @@ int main()
   str = [url scheme];
   pass([str isEqual: @"file"], "Scheme of file URL is file");
 
-  url = [NSURL URLWithString: @"http://www.w3.org/"];
+  //url = [NSURL URLWithString: @"http://www.w3.org/"];
+  url = [NSURL URLWithString: @"https://www.demon.net/"];
   data = [url resourceDataUsingCache: NO];
   pass(data != nil,
     "Can load a page from www.w3.org");
