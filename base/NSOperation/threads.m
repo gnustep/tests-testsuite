@@ -151,7 +151,27 @@ int main()
   pass(([obj ran] == YES), "operation ran");
   pass(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
   [obj release];
+
+  obj = [OpFlag new];
+  q = [NSOperationQueue new];
   [cnt reset];
+  [q addOperation: obj];
+  [q waitUntilAllOperationsAreFinished];
+  pass(([obj ran] == YES), "operation ran");
+  pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
+  pass(([cnt count] == 0), "thread did not exit immediately");
+  [obj release];
+  /* Observer behavior on OSX 10.6 is that the thread exits after five seconds ... but who knows what that might change to. */
+  [NSThread sleepForTimeInterval: 5.0];
+  pass(([cnt count] == 1), "thread exit occurs after five seconds");
+
+  pass(([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]), "current queue outside -main is main queue");
+  pass(([NSOperationQueue mainQueue] != nil), "main queue is not nil");
+  obj = [OpFlag new];
+  [q addOperation: obj];
+  [q waitUntilAllOperationsAreFinished];
+  pass(([obj isFinished] == YES), "main queue runs an operation");
+  pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
 
   [arp release]; arp = nil;
   return 0;
