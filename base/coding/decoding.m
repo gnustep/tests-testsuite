@@ -26,7 +26,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 #include <Foundation/NSValue.h>
 
 @interface NSObject (DecodingTests)
-+ (NSObject *) createTestInstance;
++ (NSObject*) createTestInstance;
 + (BOOL) verifyTestInstance: (NSObject *)instance
 	ofVersion: (int)version;
 - (BOOL) testEquality;
@@ -35,7 +35,16 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 @implementation NSObject (DecodingTests)
 + (NSObject *) createTestInstance
 {
-	return [[self alloc] init];
+  if (self == [NSException class])
+    {
+      return [[NSException alloc] initWithName: @"Test"
+					reason: @"Testing"
+				      userInfo: nil];
+    }
+  else
+    {
+      return [[self alloc] init];
+    }
 }
 
 + (BOOL) verifyTestInstance: (NSObject *)instance

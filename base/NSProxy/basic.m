@@ -27,6 +27,10 @@ int main()
   pass(NSZoneFromPointer(obj1) == testZone, "%s uses zone for alloc",prefix);
   pass([obj1 zone] == testZone, "%s -zone works",prefix);
   
+  pass([obj1 hash] != 0, "%s has working -hash",prefix);
+  pass([obj1 isEqual:obj1] == YES, "%s has working -isEqual:",prefix);
+  pass([obj1 class] == theClass, "%s has working -class",prefix);
+  
   [arp release]; arp = nil;
   return 0;
 }
