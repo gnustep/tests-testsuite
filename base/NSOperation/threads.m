@@ -1,3 +1,5 @@
+#import <Foundation/NSArray.h>
+#import <Foundation/NSLock.h>
 #import <Foundation/NSOperation.h>
 #import <Foundation/NSThread.h>
 #import <Foundation/NSNotification.h>
@@ -95,10 +97,29 @@
 }
 @end
 
+@interface      OpOrder : NSOperation
+@end
+@implementation OpOrder
+static NSLock *lock = nil;
+static NSMutableArray *list = nil;
++ (void) initialize
+{
+  lock = [NSLock new];
+  list = [NSMutableArray new];
+}
+- (void) main
+{
+  [lock lock];
+  [list addObject: self];
+  [lock unlock];
+}
+@end
+
 int main()
 {
   ThreadCounter         *cnt;
   id                    obj;
+  NSMutableArray        *a;
   NSOperationQueue      *q;
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
 
@@ -117,7 +138,7 @@ int main()
   [NSThread detachNewThreadSelector: @selector(start)
                            toTarget: obj
                          withObject: nil];
-  [NSThread sleepForTimeInterval: 1.0];
+  [NSThread sleepForTimeInterval: 0.1];
   pass(([obj isFinished] == YES), "operation finished");
   pass(([obj ran] == YES), "operation ran");
   pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
@@ -128,7 +149,7 @@ int main()
   [NSThread detachNewThreadSelector: @selector(start)
                            toTarget: obj
                          withObject: nil];
-  [NSThread sleepForTimeInterval: 1.0];
+  [NSThread sleepForTimeInterval: 0.1];
   pass(([obj isFinished] == NO), "operation exited");
   pass(([obj ran] == YES), "operation ran");
   pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
@@ -172,6 +193,57 @@ int main()
   [q waitUntilAllOperationsAreFinished];
   pass(([obj isFinished] == YES), "main queue runs an operation");
   pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
+
+  [q setSuspended: YES];
+  obj = [OpFlag new];
+  [q addOperation: obj];
+  [NSThread sleepForTimeInterval: 0.1];
+  pass(([obj isFinished] == NO), "suspend works");
+  [q setSuspended: NO];
+  [q waitUntilAllOperationsAreFinished];
+  pass(([obj isFinished] == YES), "unsuspend works");
+  [obj release];
+
+  [q setMaxConcurrentOperationCount: 0];
+  obj = [OpFlag new];
+  [q addOperation: obj];
+  [NSThread sleepForTimeInterval: 0.1];
+  pass(([obj isFinished] == NO), "max operation count of zero suspends queue");
+  [q setMaxConcurrentOperationCount: 1];
+  [q waitUntilAllOperationsAreFinished];
+  pass(([obj isFinished] == YES), "resetting max operation queue sarts it");
+  [obj release];
+
+  a = [NSMutableArray array];
+
+  obj = [OpOrder new];
+  [a addObject: obj];
+  [obj release];
+  obj = [OpOrder new];
+  [a addObject: obj];
+  [obj release];
+  obj = [OpOrder new];
+  [a addObject: obj];
+  [obj release];
+  [q addOperations: a waitUntilFinished: YES];
+  pass(([list isEqual: a]), "operations ran in order of addition");
+
+  [list removeAllObjects];
+  [a removeAllObjects];
+  obj = [OpOrder new];
+  [obj setQueuePriority: NSOperationQueuePriorityLow];
+  [a addObject: obj];
+  [obj release];
+  obj = [OpOrder new];
+  [a addObject: obj];
+  [obj release];
+  obj = [OpOrder new];
+  [obj setQueuePriority: NSOperationQueuePriorityHigh];
+  [a addObject: obj];
+  [obj release];
+  [q addOperations: a waitUntilFinished: YES];
+  pass(([list objectAtIndex: 0] == [a objectAtIndex: 2] && [list objectAtIndex: 2] == [a objectAtIndex: 0]), "operations ran in order of priority");
+
 
   [arp release]; arp = nil;
   return 0;
