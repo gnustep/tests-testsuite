@@ -2,6 +2,12 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import "ObjectTesting.h"
 
+static void
+handler(NSException *e)
+{
+  return;
+}
+
 @interface      MyClass : NSObject
 + (void) testAbc;
 @end
@@ -38,14 +44,22 @@ int main()
       NSEnumerator *e = [a objectEnumerator];
       NSString  *s = nil;
 
-NSLog(@"%@ %@", localException, a);
-
       while ((s = [e nextObject]) != nil)
         if ([s rangeOfString: @"testAbc"].length > 0)
           break;
       pass(s != nil, "working callStackSymbols");
     }
   NS_ENDHANDLER
+
+  pass(NSGetUncaughtExceptionHandler() == 0, "default handler is null");
+  NSSetUncaughtExceptionHandler(handler);
+  pass(NSGetUncaughtExceptionHandler() == handler, "setting handler works");
+
+  fprintf(stderr, "We expect a single FAIL without any explanation as\n"
+    "the test is terminated by an uncaught exception ...\n");
+  [NSException raise: NSGenericException format: @"Terminate"];
+  pass(NO, "shouldn't get here ... exception should have terminated process");
+
   [arp release]; arp = nil;
   return 0;
 }
