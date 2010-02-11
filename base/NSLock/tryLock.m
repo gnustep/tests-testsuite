@@ -21,11 +21,22 @@ int main()
   pass(ret == NO, "Recursive try lock with NSLock should return NO"); 
   
   ASSIGN(lock,[NSConditionLock new]);
-  [lock tryLock];
+  [lock lock];
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
   pass(ret == NO, "Recursive try lock with NSConditionLock should return NO"); 
+  
+  ret = [lock tryLockWhenCondition: 42];
+  if (ret)
+    [lock unlock];
+  pass(ret == NO, "Recursive tryLockWhenCondition: with NSConditionLock (1) should return NO"); 
+  [lock unlockWithCondition: 42];
+  [lock lock];
+  ret = [lock tryLockWhenCondition: 42];
+  if (ret)
+    [lock unlock];
+  pass(ret == NO, "Recursive tryLockWhenCondition: with NSConditionLock (2) should return NO"); 
   
   ASSIGN(lock,[NSRecursiveLock new]);
   [lock tryLock];
