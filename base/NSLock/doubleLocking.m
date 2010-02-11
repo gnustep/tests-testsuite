@@ -1,7 +1,6 @@
+#import <Foundation/Foundation.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
-#import <Foundation/NSAutoreleasePool.h>
-#import <Foundation/NSLock.h>
 
 int main()
 {

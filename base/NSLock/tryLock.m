@@ -1,13 +1,13 @@
+#import <Foundation/Foundation.h>
 #import "Testing.h"
-#import <Foundation/NSAutoreleasePool.h>
-#import <Foundation/NSLock.h>
 
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   BOOL ret;
+  id	lock;
   
-  NSLock *lock = [NSLock new];
+  lock = [NSLock new];
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
