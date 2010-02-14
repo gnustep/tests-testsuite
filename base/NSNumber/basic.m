@@ -6,8 +6,9 @@ int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSNumber *testObj;
-  test_alloc(@"NSNumber");
-  testObj = [NSNumber new];
+
+  test_alloc_only(@"NSNumber");
+  testObj = [NSNumber numberWithInt: 5];
   test_NSObject(@"NSNumber", [NSArray arrayWithObject:testObj]);
   test_NSCoding([NSArray arrayWithObject:testObj]);
   test_NSCopying(@"NSNumber", @"NSNumber", 
