@@ -3,6 +3,19 @@
 #import <Foundation/NSPropertyList.h>
 #import <Foundation/NSValue.h>
 
+#include <stdlib.h>
+#include <limits.h>
+
+#ifndef	ULLONG_MAX
+#define	ULLONG_MAX	18446744073709551615
+#endif
+#ifndef	LLONG_MAX
+#define	LLONG_MAX	9223372036854775807
+#endif
+#ifndef	LLONG_MIN
+#define	LLONG_MIN	-9223372036854775808
+#endif
+
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
