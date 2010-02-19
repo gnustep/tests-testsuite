@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#ifndef	ULLONG_MAX
-#define	ULLONG_MAX	18446744073709551615
-#endif
-#ifndef	LLONG_MAX
-#define	LLONG_MAX	9223372036854775807
-#endif
-#ifndef	LLONG_MIN
-#define	LLONG_MIN	-9223372036854775808
+#if	!defined(LLONG_MAX)
+#  if	defined(__LONG_LONG_MAX__)
+#    define LLONG_MAX __LONG_LONG_MAX__
+#    define LLONG_MIN	(-LLONG_MAX-1)
+#    define ULLONG_MAX	(LLONG_MAX * 2ULL + 1)
+#  else
+#    error Neither LLONG_MAX nor __LONG_LONG_MAX__ found
+#  endif
 #endif
 
 int main()
@@ -57,6 +57,25 @@ int main()
        "A -100 signed char is a -100 signed float");
   pass([val1 isEqual: [NSNumber numberWithDouble: -100.0]],
        "A -100 signed char is a -100 signed double");
+  pass([val1 isEqual: [NSNumber numberWithInteger: -100]],
+       "A -100 signed char is a -100 NSInteger");
+
+  pass([val1 shortValue] == (signed short)-100,
+       "A -100 signed char is a -100 signed short");
+  pass([val1 intValue] == (signed int)-100,
+       "A -100 signed char is a -100 signed int");
+  pass([val1 longValue] == (signed long)-100,
+       "A -100 signed char is a -100 signed long");
+  pass([val1 longLongValue] == (signed long long)-100,
+       "A -100 signed char is a -100 signed long long");
+  pass([val1 floatValue] == (float)-100.0,
+       "A -100 signed char is a -100 signed float");
+  pass([val1 doubleValue] == (double)-100.0,
+       "A -100 signed char is a -100 signed double");
+  pass([val1 integerValue] == (NSInteger)-100,
+       "A -100 signed char is a -100 NSInteger");
+  pass([val1 boolValue] == YES,
+       "A -100 signed char is a YES BOOL");
 
   val1 = [NSNumber numberWithInt: 127];
   val2 = [NSNumber numberWithInt: 128];
