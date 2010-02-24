@@ -321,13 +321,33 @@ run_server(void)
     }
   [[NSRunLoop currentRunLoop] run];
 }
+#endif
+
+@interface      MyClass : NSObject
+- (const char *) sel1;
+@end
+
+@implementation MyClass
+- (const char *) sel1
+{
+  return "";
+}
+@end
 
 int
 main(int argc, char *argv[])
 {
   NSAutoreleasePool *pool;
   pool = [[NSAutoreleasePool alloc] init];
+  id    o;
+  id    s;
 
+  o = [MyClass new];
+  s = [o methodSignatureForSelector: @selector(sel1)];
+  pass(strcmp([s methodReturnType], @encode(const char *)) == 0,
+    "sel1 return type OK");
+
+#if	GNUSTEP
   if ([[[[NSProcessInfo processInfo] arguments] lastObject] isEqual: @"srv"])
     {
       run_server();
@@ -348,10 +368,10 @@ main(int argc, char *argv[])
 	    [localException userInfo]);
     }
   NS_ENDHANDLER
+#endif
 
   [pool release];
 
   exit(0);
 }
-#endif
 
