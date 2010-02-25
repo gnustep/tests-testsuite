@@ -7,6 +7,7 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   unichar	u0 = 'a';
   unichar	u1 = 0xfe66;
+  char          buf[32];
   NSString	*s;
   NSString *testObj = [NSString stringWithCString: "Hello\n"];
 
@@ -36,6 +37,12 @@ int main()
   TEST_EXCEPTION([[NSString alloc] initWithString: nil];,
   		 NSInvalidArgumentException, YES, 
 		 "NSString -initWithString: does not allow nil argument");
+
+  pass([@"he" getCString: buf maxLength: 2 encoding: NSASCIIStringEncoding]==NO,
+    "buffer exact length fails");
+  pass([@"hell" getCString: buf maxLength: 5 encoding: NSASCIIStringEncoding],
+    "buffer length+1 works");
+  pass(strcmp(buf, "hell") == 0, "getCString:maxLength:encoding");
 
   [arp release]; arp = nil;
   return 0;
