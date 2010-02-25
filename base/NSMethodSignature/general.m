@@ -323,11 +323,11 @@ run_server(void)
 }
 #endif
 
-@interface      MyClass : NSObject
+@interface      SimpleClass : NSObject
 - (const char *) sel1;
 @end
 
-@implementation MyClass
+@implementation SimpleClass
 - (const char *) sel1
 {
   return "";
@@ -342,7 +342,7 @@ main(int argc, char *argv[])
   id    o;
   id    s;
 
-  o = [MyClass new];
+  o = [SimpleClass new];
   s = [o methodSignatureForSelector: @selector(sel1)];
   pass(strcmp([s methodReturnType], @encode(const char *)) == 0,
     "sel1 return type OK");
