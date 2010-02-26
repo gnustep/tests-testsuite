@@ -168,7 +168,8 @@ int main()
     NSUndefinedKeyException, YES,
     "KVC properly throws NSUndefinedKeyException with key paths");
 
-  pass(sel_getUid(0) == 0, "null string no selector");
+  pass(sel_getUid(0) == 0, "null string gives null selector");
+  pass(strcmp(sel_getName(0), "<null selector>") == 0, "null selector name");
 
   [arp release]; arp = nil;
   return 0;
