@@ -41,8 +41,12 @@ main(int argc, char *argv[])
   Ivar  ivar;
 
   cls = [SubClass1 class];
+  ivar = class_getInstanceVariable(cls, 0);
+  pass(ivar == 0, "class_getInstanceVariable() returns 0 for null name");
   ivar = class_getInstanceVariable(cls, "bad name");
   pass(ivar == 0, "class_getInstanceVariable() returns 0 for non-existent");
+  ivar = class_getInstanceVariable(0, "ivar2");
+  pass(ivar == 0, "class_getInstanceVariable() returns 0 for Nil class");
   ivar = class_getInstanceVariable(cls, "ivar2");
   pass(ivar != 0, "class_getInstanceVariable() works");
   ivar = class_getInstanceVariable(cls, "ivar1");
