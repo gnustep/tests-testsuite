@@ -9,6 +9,7 @@
 @interface      Class1 : NSObject
 {
   int   ivar1;
+  Class1 *ivar1obj;
 }
 - (const char *) sel1;
 @end
@@ -37,8 +38,8 @@
 int
 main(int argc, char *argv[])
 {
-  Class cls;
-  Ivar  ivar;
+  Class         cls;
+  Ivar          ivar;
 
   cls = [SubClass1 class];
   ivar = class_getInstanceVariable(cls, 0);
@@ -51,6 +52,32 @@ main(int argc, char *argv[])
   pass(ivar != 0, "class_getInstanceVariable() works");
   ivar = class_getInstanceVariable(cls, "ivar1");
   pass(ivar != 0, "class_getInstanceVariable() works for superclass ivar");
+  ivar = class_getInstanceVariable(cls, "ivar1obj");
+  pass(ivar != 0, "class_getInstanceVariable() works for superclass obj ivar");
+  NSLog(@"%s", ivar_getTypeEncoding(ivar));
+
+  cls = objc_allocateClassPair([NSString class], "runtime generated", 0);
+  pass(cls != Nil, "can allocate a class pair");
+  pass(class_addIvar(cls, "iv1", 1, 6, "c") == YES,
+    "able to add iVar 'iv1'");
+  pass(class_addIvar(cls, "iv2", 1, 5, "c") == YES,
+    "able to add iVar 'iv2'");
+  pass(class_addIvar(cls, "iv3", 1, 4, "c") == YES,
+    "able to add iVar 'iv3'");
+  pass(class_addIvar(cls, "iv4", 1, 3, "c") == YES,
+    "able to add iVar 'iv4'");
+  ivar = class_getInstanceVariable(cls, "iv1");
+  pass(ivar != 0, "iv1 exists");
+  pass(ivar_getOffset(ivar) == 64, "iv1 offset is 64");
+  ivar = class_getInstanceVariable(cls, "iv2");
+  pass(ivar != 0, "iv2 exists");
+  pass(ivar_getOffset(ivar) == 96, "iv2 offset is 96");
+  ivar = class_getInstanceVariable(cls, "iv3");
+  pass(ivar != 0, "iv3 exists");
+  pass(ivar_getOffset(ivar) == 112, "iv3 offset is 112");
+  ivar = class_getInstanceVariable(cls, "iv4");
+  pass(ivar != 0, "iv4 exists");
+  pass(ivar_getOffset(ivar) == 120, "iv4 offset is 120");
 
   exit(0);
 }
