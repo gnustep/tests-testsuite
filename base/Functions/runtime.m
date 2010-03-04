@@ -22,7 +22,11 @@
 }
 @end
 
-@interface      SubClass1 : Class1
+@protocol       SubProto
+- (const char *) sel2;
+@end
+
+@interface      SubClass1 : Class1 <SubProto>
 {
   int   ivar2;
 }
@@ -57,9 +61,11 @@ main(int argc, char *argv[])
 {
   Class         cls;
   Ivar          ivar;
+  Ivar          *ivars;
   unsigned int  count;
   unsigned int  index;
   Method        *methods;
+  Protocol      **protocols;
 
   cls = [SubClass1 class];
 
@@ -79,6 +85,14 @@ main(int argc, char *argv[])
   methods = class_copyMethodList(cls, &count);
   pass(count == 3, "SubClass1 has three methods");
   pass(methods[count] == 0, "method list is terminated");
+
+  ivars = class_copyIvarList(cls, &count);
+  pass(count == 1, "SubClass1 has one ivar");
+  pass(ivars[count] == 0, "ivar list is terminated");
+
+  protocols = class_copyProtocolList(cls, &count);
+  pass(count == 1, "SubClass1 has one protocol");
+  pass(protocols[count] == 0, "protocol list is terminated");
 
   cls = objc_allocateClassPair([NSString class], "runtime generated", 0);
   pass(cls != Nil, "can allocate a class pair");
