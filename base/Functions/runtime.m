@@ -5,6 +5,7 @@
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
 
+#include        <string.h>
 #include        <objc/runtime.h>
 
 @interface      Class1 : NSObject
@@ -60,10 +61,12 @@ int
 main(int argc, char *argv[])
 {
   Class         cls;
+  SEL           sel;
   Ivar          ivar;
   Ivar          *ivars;
   unsigned int  count;
   unsigned int  index;
+  Method        method;
   Method        *methods;
   Protocol      **protocols;
 
@@ -86,13 +89,53 @@ main(int argc, char *argv[])
   pass(count == 3, "SubClass1 has three methods");
   pass(methods[count] == 0, "method list is terminated");
 
+  method = methods[2];
+  sel = method_getName(method);
+  pass(sel_isEqual(sel, sel_getUid("sel2")),
+    "last method is sel2");
+  pass(method_getImplementation(method) != [cls instanceMethodForSelector: sel],
+    "method 2 is the original, overridden by the category");
+
+  method = methods[0];
+  sel = method_getName(method);
+  pass(sel_isEqual(sel, sel_getUid("catMethod"))
+    || sel_isEqual(sel, sel_getUid("sel2")),
+    "method 0 has expected name");
+
+  if (sel_isEqual(sel, sel_getUid("catMethod")))
+    {
+      method = methods[1];
+      sel = method_getName(method);
+      pass(sel_isEqual(sel, sel_getUid("sel2")),
+        "method 1 has expected name");
+      pass(method_getImplementation(method)
+        == [cls instanceMethodForSelector: sel],
+        "method 1 is the category method overriding original");
+    }
+  else
+    {
+      pass(method_getImplementation(method)
+        == [cls instanceMethodForSelector: sel],
+        "method 0 is the category method overriding original");
+      method = methods[1];
+      sel = method_getName(method);
+      pass(sel_isEqual(sel, sel_getUid("catMethod")),
+        "method 1 has expected name");
+    }
+
   ivars = class_copyIvarList(cls, &count);
   pass(count == 1, "SubClass1 has one ivar");
   pass(ivars[count] == 0, "ivar list is terminated");
+  pass(strcmp(ivar_getName(ivars[0]), "ivar2") == 0,
+    "ivar has correct name");
+  pass(strcmp(ivar_getTypeEncoding(ivars[0]), @encode(int)) == 0,
+    "ivar has correct type");
 
   protocols = class_copyProtocolList(cls, &count);
   pass(count == 1, "SubClass1 has one protocol");
   pass(protocols[count] == 0, "protocol list is terminated");
+  pass(strcmp(protocol_getName(protocols[0]), "SubProto") == 0,
+    "protocol has correct name");
 
   cls = objc_allocateClassPair([NSString class], "runtime generated", 0);
   pass(cls != Nil, "can allocate a class pair");
