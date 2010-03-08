@@ -61,6 +61,7 @@ int
 main(int argc, char *argv[])
 {
   Class         cls;
+  Class         meta;
   SEL           sel;
   Ivar          ivar;
   Ivar          *ivars;
@@ -72,6 +73,10 @@ main(int argc, char *argv[])
 
   cls = [SubClass1 class];
 
+  pass(strcmp(class_getName(cls), "SubClass1") == 0, "class name works");
+  meta = object_getClass(cls);
+  pass(class_isMetaClass(meta), "object_getClass() retrieves meta class");
+  pass(strcmp(class_getName(meta), "SubClass1") == 0, "metaclass name works");
   ivar = class_getInstanceVariable(cls, 0);
   pass(ivar == 0, "class_getInstanceVariable() returns 0 for null name");
   ivar = class_getInstanceVariable(cls, "bad name");
