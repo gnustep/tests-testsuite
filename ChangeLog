@@ -1,3 +1,7 @@
+2010-03-08  Fred Kiefer <FredKiefer@gmx.de>
+
+	* base/coding/basictypes.m: Correct test for unsigned short encoding.
+
 2009-10-21  Adam Fedor <fedor@gnu.org>
 
 	* runtest.sh: Simplify variable setting to work with brain-dead shells

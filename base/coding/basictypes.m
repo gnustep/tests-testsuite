@@ -201,8 +201,8 @@ int main()
   testWriteBasicType_double("double", &d);
   testReadBasicType_double("double", &d, &d2);
   
-  testWriteBasicType_short("ushort", &us);
-  testReadBasicType_short("ushort", &us, &us2);
+  testWriteBasicType_ushort("ushort", &us);
+  testReadBasicType_ushort("ushort", &us, &us2);
   
   obj1 = [Model new];
   data = [NSArchiver archivedDataWithRootObject: obj1];
