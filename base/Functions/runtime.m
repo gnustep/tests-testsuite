@@ -60,6 +60,7 @@
 int
 main(int argc, char *argv[])
 {
+  id            obj;
   Class         cls;
   Class         meta;
   SEL           sel;
@@ -71,8 +72,10 @@ main(int argc, char *argv[])
   Method        *methods;
   Protocol      **protocols;
 
+  obj = [NSObject new];
   cls = [SubClass1 class];
 
+  pass(strcmp(class_getName(Nil), "nil") == 0, "class name for Nil is nil");
   pass(strcmp(class_getName(cls), "SubClass1") == 0, "class name works");
   meta = object_getClass(cls);
   pass(class_isMetaClass(meta), "object_getClass() retrieves meta class");
