@@ -52,7 +52,7 @@
 -(id)initWithCoder:(NSCoder *)coder
 {
   /* encoded as int - decoded as NSInteger. */
-  [coder decodeValueOfObjCType: @encode(NSInteger) at: &cint];
+  [coder decodeValueOfObjCType: @encode(NSInteger) at: &nsint];
   /* encoded as unsinged int - decoded as NSUInteger. */
   [coder decodeValueOfObjCType: @encode(NSUInteger) at: &nsuint];
   /* encoded as NSInteger - decoded as int. */
@@ -205,6 +205,7 @@ int main()
   testReadBasicType_ushort("ushort", &us, &us2);
   
   obj1 = [Model new];
+  [obj1 setValues];
   data = [NSArchiver archivedDataWithRootObject: obj1];
   obj2 = [NSUnarchiver unarchiveObjectWithData: data];
   pass([obj1 testCInt:obj2],       "archiving as int - dearchiving as NSInteger");
