@@ -5,14 +5,14 @@
 @interface CustomString : NSString
 {
   unichar *characters;
-  unsigned int length;
+  NSUInteger length;
 }
 @end
 
 @implementation CustomString
 
-- (id) initWithBytesNoCopy: (const void *)c
-		    length: (unsigned int)l
+- (id) initWithBytesNoCopy: (void *)c
+		    length: (NSUInteger)l
 		  encoding: (NSStringEncoding)encoding
 	      freeWhenDone: (BOOL)freeWhenDone
 {
@@ -52,12 +52,12 @@
   [super dealloc];
 }
 
-- (unsigned int) length
+- (NSUInteger) length
 {
   return length;
 }
 
-- (unichar) characterAtIndex: (unsigned int)index
+- (unichar) characterAtIndex: (NSUInteger)index
 {
   return characters[index];
 }
