@@ -80,7 +80,7 @@ int main()
     "A namespace remembers its prefix");
   
 
-  rpc = [[GSXMLRPC alloc] initWithURL: @"http://localhost/"];
+  rpc = [(GSXMLRPC*)[GSXMLRPC alloc] initWithURL: @"http://localhost/"];
   pass(rpc != nil, "Can initialise an RPC instance");
 
   iparams = [NSMutableArray array];
