@@ -339,12 +339,15 @@ main(int argc, char *argv[])
 {
   NSAutoreleasePool *pool;
   pool = [[NSAutoreleasePool alloc] init];
+  const char	*e;
   id    o;
   id    s;
 
   o = [SimpleClass new];
   s = [o methodSignatureForSelector: @selector(sel1)];
-  pass(strcmp([s methodReturnType], @encode(const char *)) == 0,
+  e = @encode(const char*);
+  pass(strcmp(e, "r*") == 0, "compiler creates correct const char * encoding");
+  pass(strcmp([s methodReturnType], "r*") == 0,
     "sel1 return type OK");
 
 #if	GNUSTEP
