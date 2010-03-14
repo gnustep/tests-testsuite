@@ -346,9 +346,9 @@ main(int argc, char *argv[])
   o = [SimpleClass new];
   s = [o methodSignatureForSelector: @selector(sel1)];
   e = @encode(const char*);
-  pass(strcmp(e, "r*") == 0, "compiler creates correct const char * encoding");
+  pass(strcmp(e, "r*") == 0, "@encode(const char*) makes 'r*' type encoding");
   pass(strcmp([s methodReturnType], "r*") == 0,
-    "sel1 return type OK");
+    "sel1 return type is 'r*'");
 
 #if	GNUSTEP
   if ([[[[NSProcessInfo processInfo] arguments] lastObject] isEqual: @"srv"])
