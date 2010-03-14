@@ -12,15 +12,15 @@ implementations of the NSString methods in NSString itself.
 @interface CustomString : NSString
 {
   unichar *characters;
-  unsigned int length;
+  NSUInteger length;
 }
 
 @end
 
 @implementation CustomString
 
-- initWithBytesNoCopy: (const void *)c
-	       length: (unsigned int)l
+- initWithBytesNoCopy: (void *)c
+	       length: (NSUInteger)l
 	     encoding: (NSStringEncoding)encoding
          freeWhenDone: (BOOL)freeWhenDone
 {
@@ -50,7 +50,7 @@ implementations of the NSString methods in NSString itself.
   return self;
 }
 
--(void) dealloc
+- (void) dealloc
 {
   if (characters)
     {
@@ -60,12 +60,12 @@ implementations of the NSString methods in NSString itself.
   [super dealloc];
 }
 
--(unsigned int) length
+- (NSUInteger) length
 {
   return length;
 }
 
--(unichar) characterAtIndex: (unsigned int)index
+- (unichar) characterAtIndex: (NSUInteger)index
 {
   return characters[index];
 }
