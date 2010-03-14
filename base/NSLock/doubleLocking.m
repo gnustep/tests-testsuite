@@ -29,7 +29,6 @@ int main()
   [task launch];
   [task waitUntilExit];
   data = [hdl availableData];
-  pass([data length] > 0, "was able to read data from doubleNSLock");
   //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   string = [NSString alloc];
   string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
@@ -45,7 +44,6 @@ int main()
   [task launch];
   [task waitUntilExit];
   data = [hdl availableData];
-  pass([data length] > 0, "was able to read data from doubleNSConditionLock");
   //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   string = [NSString alloc];
   string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
