@@ -128,7 +128,14 @@ run_test_file ()
 
 
 # Delete the old files.
-rm -f tests.log tests.sum
+if [ -f tests.log ]
+then
+  mv tests.log tests-old.log
+fi
+if [ -f tests.sum ]
+then
+  mv tests.sum tests-old.sum
+fi
 
 if [ x"$TESTDIRS" = x ]
 then

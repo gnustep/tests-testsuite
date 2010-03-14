@@ -141,11 +141,17 @@ then
     export NSZombieEnabled CRASH_ON_ZOMBIE
 
     echo Running $1...
-    # Run it. If it terminates abnormally, mark it as a crash.
+    # Run it. If it terminates abnormally, mark it as a crash (unless we have
+    # a special file to mark it as being expected to abort).
     $MAKE_CMD -s test
     if [ $? != 0 ]
     then
-      echo FAIL: $1 >&2
+      if [ -r $NAME.abort ]
+      then
+        echo COMPLETED: $1 >&2
+      else
+        echo FAIL: $1 >&2
+      fi
     else
       echo COMPLETED: $1 >&2
     fi

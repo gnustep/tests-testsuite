@@ -153,13 +153,13 @@ static void test_alloc_only(NSString *className)
   pass(obj0 != nil, "%s has working alloc", prefix);
   pass([obj0 isKindOfClass:theClass],
     "%s alloc gives the correct class", prefix);
-  TEST_EXCEPTION([obj0 description], NSInvalidArgumentException, YES, "raises exception in description")
+  TEST_EXCEPTION([obj0 description], NSInvalidArgumentException, YES, "raises NSInvalidArgumentException in description")
 
   TEST_EXCEPTION(if([obj0 init]==nil)[NSException raise: NSInvalidArgumentException format: @""],
-    NSInvalidArgumentException, YES, "returns nil or raises exception in init")
+    NSInvalidArgumentException, YES, "returns nil or raises NSInvalidArgumentException in init")
 
   TEST_EXCEPTION(if([theClass new]==nil)[NSException raise: NSInvalidArgumentException format: @""],
-    NSInvalidArgumentException, YES, "returns nil or raises exception in new")
+    NSInvalidArgumentException, YES, "returns nil or raises NSInvalidArgumentException in new")
 
   obj1 = [theClass allocWithZone:testZone];
   pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
