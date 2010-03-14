@@ -4,28 +4,53 @@
 
 int main()
 {
-  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
-  NSLock *lock = nil;
+  NSAutoreleasePool	*arp = [NSAutoreleasePool new];
+  NSFileManager		*mgr;
+  NSString		*helpers;
+  NSString		*command;
+  NSTask		*task;
+  NSPipe		*ePipe;
+  NSFileHandle		*hdl;
+  NSData		*data;
+  NSString		*string;
+  NSLock 		*lock = nil;
 
-#if	1
-  pass(NO, "Recursive lock with NSLock deadlocks ... this is not a real test, just a reminder that recursively locking should deadlock the thread after printing a diagnostic message");
-#else
-  ASSIGN(lock,[NSLock new]);
-  [lock lock];
-  TEST_EXCEPTION([lock lock],@"NSLockException",YES,
-    "Recursive lock with NSLock raises an exception");
-  [lock unlock];
-#endif
+  mgr = [NSFileManager defaultManager];
+  helpers = [mgr currentDirectoryPath];
+  helpers = [helpers stringByAppendingPathComponent: @"Helpers"];
+  helpers = [helpers stringByAppendingPathComponent: @"obj"];
 
-#if	1
-  pass(NO, "Recursive lock with NSConditionLock deadlocks ... this is not a real test, just a reminder that recursively locking should deadlock the thread after printing a diagnostic message");
-#else
-  ASSIGN(lock,[NSConditionLock new]);
-  [lock lock];
-  TEST_EXCEPTION([lock lock],@"NSConditionLockException",YES,
-    "Recursive lock with NSConditionLock raises an exception");
-  [lock unlock];
-#endif
+  command = [helpers stringByAppendingPathComponent: @"doubleNSLock"];
+  task = [[NSTask alloc] init];
+  ePipe = [[NSPipe pipe] retain];
+  [task setLaunchPath: command];
+  [task setStandardError: ePipe]; 
+  hdl = [ePipe fileHandleForReading];
+  [task launch];
+  [task waitUntilExit];
+  data = [hdl availableData];
+  pass([data length] > 0, "was able to read data from doubleNSLock");
+  //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
+  string = [NSString alloc];
+  string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
+  pass([string rangeOfString: @"deadlock"].length > 0,
+    "NSLock deadlocked as expected");
+
+  command = [helpers stringByAppendingPathComponent: @"doubleNSConditionLock"];
+  task = [[NSTask alloc] init];
+  ePipe = [[NSPipe pipe] retain];
+  [task setLaunchPath: command];
+  [task setStandardError: ePipe]; 
+  hdl = [ePipe fileHandleForReading];
+  [task launch];
+  [task waitUntilExit];
+  data = [hdl availableData];
+  pass([data length] > 0, "was able to read data from doubleNSConditionLock");
+  //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
+  string = [NSString alloc];
+  string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
+  pass([string rangeOfString: @"deadlock"].length > 0,
+    "NSConditionLock deadlocked as expected");
 
   ASSIGN(lock,[NSRecursiveLock new]);
   [lock lock];
