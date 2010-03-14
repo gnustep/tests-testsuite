@@ -5,7 +5,9 @@
 static void
 handler(NSException *e)
 {
-  return;
+  pass (YES == [[e reason] isEqual: @"Terminate"],
+    "uncaught exceptionhandler called as expected");
+  abort();
 }
 
 @interface      MyClass : NSObject

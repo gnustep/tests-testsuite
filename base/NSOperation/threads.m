@@ -183,8 +183,8 @@ int main()
   pass(([cnt count] == 0), "thread did not exit immediately");
   [obj release];
   /* Observer behavior on OSX 10.6 is that the thread exits after five seconds ... but who knows what that might change to. */
-  [NSThread sleepForTimeInterval: 5.0];
-  pass(([cnt count] == 1), "thread exit occurs after five seconds");
+  [NSThread sleepForTimeInterval: 6.0];
+  pass(([cnt count] == 1), "thread exit occurs after six seconds");
 
   pass(([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]), "current queue outside -main is main queue");
   pass(([NSOperationQueue mainQueue] != nil), "main queue is not nil");
