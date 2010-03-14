@@ -28,7 +28,7 @@ int main()
                                         mutabilityOption: 0
                                                   format: &aFormat
                                         errorDescription: &aString];
-  pl = [[[pl objectForKey: @"$objects"]
+  pl = [(NSDictionary*)[[(NSDictionary*)pl objectForKey: @"$objects"]
     objectAtIndex: 2] objectForKey: @"NS.data"];
   // FIXME ... maybe check encoded data format
 
