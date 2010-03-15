@@ -1,3 +1,9 @@
+2010-03-15  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* runtests.sh: Improve help and fig bug extracting results from log.
+	* Testing.h: Add 'hope()' for a test we don't really expect to pass.
+	* base/NSException/basic.m: Use hope()
+
 2010-03-08  Fred Kiefer <FredKiefer@gmx.de>
 
 	* base/coding/basictypes.m: Correct test for unsigned short encoding.

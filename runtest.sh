@@ -2,7 +2,7 @@
 #
 #  run tests script for the GNUstep Testsuite
 #
-#  Copyright (C) 2005 Free Software Foundation, Inc.
+#  Copyright (C) 2005-2010 Free Software Foundation, Inc.
 #
 #  Written by:  Alexander Malmberg <alexander@malmberg.org>
 #

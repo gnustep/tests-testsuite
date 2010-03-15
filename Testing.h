@@ -22,16 +22,42 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+/* The pass() function is the core of the testsuiit.
+ * You call it with two arguments ... an intger expression indicating the
+ * success or failure of the testcase (0 is a failure) and a string which
+ * describes the testcase.
+ */
 static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
 static void pass(int testPassed, const char *description, ...)
 {
   va_list args;
   va_start(args, description);
-  fprintf(stderr, testPassed?"PASS: ":"FAIL: ");
+  fprintf(stderr, testPassed ?"PASS: " : "FAIL: ");
   vfprintf(stderr, description, args);
   fprintf(stderr, "\n");
   va_end(args);
 }
+
+/* The hope() function is similar to pass() but is used where it is expected
+ * that the testcase is likely to fail (eg. a test for a known bug which may
+ * have been fixed by the time the testsuite is run).
+ */
+static void hope(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
+static void hope(int testPassed, const char *description, ...)
+{
+  va_list args;
+  va_start(args, description);
+  fprintf(stderr, testPassed ? "PASS: " : "DASHED: ");
+  vfprintf(stderr, description, args);
+  fprintf(stderr, "\n");
+  va_end(args);
+}
+
+/* The unresolved() function is called with a single string argument to
+ * notify the testsuite that a test failed to complete for some reason.
+ * eg. You might call this if an earlier testcase failed and it makes no
+ * sense to run subsequent tests.
+ */
 static void unresolved(const char *description, ...) __attribute__ ((format(printf, 1, 2), unused));
 static void unresolved(const char *description, ...)
 {
@@ -42,6 +68,11 @@ static void unresolved(const char *description, ...)
   fprintf(stderr, "\n");
   va_end(args);
 }
+
+/* The unsupported() function is called with a single string argument to
+ * notify the testsuite that a test could not be run because the capability
+ * it is testing does not exist on the current platform.
+ */
 static void unsupported(const char *description, ...) __attribute__ ((format(printf, 1, 2), unused));
 static void unsupported(const char *description, ...)
 {

@@ -19,9 +19,11 @@
 #
 # Usage: ./runtests.sh [directory | test1.m [test2.m ...]]
 #
-# Runs the specified tests, or "all" tests if no arguments are given. A
-# summary is written to tests.sum, a log to tests.log, and a brief summary
-# to stdout.
+# Runs the specified tests, or "all" tests if no arguments are given.
+# A summary is written to tests.sum, a log to tests.log, and a brief
+# summary to stdout.
+# The log and summary from the previous testrun are renamed to
+# tests-old.log and tests-old.sum, available for comparison.
 
 if test -z "$GNUSTEP_MAKEFILES"; then
   GNUSTEP_MAKEFILES=`gnustep-config --variable=GNUSTEP_MAKEFILES 2>/dev/null`
@@ -39,10 +41,29 @@ do
   gs_option=
   case $1 in
     --help | -h)
+      echo
       echo "$0: Script to run the GNUstep testsuite"
       echo "Usage: ./runtests.sh [directory | test1.m [test2.m ...]]"
-      echo "Options:"
-      echo "  --help	- Print help"
+      echo "Runs the specified tests, or "all" tests if no arguments are given."
+      echo
+      echo "Interpreting the output"
+      echo "-----------------------"
+      echo "The summary output lists all test failures ... there should not"
+      echo "be any.  If a test fails then either there is a problem in the"
+      echo "software beign tested, or a problem in the test itsself. Either"
+      echo "way, you should try to fix the problem and provide a patch, or"
+      echo "at least report it at: https://savannah.gnu.org/bugs/?group=gnustep"
+      echo
+      echo "After the listing of any failures is a summary of counts of events:"
+      echo "COMPLETED:  The number of separate test files which were run."
+      echo "DASHED:     The number of hopes dashed ... tests which failed, but"
+      echo "            which were expected to perhaps fail (known bugs etc)."
+      echo "FAIL:       The number of individual tests failed"
+      echo "PASS:       The number of individual tests passed"
+      echo "UNRESOLVED: The number of unresolved tests ... tests which have"
+      echo "            been omitted because of an earlier failure etc."
+      echo "UNRESOLVED: The number of unsupported tests ... those for features"
+      echo "            which work on some platforms, but not on yours."
       echo
       exit 0
       ;;
@@ -114,15 +135,14 @@ run_test_file ()
   cat $CWD/tests.tmp >> $CWD/tests.log
 
   # Extract the summary information and add it to the summary file.
-  grep "^[A-Z]*:" $CWD/tests.tmp > $CWD/tests.sum.tmp
+  grep "^\(PASS\|FAIL\|COMPLETED\|DASHED\|UNRESOLVED\|UNSUPPORTED\)" $CWD/tests.tmp > $CWD/tests.sum.tmp
   cat $CWD/tests.sum.tmp >> $CWD/tests.sum
 
-  # If there was anything other than PASS and COMPLETE in the summary...
-  if grep -L -v "^\(PASS\|COMPLETED\)" $CWD/tests.sum.tmp > /dev/null; then
-    # ... print them to stdout.
+  # If there were failures or unresolved tests then report them...
+  if grep -L "^\(FAIL\|UNRESOLVED\)" $CWD/tests.sum.tmp > /dev/null; then
     echo
     echo $TESTFILE:
-    grep -v "^\(PASS\|COMPLETED\)" $CWD/tests.sum.tmp
+    grep "^\(FAIL\|UNRESOLVED\)" $CWD/tests.sum.tmp
   fi
 }
 
