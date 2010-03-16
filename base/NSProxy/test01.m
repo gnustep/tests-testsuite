@@ -196,6 +196,7 @@ main(int argc, char *argv[])
   pass([obj enumPenum: NSSymbolStringEncoding] == NSNEXTSTEPStringEncoding, "Proxy enum");
   pass(NSEqualRanges([obj rangePrange: NSMakeRange(243,437)],NSMakeRange(437,243)), "Proxy NSRange");
   pass(NSEqualPoints([obj pointPpoint: NSMakePoint(243.0F,437.0F)],NSMakePoint(437.0F,243.0F)), "Proxy NSPoint");
+  pass(GSEqualFinePoints([obj finePointPfinePoint: GSMakeFinePoint(243.0L,437.0L)],GSMakeFinePoint(437.0L,243.0L)), "Proxy GSFinePoint");
 #if 0
   /* These next two are disabled because they test passing structures as
    * parameters, a feature which has never worked and which maybe doesn't
@@ -203,7 +204,6 @@ main(int argc, char *argv[])
    * We should enable these tests if/when the capability is ever implemented.
    */
   pass(GSDecimalCompare([obj decimalPdecimal: GSMakeDecimal(321,7,YES)],GSDecimalMultiply(GSMakeDecimal(321,7,YES),GSMakeDecimal(321,7,YES)))==0, "Proxy NSDecimal");
-  pass(GSEqualFinePoints([obj finePointPfinePoint: GSMakeFinePoint(243.0L,437.0L)],GSMakeFinePoint(437.0L,243.0L)), "Proxy GSFinePoint");
 #endif
 #if 0
   /*

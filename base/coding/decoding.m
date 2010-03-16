@@ -139,7 +139,12 @@ void test(Class class)
       NSArray	*decodedInstance;
       NSData	*d;
       NSString	*filename;
+      int       arch;
 
+      if (sizeof(CGFloat) == sizeof(float))
+        arch = 32;
+      else
+        arch = 64;
       instance = [class createTestInstance];
 
       d = [NSArchiver archivedDataWithRootObject:
@@ -153,7 +158,7 @@ void test(Class class)
 
       for (; v >= 0; v--)
 	{
-	  filename = [NSString stringWithFormat: @"%@.%i.data", class, v];
+	  filename = [NSString stringWithFormat: @"%@.%i.%i.data", class, arch, v];
 	  d = [NSData dataWithContentsOfFile: filename];
 	  if (!d)
 	    {

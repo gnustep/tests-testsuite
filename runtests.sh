@@ -55,15 +55,16 @@ do
       echo "at least report it at: https://savannah.gnu.org/bugs/?group=gnustep"
       echo
       echo "After the listing of any failures is a summary of counts of events:"
-      echo "COMPLETED:  The number of separate test files which were run."
-      echo "DASHED:     The number of hopes dashed ... tests which failed, but"
-      echo "            which were expected to perhaps fail (known bugs etc)."
-      echo "FAIL:       The number of individual tests failed"
-      echo "PASS:       The number of individual tests passed"
-      echo "UNRESOLVED: The number of unresolved tests ... tests which have"
-      echo "            been omitted because of an earlier failure etc."
-      echo "UNRESOLVED: The number of unsupported tests ... those for features"
-      echo "            which work on some platforms, but not on yours."
+      echo "COMPLETED:   The number of separate test files which were run."
+      echo "COMPILEFAIL: The number of separate test files which failed to run."
+      echo "DASHED:      The number of hopes dashed ... tests which failed, but"
+      echo "             which were expected to perhaps fail (known bugs etc)."
+      echo "FAIL:        The number of individual tests failed"
+      echo "PASS:        The number of individual tests passed"
+      echo "UNRESOLVED:  The number of unresolved tests ... tests which have"
+      echo "             been omitted because of an earlier failure etc."
+      echo "UNRESOLVED:  The number of unsupported tests ... those for features"
+      echo "             which work on some platforms, but not on yours."
       echo
       exit 0
       ;;
@@ -135,14 +136,14 @@ run_test_file ()
   cat $CWD/tests.tmp >> $CWD/tests.log
 
   # Extract the summary information and add it to the summary file.
-  grep "^\(PASS\|FAIL\|COMPLETED\|DASHED\|UNRESOLVED\|UNSUPPORTED\)" $CWD/tests.tmp > $CWD/tests.sum.tmp
+  grep "^\(PASS\|FAIL\|COMPILEFAIL\|COMPLETED\|DASHED\|UNRESOLVED\|UNSUPPORTED\)" $CWD/tests.tmp > $CWD/tests.sum.tmp
   cat $CWD/tests.sum.tmp >> $CWD/tests.sum
 
   # If there were failures or unresolved tests then report them...
-  if grep -L "^\(FAIL\|UNRESOLVED\)" $CWD/tests.sum.tmp > /dev/null; then
+  if grep -L "^\(COMPILEFAIL\|FAIL\|UNRESOLVED\)" $CWD/tests.sum.tmp > /dev/null; then
     echo
     echo $TESTFILE:
-    grep "^\(FAIL\|UNRESOLVED\)" $CWD/tests.sum.tmp
+    grep "^\(COMPILEFAIL\|FAIL\|UNRESOLVED\)" $CWD/tests.sum.tmp
   fi
 }
 
