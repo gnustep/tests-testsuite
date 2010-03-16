@@ -83,7 +83,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 @implementation NSValue (DecodingTests)
 + (NSObject *) createTestInstance
 {
-  return [[self valueWithSize: NSMakeSize(1.1, 1.2)] retain];
+  return [[self valueWithSize: NSMakeSize((float)1.1, (float)1.2)] retain];
 }
 @end
 
@@ -139,12 +139,7 @@ void test(Class class)
       NSArray	*decodedInstance;
       NSData	*d;
       NSString	*filename;
-      int       arch;
 
-      if (sizeof(CGFloat) == sizeof(float))
-        arch = 32;
-      else
-        arch = 64;
       instance = [class createTestInstance];
 
       d = [NSArchiver archivedDataWithRootObject:
@@ -158,7 +153,7 @@ void test(Class class)
 
       for (; v >= 0; v--)
 	{
-	  filename = [NSString stringWithFormat: @"%@.%i.%i.data", class, arch, v];
+	  filename = [NSString stringWithFormat: @"%@.%i.data", class, v];
 	  d = [NSData dataWithContentsOfFile: filename];
 	  if (!d)
 	    {
