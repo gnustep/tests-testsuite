@@ -50,10 +50,14 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 + (BOOL) verifyTestInstance: (NSObject *)instance
 		  ofVersion: (int)version
 {
-  
-  return instance != nil
-    && ([instance testEquality] == NO 
-      || [[self createTestInstance] isEqual: instance]);
+  id    o;
+
+  if (instance == nil) return NO;
+  o = [self createTestInstance];
+  if (YES == [o respondsToSelector: @selector(testEquality:)])
+    return [o testEquality: instance];
+  if (NO == [instance testEquality]) return YES;
+  return [o isEqual: instance];
 }
 
 - (BOOL) testEquality
@@ -83,7 +87,20 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 @implementation NSValue (DecodingTests)
 + (NSObject *) createTestInstance
 {
-  return [[self valueWithSize: NSMakeSize((float)1.1, (float)1.2)] retain];
+  return [[self valueWithSize: NSMakeSize(1.1, 1.2)] retain];
+}
+- (BOOL) testEquality: (id)other
+{
+  if (strcmp([self objCType], @encode(NSSize)) == 0)
+    {
+      NSSize        mSize = [self sizeValue];
+      NSSize        oSize = [other sizeValue];
+
+      if (EQ(mSize.height, oSize.height) && EQ(mSize.width, oSize.width))
+        return YES;
+      return NO;
+    }
+  return [self isEqual: other];
 }
 @end
 
