@@ -118,6 +118,10 @@ int main()
                      locale: myLocale] isEqualToString: @"2"],
        "%%e format has no leading space with single digit");
   
+  pass([[anotherDay descriptionWithCalendarFormat: @"%2e" 
+                     locale: myLocale] isEqualToString: @" 2"],
+       "%%2e format has leading space with single digit");
+  
   pass([[myBirthday descriptionWithCalendarFormat: @"%F" 
                      locale: myLocale] isEqualToString: @"000"],
        "%%F format works in description");
