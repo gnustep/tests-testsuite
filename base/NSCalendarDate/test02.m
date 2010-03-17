@@ -12,6 +12,7 @@ int main()
   NSMutableArray *tmpArray;
   NSMutableDictionary *myLocale;
   NSCalendarDate *myBirthday; 
+  NSCalendarDate *anotherDay; 
   myLocale = [NSMutableDictionary new];
   
   tmpArray = [NSMutableArray new];
@@ -77,6 +78,14 @@ int main()
 			second: 0
 		      timeZone: [NSTimeZone timeZoneWithName: @"MET"]];
    
+  anotherDay = [NSCalendarDate dateWithYear: 1974 
+  			 month: 1
+			   day: 2
+			  hour: 3
+			minute: 0
+			second: 0
+		      timeZone: [NSTimeZone timeZoneWithName: @"MET"]];
+   
   pass([[myBirthday descriptionWithCalendarFormat: @"%%" 
                      locale: myLocale] isEqualToString: @"%"],
        "%% format works in description");
@@ -104,6 +113,10 @@ int main()
   pass([[myBirthday descriptionWithCalendarFormat: @"%e" 
                      locale: myLocale] isEqualToString: @"20"],
        "%%e format works in description");
+  
+  pass([[anotherDay descriptionWithCalendarFormat: @"%e" 
+                     locale: myLocale] isEqualToString: @"2"],
+       "%%e format has no leading space with single digit");
   
   pass([[myBirthday descriptionWithCalendarFormat: @"%F" 
                      locale: myLocale] isEqualToString: @"000"],
