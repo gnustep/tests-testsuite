@@ -23,6 +23,11 @@ int main()
 {
   NSAutoreleasePool	*arp = [NSAutoreleasePool new];
   
+  /* We need the user defaults system set up to allow NSLog to query it
+   * when logging the deadlock message, but if the main thread is
+   * sleeping then it can't get set up. So we set it up before we 
+   * start the test.
+   */
   [NSUserDefaults standardUserDefaults];
   [NSThread detachNewThreadSelector: @selector(run)
 			   toTarget: [MyClass class]
