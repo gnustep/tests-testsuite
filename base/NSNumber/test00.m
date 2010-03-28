@@ -2,6 +2,7 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSPropertyList.h>
 #import <Foundation/NSValue.h>
+#import <Foundation/NSDecimalNumber.h>
 
 #include <stdlib.h>
 #include <limits.h>
@@ -94,6 +95,11 @@ int main()
 
   pass(5 == (NSUInteger)[[NSNumber numberWithUnsignedInteger: 5] pointerValue],
     "pointerValue works");
+
+  val1 = [NSDecimalNumber numberWithInt: 200];
+  pass(200 == [val1 intValue], "NSDecimalNumber numberWithInt: works");
+  val1 = [NSDecimalNumber decimalNumberWithString: @"200"];
+  pass(200 == [val1 intValue], "NSDecimalNumber intValue works");
 
   val1 = [[NSNumber alloc] initWithLongLong: LLONG_MIN];
   val2 = [[NSNumber alloc] initWithUnsignedLongLong:
