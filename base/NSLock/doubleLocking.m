@@ -29,7 +29,7 @@ int main()
   [task launch];
   [task waitUntilExit];
   data = [hdl availableData];
-  //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
+  NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   string = [NSString alloc];
   string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
   pass([string rangeOfString: @"deadlock"].length > 0,
@@ -44,7 +44,7 @@ int main()
   [task launch];
   [task waitUntilExit];
   data = [hdl availableData];
-  //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
+  NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   string = [NSString alloc];
   string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
   pass([string rangeOfString: @"deadlock"].length > 0,

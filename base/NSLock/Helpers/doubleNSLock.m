@@ -1,6 +1,7 @@
 #import <Foundation/NSLock.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSThread.h>
+#import <Foundation/NSUserDefaults.h>
 
 @interface	MyClass : NSObject
 + (void) run;
@@ -20,9 +21,13 @@
 
 int main()
 {
+  NSAutoreleasePool	*arp = [NSAutoreleasePool new];
+
+  [NSUserDefaults standardUserDefaults];
   [NSThread detachNewThreadSelector: @selector(run)
 			   toTarget: [MyClass class]
 			 withObject: nil];
   [NSThread sleepForTimeInterval: 1.0];
+  [arp release];
   return 0;
 }
