@@ -4,27 +4,15 @@
 
 int main()
 {
-  NSAutoreleasePool     *arp = [NSAutoreleasePool new];
-  NSMutableArray        *ma;
-  NSNumber              *testObj;
+  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  NSNumber *testObj;
 
   test_alloc_only(@"NSNumber");
   testObj = [NSNumber numberWithInt: 5];
   test_NSObject(@"NSNumber", [NSArray arrayWithObject:testObj]);
   test_NSCoding([NSArray arrayWithObject:testObj]);
-  ma = [NSMutableArray new];
-  [ma addObject: [NSNumber numberWithShort: -10]];
-  [ma addObject: [NSNumber numberWithInt: -1]];
-  [ma addObject: [NSNumber numberWithInt: 0]];
-  [ma addObject: [NSNumber numberWithLong: 10]];
-  [ma addObject: [NSNumber numberWithLongLong: 12]];
-  test_NSCopying(@"NSNumber", @"NSNumber", ma, YES, NO);
-  [ma removeAllObjects];
-  [ma addObject: [NSNumber numberWithShort: -13]];
-  [ma addObject: [NSNumber numberWithInt: 13]];
-  [ma addObject: [NSNumber numberWithInt: 0x7fffffff]];
-  test_NSCopying(@"NSNumber", @"NSNumber", ma, NO, YES);
-
+  test_NSCopying(@"NSNumber", @"NSNumber", 
+  		 [NSArray arrayWithObject:testObj],YES,NO);
   [arp release]; arp = nil;
   return 0;
 }
