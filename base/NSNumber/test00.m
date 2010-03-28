@@ -97,9 +97,39 @@ int main()
     "pointerValue works");
 
   val1 = [NSDecimalNumber numberWithInt: 200];
-  pass(200 == [val1 intValue], "NSDecimalNumber numberWithInt: works");
+  pass(200 == [val1 intValue],
+    "NSDecimalNumber numberWithInt: works");
   val1 = [NSDecimalNumber decimalNumberWithString: @"200"];
-  pass(200 == [val1 intValue], "NSDecimalNumber intValue works");
+  pass(200.0 == [val1 floatValue],
+    "NSDecimalNumber floatValue works");
+  pass(200.0 == [val1 doubleValue],
+    "NSDecimalNumber doubleValue works");
+  pass(YES == [val1 boolValue],
+    "NSDecimalNumber boolValue works");
+  pass((char)200 == [val1 charValue],
+    "NSDecimalNumber charValue works");
+  pass(200 == [val1 intValue],
+    "NSDecimalNumber intValue works");
+  pass(200 == [val1 integerValue],
+    "NSDecimalNumber integerValue works");
+  pass(200 == [val1 longValue],
+    "NSDecimalNumber longValue works");
+  pass(200 == [val1 longLongValue],
+    "NSDecimalNumber longLongValue works");
+  pass(200 == [val1 shortValue],
+    "NSDecimalNumber shortValue works");
+  pass(200 == [val1 unsignedCharValue],
+    "NSDecimalNumber unsignedCharValue works");
+  pass(200 == [val1 unsignedIntValue],
+    "NSDecimalNumber unsignedIntValue works");
+  pass(200 == [val1 unsignedIntegerValue],
+    "NSDecimalNumber unsignedIntegerValue works");
+  pass(200 == [val1 unsignedLongValue],
+    "NSDecimalNumber unsignedLongValue works");
+  pass(200 == [val1 unsignedLongLongValue],
+    "NSDecimalNumber unsignedLongLongValue works");
+  pass(200 == [val1 unsignedShortValue],
+    "NSDecimalNumber unsignedShortValue works");
 
   val1 = [[NSNumber alloc] initWithLongLong: LLONG_MIN];
   val2 = [[NSNumber alloc] initWithUnsignedLongLong:
