@@ -6,6 +6,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 
 #include <Foundation/NSArray.h>
 #include <Foundation/NSAutoreleasePool.h>
+#include <Foundation/NSString.h>
 #include <AppKit/NSPasteboard.h>
 
 static NSString *theString=@"QUUX!!1!!\"$!";

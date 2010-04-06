@@ -1,3 +1,9 @@
+2010-04-06  Fred Kiefer <FredKiefer@gmx.de>
+
+	* gui/NSPasteboard/lazy_copy.m,
+	* gui/NSBezierPath/windingCountAtPoint.m,
+	* gui/NSBezierPath/bounds.m: Add missing includes.
+
 2010-03-15  Adam Fedor <fedor@gnu.org>
 
 	* base/NSHTTPCookie: New tests

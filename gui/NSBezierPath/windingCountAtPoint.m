@@ -4,6 +4,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 
 #include "Testing.h"
 
+#include <Foundation/NSAutoreleasePool.h>
 #include <AppKit/NSBezierPath.h>
 
 #include <math.h>
