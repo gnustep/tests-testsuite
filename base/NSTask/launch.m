@@ -36,6 +36,20 @@ int main()
   NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   [task terminate];
 
+  task = [[NSTask alloc] init];
+  outPipe = [[NSPipe pipe] retain];
+  [task setLaunchPath: [helpers stringByAppendingPathComponent: @"testecho"]];
+  [task setArguments: [NSArray arrayWithObjects: @"Hello", @"there", nil]];
+  [task setStandardOutput: outPipe]; 
+  outHandle = [outPipe fileHandleForReading];
+
+  [task launch];
+  data = [outHandle readDataToEndOfFile];
+  pass([data length] > 0, "was able to read data from subtask");
+  NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
+  [task terminate];
+
+
   TEST_EXCEPTION([task launch];, @"NSInvalidArgumentException", YES,
     "raised exception on failed launch") 
   [outPipe release];
