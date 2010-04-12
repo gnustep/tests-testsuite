@@ -6,14 +6,6 @@
 
 #import "ObjectTesting.h" 
 
-#if	defined(__MINGW32__)
-#define	COMMAND		@"C:\\WINDOWS\\SYSTEM32\\MEM.EXE"
-#define ARGUMENTS	nil
-#else
-#define	COMMAND		@"/bin/ls"
-#define ARGUMENTS	@"-l",nil
-#endif
-
 int main()
 {
   NSTask *task;
@@ -33,15 +25,15 @@ int main()
 
   task = [[NSTask alloc] init];
   outPipe = [[NSPipe pipe] retain];
-  [task setLaunchPath: [NSString stringWithString: COMMAND]];
-  [task setArguments: [NSArray arrayWithObjects: ARGUMENTS]];
+  [task setLaunchPath: [helpers stringByAppendingPathComponent: @"testcat"]];
+  [task setArguments: [NSArray arrayWithObjects: nil]];
   [task setStandardOutput: outPipe]; 
   outHandle = [outPipe fileHandleForReading];
 
   [task launch];
   data = [outHandle readDataToEndOfFile];
   pass([data length] > 0, "was able to read data from subtask");
-  //NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
+  NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   [task terminate];
 
   TEST_EXCEPTION([task launch];, @"NSInvalidArgumentException", YES,
