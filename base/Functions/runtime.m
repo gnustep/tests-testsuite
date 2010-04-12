@@ -8,6 +8,10 @@
 #include        <string.h>
 #include        <objc/runtime.h>
 
+static int      c1count = 0;
+static int      c1initialize = 0;
+static int      c1load = 0;
+
 @interface      Class1 : NSObject
 {
   int   ivar1;
@@ -17,6 +21,15 @@
 @end
 
 @implementation Class1
++ (void) initialize
+{
+  if (self == [Class1 class])
+    c1initialize = ++c1count;
+}
++ (void) load
+{
+  c1load = ++c1count;
+}
 - (const char *) sel1
 {
   return "";
@@ -75,6 +88,9 @@ main(int argc, char *argv[])
   obj = [NSObject new];
   cls = [SubClass1 class];
 
+  pass(c1initialize != 0, "+initialize was called");
+  pass(c1load != 0, "+load was called");
+  pass(c1initialize > c1load, "+load occurs before +initialize");
   pass(strcmp(class_getName(Nil), "nil") == 0, "class name for Nil is nil");
   pass(strcmp(class_getName(cls), "SubClass1") == 0, "class name works");
   meta = object_getClass(cls);
