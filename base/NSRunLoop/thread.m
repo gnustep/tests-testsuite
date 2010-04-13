@@ -113,7 +113,6 @@
   else
     moreForInput = 'N';
   [timer invalidate];
-  [fh availableData];	// Empty buffer
   if (fabs([start timeIntervalSinceNow]) < 0.01)
     blockForInput = 'N';
   else
