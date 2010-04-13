@@ -21,6 +21,11 @@ int main()
   test_NSCopying(@"NSArray",@"NSMutableArray",testObjs,YES,NO);
   test_NSMutableCopying(@"NSArray",@"NSMutableArray",testObjs);
   
+  obj = [NSArray arrayWithContentsOfFile: @"test.plist"];
+  pass((obj != nil && [obj count] > 0),"can create an array from file");
+  pass([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
+  obj = [obj objectAtIndex: 0];
+  pass([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
   [arp release]; arp = nil;
   return 0;
 }
