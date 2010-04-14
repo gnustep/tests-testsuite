@@ -90,11 +90,11 @@ main(int argc, char *argv[])
   const char    *t0;
   const char    *t1;
 
-  t0 = "@:@";
+  t0 = "1@1:@";
   t1 = NSGetSizeAndAlignment(t0, &s, &a);
-  pass(t1 == &t0[1], "NSGetSizeAndAlignment() steps through id");
+  pass(t1 == &t0[2], "NSGetSizeAndAlignment() steps through id");
   t1 = NSGetSizeAndAlignment(t1, &s, &a);
-  pass(t1 == &t0[2], "NSGetSizeAndAlignment() steps through sel");
+  pass(t1 == &t0[4], "NSGetSizeAndAlignment() steps through sel");
 
   obj = [NSObject new];
   cls = [SubClass1 class];
