@@ -4,6 +4,7 @@
 #import <Foundation/NSDebug.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSString.h>
+#import <Foundation/NSObjCRuntime.h>
 
 #include        <string.h>
 #include        <objc/runtime.h>
@@ -84,6 +85,16 @@ main(int argc, char *argv[])
   Method        method;
   Method        *methods;
   Protocol      **protocols;
+  NSUInteger    s;
+  NSUInteger    a;
+  const char    *t0;
+  const char    *t1;
+
+  t0 = "@:@";
+  t1 = NSGetSizeAndAlignment(t0, &s, &a);
+  pass(t1 == &t0[1], "NSGetSizeAndAlignment() steps through id");
+  t1 = NSGetSizeAndAlignment(t1, &s, &a);
+  pass(t1 == &t0[2], "NSGetSizeAndAlignment() steps through sel");
 
   obj = [NSObject new];
   cls = [SubClass1 class];
