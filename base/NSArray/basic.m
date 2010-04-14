@@ -23,11 +23,12 @@ int main()
   
   obj = [NSArray arrayWithContentsOfFile: @"test.plist"];
   pass((obj != nil && [obj count] > 0),"can create an array from file");
-#if defined(GNUSTEP_BASE_LIBRARY)
+#if 1
   /* The apple foundation is arguably buggy in that it seems to create a
-   * mutable array ... we would copy that in base, but it would currently
-   * break jigs wrapping of initWithContentsIfFile: for java.
+   * mutable array ... we currently copy that
    */
+  pass([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
+#else
   pass([obj isKindOfClass: [NSMutableArray class]] == NO,"array immutable");
 #endif
   obj = [obj objectAtIndex: 0];
