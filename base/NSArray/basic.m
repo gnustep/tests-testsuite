@@ -28,6 +28,7 @@ int main()
    * mutable array ... we currently copy that
    */
   pass([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
+  TEST_EXCEPTION([obj addObject: @"x"],nil,NO,"can add to array");
 #else
   pass([obj isKindOfClass: [NSMutableArray class]] == NO,"array immutable");
 #endif
