@@ -216,6 +216,7 @@ int main()
 
   a = [NSMutableArray array];
 
+  [q setSuspended: YES];
   obj = [OpOrder new];
   [a addObject: obj];
   [obj release];
@@ -225,11 +226,13 @@ int main()
   obj = [OpOrder new];
   [a addObject: obj];
   [obj release];
+  [q setSuspended: NO];
   [q addOperations: a waitUntilFinished: YES];
   pass(([list isEqual: a]), "operations ran in order of addition");
 
   [list removeAllObjects];
   [a removeAllObjects];
+  [q setSuspended: YES];
   obj = [OpOrder new];
   [obj setQueuePriority: NSOperationQueuePriorityLow];
   [a addObject: obj];
@@ -241,6 +244,7 @@ int main()
   [obj setQueuePriority: NSOperationQueuePriorityHigh];
   [a addObject: obj];
   [obj release];
+  [q setSuspended: NO];
   [q addOperations: a waitUntilFinished: YES];
   pass(([list objectAtIndex: 0] == [a objectAtIndex: 2] && [list objectAtIndex: 2] == [a objectAtIndex: 0]), "operations ran in order of priority");
 
