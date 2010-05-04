@@ -1,3 +1,7 @@
+2010-05-04  David Ayers  <ayers@fsfe.org>
+
+	* base/NSString/test07.m: Adapt test to check for decimal rounding.
+	
 2010-04-06  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/NSPasteboard/lazy_copy.m,

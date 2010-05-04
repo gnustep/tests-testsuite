@@ -10,7 +10,7 @@ int main()
   pass([@"12" intValue] == 12, "simple intValue works");
   pass([@"-12" intValue] == -12, "negative intValue works");
   pass([@"+12" intValue] == 12, "positive intValue works");
-  pass([@"1.2" intValue] == 1, "intValue ignores trailing data");
+  pass([@"1.6" intValue] == 1, "intValue ignores trailing data");
   pass([@"                                12" intValue] == 12,
     "intValue with leading space works");
 
