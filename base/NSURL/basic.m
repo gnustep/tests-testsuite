@@ -80,9 +80,11 @@ int main()
   pass([[rel path]
     isEqual: @"/testing/aaa/bbb/ccc"],
     "Simple relative URL path works");
+#if     GNUSTEP
   pass([[rel fullPath]
     isEqual: @"/testing/aaa/bbb/ccc/"],
     "Simple relative URL fullPath works");
+#endif
 
   url = [NSURL URLWithString: @"http://here.and.there/testing/one.html"];
   rel = [NSURL URLWithString: @"/aaa/bbb/ccc/" relativeToURL: url];
@@ -92,39 +94,62 @@ int main()
   pass([[rel path]
     isEqual: @"/aaa/bbb/ccc"],
     "Root relative URL path works");
+#if     GNUSTEP
   pass([[rel fullPath]
     isEqual: @"/aaa/bbb/ccc/"],
     "Root relative URL fullPath works");
+#endif
 
   url = [NSURL URLWithString: @"/aaa/bbb/ccc/"];
   pass([[url absoluteString] isEqual: @"/aaa/bbb/ccc/"],
     "absolute root URL absoluteString works");
   pass([[url path] isEqual: @"/aaa/bbb/ccc"],
     "absolute root URL path works");
+#if     GNUSTEP
   pass([[url fullPath] isEqual: @"/aaa/bbb/ccc/"],
     "absolute root URL fullPath works");
+#endif
 
   url = [NSURL URLWithString: @"aaa/bbb/ccc/"];
   pass([[url absoluteString] isEqual: @"aaa/bbb/ccc/"],
     "absolute URL absoluteString works");
   pass([[url path] isEqual: @"aaa/bbb/ccc"],
     "absolute URL path works");
+#if     GNUSTEP
   pass([[url fullPath] isEqual: @"aaa/bbb/ccc/"],
     "absolute URL fullPath works");
+#endif
 
   url = [NSURL URLWithString: @"http://127.0.0.1/"];
   pass([[url absoluteString] isEqual: @"http://127.0.0.1/"],
     "absolute http URL absoluteString works");
   pass([[url path] isEqual: @"/"],
     "absolute http URL path works");
+#if     GNUSTEP
   pass([[url fullPath] isEqual: @"/"],
     "absolute http URL fullPath works");
+#endif
 
   url = [NSURL URLWithString: @"http://127.0.0.1/ hello"];
   pass(url == nil, "space is illegal");
 
   url = [NSURL URLWithString: @""];
-  pass(url == nil, "empty string gives nil URL");
+  pass([[url absoluteString] isEqual: @""],
+    "empty string gives empty URL");
+
+  url = [NSURL URLWithString: @"aaa%20ccc/"];
+  pass([[url absoluteString] isEqual: @"aaa%20ccc/"],
+    "absolute URL absoluteString works with encoded space");
+  pass([[url path] isEqual: @"aaa ccc"],
+    "absolute URL path decodes space");
+
+  url = [NSURL URLWithString: @"/?aaa%20ccc"];
+  pass([[url query] isEqual: @"aaa%20ccc"],
+    "escapes are not decoded in query");
+
+  url = [NSURL URLWithString: @"/#aaa%20ccc"];
+  pass([[url fragment] isEqual: @"aaa%20ccc"],
+    "escapes are not decoded in fragment");
 
   [arp release]; arp = nil;
   return 0;
