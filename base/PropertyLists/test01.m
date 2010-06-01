@@ -30,6 +30,22 @@ test_parse_unparse_xml(id object)
 }
 
 static BOOL
+test_parse_unparse_openstep(id object)
+{
+  NSPropertyListFormat	format;
+  NSData		*d;
+  id			u;
+
+  d = [NSPropertyListSerialization dataFromPropertyList: object
+    format: NSPropertyListOpenStepFormat errorDescription: 0];
+  u = [NSPropertyListSerialization propertyListFromData: d
+    mutabilityOption: NSPropertyListImmutable
+    format: &format
+    errorDescription: 0];
+  return [u isEqual: object];
+}
+
+static BOOL
 test_parse_unparse_binary(id object)
 {
   NSPropertyListFormat	format;
@@ -69,24 +85,37 @@ int main()
   int	i;
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < 5; i++)
     {
       switch (i)
         {
 	  case 0:
 	    func = test_parse_unparse;
+	    NSLog(@"test descriptions");
 	    break;
 	  case 1:
 	    func = test_parse_unparse_xml;
+	    NSLog(@"test XML");
 	    break;
 	  case 2:
 	    func = test_parse_unparse_binary;
+	    NSLog(@"test binary");
+	    break;
+	  case 3:
+	    func = test_parse_unparse_openstep;
+	    NSLog(@"test OpenStep");
+	    break;
+	  case 5:
+#if     defined(GNUSTEP_BASE_LIBRARY)
+	    func = test_parse_unparse_binary_old;
+	    NSLog(@"test GNUStep old binary");
+#else
+	    func = 0;
+#endif
 	    break;
 	}
 
-#if     defined(GNUSTEP_BASE_LIBRARY)
-      func = test_parse_unparse_binary_old;
-#endif
+      if (func == 0) continue;
 
       pass(func(@"ariosto"),
 	   "We can generate a property list from a string");
