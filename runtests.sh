@@ -23,7 +23,7 @@
 # A summary is written to tests.sum, a log to tests.log, and a brief
 # summary to stdout.
 # The log and summary from the previous testrun are renamed to
-# tests-old.log and tests-old.sum, available for comparison.
+# oldtests.log and oldtests.sum, available for comparison.
 
 if test -z "$GNUSTEP_MAKEFILES"; then
   GNUSTEP_MAKEFILES=`gnustep-config --variable=GNUSTEP_MAKEFILES 2>/dev/null`
@@ -151,11 +151,11 @@ run_test_file ()
 # Delete the old files.
 if [ -f tests.log ]
 then
-  mv tests.log tests-old.log
+  mv tests.log oldtests.log
 fi
 if [ -f tests.sum ]
 then
-  mv tests.sum tests-old.sum
+  mv tests.sum oldtests.sum
 fi
 
 if [ x"$TESTDIRS" = x ]
