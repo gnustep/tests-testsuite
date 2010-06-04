@@ -22,6 +22,8 @@ int main()
    			    [date1 timeIntervalSinceReferenceDate]];
   pass(date2 != nil && [date2 isKindOfClass:[NSDate class]],
        "+dateWithTimeIntervalSinceReferenceDate: works");
+  // Make sure we get day in correct zone.
+  [date2 setTimeZone: [NSTimeZone timeZoneForSecondsFromGMT: 0]];
   pass([date2 dayOfMonth] == 19, "+dateWithString makes correct day");
   pass([date2 monthOfYear] == 10, "+dateWithString makes correct month");
   pass([date2 yearOfCommonEra] == 2000, "+dateWithString makes correct year");
