@@ -67,8 +67,11 @@ int main()
   pass([obj remote] == rem, "Can set the remote object for the proxy");
   pass([obj length] == [rem length], "Can get the length of the remote object");
   pass(NO == [obj isEqual: rem], "proxy isEqual: to remote returns NO");
+  pass(NO == [rem isEqual: obj], "remote isEqual: to proxy returns NO");
   pass([obj isEqualToString: rem], "proxy isEqualToString: to remote");
+  pass([rem isEqualToString: obj], "remote isEqualToString: to proxy");
   pass([obj compare: rem] == NSOrderedSame, "proxy compare: remote");
+  pass([rem compare: obj] == NSOrderedSame, "remote compare: proxy");
   
   [arp release]; arp = nil;
   return 0;
