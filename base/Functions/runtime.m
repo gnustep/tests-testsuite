@@ -104,6 +104,16 @@ main(int argc, char *argv[])
   pass(c1initialize > c1load, "+load occurs before +initialize");
   pass(strcmp(class_getName(Nil), "nil") == 0, "class name for Nil is nil");
   pass(strcmp(class_getName(cls), "SubClass1") == 0, "class name works");
+  pass(YES == class_respondsToSelector(cls, @selector(sel2)),
+    "class_respondsToSelector() works for class method");
+  pass(YES == class_respondsToSelector(cls, @selector(sel1)),
+    "class_respondsToSelector() works for superclass method");
+  pass(NO == class_respondsToSelector(cls, @selector(rangeOfString:)),
+    "class_respondsToSelector() returns NO for unknown method");
+  pass(NO == class_respondsToSelector(cls, 0),
+    "class_respondsToSelector() returns NO for nul selector");
+  pass(NO == class_respondsToSelector(0, @selector(sel1)),
+    "class_respondsToSelector() returns NO for nul class");
   meta = object_getClass(cls);
   pass(class_isMetaClass(meta), "object_getClass() retrieves meta class");
   pass(strcmp(class_getName(meta), "SubClass1") == 0, "metaclass name works");
