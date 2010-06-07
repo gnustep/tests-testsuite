@@ -62,9 +62,13 @@ int main()
   pass([[NSProxy alloc] description] != nil, "%s implements -description",prefix);
   obj = [[MyProxy alloc] init];
   pass(obj != nil, "Can create a MyProxy instance");
+  pass([obj isEqual: obj], "proxy isEqual: to self without remote");
   [obj setRemote:rem];
   pass([obj remote] == rem, "Can set the remote object for the proxy");
   pass([obj length] == [rem length], "Can get the length of the remote object");
+  pass(NO == [obj isEqual: rem], "proxy isEqual: to remote returns NO");
+  pass([obj isEqualToString: rem], "proxy isEqualToString: to remote");
+  pass([obj compare: rem] == NSOrderedSame, "proxy compare: remote");
   
   [arp release]; arp = nil;
   return 0;
