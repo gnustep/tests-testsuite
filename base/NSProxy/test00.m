@@ -9,7 +9,6 @@
   id _remote;
 }
 
--(id)initWithRemote:(id)receiver;
 @end
 
 @implementation MyProxy
@@ -21,6 +20,20 @@
 - (void) dealloc
 {
   [_remote release];
+}
+- (NSUInteger) hash
+{
+  if (_remote)
+    return [_remote hash];
+  else
+    return [super hash];
+}
+- (BOOL) isEqual: (id)other
+{
+  if (_remote)
+    return [_remote isEqual: other];
+  else
+    return [super isEqual: other];
 }
 -(void) setRemote:(id)remote
 {
@@ -66,8 +79,8 @@ int main()
   [obj setRemote:rem];
   pass([obj remote] == rem, "Can set the remote object for the proxy");
   pass([obj length] == [rem length], "Can get the length of the remote object");
-  pass(NO == [obj isEqual: rem], "proxy isEqual: to remote returns NO");
-  pass(NO == [rem isEqual: obj], "remote isEqual: to proxy returns NO");
+  pass([obj isEqual: rem], "proxy isEqual: to remote");
+  pass([rem isEqual: obj], "remote isEqual: to proxy");
   pass([obj isEqualToString: rem], "proxy isEqualToString: to remote");
   pass([rem isEqualToString: obj], "remote isEqualToString: to proxy");
   pass([obj compare: rem] == NSOrderedSame, "proxy compare: remote");
