@@ -136,6 +136,10 @@ int main()
   url = [NSURL URLWithString: @""];
   pass([[url absoluteString] isEqual: @""],
     "empty string gives empty URL");
+  pass([url path] == nil,
+    "empty string gives nil path");
+  pass([url scheme] == nil,
+    "empty string gives nil scheme");
 
   url = [NSURL URLWithString: @"aaa%20ccc/"];
   pass([[url absoluteString] isEqual: @"aaa%20ccc/"],
