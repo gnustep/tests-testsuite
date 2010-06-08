@@ -6,6 +6,7 @@
 #import <Foundation/NSData.h>
 #import <Foundation/NSPropertyList.h>
 #import <Foundation/NSProcessInfo.h>
+#import <Foundation/NSValue.h>
 
 static BOOL
 test_parse_unparse(id object)
@@ -213,6 +214,40 @@ int main()
 	[objectB_A_A addObject: @"8"];
 	[objectB_A_A addObject: @"9"];
 	[objectB_A_A addObject: @"0"];
+        if (func == test_parse_unparse_binary
+          || func == test_parse_unparse_xml)
+	  {
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 1]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 2]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 3]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 4]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 5]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 6]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 7]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 8]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 9]];
+	    [objectB_A_A addObject: [NSNumber numberWithInteger: 0]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 1]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 2]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 3]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 4]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 5]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 6]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 7]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 8]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 9]];
+	    [objectB_A_A addObject: [NSNumber numberWithShort: 0]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 1]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 2]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 3]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 4]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 5]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 6]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 7]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 8]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 9]];
+	    [objectB_A_A addObject: [NSNumber numberWithFloat: 0]];
+	  }
 	[objectB_A setObject: objectB_A_A forKey: @"numeri"];
 
 	objectB_A_B = [NSMutableArray array];
