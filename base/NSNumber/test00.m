@@ -22,6 +22,7 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSNumber *val1, *val2, *val3;
   NSArray *a;
+  id    o;
   double d;
 
   val1 = [NSNumber numberWithBool:YES];
@@ -160,6 +161,9 @@ int main()
   pass((d = [[NSPropertyListSerialization propertyListFromData: [NSPropertyListSerialization dataFromPropertyList: [NSNumber numberWithDouble: -1.2] format: NSPropertyListGNUstepFormat errorDescription: 0] mutabilityOption: NSPropertyListImmutable format: 0 errorDescription: 0] doubleValue]) > -1.21 && d < -1.19,
     "store negative double in property list works");
 #endif
+
+  o = [NSDecimalNumber numberWithDouble: 66.66];   
+  pass([o isKindOfClass: [NSDecimalNumber class]], "+numberWith... subclass");
 
   [arp release]; arp = nil;
   return 0;
