@@ -36,34 +36,34 @@ int main()
   GSMimeDocument *doc;
   GSMimeDocument *idoc;
 
-  data = [NSData dataWithContentsOfFile:@"mime1.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime1.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[[[idoc content] objectAtIndex:0] content] isEqual: @"a"]),
        "can parse one char base64 mime1.dat incrementally");
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
   pass(([[[[doc content] objectAtIndex:0] content] isEqual: @"a"]),
        "can parse one char base64 mime1.dat in one go");
   pass([idoc isEqual: doc], "mime1.dat documents are the same");
   
-  data = [NSData dataWithContentsOfFile:@"mime2.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime2.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[idoc content] isEqual: @"aa"]),
     "can parse two char base64 mime2.dat incrementally");
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
   pass(([[doc content] isEqual: @"aa"]),
     "can parse two char base64 mime2.dat in one go");
   pass([idoc isEqual: doc], "mime2.dat documents are the same");
  
-  data = [NSData dataWithContentsOfFile:@"mime3.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime3.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[idoc content] isEqual: @"aaa"]),
     "can parse three char base64 mime3.dat incrementally");
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
   pass(([[doc content] isEqual: @"aaa"]),
     "can parse three char base64 mime3.dat in one go");
   pass([idoc isEqual: doc], "mime3.dat documents are the same");
    
-  data = [NSData dataWithContentsOfFile:@"mime4.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime4.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[[[idoc content] objectAtIndex:0] content] isEqual: @"hello\n"]
     && [[[[idoc content] objectAtIndex:1] content] isEqual: @"there\n"]),
@@ -75,7 +75,7 @@ int main()
   pass(([[[[idoc content] objectAtIndex:0] contentSubtype] isEqual: @"plain"]),
    "can extract content sub type from mime4.dat (incrementally parsed)");
     
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
   pass(([[[[doc content] objectAtIndex:0] content] isEqual: @"hello\n"]
     && [[[[doc content] objectAtIndex:1] content] isEqual: @"there\n"]),
     "can parse multi-part text mime4.dat in one go");
@@ -87,37 +87,47 @@ int main()
    "can extract content sub type from mime4.dat (parsed in one go)");
   pass([idoc isEqual: doc], "mime4.dat documents are the same");
     
-  data = [NSData dataWithContentsOfFile:@"mime5.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime5.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[idoc contentSubtype] isEqual: @"xml"]),
    "can parse http document mime5.dat incrementally"); 
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
   pass(([[doc contentSubtype] isEqual: @"xml"]),
    "can parse http document mime5.dat in one go"); 
   pass([idoc isEqual: doc], "mime5.dat documents are the same");
   
-  data = [NSData dataWithContentsOfFile:@"mime6.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime6.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[idoc content] count] == 3),
     "can parse multipart mixed mime6.dat incrementally"); 
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
   pass(([[doc content] count] == 3),
     "can parse multipart mixed mime6.dat in one go"); 
   pass([idoc isEqual: doc], "mime6.dat documents are the same");
  
-  data = [NSData dataWithContentsOfFile:@"mime7.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime7.dat"];
   pass(([[[[doc content] objectAtIndex:1] content] isEqual: data]),
    "mime6.dat binary data part matches mime7.dat");
 
-  data = [NSData dataWithContentsOfFile:@"mime9.dat"];
+  data = [NSData dataWithContentsOfFile: @"mime9.dat"];
   idoc = parse([[GSMimeParser new] autorelease], data);
   pass(([[[idoc headerNamed: @"Long"] value] isEqual: @"first second third"]),
    "mime9.dat folded header unfolds correctly incrementally");
-  doc = [GSMimeParser documentFromData:data];
+  doc = [GSMimeParser documentFromData: data];
 //NSLog(@"'%@'", [[doc headerNamed: @"Long"] value]);
   pass(([[[doc headerNamed: @"Long"] value] isEqual: @"first second third"]),
    "mime9.dat folded header unfolds correctly in one go");
   pass([idoc isEqual: doc], "mime9.dat documents are the same");
+
+  /* Test a document containing nested multipart documents
+   */
+  data = [NSData dataWithContentsOfFile: @"mime10.dat"];
+  idoc = parse([[GSMimeParser new] autorelease], data);
+  doc = [GSMimeParser documentFromData: data];
+  pass([idoc isEqual: doc], "mime10.dat documents are the same");
+  data = [idoc rawMimeData];
+  doc = [GSMimeParser documentFromData: data];
+  pass([idoc isEqual: doc], "rawMimeData reproduces docuement");
 
   
   [arp release]; arp = nil;
