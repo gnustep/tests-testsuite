@@ -256,9 +256,18 @@ int main()
 { 
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   
+  TEST_EXCEPTION([NSString stringWithUTF8String: 0],
+    NSInvalidArgumentException, YES, 
+    "stringWithUTF8String raises for NULL");
+
+  TEST_EXCEPTION([NSString stringWithCString: 0
+    encoding: NSASCIIStringEncoding],
+    NSInvalidArgumentException, YES, 
+    "initWithCString raises for NULL");
+
   TEST_EXCEPTION([@"Hello" substringWithRange:NSMakeRange(6,4)];,
-  		 NSRangeException, YES, 
-		 "NSString extracting substring with range beyond end of string");
+    NSRangeException, YES, 
+    "NSString extracting substring with range beyond end of string");
   
   TEST_EXCEPTION([@"Hello" compare: @"Hello" 
                           options:NSLiteralSearch 
