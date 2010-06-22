@@ -163,7 +163,8 @@ void test(Class class)
 	[NSArray arrayWithObjects: instance, sentinel, nil]];
       decodedInstance = [NSUnarchiver unarchiveObjectWithData: d];
 
-      assert([sentinel isEqual: [decodedInstance objectAtIndex: 1]]);
+      NSCAssert([sentinel isEqual: [decodedInstance objectAtIndex: 1]],
+	NSInternalInconsistencyException);
 
       pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
 	ofVersion: v], "decoding current version of class %s", POBJECT(class));
@@ -188,7 +189,8 @@ void test(Class class)
 	    }
 
 	  decodedInstance = [NSUnarchiver unarchiveObjectWithData: d];
-	  assert([sentinel isEqual: [decodedInstance objectAtIndex: 1]]);
+	  NSCAssert([sentinel isEqual: [decodedInstance objectAtIndex: 1]],
+	    NSInternalInconsistencyException);
 	  pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
 	    ofVersion: v], "decoding version %i of class %s",
 	    v, POBJECT(class));
