@@ -26,12 +26,12 @@ int main()
   data2 = [NSMutableData new];
   archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: data2];
   [archiver setOutputFormat: NSPropertyListXMLFormat_v1_0];
-  [archiver encodeRootObject: u];
+  [archiver encodeObject: u forKey: @"root"];
   [archiver finishEncoding];
   NSLog(@"%*.*s", [data2 length], [data2 length], [data2 bytes]);
   u = [NSKeyedUnarchiver unarchiveObjectWithData: data2];
-  NSLog(@"'%@' '%@'", u, [u absoluteString]);
-  pass([[u absoluteString] isEqual: @"http://www.w3.org."], "Can archive and restore a URL");
+  pass([[u absoluteString] isEqual: @"http://www.w3.org/"],
+    "Can archive and restore a URL");
   
   [archiver release];
   [data2 release];
