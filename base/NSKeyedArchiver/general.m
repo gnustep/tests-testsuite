@@ -4,6 +4,7 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSData.h>
 #import <Foundation/NSFileManager.h>
+#import <Foundation/NSURL.h>
 #import <Foundation/NSValue.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
@@ -17,8 +18,24 @@ int main()
   NSData   *data1;
   NSMutableData *data2;
   NSArray *a;
+  NSURL *u;
   NSKeyedArchiver *archiver = nil;
   NSKeyedUnarchiver *unarchiver = nil;
+
+  u = [NSURL URLWithString: @"http://www.w3.org/"];
+  data2 = [NSMutableData new];
+  archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: data2];
+  [archiver setOutputFormat: NSPropertyListXMLFormat_v1_0];
+  [archiver encodeRootObject: u];
+  [archiver finishEncoding];
+  NSLog(@"%*.*s", [data2 length], [data2 length], [data2 bytes]);
+  u = [NSKeyedUnarchiver unarchiveObjectWithData: data2];
+  NSLog(@"'%@' '%@'", u, [u absoluteString]);
+  pass([[u absoluteString] isEqual: @"http://www.w3.org."], "Can archive and restore a URL");
+  
+  [archiver release];
+  [data2 release];
+
 
   TEST_EXCEPTION(val1 = [NSString stringWithCString:"Archiver.dat"];
 		 val2 = [NSString stringWithCString:"A Goodbye"];
