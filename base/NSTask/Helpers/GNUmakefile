@@ -1,7 +1,10 @@
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
-TOOL_NAME = processgroup testcat testecho
+TOOL_NAME = NSZombie processgroup testcat testecho
+
+NSZombie_OBJC_FILES = NSZombie.m
+NSZombie_NEEDS_GUI = NO
 
 processgroup_OBJC_FILES = processgroup.m
 processgroup_NEEDS_GUI = NO
