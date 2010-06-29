@@ -155,6 +155,14 @@ int main()
   pass([[url fragment] isEqual: @"aaa%20ccc"],
     "escapes are not decoded in fragment");
 
+  url = [NSURL URLWithString: @"/tmp/xxx"];
+  pass([[url path] isEqual: @"/tmp/xxx"] && [url scheme] == nil,
+    "a simple path becomes a simple URL");
+
+  url = [NSURL URLWithString: @"filename"];
+  pass([[url path] isEqual: @"filename"] && [url scheme] == nil,
+    "a simple file name becomes a simple URL");
+
   [arp release]; arp = nil;
   return 0;
 }
