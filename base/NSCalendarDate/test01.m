@@ -40,6 +40,14 @@ int main()
     && time5 < time6 && time6 < time7 && time7 < time8 && time8 < time9),
     "+dateWithString:calendarFormat: works if no time zone is specified");
   
+  date1 = [NSCalendarDate dateWithString: @"Nov 29 06 12:00am" 
+                          calendarFormat: @"%b %d %y %H:%M%p"]; 
+  pass(date1 != nil && [date1 hourOfDay] == 0, "12:00am is midnight");
+
+  date1 = [NSCalendarDate dateWithString: @"Nov 29 06 12:00pm" 
+                          calendarFormat: @"%b %d %y %H:%M%p"]; 
+  pass(date1 != nil && [date1 hourOfDay] == 12, "12:00pm is noon");
+
   date1 = [NSCalendarDate dateWithString: @"Nov 29 06 01:25:38" 
                           calendarFormat: @"%b %d %y %H:%M:%S"]; 
   pass([date1 timeIntervalSinceReferenceDate] + 1 == [[date1 addTimeInterval:1]
