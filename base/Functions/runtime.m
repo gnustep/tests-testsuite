@@ -205,6 +205,19 @@ main(int argc, char *argv[])
   pass(ivar != 0, "iv4 exists");
   pass(ivar_getOffset(ivar) == 120, "iv4 offset is 120");
 
+  /* NSObjCRuntime function tests.
+   */
+  sel = NSSelectorFromString(nil);
+  pass(sel == 0,
+    "NSSelectorFromString() returns 0 for nil string");
+  pass(NSStringFromSelector(0) == nil,
+    "NSStringFromSelector() returns nil for null selector");
+  sel = NSSelectorFromString(@"xxxyyy_odd_name_xxxyyy");
+  pass(sel != 0,
+    "NSSelectorFromString() creates for non-existent selector");
+  pass([NSStringFromSelector(sel) isEqual: @"xxxyyy_odd_name_xxxyyy"],
+    "NSStringFromSelector() works for existing selector");
+
   exit(0);
 }
 
