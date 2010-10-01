@@ -118,6 +118,7 @@ static NSMutableArray *list = nil;
 int main()
 {
   ThreadCounter         *cnt;
+  id			old;
   id                    obj;
   NSMutableArray        *a;
   NSOperationQueue      *q;
@@ -233,20 +234,22 @@ int main()
   [list removeAllObjects];
   [a removeAllObjects];
   [q setSuspended: YES];
+  old = [OpOrder new];
+  [a addObject: old];
+  [old release];
+  [old setQueuePriority: NSOperationQueuePriorityLow];
   obj = [OpOrder new];
-  [obj setQueuePriority: NSOperationQueuePriorityLow];
   [a addObject: obj];
   [obj release];
+  [old addDependency: obj];
   obj = [OpOrder new];
   [a addObject: obj];
   [obj release];
-  obj = [OpOrder new];
   [obj setQueuePriority: NSOperationQueuePriorityHigh];
-  [a addObject: obj];
-  [obj release];
+  [obj addDependency: old];
   [q setSuspended: NO];
   [q addOperations: a waitUntilFinished: YES];
-  pass(([list objectAtIndex: 0] == [a objectAtIndex: 2] && [list objectAtIndex: 2] == [a objectAtIndex: 0]), "operations ran in order of priority");
+  pass(([list objectAtIndex: 0] == [a objectAtIndex: 1] && [list objectAtIndex: 1] == [a objectAtIndex: 0]), "operations ran in order of dependency");
 
 
   [arp release]; arp = nil;
