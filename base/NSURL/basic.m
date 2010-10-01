@@ -163,6 +163,18 @@ int main()
   pass([[url path] isEqual: @"filename"] && [url scheme] == nil,
     "a simple file name becomes a simple URL");
 
+  url = [NSURL URLWithString: @"file://localhost/System/Library/"
+    @"Documentation/Developer/Gui/Reference/index.html"]; 
+
+  str = @"NSApplication.html"; 
+  rel = [NSURL URLWithString: str relativeToURL: url]; 
+// NSLog(@"with link %@, obtained URL: %@ String: %@", str, rel, [rel absoluteString]); 
+  pass([[rel absoluteString] isEqual: @"file://localhost/System/Library/Documentation/Developer/Gui/Reference/NSApplication.html"], "Adding a relative file URL works");
+  str = @"NSApplication.html#class$NSApplication"; 
+  rel = [NSURL URLWithString: str relativeToURL: url]; 
+//NSLog(@"with link %@, obtained URL: %@ String: %@", str, rel, [rel absoluteString]); 
+  pass([[rel absoluteString] isEqual: @"file://localhost/System/Library/Documentation/Developer/Gui/Reference/NSApplication.html#class$NSApplication"], "Adding relative file URL with fragment works");
+
   [arp release]; arp = nil;
   return 0;
 }
