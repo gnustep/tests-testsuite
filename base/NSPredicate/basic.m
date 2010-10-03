@@ -94,34 +94,37 @@ testAttregate(NSDictionary *dict)
 {
   NSPredicate *p;
 
-	p = [NSPredicate predicateWithFormat: @"%@ IN %K", @"Kid1", @"Record1.Children"];
-	pass([p evaluateWithObject: dict], "%%@ IN %%K");
-	p = [NSPredicate predicateWithFormat: @"Any %K == %@", @"Record2.Children", @"Girl1"];
-	pass([p evaluateWithObject: dict], "Any %%K == %%@");
+  p = [NSPredicate predicateWithFormat: @"%@ IN %K", @"Kid1", @"Record1.Children"];
+  pass([p evaluateWithObject: dict], "%%@ IN %%K");
+  p = [NSPredicate predicateWithFormat: @"Any %K == %@", @"Record2.Children", @"Girl1"];
+  pass([p evaluateWithObject: dict], "Any %%K == %%@");
 }
 
 int main()
 {
-	NSMutableDictionary *dict;
-	NSDictionary *d;
+  NSArray *filtered;
+  NSArray *pitches;
+  NSArray *expect;
+  NSMutableDictionary *dict;
+  NSDictionary *d;
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
   dict = [[NSMutableDictionary alloc] init];
-	[dict setObject: @"A Title" forKey: @"title"];
+  [dict setObject: @"A Title" forKey: @"title"];
 
   d = [NSDictionary dictionaryWithObjectsAndKeys:
-			@"John", @"Name",
-			[NSNumber numberWithInt: 34], @"Age",
-			[NSArray arrayWithObjects: @"Kid1", @"Kid2", nil], @"Children",
-			nil];
-	[dict setObject: d forKey: @"Record1"];
+    @"John", @"Name",
+    [NSNumber numberWithInt: 34], @"Age",
+    [NSArray arrayWithObjects: @"Kid1", @"Kid2", nil], @"Children",
+    nil];
+  [dict setObject: d forKey: @"Record1"];
 
-	d = [NSDictionary dictionaryWithObjectsAndKeys:
-			@"Mary", @"Name",
-			[NSNumber numberWithInt: 30], @"Age",
-			[NSArray arrayWithObjects: @"Kid1", @"Girl1", nil], @"Children",
-			nil];
-	[dict setObject: d forKey: @"Record2"];
+  d = [NSDictionary dictionaryWithObjectsAndKeys:
+    @"Mary", @"Name",
+    [NSNumber numberWithInt: 30], @"Age",
+    [NSArray arrayWithObjects: @"Kid1", @"Girl1", nil], @"Children",
+    nil];
+  [dict setObject: d forKey: @"Record2"];
 
   testKVC(dict);
   testContains(dict);
@@ -129,8 +132,24 @@ int main()
   testInteger(dict);
   testFloat(dict);
   testAttregate(dict);
-
   [dict release];
+
+  pitches = [NSArray arrayWithObjects:
+    @"Do", @"Re", @"Mi", @"Fa", @"So", @"La", nil];
+  expect = [NSArray arrayWithObjects: @"Do", nil];
+
+  filtered = [pitches filteredArrayUsingPredicate:
+    [NSPredicate predicateWithFormat: @"SELF == 'Do'"]];  
+  pass([filtered isEqual: expect], "filter with SELF");
+
+  filtered = [pitches filteredArrayUsingPredicate:
+    [NSPredicate predicateWithFormat: @"description == 'Do'"]];
+  pass([filtered isEqual: expect], "filter with description");
+
+  filtered = [pitches filteredArrayUsingPredicate:
+    [NSPredicate predicateWithFormat: @"SELF == '%@'", @"Do"]];
+  pass([filtered isEqual: [NSArray array]], "filter with format");
+
   [arp release]; arp = nil;
   return 0;
 }
