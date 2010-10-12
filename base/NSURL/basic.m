@@ -175,6 +175,28 @@ int main()
 //NSLog(@"with link %@, obtained URL: %@ String: %@", str, rel, [rel absoluteString]); 
   pass([[rel absoluteString] isEqual: @"file://localhost/System/Library/Documentation/Developer/Gui/Reference/NSApplication.html#class$NSApplication"], "Adding relative file URL with fragment works");
 
+  /* Test fileUrlWithPath: for messy/complex path
+   */
+  url = [NSURL fileURLWithPath: @"/this#is a Path with % < > ?"];
+  //NSLog(@"%@", [url path]);
+  pass([[url path] isEqual: @"/this#is a Path with % < > ?"], "complex -path");
+  //NSLog(@"%@", [url fragment]);
+  pass([url fragment] == nil, "complex -fragment");
+  //NSLog(@"%@", [url parameterString]);
+  pass([url parameterString] == nil, "complex -parameterString");
+  //NSLog(@"%@", [url query]);
+  pass([url query] == nil, "complex -query");
+  //NSLog(@"%@", [url absoluteString]);
+  pass([[url absoluteString] isEqual:
+    @"file://localhost/this%23is%20a%20Path%20with%20%25%20%3C%20%3E%20%3F"],
+    "complex -absoluteString");
+  pass([[url relativeString] isEqual:
+    @"file://localhost/this%23is%20a%20Path%20with%20%25%20%3C%20%3E%20%3F"],
+    "complex -relativeString");
+  pass([[url description] isEqual:
+    @"file://localhost/this%23is%20a%20Path%20with%20%25%20%3C%20%3E%20%3F"],
+    "complex -description");
+
   [arp release]; arp = nil;
   return 0;
 }
