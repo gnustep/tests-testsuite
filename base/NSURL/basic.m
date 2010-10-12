@@ -177,9 +177,10 @@ int main()
 
   /* Test fileUrlWithPath: for messy/complex path
    */
-  url = [NSURL fileURLWithPath: @"/this#is a Path with % < > ?"];
+  url = [NSURL fileURLWithPath: @"/this#is a Path with % + = & < > ?"];
   //NSLog(@"%@", [url path]);
-  pass([[url path] isEqual: @"/this#is a Path with % < > ?"], "complex -path");
+  pass([[url path] isEqual: @"/this#is a Path with % + = & < > ?"],
+    "complex -path");
   //NSLog(@"%@", [url fragment]);
   pass([url fragment] == nil, "complex -fragment");
   //NSLog(@"%@", [url parameterString]);
@@ -187,15 +188,9 @@ int main()
   //NSLog(@"%@", [url query]);
   pass([url query] == nil, "complex -query");
   //NSLog(@"%@", [url absoluteString]);
-  pass([[url absoluteString] isEqual:
-    @"file://localhost/this%23is%20a%20Path%20with%20%25%20%3C%20%3E%20%3F"],
-    "complex -absoluteString");
-  pass([[url relativeString] isEqual:
-    @"file://localhost/this%23is%20a%20Path%20with%20%25%20%3C%20%3E%20%3F"],
-    "complex -relativeString");
-  pass([[url description] isEqual:
-    @"file://localhost/this%23is%20a%20Path%20with%20%25%20%3C%20%3E%20%3F"],
-    "complex -description");
+  pass([[url absoluteString] isEqual: @"file://localhost/this%23is%20a%20Path%20with%20%25%20+%20=%20&%20%3C%20%3E%20%3F"], "complex -absoluteString");
+  pass([[url relativeString] isEqual: @"file://localhost/this%23is%20a%20Path%20with%20%25%20+%20=%20&%20%3C%20%3E%20%3F"], "complex -relativeString");
+  pass([[url description] isEqual: @"file://localhost/this%23is%20a%20Path%20with%20%25%20+%20=%20&%20%3C%20%3E%20%3F"], "complex -description");
 
   [arp release]; arp = nil;
   return 0;
