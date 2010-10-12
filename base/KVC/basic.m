@@ -5,6 +5,11 @@
 #import <Foundation/NSValue.h>
 #import <Foundation/NSDecimalNumber.h>
 
+typedef struct {
+  int	i;
+  char	c;
+} myStruct;
+
 @interface TestClass : NSObject
 {
   NSString *name;
@@ -14,16 +19,28 @@
   int num3;
   int num4;
   TestClass *child;
+  myStruct s;
 }
 
 - (void) setNum3:(int) num;
 - (int) num3;
 - (void) _setNum4:(int) num;
 - (int) _num4;
+- (char) sc;
+- (int) si;
+- (myStruct) sv;
+- (void) setSv: (myStruct)v;
 
 @end
 
 @implementation TestClass
+
+- (id) init
+{
+  s.i = 1;
+  s.c = 2;
+  return self;
+}
 
 - (void) setNum3:(int) num
 {
@@ -45,6 +62,26 @@
 - (int) _num4
 {
   return num4;
+}
+
+- (char) sc
+{
+  return s.c;
+}
+
+- (int) si
+{
+  return s.i;
+}
+
+- (myStruct) sv
+{
+  return s;
+}
+
+- (void) setSv: (myStruct)v
+{
+  s = v;
 }
 @end
 
@@ -75,6 +112,7 @@
   if ([key isEqualToString: @"Lücke"]) {
     return string;
   }
+  return nil;
 }
 
 @end
@@ -106,6 +144,7 @@
   if ([key isEqualToString: @"Lücke"]) {
     return string;
   }
+  return nil;
 }
 
 @end
@@ -116,6 +155,8 @@ int main()
   NSMutableString *m = [NSMutableString string];
   TestClass *tester = [[[TestClass alloc] init] autorelease];
   NSUInteger rc;
+  NSValue *v;
+  myStruct s;
 
   [m appendString: @"testing"];
 
@@ -129,59 +170,87 @@ int main()
 
   [tester setValue: @"tester" forKey: @"name"];
   pass([[tester valueForKey: @"name"] isEqualToString: @"tester"],
-      "KVC works with strings") ;
+      "KVC works with strings");
 
   rc = [m retainCount];
   [tester setValue: m forKey: @"name"];
   pass([tester valueForKey: @"name"] == m,
-      "KVC works with mutable string") ;
+      "KVC works with mutable string");
   pass(rc + 1 == [m retainCount], "KVC retains object values");
 
   [tester setValue:n forKey: @"num1"];
   pass([[tester valueForKey: @"num1"] isEqualToNumber:n],
-      "KVC works with ints") ;
+      "KVC works with ints");
+
   [tester setValue:n2 forKey: @"num2"];
   pass([[tester valueForKey: @"num2"] isEqualToNumber:n2],
-      "KVC works with doubles") ;
+      "KVC works with doubles");
 
   [tester setValue:n forKey: @"num3"];
   pass([[tester valueForKey: @"num3"] isEqualToNumber:adjustedN],
-      "KVC works with setKey:") ;
+      "KVC works with setKey:");
+
   [tester setValue:n forKey: @"num4"];
   pass([[tester valueForKey: @"num4"] isEqualToNumber:adjustedN],
-      "KVC works with _setKey:") ;
+      "KVC works with _setKey:");
+
+  v = [tester valueForKey: @"s"];
+  s.i = 0;
+  s.c = 0;
+  [v getValue: &s];
+  pass(s.i == 1 && s.c == 2, "KVC valueForKey: works for a struct (direct)");
+
+  v = [tester valueForKey: @"sv"];
+  s.i = 0;
+  s.c = 0;
+  [v getValue: &s];
+  pass(s.i == 1 && s.c == 2, "KVC valueForKey: works for a struct (getter)");
+
+  s.i = 3;
+  s.c = 4;
+  v = [NSValue valueWithBytes: &s objCType: @encode(myStruct)];
+  [tester setValue: v forKey: @"s"];
+  pass([tester si] == s.i && [tester sc] == s.c,
+    "KVC setValue:forKey: works for a struct (direct)");
+
+  s.i = 5;
+  s.c = 6;
+  v = [NSValue valueWithBytes: &s objCType: @encode(myStruct)];
+  [tester setValue: v forKey: @"sv"];
+  pass([tester si] == s.i && [tester sc] == s.c,
+    "KVC setValue:forKey: works for a struct (setter)");
 
   [undefinedKey setValue: @"GNUstep" forKey: @"Lücke"];
   pass([[undefinedKey valueForKey: @"Lücke"] isEqualToString: @"GNUstep"],
-      "KVC works with undefined keys") ;
+      "KVC works with undefined keys");
 
   [undefinedKey2 setValue: @"GNUstep" forKey: @"Lücke"];
   pass([[undefinedKey2 valueForKey: @"Lücke"] isEqualToString: @"GNUstep"],
-      "KVC works with undefined keys (using deprecated methods) ") ;
+      "KVC works with undefined keys (using deprecated methods) ");
 
   TEST_EXCEPTION(
     [tester setValue: @"" forKey: @"nonexistent"],
     NSUndefinedKeyException, YES,
-    "KVC properly throws @\"NSUnknownKeyException\"") ;
+    "KVC properly throws @\"NSUnknownKeyException\"");
 
   TEST_EXCEPTION(
     [tester setValue: @"" forKey: @"nonexistent"],
     NSUndefinedKeyException, YES,
-    "KVC properly throws NSUndefinedKeyException") ;
+    "KVC properly throws NSUndefinedKeyException");
 
   TEST_EXCEPTION(
     [tester setValue: @"" forKeyPath: @"child.nonexistent"],
     @"NSUnknownKeyException", YES,
-    "KVC properly throws @\"NSUnknownKeyException\" with key paths") ;
+    "KVC properly throws @\"NSUnknownKeyException\" with key paths");
 
   TEST_EXCEPTION(
     [tester setValue: @"" forKeyPath: @"child.nonexistent"],
     NSUndefinedKeyException, YES,
-    "KVC properly throws NSUndefinedKeyException with key paths") ;
+    "KVC properly throws NSUndefinedKeyException with key paths");
 
-  pass(sel_getUid(0) == 0, "null string gives null selector") ;
-  pass(sel_registerName(0) == 0, "register null string gives null selector") ;
-  pass(strcmp(sel_getName(0) , "<null selector>") == 0, "null selector name") ;
+  pass(sel_getUid(0) == 0, "null string gives null selector");
+  pass(sel_registerName(0) == 0, "register null string gives null selector");
+  pass(strcmp(sel_getName(0) , "<null selector>") == 0, "null selector name");
 
   [arp release]; arp = nil;
   return 0;
