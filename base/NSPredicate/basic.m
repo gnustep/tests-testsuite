@@ -1,6 +1,7 @@
 #import "ObjectTesting.h"
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSDictionary.h>
+#import <Foundation/NSExpression.h>
 #import <Foundation/NSKeyValueCoding.h>
 #import <Foundation/NSPredicate.h>
 #import <Foundation/NSString.h>
@@ -106,6 +107,7 @@ int main()
   NSArray *pitches;
   NSArray *expect;
   NSMutableDictionary *dict;
+  NSPredicate *p;
   NSDictionary *d;
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
@@ -149,6 +151,13 @@ int main()
   filtered = [pitches filteredArrayUsingPredicate:
     [NSPredicate predicateWithFormat: @"SELF == '%@'", @"Do"]];
   pass([filtered isEqual: [NSArray array]], "filter with format");
+
+  pass([NSExpression expressionForEvaluatedObject]
+    == [NSExpression expressionForEvaluatedObject],
+    "expressionForEvaluatedObject is unique");
+
+  p = [NSPredicate predicateWithFormat: @"SELF == 'aaa'"];
+  pass([p evaluateWithObject: @"aaa"], "SELF equality works");
 
   [arp release]; arp = nil;
   return 0;
