@@ -1,3 +1,7 @@
+2010-12-22  Adam Fedor <fedor@gnu.org>
+
+	* base/NSURL: Add resourceSpecifier tests
+
 2010-12-20  Richard Frith-Macdonald  <rfm@gnu.org>
 
         * base/NSXMLParser: new tests.

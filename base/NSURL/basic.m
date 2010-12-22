@@ -58,11 +58,16 @@ int main()
   str = [url path];
   pass([str isEqual: @"/silly-file-name"],
     "Path of http://www.w3.org/silly-file-name is /silly-file-name");
+  pass([[url resourceSpecifier] isEqual: @"//www.w3.org/silly-file-name"],
+    "resourceSpecifier of http://www.w3.org/silly-file-name is //www.w3.org/silly-file-name");
+
 
   url = [NSURL URLWithString: @"http://www.w3.org/silly-file-path/"];
   str = [url path];
   pass([str isEqual: @"/silly-file-path"],
     "Path of http://www.w3.org/silly-file-path/ is /silly-file-path");
+  pass([[url resourceSpecifier] isEqual: @"//www.w3.org/silly-file-path/"],
+    "resourceSpecifier of http://www.w3.org/silly-file-path/ is //www.w3.org/silly-file-path/");
 
   str = [url absoluteString];
   pass([str isEqual: @"http://www.w3.org/silly-file-path/"],
@@ -73,6 +78,13 @@ int main()
   pass([str isEqual: @"/usr"], "Path of file URL /usr is /usr");
   pass([[url description] isEqual: @"file://localhost/usr/"],
     "File URL /usr is file://localhost/usr/");
+  pass([[url resourceSpecifier] isEqual: @"//localhost/usr/"],
+    "resourceSpecifier of /usr is //localhost/usr/");
+
+  url = [NSURL URLWithString: @"file:///usr"];
+  NSLog(@"RESOURCE %@", [url resourceSpecifier]);
+  pass([[url resourceSpecifier] isEqual: @"/usr"],
+    "resourceSpecifier of file:///usr is /usr");
 
   url = [NSURL URLWithString: @"http://here.and.there/testing/one.html"];
   rel = [NSURL URLWithString: @"aaa/bbb/ccc/" relativeToURL: url];
