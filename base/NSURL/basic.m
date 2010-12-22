@@ -82,7 +82,6 @@ int main()
     "resourceSpecifier of /usr is //localhost/usr/");
 
   url = [NSURL URLWithString: @"file:///usr"];
-  NSLog(@"RESOURCE %@", [url resourceSpecifier]);
   pass([[url resourceSpecifier] isEqual: @"/usr"],
     "resourceSpecifier of file:///usr is /usr");
 
