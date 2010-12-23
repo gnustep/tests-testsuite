@@ -1,3 +1,8 @@
+2010-12-23  Fred Kiefer <FredKiefer@gmx.de>
+
+	* gui/NSEvent/delta.m: Check that the delta methods work for non
+	mouse moved events.
+
 2010-12-22  Adam Fedor <fedor@gnu.org>
 
 	* base/NSURL: Add resourceSpecifier tests
@@ -9,7 +14,7 @@
 2010-05-04  David Ayers  <ayers@fsfe.org>
 
 	* base/NSString/test07.m: Adapt test to check for decimal rounding.
-	
+
 2010-04-06  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/NSPasteboard/lazy_copy.m,
@@ -52,12 +57,12 @@
 
 	* base/NSUndoManager/NSUndoManager_notifications.m: Add
 	tests for group Level during check point processing.
-	
+
 2009-02-22  David Ayers  <ayers@fsfe.org>
-	
+
 	* base/coding/basictypes.m: Add test to archive as int/unsigned int
 	while dearchiving as NSInteger/NSUInteger and vice versa.
-	
+
 2009-02-18  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOModel/ObjectDeallocation.m: remove invalid tests.
@@ -67,7 +72,7 @@
 	* gdl2/EORelationship/ToManyKeyPropagation.m,
 	* gdl2/EORelationship/ToManyKeyPropagation.eomodel:
 	Add test for editing relationships in memory and db.
-	
+
 2009-01-30  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSLock/doubleLocking.m: Add new tests based on Greg's code.
@@ -256,18 +261,18 @@
 	* gui/NSView/NSView_frame_bounds.m: New test code for frame and
 	bounds adjustment on trnaformations.
 	* gui/NSView/NSView_frame_rotation.m: Make check a bit more stable.
-	
+
 2008-06-26  Fred Kiefer <FredKiefer@gmx.de>
 
 	* base/NSRunLoop/performers.m: Add missing include.
-	
+
 2008-04-01  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding00.m: Add tests for more classical
 	custom aggregate keys.  Remove tests for constructed special cases.
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding02.m: Add test for compound
 	custom aggregate key paths.
-	
+
 2008-03-31  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/TSTTradingModel.eomodeld: Save with DBModeler (whitespace).
@@ -276,11 +281,11 @@
 
 	* gdl2/EOQualifier/EOQualifierFormats.m: New tests for '%%' literals.
 	* gdl2/EOQualifier/BadFormats.m: Remove valid test for '%%' literals.
-	
+
 2008-03-30  Matt Rice  <ratmice@gmail.com>
 
 	* gdl2/EOQualifier/EOQualifier00.m: Update operator string for not
-	equals. 
+	equals.
 	* gdl2/EOQualifier/EOQualifier03.m: New tests for qualifierWithFormat:
 	and qualifierWithFormat:arguments:, using formats that require
 	arguments.
@@ -336,14 +341,14 @@
 
 	* base/KVC/array.m: Add tests for aggregate key paths.
 	* gdl2/EOFault/EOFault0.m: New EOFault tests to insure fault doesn't fire.
-	
+
 2008-03-12  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding01.m: Add test to
 	handle NSArray KVC additions when used in key path.
 	* gdl2/EOKeyValueCoding/EOKeyValueCoding02.m: Add tests for
 	extended NSArray aggregate key paths.
-	
+
 2008-03-12  Matt Rice  <ratmice@gmail.com>
 
 	* GNUmakefile.tests: Add flag for running with gcov.
@@ -363,19 +368,19 @@
 2008-03-07  David Ayers  <ayers@fsfe.org>
 
 	* base/NSProxy/test01.m: New stress tests for NSInvocation.
-	
+
 2008-03-06  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOFault/EOFault01.m: New tests.
-	
+
 2008-03-05  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOGlobalID/EOTemporaryGlobalID00.m: New tests.
-	
+
 2008-02-13  David Ayers  <ayers@fsfe.org>
 
 	* base/NSString/boolValue.m: New tests.
-	
+
 2008-01-22  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/GDL2Testing.h: Add include to build with current
@@ -383,7 +388,7 @@
 	* gdl2/EOAdaptor/test00.m: Cleanup database at end of test.
 	* gdl2/Bug8993/test00.m,
 	* gdl2/Bug8993/Bug8993.eomodel:: New test case for bug report.
-	
+
 2008-01-05  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSStream/socket.m: Update to do trivial ssl test.
@@ -397,7 +402,7 @@
 
 	* gdl2/GNUmakefile.super: Update to link against
 	libraries explicitly.
-	
+
 2007-10-03  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSKeyedArchiver/basic.m:
@@ -438,7 +443,7 @@
 
 	* gdl2/EODataSource/test00.m: Add format for dates.
 	Remove adaptor iterarion stub code.
-	
+
 2007-04-15  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSBundle/resources.m: Add some checks for behavior with
@@ -462,7 +467,7 @@
 	* base/NSURLHandle/Helpers/StatusServer.m: ditto
 	* base/NSURLHandle/Helpers/GNUmakefile: ditto
 	* base/NSURLHandle/Helpers/IGNORE: new file.
-	
+
 2006-02-20  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* runtests.sh: Update gnustep-config argument.  Only source
@@ -535,9 +540,9 @@
 
 2006-11-16  Matt Rice  <ratmice@gmail.com>
 
-	* gdl2/EOObserverCenter/test00.m: Update existing tests, add some new 
+	* gdl2/EOObserverCenter/test00.m: Update existing tests, add some new
 	tests.
-	
+
 2006-11-16  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSConnection/GNUmakefile.preamble:
@@ -622,9 +627,9 @@
 2006-10-21  David Ayers  <ayers@fsfe.org>
 
 	* base/NSCalendarDate/test00.m: New test which currently fails.
-	
+
 2006-10-19  Matt Rice <ratmice@yahoo.com>
-	
+
 	* gdl2/EOFault: New dir.
 	* gdl2/EOFault/EOFault0.m: New tests.
 
@@ -636,16 +641,16 @@
 2006-10-13  David Ayers  <ayers@fsfe.org>
 
 	* gdl2/EOAdaptor/EOAdaptorEncoding.m: New tests.
-	
+
 2006-10-09  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/Functions/NSGeometry1.m: Remove use of priovate method from
 	base library.
 
 2006-10-03  Matt Rice  <ratmice@yahoo.com>
-	
+
 	* gdl2/EOModel/test07.m: New tests for parent/sub entities.
-	
+
 	* gdl2/EOModel/test07.m: Use NSTemporaryDirectory(); and remove the
 	temporary file.
 
@@ -665,7 +670,7 @@
 
 
 2006-09-29  Matt Rice  <ratmice@yahoo.com>
-	
+
 	* gdl2/GDL2Testing.h (setupModel): New function setup to check for
 	TEST_ADAPTOR environment variable or GDL2TestAdaptor default.
 
@@ -684,7 +689,7 @@
 	* gdl2/TSTTradingModel.eomodeld/EOPostgres95Prototypes.plist: New file.
 
 2006-09-28  Matt Rice  <ratmice@yahoo.com>
-	
+
 	* gdl2/TSTTradingModel.eomodeld/EOPostgreSQLPrototypes.plist: New
 	file.
 	* gdl2/TSTTradingModel.eomodeld/*: Use prototypes. Add adaptor
@@ -692,14 +697,14 @@
 	* gdl2/EOAdaptor/EOAdaptorTypes.eomodel: Add adaptor specific
 	connection dictionaries to userInfo.
 	* gdl2/EOAdaptor/test00.m: Handle abstract entities in
-	-describeTableNames test. Use model setup function. 
+	-describeTableNames test. Use model setup function.
 	* gdl2/GDL2Testing.h: Add a function to setup the model for an
 	adaptor.
 	* gdl2/EOModel/test02.eomodel,
 	* gdl2/EORelationship/ToManyKeyPropagation.eomodel,
 	* gdl2/EOModel/test00.m: Change Postgres95 to PostgreSQL.
 	* gdl2/EODataSource/test00.m: Run tests on all available adaptors.
-	
+
 	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m,
 	* gdl2/EOQualifier/EOKeyValueQualifier01.m,
 	* gdl2/EOEditingContext/EOEditingContext01.m,
@@ -707,10 +712,10 @@
 	* gdl2/EOEditingContext/EOEditingContext03.m,
 	* gdl2/EOAdaptor/EOAdaptorTypes00.m,
 	* gdl2/EOEditingContext/TemporaryGlobalID.m: Use model setup function.
-	
+
 
 2006-09-26  Matt Rice  <ratmice@yahoo.com>
-	
+
 	* gdl2/EODisplayGroup/EODisplayGroup00.m: add tests for
 	-selectedObject:, -selectNext:, -selectPrevious:,
 	-enabledToSetSelectedObjectValueForKey:, -clearSelection,
@@ -723,7 +728,7 @@
 	external names is enabled in the adaptor.
 	* gdl2/EOObserverCenter/test00.m: Update tests to conform to new
 	omniscient observers implementation.
-	
+
 2006-08-16  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: Reverse test for
@@ -743,7 +748,7 @@
 	* base/NSCharacterSet/illegalCharacterSet.m
 	(main): Adjust dest to only skip codepoints which clash
 	with surrogate characters.
-	
+
 2006-08-13  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCalendarDate/test00.m: Fix nil format test to work even if
@@ -756,10 +761,10 @@
 
 2006-08-12  David Ayers  <d.ayers@inode.at>
 
-	* base/NSString/NSString_tests.h 
+	* base/NSString/NSString_tests.h
 	(test_getCString_maxLength_range_remainingRange): Correct exit condition
 	in for loop.
-	
+
 2006-08-11  Fred Kiefer <FredKiefer@gmx.de>
 
 	* gui/NSSavePanel/setDelegate_reload.m (main()): Changed from
@@ -813,7 +818,7 @@
 
 	* base/NSString/basic.m: Add mutable copy test for non-ASCII strings
 	fixed by recent patch.
-	
+
 2006-05-12  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: Replace broken test with
@@ -822,14 +827,14 @@
 2006-05-11  David Ayers  <d.ayers@inode.at>
 
 	* base/NSCharacterSet/illegalCharacterSet.m: New experimental test.
-	
+
 2006-05-05  David Ayers  <d.ayers@inode.at>
 
 	* base/NSBundle/resources2.m: Move +bundleWithPath test to...
-	* base/NSBundle/general.m: ... here.  Use 
+	* base/NSBundle/general.m: ... here.  Use
 	#include <Foundaton/Foundation.h> to increase portability.
 	Add tests for -executablePath.
-	
+
 2006-03-31  Matt Rice <ratmice@yahoo.com>
 
 	* gdl2/EOModel/test04.m: Add tests for renaming	attributes and
@@ -845,7 +850,7 @@
 
 	* base/NSString/bom.m
 	* base/NSString/utf8bom.txt: New tests for UTF-8 BOM.
-	
+
 2006-03-28  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSString/basic.m: Add tests for init using unichar method with
@@ -895,31 +900,31 @@
 
 	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m:
 	Fix tests committed from obsolete tree.
-	
+
 2005-12-05  David Ayers  <d.ayers@inode.at>
 
 	gdl2/EOQualifier/EOQualifier00.m: Add test for parsing qualifiers
 	with 'nil'.
-	
+
 2005-11-30  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/EOQualifier/EOQualifier01.m: Add 'like' wildcard tests
 	including unicode characters.
-	* gdl2/EOQualifier/EOQualifier02.m: New test for 
+	* gdl2/EOQualifier/EOQualifier02.m: New test for
 	unicode qualifiers.
-	
+
 2005-11-28  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/EODataSource/test00.m: Make date reproducable.
 	* gdl2/EOSharedEditingContext/EOSharedEditingContext00.m: New test.
 	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m: Ditto.
-	
+
 2005-11-27  David Ayers  <d.ayers@inode.at>
 
 	* base/NSFileHandle/basic.m: New test.
 	* base/NSFileHandle/general.m: Ditto.
 	* base/NSFileHandle/socket.m: Ditto.
-	
+
 2005-10-31  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* GNUmakefile.tests: Use portable name for binaries subdirectory.
@@ -939,11 +944,11 @@
 	* base/NSBundle/Resources/...: Extra files for tests.
 
 2005-08-25  Manuel Guesdon  <mguesdon@orange-concept.com>
-	
+
 	* gdl2/EOQualifier/EOKeyValueQualifier01.m: New File.
 
 2005-08-24  Manuel Guesdon  <mguesdon@orange-concept.com>
-	
+
 	* gdl2/EOEditingContext/EOEditingContext03.m: New File.
 
 2005-08-22  Adam Fedor  <fedor@gnu.org>
@@ -955,7 +960,7 @@
 2005-08-18  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/EOEditingContext/EOEditingContext02.m: New delete rule tests.
-	
+
 2005-08-17  David Ayers  <d.ayers@inode.at>
 
 	* gdl2/TSTTradingModel.eomodeld/*.plist: Prefix external
@@ -972,12 +977,12 @@
 	* gdl2/EOEditingContext/EOEditingContext02.m: New File.
 	* gdl2/TSTTradingModel.eomodeld/ProductGroup.plist: Add backward
 	relationship.
-	
+
 2005-07-26  David Ayers  <d.ayers@inode.at>
 
 	* ObjectTesting.h (START_SET, END_SET, START_TEST, END_TEST):
 	Added documentation.
-	
+
 2005-07-17  Matt Rice  <ratmice@yahoo.com>
 
 	* coding/basictypes.m: New test for encoding and decoding non-object
@@ -1010,7 +1015,7 @@
 	* coding/NSNumber.0.data: Update archive to contain an NSNumber
 	instead of an NSValue.
 	* coding/NSCharacterSet.0.data: Use stable character set.
-	
+
 2005-07-08  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* base/NSBundle/create.m: Correct the sense of the test for a tool
@@ -1027,7 +1032,7 @@
 
 	* base/NSTask/launch.m: New test for correct handling of launching
 	terminated tasks.
-	
+
 2005-06-30  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EORelationship/ToManyKeyPropagation.eomodel: Add inverse
@@ -1037,7 +1042,7 @@
 
 	* gdl2/EORelationship/ToManyKeyPropagation.m: New test to fetching
 	relationship from db.
-	
+
 2005-06-29  Adam Fedor  <fedor@gnu.org>
 
 	* base/NSCharacterSet/general.m: Work with older gcc versions.
@@ -1049,19 +1054,19 @@
 2005-06-29  David Ayers  <d.ayers@inode.at>
 
 	* base/NSBundle/general.m: Do not include AppKit headers.
-	
+
 2005-06-26  Matt Rice  <ratmice@yahoo.com>
 
 	* gdl2/EODataSource/test00.m: new test for -createObject: with
 	EODetailDataSource
-	
+
 2005-06-26  David Ayers  <d.ayers@inode.at>
 
 	* runtest.sh: Default to using gmake yet allow overriding the make
 	command with an environment variable.
 	* gdl2/GDL2Testing (globalModelForKey): Make compatible with older
 	gcc versions.
-	
+
 2005-06-26  Riccardo Mottola  <multix@gmail.com>
 
 	* ObjectTesting.h: Make compatible with older gcc versions.
@@ -1083,7 +1088,7 @@
 	* GNUmakefile.tests: Include GNUmakefile.super, not Super.mk
 	* runtests.sh: Run tests per each directory.
 	* stuff.h: Limit output of object description.
-	
+
 	* guile/GNUmakefile: Make libgenerictests
 	* guile/NSBundle/GNUmakefile.preamble,
 	guile/NSBundle/load/GNUmakefile.preamble,
@@ -1091,7 +1096,7 @@
 	guile/NSConnection/GNUmakefile.preamble: Include libgenerictests subproj
 
 	gui, base: Move top-level tests to individual directories.
-	
+
 2005-05-30  Adam Fedor  <fedor@gnu.org>
 
 	* GNUmakefile.tests: Include GNUmakefile.preamble
