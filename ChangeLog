@@ -1,5 +1,11 @@
 2010-12-24  Nicola Pero  <nicola.pero@meta-innovation.com>
 
+	* base/NSMethodSignature/general.m ([MyClass
+	-runtimeSignatureForSelector:]): Use method_getTypeEncoding()
+	instead of accessing directly the 'types' field of a method.
+
+2010-12-24  Nicola Pero  <nicola.pero@meta-innovation.com>
+
 	* base/Functions/runtime.m (main): Register a class pair before
 	trying to look at the list of instance variables.
 
