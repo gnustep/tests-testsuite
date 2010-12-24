@@ -1,5 +1,10 @@
 2010-12-24  Nicola Pero  <nicola.pero@meta-innovation.com>
 
+	* base/Functions/runtime.m (main): Register a class pair before
+	trying to look at the list of instance variables.
+
+2010-12-24  Nicola Pero  <nicola.pero@meta-innovation.com>
+
 	* base/headers/GSCategories.m: Test removed.  The header file
 	GNUstepBase/GSCategories.h no longer exists.
 	

@@ -192,6 +192,7 @@ main(int argc, char *argv[])
     "able to add iVar 'iv3'");
   pass(class_addIvar(cls, "iv4", 1, 3, "c") == YES,
     "able to add iVar 'iv4'");
+  objc_registerClassPair (cls);
   ivar = class_getInstanceVariable(cls, "iv1");
   pass(ivar != 0, "iv1 exists");
   pass(ivar_getOffset(ivar) == 64, "iv1 offset is 64");
