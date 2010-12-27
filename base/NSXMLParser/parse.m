@@ -1,5 +1,6 @@
 #import "ObjectTesting.h"
 #import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSUserDefaults.h>
 #import <Foundation/NSXMLParser.h>
 #include <string.h>
 
@@ -125,8 +126,17 @@
   qualifiedName: (NSString *)qName
   attributes: (NSDictionary *)attributeDict
 {
+  static NSDictionary	*locale = nil;
+  NSString		*d;
+
+  if (nil == locale)
+    {
+      locale = [[[NSUserDefaults standardUserDefaults]
+	dictionaryRepresentation] retain];
+    }
+  d = [attributeDict descriptionWithLocale: locale];
   [s appendFormat: @"%@ %@ %@ %@ %@\n", NSStringFromSelector(_cmd),
-    elementName, namespaceURI, qName, attributeDict];
+    elementName, namespaceURI, qName, d];
 }
 
 - (void) parser: (NSXMLParser *)parser
