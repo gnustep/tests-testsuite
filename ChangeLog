@@ -1,3 +1,9 @@
+2011-01-01  Stefen Bidigaray <stefanbidi@gmail.com>
+
+	* base/NSLocale/basic.m:
+	* base/NSLocale/create.m:
+	* base/NSLocale/general.m: New NSLocale tests.
+
 2010-12-24  Nicola Pero  <nicola.pero@meta-innovation.com>
 
 	* base/NSMethodSignature/general.m ([MyClass
