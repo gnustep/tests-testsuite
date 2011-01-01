@@ -1,5 +1,10 @@
 2011-01-01  Stefen Bidigaray <stefanbidi@gmail.com>
 
+	* base/NSCalendar/basic.m:
+	* base/NSCalendar/create.m: New NSCalendar tests.
+
+2011-01-01  Stefen Bidigaray <stefanbidi@gmail.com>
+
 	* base/NSLocale/basic.m:
 	* base/NSLocale/create.m:
 	* base/NSLocale/general.m: New NSLocale tests.
