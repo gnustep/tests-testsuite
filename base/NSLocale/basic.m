@@ -6,7 +6,7 @@
 int main()
 {  
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
-  id testObj = [NSLocale new];
+  id testObj = [NSLocale currentLocale];
 
   test_NSObject(@"NSLocale", [NSArray arrayWithObject: testObj]);
   test_NSCoding([NSArray arrayWithObject: testObj]);

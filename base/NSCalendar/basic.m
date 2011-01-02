@@ -6,7 +6,7 @@
 int main()
 {  
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
-  id testObj = [NSLocale new];
+  id testObj = [NSCalendar currentCalendar];
 
   test_NSObject(@"NSCalendar", [NSArray arrayWithObject: testObj]);
   test_NSCoding([NSArray arrayWithObject: testObj]);
