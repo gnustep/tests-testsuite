@@ -41,7 +41,7 @@ int main()
   NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   str = [[NSString alloc] initWithData: data
 			      encoding: NSISOLatin1StringEncoding];
-  pass(str != nil && [str rangeOfString: @"sent release"].length > 0,
+  pass(str != nil && [str rangeOfString: @"sent to deallocated"].length > 0,
     "was able to read zombie message from subtask");
   [task terminate];
 

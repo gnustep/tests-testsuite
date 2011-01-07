@@ -1,5 +1,16 @@
 2011-01-07  Richard Frith-Macdonald  <rfm@gnu.org>
 
+        * base/NSLock/Helpers/doubleNSLock.m:
+        * base/NSLock/Helpers/doubleNSConditionLock.m:
+        * base/NSTask/zombie.m:
+        * base/NSTask/Helpers/NSZombie.m:
+        * base/NSProxy/test01.m:
+        * base/coding/decoding.m:
+        * base/NSInvocation/InvokeProxyProtocol.h:
+        Tweaks to compile on current OSX.
+
+2011-01-07  Richard Frith-Macdonald  <rfm@gnu.org>
+
 	* runtest.sh: Add more checks of the arguments to ensure we have a
 	single readable filename as our argument.
         * ObjectTesting.h: Permit copying to be done by either retain or by a

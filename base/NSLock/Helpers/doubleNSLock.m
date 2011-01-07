@@ -1,3 +1,5 @@
+
+#import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSLock.h>
 #import <Foundation/NSObject.h>
 #import <Foundation/NSThread.h>

@@ -17,6 +17,7 @@ copyright 2004 Alexander Malmberg <alexander@malmberg.org>
 #include <Foundation/NSDictionary.h>
 #include <Foundation/NSException.h>
 #include <Foundation/NSFormatter.h>
+#include <Foundation/NSGeometry.h>
 #include <Foundation/NSNotification.h>
 #include <Foundation/NSNull.h>
 #include <Foundation/NSObject.h>

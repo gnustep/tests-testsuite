@@ -52,10 +52,16 @@ GSEqualBitFields(GSBitField aField, GSBitField bField)
 NSDecimal
 GSMakeDecimal(unsigned long long mantissa, short exponent, BOOL negative)
 {
-  NSDecimal dec;
-  NSDecimalFromComponents(&dec, mantissa, exponent, negative);
+  NSDecimalNumber       *d;
+  NSDecimal             dec;
+
+  d = [NSDecimalNumber decimalNumberWithMantissa: mantissa
+                                        exponent: exponent
+                                      isNegative: negative];
+  dec = [d decimalValue];
   return dec;
 }
+
 NSDecimal
 GSDecimalMultiply(NSDecimal left,NSDecimal right)
 {
@@ -63,6 +69,7 @@ GSDecimalMultiply(NSDecimal left,NSDecimal right)
   NSDecimalMultiply(&dec,&left,&right,NSRoundPlain);
   return dec;
 }
+
 BOOL
 GSDecimalCompare(NSDecimal left,NSDecimal right)
 {

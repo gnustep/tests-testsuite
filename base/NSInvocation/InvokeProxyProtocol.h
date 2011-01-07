@@ -2,6 +2,7 @@
 
    Written By: Adam Fedor <fedor@gnu.org>
 */
+#import <Foundation/NSGeometry.h>
 #import <Foundation/NSObject.h>
 
 typedef struct {
