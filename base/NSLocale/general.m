@@ -18,17 +18,28 @@ int main(void)
     "NSLocaleLanguageCode key returns a NSString");
   TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCountryCode],
     "NSLocaleCountryCode key returns a NSString");
+
+/*
   TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleScriptCode],
     "NSLocaleScriptCode key returns a NSString");
   TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleVariantCode],
     "NSLocaleVariantCode key returns a NSString");
+  TEST_FOR_CLASS(@"NSString",
+    [locale objectForKey: NSLocaleCollationIdentifier],
+    "NSLocaleCollationIdentifier key returns a NSString");
+*/
+  pass(nil == [locale objectForKey: NSLocaleScriptCode],
+    "NSLocaleScriptCode key returns nil");
+  pass(nil == [locale objectForKey: NSLocaleVariantCode],
+    "NSLocaleVariantCode key returns nil");
+  pass(nil == [locale objectForKey: NSLocaleCollationIdentifier],
+    "NSLocaleCollationIdentifier key returns nil");
+
   TEST_FOR_CLASS(@"NSCharacterSet",
     [locale objectForKey: NSLocaleExemplarCharacterSet],
     "NSLocaleExemplarCharacterSet key returns a NSCharacterSet");
   TEST_FOR_CLASS(@"NSCalendar", [locale objectForKey: NSLocaleCalendar],
     "NSLocaleCalendar key returns a NSCalendar");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCollationIdentifier],
-    "NSLocaleCollationIdentifier key returns a NSString");
   TEST_FOR_CLASS(@"NSNumber", [locale objectForKey: NSLocaleUsesMetricSystem],
     "NSLocaleUsesMetricSystem key returns a NSNumber");
   TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleMeasurementSystem],
@@ -71,10 +82,14 @@ int main(void)
   RELEASE(locale);
   
   locale = [[NSLocale alloc] initWithLocaleIdentifier: @"zh-Hant_TW"];
-  pass ([[locale localeIdentifier] isEqual: @"zh_Hant_TW"],
-    "'zh-Hant_TW' is stored as 'zh_Hant_TW'");
-  pass ([locale objectForKey: NSLocaleScriptCode] != nil,
-    "zh-Hant_TW has a script code");
+  passeq ([locale objectForKey: NSLocaleCountryCode], @"TW",
+    "zh-Hant_TW country code is zh");
+  passeq ([locale objectForKey: NSLocaleLanguageCode], @"zh",
+    "zh-Hant_TW language code is zh");
+  passeq ([locale localeIdentifier], @"zh_TW",
+    "'zh-Hant_TW' is stored as 'zh_TW'");
+  passeq ([locale objectForKey: NSLocaleScriptCode], nil,
+    "zh-Hant_TW has no script code");
   RELEASE(locale);
   
   str = [NSLocale canonicalLocaleIdentifierFromString: @"AmericanEnglish"];

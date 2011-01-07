@@ -26,6 +26,58 @@
 #import <Foundation/NSGarbageCollector.h>
 #import "Testing.h"
 
+/* Tests obj and expect for equality ... logs the descriptionas as UTF8 to
+ * stderr if they are not equal.
+ */
+static void passeq(id obj, id expect, const char *description, ...) __attribute__ ((format(printf, 3, 4)));
+static void passeq(id obj, id expect, const char *description, ...)
+{
+  va_list args;
+  va_start(args, description);
+  if (obj == expect || [obj isEqual: expect])
+    {
+      fprintf(stderr, "PASS: ");
+      vfprintf(stderr, description, args);
+      fprintf(stderr, "\n");
+    }
+  else
+    {
+      fprintf(stderr, "FAIL: ");
+      vfprintf(stderr, description, args);
+      fprintf(stderr, "\n");
+      fprintf(stderr, "Expected '%s' and got '%s'\n",
+        [[expect description] UTF8String],
+        [[obj description] UTF8String]);
+    }
+  va_end(args);
+}
+
+/* Tests obj and expect for equality ... logs the descriptionas as UTF8 to
+ * stderr if they are not equal.
+ */
+static void hopeeq(id obj, id expect, const char *description, ...) __attribute__ ((format(printf, 3, 4)));
+static void hopeeq(id obj, id expect, const char *description, ...)
+{
+  va_list args;
+  va_start(args, description);
+  if (obj == expect || [obj isEqual: expect])
+    {
+      fprintf(stderr, "PASS: ");
+      vfprintf(stderr, description, args);
+      fprintf(stderr, "\n");
+    }
+  else
+    {
+      fprintf(stderr, "DASHED: ");
+      vfprintf(stderr, description, args);
+      fprintf(stderr, "\n");
+      fprintf(stderr, "Expected '%s' and got '%s'\n",
+        [[expect description] UTF8String],
+        [[obj description] UTF8String]);
+    }
+  va_end(args);
+}
+
 #define TEST_FOR_CLASS(aClassName, aClass, TestDescription) \
   pass([aClass isKindOfClass:NSClassFromString(aClassName)], TestDescription)
 

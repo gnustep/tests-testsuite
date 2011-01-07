@@ -1,5 +1,11 @@
 2011-01-07  Richard Frith-Macdonald  <rfm@gnu.org>
 
+	* ObjectTesting.h: add functions passeq() and hopeeq()
+        * base/NSLocale/general.m: Tweak some tests to pass on OSX.
+        Add tests of country and language for zh-Hant_TW
+
+2011-01-07  Richard Frith-Macdonald  <rfm@gnu.org>
+
         * base/NSLock/Helpers/doubleNSLock.m:
         * base/NSLock/Helpers/doubleNSConditionLock.m:
         * base/NSTask/zombie.m:
