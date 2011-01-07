@@ -281,7 +281,7 @@ int main()
 @"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n    x = 1;\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";
 
   pass(testParse(x1, e1), "simple document 1");
-  pass(testParse(x1e, e1), "simple document 1");
+  pass(testParse(x1e, e1), "simple document 1 without header");
 
   [arp release]; arp = nil;
   return 0;
