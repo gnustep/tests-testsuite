@@ -275,7 +275,7 @@ testParse(const char *xmlBytes, NSString *expect)
 int main()
 {
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
-  const char            *x1 = "<?xml version=\"1.0\"?><test x = \"1\"></test>";
+  const char            *x1 = "<?xml version=\"1.0\"?>< test x = \"1\"></test>";
   const char            *x1e = "<test x=\"1\"></test>";
   NSString              *e1 =
 @"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n    x = 1;\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";

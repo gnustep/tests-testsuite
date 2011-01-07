@@ -280,7 +280,6 @@ static void test_NSCopying(NSString *iClassName,
       const char *prefix;
       id theCopy = nil;
       Class theClass = Nil;
-      BOOL mayRetain; 
       id theObj = [objects objectAtIndex: i];
 
       START_SET(YES);
@@ -301,18 +300,6 @@ static void test_NSCopying(NSString *iClassName,
 	i, [theName UTF8String]] UTF8String];
       pass([theObj conformsToProtocol:@protocol(NSCopying)], 
 	"conforms to NSCopying");
-      if (mustCopy)
-        {
-	  mayRetain = NO;
-        }
-      else if (mustRetain)
-        {
-	  mayRetain = YES;
-        }
-      else	
-        {
-          mayRetain = NSShouldRetainWithZone(theObj, defZone);
-	}
       theCopy = [theObj copy];
       pass(theCopy != nil, "%s understands -copy", prefix);
       pass([theCopy isKindOfClass:iClass],
@@ -320,12 +307,12 @@ static void test_NSCopying(NSString *iClassName,
       pass([theObj isEqual:theCopy], "%s original and copy are equal", prefix);
       if (immutable)
         { 
-	  if (mustRetain)
+	  if (YES == mustRetain)
 	    {
 	      pass(theCopy == theObj, 
 		"%s is retained by copy with same zone", prefix);
             }
-          else if (YES == mustCopy || NO == mayRetain)
+          else if (YES == mustCopy)
             { 
 	      pass(theCopy != theObj,
 		"%s is not retained by copy with same zone", prefix);
@@ -337,19 +324,6 @@ static void test_NSCopying(NSString *iClassName,
 	    "%s result of copy is not immutable", prefix);
 	}
     
-      if (mustCopy)
-        {
-	  mayRetain = NO;
-        }
-      else if (mustRetain)
-        {
-	  mayRetain = YES;
-        }
-      else	
-        {
-          mayRetain = NSShouldRetainWithZone(theObj, testZone);
-	}
-      
       theCopy = [theObj copyWithZone: testZone];
       pass(theCopy != nil, "%s understands -copyWithZone", prefix);
       pass([theCopy isKindOfClass: iClass],
@@ -358,12 +332,12 @@ static void test_NSCopying(NSString *iClassName,
         "%s copy and original are equal", prefix);
       if (immutable)
         {
-           if (mustRetain)
+           if (YES == mustRetain)
 	     {
 	       pass(theCopy == theObj,
 		 "%s is retained by copy with other zone", prefix);
 	     }
-	   else if (YES == mustCopy || NO == mayRetain)
+	   else if (YES == mustCopy)
 	     {
 	       pass(theCopy != theObj,
 		 "%s is not retained by copy with other zone", prefix);
