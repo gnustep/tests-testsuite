@@ -2,6 +2,10 @@
 
 	* runtest.sh: Add more checks of the arguments to ensure we have a
 	single readable filename as our argument.
+        * ObjectTesting.h: Permit copying to be done by either retain or by a
+        real copy if we don't specify a flag to say it must be one or the other.
+        * base/Functions/NSPathUtilities.m: conditionally compile tests for
+        functions no longer present in OSX
 
 2011-01-01  Stefen Bidigaray <stefanbidi@gmail.com>
 

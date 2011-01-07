@@ -21,10 +21,15 @@ int main()
   pass([o length] > 0, "we can get a temporary directory");
   NSLog(@"NSOpenStepRootDirectory() %@", o = NSOpenStepRootDirectory());
   pass([o length] > 0, "we can get a root directory");
+
+  /* These functions have been removed in recent OSX but are retained in GNUstep
+   */
+#if     defined(GNUSTEP_BASE_LIBRARY)
   NSLog(@"NSStandardApplicationPaths() %@", o = NSStandardApplicationPaths());
   pass([o count] > 0, "we have application paths");
   NSLog(@"NSStandardLibraryPaths() %@", o = NSStandardLibraryPaths());
   pass([o count] > 0, "we have library paths");
+#endif
 
   [pool release]; pool = nil;
  

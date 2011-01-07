@@ -276,7 +276,7 @@ int main()
 {
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
   const char            *x1 = "<?xml version=\"1.0\"?><test></test>";
-  const char            *x1e = "<test></test>";
+  const char            *x1e = "<test x=\"1\" y=\"2\"></test>";
   NSString              *e1 =
 @"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";
 
