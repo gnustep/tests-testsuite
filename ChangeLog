@@ -1,3 +1,8 @@
+2011-01-07  Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* runtest.sh: Add more checks of the arguments to ensure we have a
+	single readable filename as our argument.
+
 2011-01-01  Stefen Bidigaray <stefanbidi@gmail.com>
 
 	* base/NSCalendar/basic.m:

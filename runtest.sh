@@ -47,7 +47,34 @@ done
 
 if [ x$1 = x ]
 then
-  echo ERROR: $0: No test given
+  echo "ERROR: $0: No test given"
+  exit 1
+fi
+
+if [ $# != 1 ]
+then
+  echo "ERROR: $0: Too many arguments (single test file name expected)"
+  exit 1
+fi
+
+if [ -e $1 ]
+then
+
+  if [ ! -f $1 ]
+  then
+    echo "ERROR: $0: Argument ($1) is not the name of a regular file"
+    exit 1
+  fi
+
+  if [ ! -r $1 ]
+  then
+    echo "ERROR: $0: Test file ($1) is not readable by you"
+    exit 1
+  fi
+
+else
+  echo "ERROR: $0: Test file ($1) does not exist"
+  exit 1
 fi
 
 if test -z "$GNUSTEP_MAKEFILES"; then
@@ -85,7 +112,6 @@ if [ -f runtest.sh ]; then
   exit 1
 fi
 
-NAME=`basename $1`
 if [ ! "$MAKE_CMD" ]
 then
   MAKE_CMD=gmake
@@ -95,6 +121,8 @@ then
     MAKE_CMD=make
   fi
 fi
+
+NAME=`basename $1`
 
 if [ ! -f IGNORE ] 
 then

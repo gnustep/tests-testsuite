@@ -5,6 +5,7 @@
 #import <Foundation/NSData.h>
 #import <Foundation/NSFileManager.h>
 #import <Foundation/NSURL.h>
+#import <Foundation/NSSet.h>
 #import <Foundation/NSValue.h>
 #import "Testing.h"
 #import "ObjectTesting.h"
@@ -19,18 +20,21 @@ int main()
   NSMutableData *data2;
   NSArray *a;
   NSURL *u;
+  NSMutableSet *ms;
   NSKeyedArchiver *archiver = nil;
   NSKeyedUnarchiver *unarchiver = nil;
 
   u = [NSURL URLWithString: @"http://www.w3.org/"];
+  ms = [NSMutableSet set];
+  [ms addObject: u];
   data2 = [NSMutableData new];
   archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: data2];
   [archiver setOutputFormat: NSPropertyListXMLFormat_v1_0];
-  [archiver encodeObject: u forKey: @"root"];
+  [archiver encodeObject: ms forKey: @"root"];
   [archiver finishEncoding];
   NSLog(@"%*.*s", [data2 length], [data2 length], [data2 bytes]);
-  u = [NSKeyedUnarchiver unarchiveObjectWithData: data2];
-  pass([[u absoluteString] isEqual: @"http://www.w3.org/"],
+  ms = [NSKeyedUnarchiver unarchiveObjectWithData: data2];
+  pass([[[ms anyObject] absoluteString] isEqual: @"http://www.w3.org/"],
     "Can archive and restore a URL");
   
   [archiver release];
