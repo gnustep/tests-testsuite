@@ -275,10 +275,10 @@ testParse(const char *xmlBytes, NSString *expect)
 int main()
 {
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
-  const char            *x1 = "<?xml version=\"1.0\"?><test></test>";
-  const char            *x1e = "<test x=\"1\" y=\"2\"></test>";
+  const char            *x1 = "<?xml version=\"1.0\"?><test x = \"1\"></test>";
+  const char            *x1e = "<test x=\"1\"></test>";
   NSString              *e1 =
-@"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";
+@"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n    x = 1;\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";
 
   pass(testParse(x1, e1), "simple document 1");
   pass(testParse(x1e, e1), "simple document 1");
