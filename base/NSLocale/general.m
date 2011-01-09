@@ -52,8 +52,8 @@ int main(void)
     "NSLocaleCurrencySymbol key returns a NSString");
   TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCurrencyCode],
     "NSLocaleCurrencyCode key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCollatorIdentifier],
-    "NSLocaleCollatorIdentifier key returns a NSString");
+  passeq([locale objectForKey: NSLocaleCollatorIdentifier],
+    @"es_ES@currency=ESP", "NSLocaleCollatorIdentifier for Spain");
   TEST_FOR_CLASS(@"NSString",
     [locale objectForKey: NSLocaleQuotationBeginDelimiterKey],
     "NSLocaleQuotationBeginDelimiterKey key returns a NSString");
