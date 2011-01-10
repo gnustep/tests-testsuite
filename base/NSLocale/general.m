@@ -1,5 +1,6 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSLocale.h>
+#import <Foundation/NSValue.h>
 #import "ObjectTesting.h"
 
 int main(void)
