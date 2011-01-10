@@ -1,3 +1,8 @@
+2011-01-10- Richard Frith-Macdonald  <rfm@gnu.org>
+
+        * base/NSLocale/general.mAdd more specific tests of actual values
+        returned by locale keys.
+
 2011-01-07  Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* ObjectTesting.h: add functions passeq() and hopeeq()

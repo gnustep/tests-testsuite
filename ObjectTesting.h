@@ -42,12 +42,23 @@ static void passeq(id obj, id expect, const char *description, ...)
     }
   else
     {
+      NSString  *s = [obj description];
+
       fprintf(stderr, "FAIL: ");
       vfprintf(stderr, description, args);
       fprintf(stderr, "\n");
-      fprintf(stderr, "Expected '%s' and got '%s'\n",
-        [[expect description] UTF8String],
-        [[obj description] UTF8String]);
+      if ([s length] == 1)
+        {
+          fprintf(stderr, "Expected '%s' and got '%s' (unicode codepoint %d)\n",
+            [[expect description] UTF8String],
+            [s UTF8String], [s characterAtIndex: 0]);
+        }
+      else
+        {
+          fprintf(stderr, "Expected '%s' and got '%s'\n",
+            [[expect description] UTF8String],
+            [s UTF8String]);
+        }
     }
   va_end(args);
 }

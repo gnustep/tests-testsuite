@@ -8,74 +8,82 @@ int main(void)
   NSLocale *locale;
   NSString *str;
   NSDictionary *dict;
+  id            o;
+  unichar       u;
   
   // These tests don't really work all that well.  I need to come up with
   // something better.  Most of the ones that fail are because nil is returned.
   locale = [[NSLocale alloc] initWithLocaleIdentifier: @"es_ES_PREEURO"];
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleIdentifier],
-    "NSLocaleIdentifier key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleLanguageCode],
-    "NSLocaleLanguageCode key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCountryCode],
-    "NSLocaleCountryCode key returns a NSString");
+  passeq ([locale objectForKey: NSLocaleIdentifier],
+    @"es_ES@currency=ESP",
+    "NSLocaleIdentifier key returns 'es_ES@currency=ESP'");
+  passeq ([locale objectForKey: NSLocaleLanguageCode],
+    @"es",
+    "NSLocaleLanguageCode key returns 'es'");
+  passeq ([locale objectForKey: NSLocaleCountryCode],
+    @"ES",
+    "NSLocaleCountryCode key returns 'ES'");
 
-/*
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleScriptCode],
-    "NSLocaleScriptCode key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleVariantCode],
-    "NSLocaleVariantCode key returns a NSString");
-  TEST_FOR_CLASS(@"NSString",
-    [locale objectForKey: NSLocaleCollationIdentifier],
-    "NSLocaleCollationIdentifier key returns a NSString");
-*/
-  pass(nil == [locale objectForKey: NSLocaleScriptCode],
+  passeq ([locale objectForKey: NSLocaleScriptCode], nil,
     "NSLocaleScriptCode key returns nil");
-  pass(nil == [locale objectForKey: NSLocaleVariantCode],
+  passeq ([locale objectForKey: NSLocaleVariantCode], nil,
     "NSLocaleVariantCode key returns nil");
-  pass(nil == [locale objectForKey: NSLocaleCollationIdentifier],
+  passeq ([locale objectForKey: NSLocaleCollationIdentifier], nil,
     "NSLocaleCollationIdentifier key returns nil");
-
   TEST_FOR_CLASS(@"NSCharacterSet",
     [locale objectForKey: NSLocaleExemplarCharacterSet],
     "NSLocaleExemplarCharacterSet key returns a NSCharacterSet");
   TEST_FOR_CLASS(@"NSCalendar", [locale objectForKey: NSLocaleCalendar],
     "NSLocaleCalendar key returns a NSCalendar");
-  TEST_FOR_CLASS(@"NSNumber", [locale objectForKey: NSLocaleUsesMetricSystem],
+  o = [locale objectForKey: NSLocaleUsesMetricSystem];
+  TEST_FOR_CLASS(@"NSNumber", o,
     "NSLocaleUsesMetricSystem key returns a NSNumber");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleMeasurementSystem],
-    "NSLocaleMeasurementSystem key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleDecimalSeparator],
-    "NSLocaleDecimalSeparator key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleGroupingSeparator],
-    "NSLocaleGroupingSeparator key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCurrencySymbol],
-    "NSLocaleCurrencySymbol key returns a NSString");
-  TEST_FOR_CLASS(@"NSString", [locale objectForKey: NSLocaleCurrencyCode],
-    "NSLocaleCurrencyCode key returns a NSString");
+  passeq (o, [NSNumber numberWithBool: YES],
+    "NSLocaleUsesMetricSystem key returns YES");
+  passeq ([locale objectForKey: NSLocaleMeasurementSystem],
+    @"Metric",
+    "NSLocaleMeasurementSystem key returns 'Metric'");
+  passeq ([locale objectForKey: NSLocaleDecimalSeparator],
+    @",",
+    "NSLocaleDecimalSeparator key returns ','");
+  passeq ([locale objectForKey: NSLocaleGroupingSeparator],
+    @".",
+    "NSLocaleGroupingSeparator key returns '.'");
+  u = 8359;
+  passeq ([locale objectForKey: NSLocaleCurrencySymbol],
+    [NSString stringWithCharacters: &u length: 1],
+    "NSLocaleCurrencySymbol key returns 'xx3'");
+  passeq ([locale objectForKey: NSLocaleCurrencyCode],
+    @"ESP",
+    "NSLocaleCurrencyCode key returns 'ESP'");
   passeq([locale objectForKey: NSLocaleCollatorIdentifier],
     @"es_ES@currency=ESP", "NSLocaleCollatorIdentifier for Spain");
-  TEST_FOR_CLASS(@"NSString",
-    [locale objectForKey: NSLocaleQuotationBeginDelimiterKey],
-    "NSLocaleQuotationBeginDelimiterKey key returns a NSString");
-  TEST_FOR_CLASS(@"NSString",
-    [locale objectForKey: NSLocaleQuotationEndDelimiterKey],
-    "NSLocaleQuotationEndDelimiterKey key returns a NSString");
-  TEST_FOR_CLASS(@"NSString",
-    [locale objectForKey: NSLocaleAlternateQuotationBeginDelimiterKey],
-    "NSLocaleAlternateQuotationBeginDelimiterKey key returns a NSString");
-  TEST_FOR_CLASS(@"NSString",
-    [locale objectForKey: NSLocaleAlternateQuotationEndDelimiterKey],
-    "NSLocaleAlternateQuotationEndDelimiterKey key returns a NSString");
+  u = 8216;
+  passeq ([locale objectForKey: NSLocaleQuotationBeginDelimiterKey],
+    [NSString stringWithCharacters: &u length: 1],
+    "NSLocaleQuotationBeginDelimiterKey key works");
+  u = 8217;
+  passeq ([locale objectForKey: NSLocaleQuotationEndDelimiterKey],
+    [NSString stringWithCharacters: &u length: 1],
+    "NSLocaleQuotationEndDelimiterKey key returns 'xx6'");
+  u = 8220;
+  passeq ([locale objectForKey: NSLocaleAlternateQuotationBeginDelimiterKey],
+    [NSString stringWithCharacters: &u length: 1],
+    "NSLocaleAlternateQuotationBeginDelimiterKey key returns 'xx7'");
+  u = 8221;
+  passeq ([locale objectForKey: NSLocaleAlternateQuotationEndDelimiterKey],
+    [NSString stringWithCharacters: &u length: 1],
+    "NSLocaleAlternateQuotationEndDelimiterKey key returns 'xx8'");
   RELEASE(locale);
   
   locale = [[NSLocale alloc] initWithLocaleIdentifier: @"en_US"];
-  pass ([[locale localeIdentifier] isEqual: @"en_US"],
+  passeq ([locale localeIdentifier], @"en_US",
     "'en_US' is stored as 'en_US'.");
-  pass ([locale objectForKey: NSLocaleScriptCode] == nil,
+  passeq ([locale objectForKey: NSLocaleScriptCode], nil,
     "en_US does not have script code");
-  pass ([locale objectForKey: NSLocaleVariantCode] == nil,
+  passeq ([locale objectForKey: NSLocaleVariantCode], nil,
     "en_US does not have variant code");
-  pass ([locale objectForKey: NSLocaleCollationIdentifier] == nil,
+  passeq ([locale objectForKey: NSLocaleCollationIdentifier], nil,
     "en_US does not have a collation identifier");
   pass ([[locale objectForKey: NSLocaleUsesMetricSystem] boolValue] == NO,
     "en_US does not use the metric system");
@@ -92,12 +100,12 @@ int main(void)
     "zh-Hant_TW has no script code");
   RELEASE(locale);
   
-  str = [NSLocale canonicalLocaleIdentifierFromString: @"AmericanEnglish"];
-  pass ([str isEqual: @"en_US"],
-    "Canonical identifier for 'AmericanEnglish is en_US");
-  str = [NSLocale canonicalLanguageIdentifierFromString: @"AmericanEnglish"];
-  pass ([str isEqual: @"en"],
-    "Canonical language identifier for 'AmericanEnglish is en");
+  passeq ([NSLocale canonicalLocaleIdentifierFromString: @"AmericanEnglish"],
+    @"americanenglish",
+    "Canonical identifier for 'AmericanEnglish is americanenglish");
+  passeq ([NSLocale canonicalLanguageIdentifierFromString: @"AmericanEnglish"],
+    @"americanenglish",
+    "Canonical language identifier for 'AmericanEnglish is americanenglish");
   
   RELEASE(arp);
   return 0;
