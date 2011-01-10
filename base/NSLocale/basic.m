@@ -9,7 +9,7 @@ int main()
   id testObj = [NSLocale currentLocale];
 
   test_NSObject(@"NSLocale", [NSArray arrayWithObject: testObj]);
-  test_NSCoding([NSArray arrayWithObject: testObj]);
+  test_keyed_NSCoding([NSArray arrayWithObject: testObj]);
   test_NSCopying(@"NSLocale", @"NSLocale",
     [NSArray arrayWithObject: testObj], NO, NO);
   
