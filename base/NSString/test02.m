@@ -109,26 +109,34 @@ int main()
 
 /* Check behavior for UNC absolute and relative paths.
  */
-#ifdef	GNUSTEP
+#ifdef	GNUSTEP_BASE_LIBRARY
   GSPathHandling("gnustep");
+
   // UNC
-  pass([[@"//host/share/file.jpg" stringByDeletingLastPathComponent]
-    isEqual: @"//host/share/"],
+  passeq([@"//host/share/file.jpg" stringByDeletingLastPathComponent],
+    @"//host/share/",
     "'//host/file.jpg' stringByDeletingLastPathComponent == '//host/'");
+
   // UNC
-  pass([[@"//host/share/" stringByDeletingLastPathComponent]
-    isEqual: @"//host/share/"],
+  passeq([@"//host/share/" stringByDeletingLastPathComponent],
+    @"//host/share/",
     "'//host/share/' stringByDeletingLastPathComponent == '//host/share/'");
+
   // Not UNC
   passeq([@"///host/share/" stringByDeletingLastPathComponent],
     @"///host",
     "'///host/share/' stringByDeletingLastPathComponent == '///host'");
+
   // Not UNC
-  pass([[@"//host/share" stringByDeletingLastPathComponent] isEqual: @"//host"],
-   "'//host/share' stringByDeletingLastPathComponent == '//host'");
+  passeq([@"//host/share" stringByDeletingLastPathComponent],
+    @"//host",
+    "'//host/share' stringByDeletingLastPathComponent == '//host'");
+
   // Not UNC
-  pass([[@"//dir/" stringByDeletingLastPathComponent] isEqual: @"/"],
-   "'//dir/' stringByDeletingLastPathComponent == '/'");
+  passeq([@"//dir/" stringByDeletingLastPathComponent],
+    @"/",
+    "'//dir/' stringByDeletingLastPathComponent == '/'");
+
   GSPathHandling("unix");
 #endif
 
@@ -146,7 +154,7 @@ int main()
   pass([[@"//dir/" stringByDeletingLastPathComponent] isEqual: @"/"],
    "'//dir/' stringByDeletingLastPathComponent == '/'");
 
-#ifdef	GNUSTEP
+#ifdef	GNUSTEP_BASE_LIBRARY
   GSPathHandling("gnustep");
 #endif
 
@@ -185,72 +193,73 @@ int main()
       "'~root' stringByExpandingTildeInPath: != '~root'");
 #endif
   
-  testPath = "/home//user";
-  resultPath = "/home/user";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+#ifdef	GNUSTEP_BASE_LIBRARY
+
+  passeq ([@"//home/user/" stringByStandardizingPath], @"//home/user/",
+    "//home/user/ stringByStandardizingPath == //home/user/");
+
+  passeq ([@"\\\\home\\user\\" stringByStandardizingPath],
+    @"\\\\home\\user\\",
+    "\\\\home\\user\\ stringByStandardizingPath == \\\\home\\user\\");
+
+  passeq ([@"c:\\." stringByStandardizingPath], @"c:\\",
+    "'c:\\.' stringByStandardizingPath == 'c:\\'");
   
+  passeq ([@"c:\\..." stringByStandardizingPath], @"c:\\...",
+    "'c:\\...' stringByStandardizingPath == 'c:\\...'");
+  
+  pass([@"c:/home" isAbsolutePath] == YES,
+       "'c:/home' isAbsolutePath == YES");
+
+  pass([@"//host/share/" isAbsolutePath] == YES,
+       "'//host/share/' isAbsolutePath == YES");
+
+#endif
+
+  passeq ([@"/home//user/" stringByStandardizingPath], @"/home/user",
+   "/home//user/ stringByStandardizingPath == /home/user");
+
+  passeq ([@"//home/user" stringByStandardizingPath], @"/home/user",
+   "//home/user stringByStandardizingPath == /home/user");
+
   passeq ([@"///home/user" stringByStandardizingPath], @"/home/user",
    "///home/user stringByStandardizingPath == /home/user");
   
-  testPath = "/home/./user";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  passeq ([@"/home/./user" stringByStandardizingPath], @"/home/user",
+   "/home/./user stringByStandardizingPath == /home/user");
   
-  testPath = "/home/user/.";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  passeq ([@"/home/user/." stringByStandardizingPath], @"/home/user",
+   "/home/user/. stringByStandardizingPath == /home/user");
   
-  testPath = "/home/.//././user";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  passeq ([@"/home/.//././user" stringByStandardizingPath], @"/home/user",
+   "/home/.//././user stringByStandardizingPath == /home/user");
   
-  pass([[@"home/../nicola" stringByStandardizingPath]
-  				isEqual: @"home/../nicola"],
-       "'home/../nicola' stringByStandardizingPath == 'home/../nicola'");
+  passeq ([@"/home/../nicola" stringByStandardizingPath], @"/home/../nicola",
+   "/home/../nicola stringByStandardizingPath == /home/../nicola");
   
-  testPath = "/.";
-  resultPath = "/";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
-  
-  testPath = "c:\\.";
-  resultPath = "c:\\";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
-  
-  testPath = "c:\\...";
-  resultPath = "c:\\...";
-  pass(strcmp([[[NSString stringWithCString:testPath] 
-	                stringByStandardizingPath] cString],resultPath) == 0,
-       "'%s' stringByStandardizingPath == '%s'",testPath,resultPath);
+  passeq ([@"/." stringByStandardizingPath], @"/",
+   "/. stringByStandardizingPath == /");
   
   result = [NSArray arrayWithObjects: @"nicola",@"core",nil];
   result = [@"home" stringsByAppendingPaths:result];
   pass([result count] == 2
-       && [[result objectAtIndex:0] isEqual: @"home/nicola"]
-       && [[result objectAtIndex:1] isEqual: @"home/core"],
-       "stringsByAppendingPaths works");
-  
+    && [[result objectAtIndex:0] isEqual: @"home/nicola"]
+    && [[result objectAtIndex:1] isEqual: @"home/core"],
+    "stringsByAppendingPaths works");
   
   pass([@"home" isAbsolutePath] == NO,
        "'home' isAbsolutePath == NO");
 
-  pass([@"c:/home" isAbsolutePath] == YES,
-       "'c:/home' isAbsolutePath == YES");
-
 #if	defined(__MINGW32__)
   pass([@"/home" isAbsolutePath] == NO,
        "'/home' isAbsolutePath == NO");
+  pass([@"//host/share" isAbsolutePath] == NO,
+       "'//host/share' isAbsolutePath == NO");
 #else
   pass([@"/home" isAbsolutePath] == YES,
        "'/home' isAbsolutePath == YES");
+  pass([@"//host/share" isAbsolutePath] == YES,
+       "'//host/share' isAbsolutePath == YES");
 #endif
   
   result = [NSArray arrayWithObjects: @"nicola",@"core",nil];
