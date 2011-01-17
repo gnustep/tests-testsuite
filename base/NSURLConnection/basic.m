@@ -18,30 +18,32 @@ int main()
   TEST_FOR_CLASS(@"NSURLConnection", [NSURLConnection alloc],
     "NSURLConnection +alloc returns an NSURLConnection");
 
-  mutable = [NSMutableURLRequest requestWithURL:httpURL];
-  pass([NSURLConnection canHandleRequest:mutable],
-       "NSURLConnection can handle an valid HTTP request (GET)");
-  [mutable setHTTPMethod:@"WRONGMETHOD"];
-  pass([NSURLConnection canHandleRequest:mutable],
-       "NSURLConnection can handle an invalid HTTP request (WRONGMETHOD)");
+  mutable = [NSMutableURLRequest requestWithURL: httpURL];
+  pass([NSURLConnection canHandleRequest: mutable],
+    "NSURLConnection can handle an valid HTTP request (GET)");
+  [mutable setHTTPMethod: @"WRONGMETHOD"];
+  pass([NSURLConnection canHandleRequest: mutable],
+    "NSURLConnection can handle an invalid HTTP request (WRONGMETHOD)");
 
-  [mutable setHTTPMethod:@"GET"];
-  connection = [NSURLConnection connectionWithRequest:mutable delegate:nil];
+  [mutable setHTTPMethod: @"GET"];
+  connection = [NSURLConnection connectionWithRequest: mutable delegate: nil];
   pass(connection != nil,
-       "NSURLConnection +connectionWithRequest:delegate: with nil as delegate returns a instance");
+    "NSURLConnection +connectionWithRequest: delegate: with nil as delegate returns a instance");
 
-  data = [NSURLConnection sendSynchronousRequest:mutable returningResponse:&response error:&error];
+  data = [NSURLConnection sendSynchronousRequest: mutable
+                               returningResponse: &response
+                                           error: &error];
   pass(data != nil && [data length] > 0,
-       "NSURLConnection synchronously load data from an http URL");
-  [data release];
+    "NSURLConnection synchronously load data from an http URL");
 
   path = [[NSFileManager defaultManager] currentDirectoryPath];
-  path = [path stringByAppendingPathComponent:@"basic.m"];
-  [mutable setURL:[NSURL fileURLWithPath:path]];
-  data = [NSURLConnection sendSynchronousRequest:mutable returningResponse:&response error:&error];
+  path = [path stringByAppendingPathComponent: @"basic.m"];
+  [mutable setURL: [NSURL fileURLWithPath: path]];
+  data = [NSURLConnection sendSynchronousRequest: mutable
+                               returningResponse: &response
+                                           error: &error];
   pass(data != nil && [data length] > 0,
-       "NSURLConnection synchronously load data from a local file");
-  [data release];
+    "NSURLConnection synchronously load data from a local file");
 
   [arp release]; arp = nil;
   return 0;

@@ -1,4 +1,11 @@
-2011-01-10- Richard Frith-Macdonald  <rfm@gnu.org>
+2011-01-17 Phillipe Roussel, Richard Frith-Macdonald
+
+        * base/NSURLConnection/basic.m:
+        * base/NSURLProtocol/basic.m:
+        * base/NSURLRequest/basic.m:
+        New tests by Phillipe, tidied by Richard.
+
+2011-01-10 Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* ObjectTesting.h: add test for keyed coding.
         * base/NSLocale/general.m: Add more specific tests of actual values

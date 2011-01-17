@@ -30,7 +30,7 @@
 /* Tests obj and expect for equality ... logs the descriptionas as UTF8 to
  * stderr if they are not equal.
  */
-static void passeq(id obj, id expect, const char *description, ...) __attribute__ ((format(printf, 3, 4)));
+static void passeq(id obj, id expect, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 3, 4)));
 static void passeq(id obj, id expect, const char *description, ...)
 {
   va_list args;
@@ -67,7 +67,7 @@ static void passeq(id obj, id expect, const char *description, ...)
 /* Tests obj and expect for equality ... logs the descriptionas as UTF8 to
  * stderr if they are not equal.
  */
-static void hopeeq(id obj, id expect, const char *description, ...) __attribute__ ((format(printf, 3, 4)));
+static void hopeeq(id obj, id expect, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 3, 4)));
 static void hopeeq(id obj, id expect, const char *description, ...)
 {
   va_list args;
@@ -331,7 +331,6 @@ static void test_keyed_NSCoding(NSArray *objects)
       id obj = [objects objectAtIndex: i];
       const char *prefix; 
       NSData *data;
-      NSKeyedArchiver *archiver;
       id decoded;
 
       START_SET(YES);
@@ -360,7 +359,6 @@ static void test_NSCopying(NSString *iClassName,
   Class iClass = NSClassFromString(iClassName);
   Class mClass = NSClassFromString(mClassName);
   int i;
-  NSZone *defZone = NSDefaultMallocZone();
   NSZone *testZone = NSCreateZone(1024, 1024, 1);
 
   pass(iClass != Nil, "%s is a known class", [iClassName UTF8String]);

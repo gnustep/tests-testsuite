@@ -27,7 +27,7 @@
  * success or failure of the testcase (0 is a failure) and a string which
  * describes the testcase.
  */
-static void pass(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
+static void pass(int testPassed, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 2, 3)));
 static void pass(int testPassed, const char *description, ...)
 {
   va_list args;
@@ -42,7 +42,7 @@ static void pass(int testPassed, const char *description, ...)
  * that the testcase is likely to fail (eg. a test for a known bug which may
  * have been fixed by the time the testsuite is run).
  */
-static void hope(int testPassed, const char *description, ...) __attribute__ ((format(printf, 2, 3)));
+static void hope(int testPassed, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 2, 3)));
 static void hope(int testPassed, const char *description, ...)
 {
   va_list args;
@@ -58,7 +58,7 @@ static void hope(int testPassed, const char *description, ...)
  * eg. You might call this if an earlier testcase failed and it makes no
  * sense to run subsequent tests.
  */
-static void unresolved(const char *description, ...) __attribute__ ((format(printf, 1, 2), unused));
+static void unresolved(const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 1, 2), unused));
 static void unresolved(const char *description, ...)
 {
   va_list args;
@@ -73,7 +73,7 @@ static void unresolved(const char *description, ...)
  * notify the testsuite that a test could not be run because the capability
  * it is testing does not exist on the current platform.
  */
-static void unsupported(const char *description, ...) __attribute__ ((format(printf, 1, 2), unused));
+static void unsupported(const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 1, 2), unused));
 static void unsupported(const char *description, ...)
 {
   va_list args;
