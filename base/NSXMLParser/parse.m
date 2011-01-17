@@ -1,5 +1,6 @@
 #import "ObjectTesting.h"
 #import <Foundation/NSAutoreleasePool.h>
+#import <Foundation/NSFileManager.h>
 #import <Foundation/NSUserDefaults.h>
 #import <Foundation/NSXMLParser.h>
 #include <string.h>
@@ -236,14 +237,11 @@ static BOOL     setShouldReportNamespacePrefixes = YES;
 static BOOL     setShouldResolveExternalEntities = NO;
 
 static BOOL
-testParse(const char *xmlBytes, NSString *expect)
+testParse(NSData *xml, NSString *expect)
 {
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
   Handler               *handler;
   NSXMLParser           *parser;
-  NSData                *xml;
-
-  xml = [NSData dataWithBytes: xmlBytes length: strlen(xmlBytes)];
 
   parser = [[NSXMLParser alloc] initWithData: xml];
 
@@ -255,15 +253,16 @@ testParse(const char *xmlBytes, NSString *expect)
   [parser setDelegate: handler];
   if (NO == [parser parse])
     {
-      NSLog(@"%@", [parser parserError]);
+      NSLog(@"Parsing failed: %@", [parser parserError]);
       [arp release];
       return NO;
     }
   else
     {
-      NSLog(@"%@", handler);
       if (NO == [[handler description] isEqual: expect]) 
         {
+          NSLog(@"######## Expected:\n%@\n######## Parsed:\n%@\n########\n",
+	    expect, [handler description]);
           [arp release];
           return NO;
         }
@@ -272,16 +271,50 @@ testParse(const char *xmlBytes, NSString *expect)
   return YES;
 }
 
+static BOOL
+testParseCString(const char *xmlBytes, NSString *expect)
+{
+  NSData	*xml;
+
+  xml = [NSData dataWithBytes: xmlBytes length: strlen(xmlBytes)];
+  return testParse(xml, expect);
+}
+
 int main()
 {
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
+  NSFileManager		*mgr = [NSFileManager defaultManager];
+  NSDirectoryEnumerator	*dir;
+  NSString		*xmlName;
   const char            *x1 = "<?xml version=\"1.0\"?><test x = \"1\"></test>";
   const char            *x1e = "<test x=\"1\"></test>";
   NSString              *e1 =
 @"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n    x = 1;\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";
 
-  pass(testParse(x1, e1), "simple document 1");
-  pass(testParse(x1e, e1), "simple document 1 without header");
+  pass(testParseCString(x1, e1), "simple document 1");
+  pass(testParseCString(x1e, e1), "simple document 1 without header");
+
+  /* Now perform any tests using .xml and .result pairs of files in
+   * the ParseData subdirectory.
+   */
+  dir = [mgr enumeratorAtPath: @"ParseData"];
+  while ((xmlName = [dir nextObject]) != nil)
+    {
+      if ([[xmlName pathExtension] isEqualToString: @"xml"])
+	{
+	  NSString	*str;
+	  NSString	*xmlPath;
+          NSData	*xmlData;
+          NSString	*result;
+
+	  xmlPath = [@"ParseData" stringByAppendingPathComponent: xmlName];
+	  str = [xmlPath stringByDeletingPathExtension];
+	  str = [str stringByAppendingPathExtension: @"result"];
+          xmlData = [NSData dataWithContentsOfFile: xmlPath];
+          result = [NSString stringWithContentsOfFile: str];
+	  pass(testParse(xmlData, result), [xmlName UTF8String]);
+	}
+    }
 
   [arp release]; arp = nil;
   return 0;
