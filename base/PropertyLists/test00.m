@@ -52,19 +52,19 @@ int main()
   pass(test_parse(@"{}", [NSDictionary dictionary]),
        "We can parse an empty dictionary");
 
-  pass(test_parse(@"{author = ariosto; title = \"orlando furioso\"}",
+  pass(test_parse(@"{author = ariosto; title = \"orlando furioso\"; }",
 		  [NSDictionary dictionaryWithObjectsAndKeys:
 				  @"ariosto", @"author",
 				@"orlando furioso", @"title", nil]),
        "We can parse a simple dictionary with a two key value pairs");
 
-  pass(test_parse(@"{/* -*-c-*- */ author = ariosto; title = \"orlando furioso\"}",
+  pass(test_parse(@"{/* -*-c-*- */ author = ariosto; title = \"orlando furioso\"; }",
 		  [NSDictionary dictionaryWithObjectsAndKeys:
 				  @"ariosto", @"author",
 				@"orlando furioso", @"title", nil]),
        "We can parse a simple dictionary with a two key value pairs and a C comment");
 
-  pass(test_parse(@"{// -*-c-*-\n author = ariosto; title = \"orlando furioso\"}",
+  pass(test_parse(@"{// -*-c-*-\n author = ariosto; title = \"orlando furioso\";}",
 		  [NSDictionary dictionaryWithObjectsAndKeys:
 				  @"ariosto", @"author",
 				@"orlando furioso", @"title", nil]),
