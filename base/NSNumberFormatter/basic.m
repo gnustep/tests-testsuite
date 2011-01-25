@@ -13,7 +13,6 @@ int main()
                  "+[NSNumberFormatter alloc] returns a NSNumberFormatter");
 
   fmt = [[[NSNumberFormatter alloc] init] autorelease];
-  [fmt setFormatterBehavior: NSNumberFormatterBehavior10_0];
   num = [[[NSNumber alloc] initWithFloat: 1234.567] autorelease];
 
   str = [fmt stringForObjectValue: num];
