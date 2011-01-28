@@ -22,8 +22,13 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-/* The pass() function is the core of the testsuiit.
- * You call it with two arguments ... an intger expression indicating the
+/* The pass() function is the low-level core of the testsuit.
+ *
+ * Try not to use it diectly if there is a higher-level test macro or function
+ * available.  In particular, please use the passeq() function instead wherever
+ * you wish to test the eqality of a pair of objective-c objects.
+ *
+ * You call this with two arguments ... an intger expression indicating the
  * success or failure of the testcase (0 is a failure) and a string which
  * describes the testcase.
  */
@@ -41,6 +46,9 @@ static void pass(int testPassed, const char *description, ...)
 /* The hope() function is similar to pass() but is used where it is expected
  * that the testcase is likely to fail (eg. a test for a known bug which may
  * have been fixed by the time the testsuite is run).
+ *
+ * See also, the hopeeq() function for wherever you are testing the equality
+ * of objective-c objects.
  */
 static void hope(int testPassed, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 2, 3)));
 static void hope(int testPassed, const char *description, ...)
