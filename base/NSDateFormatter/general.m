@@ -48,13 +48,16 @@ int main(void)
   [cal setLocale: locale];
   components = NSYearCalendarUnit;
   year = [[cal components: components fromDate: date] year];
-  str = [NSDateFormatter localizedStringFromDate: date
-          dateStyle: NSDateFormatterLongStyle
-          timeStyle: NSDateFormatterNoStyle];
+  inFmt = [NSDateFormatter new];
+  [inFmt setLocale: locale];
+  [inFmt setDateStyle: NSDateFormatterLongStyle];
+  [inFmt setTimeStyle: NSDateFormatterNoStyle];
+  str = [inFmt stringFromDate: date];
   pass (year == 1982, "Year is 1982");
-  passeq (str, @"June 15, 1982", "Date is formatted correctly.");
+  passeq (str, @"15 June 1982", "Date is formatted correctly.");
   RELEASE(locale);
   RELEASE(cal);
+  RELEASE(inFmt);
   
   RELEASE(pool);
   return 0;
