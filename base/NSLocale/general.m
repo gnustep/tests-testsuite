@@ -7,8 +7,6 @@ int main(void)
 {
   NSAutoreleasePool *arp = [NSAutoreleasePool new];
   NSLocale *locale;
-  NSString *str;
-  NSDictionary *dict;
   id            o;
   unichar       u;
   
