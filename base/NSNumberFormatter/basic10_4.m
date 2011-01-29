@@ -13,17 +13,17 @@ int main()
   num = [[[NSNumber alloc] initWithFloat: 1234.567] autorelease];
 
   str = [fmt stringFromNumber: num];
-  passeq (str, @"1,234.57", "default 10.4 format same as Cocoa");
+  passeq (str, @"1235", "default 10.4 format same as Cocoa");
 
-  [fmt setMaximumFractionDigits: 0];
+  [fmt setMaximumFractionDigits: 2];
   str = [fmt stringFromNumber: num];
 
-  passeq (str, @"1,235", "round up for fractional part >0.5");
+  passeq (str, @"1234.57", "round up for fractional part >0.5");
 
   num = [[[NSNumber alloc] initWithFloat: 1234.432] autorelease];
   str = [fmt stringFromNumber: num];
 
-  passeq (str, @"1,234", "round down for fractional part <0.5");
+  passeq (str, @"1234.43", "round down for fractional part <0.5");
 
   [fmt setNumberStyle: NSNumberFormatterNoStyle];
   [fmt setMaximumFractionDigits: 0];
@@ -37,15 +37,16 @@ int main()
 
   num = [[[NSNumber alloc] initWithFloat: 1234.56] autorelease];
   [fmt setNumberStyle: NSNumberFormatterCurrencyStyle];
+  [fmt setLocale: [[NSLocale alloc] initWithLocaleIdentifier: @"pt_BR"]];
   [fmt setPositiveSuffix: @"c"];
   str = [fmt stringFromNumber: num];
   
-  passeq (str, @"$1,234.56c", "prefix and suffix used properly");
+  passeq (str, @"R$1.235c", "prefix and suffix used properly");
 
   num = [[[NSNumber alloc] initWithFloat: -1234.56] autorelease];
   str = [fmt stringFromNumber: num];
 
-  passeq (str, @"($1,234.56)", "negativeFormat used for -ve number");
+  passeq (str, @"(R$1.235)", "negativeFormat used for -ve number");
 
   str = [fmt stringFromNumber: [NSDecimalNumber notANumber]];
 

@@ -8,6 +8,8 @@ int main()
   NSNumberFormatter *fmt;
   NSNumber *num;
   NSString *str;
+  
+  [NSNumberFormatter setDefaultFormatterBehavior: NSNumberFormatterBehavior10_0];
 
   TEST_FOR_CLASS(@"NSNumberFormatter",[NSNumberFormatter alloc],
                  "+[NSNumberFormatter alloc] returns a NSNumberFormatter");
