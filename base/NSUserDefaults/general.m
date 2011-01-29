@@ -60,13 +60,13 @@ int main()
   pass([defs boolForKey: @"Test Suite Bool"],
        "NSUserDefaults can set/get a BOOL");
 
-  passeq([obs count], @"1", @"setting a boolean causes notification");
+  passeq([obs count], @"1", "setting a boolean causes notification");
 
   [defs setInteger: 34 forKey: @"Test Suite Int"];
   pass([defs integerForKey: @"Test Suite Int"] == 34,
        "NSUserDefaults can set/get an int");
 
-  passeq([obs count], @"2", @"setting an integer causes notification");
+  passeq([obs count], @"2", "setting an integer causes notification");
 
   [defs setObject: @"SetString" forKey: @"Test Suite Str"];
   pass([[defs stringForKey: @"Test Suite Str"] isEqual: @"SetString"],
