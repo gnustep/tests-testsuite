@@ -5,8 +5,10 @@
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  NSMutableString *ms;
   NSString *val1, *val2, *val3;
   NSPointerArray *obj, *old;
+  NSUInteger rc;
   id vals[3];
   
   val1 = @"Hello";
@@ -34,6 +36,12 @@ int main()
   pass([obj count] == 5 && [obj pointerAtIndex: 2] == (void*)vals[0],
     "+insertPointer:atIndex: works");
   
+  obj = [NSPointerArray pointerArrayWithWeakObjects];
+  ms = [@"hello" mutableCopy];
+  rc = [ms retainCount];
+  [obj addPointer: ms];
+  pass(rc == [ms retainCount], "array with weak references doesn't retain");
+
   [arp release]; arp = nil;
   return 0;
 } 
