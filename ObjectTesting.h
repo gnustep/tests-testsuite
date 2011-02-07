@@ -15,80 +15,12 @@
    General Public License for more details.
  
 */
-#import <Foundation/NSObjCRuntime.h>
-#import <Foundation/NSString.h>
-#import <Foundation/NSObject.h>
+#import <Testing.h>
 #import <Foundation/NSArray.h>
 #import <Foundation/NSDictionary.h>
-#import <Foundation/NSException.h>
 #import <Foundation/NSData.h>
 #import <Foundation/NSArchiver.h>
 #import <Foundation/NSKeyedArchiver.h>
-#import <Foundation/NSGarbageCollector.h>
-#import "Testing.h"
-
-/* Tests obj and expect for equality ... logs the descriptionas as UTF8 to
- * stderr if they are not equal.
- */
-static void passeq(id obj, id expect, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 3, 4)));
-static void passeq(id obj, id expect, const char *description, ...)
-{
-  va_list args;
-  va_start(args, description);
-  if (obj == expect || [obj isEqual: expect])
-    {
-      fprintf(stderr, "PASS: ");
-      vfprintf(stderr, description, args);
-      fprintf(stderr, "\n");
-    }
-  else
-    {
-      NSString  *s = [obj description];
-
-      fprintf(stderr, "FAIL: ");
-      vfprintf(stderr, description, args);
-      fprintf(stderr, "\n");
-      if ([s length] == 1)
-        {
-          fprintf(stderr, "Expected '%s' and got '%s' (unicode codepoint %d)\n",
-            [[expect description] UTF8String],
-            [s UTF8String], [s characterAtIndex: 0]);
-        }
-      else
-        {
-          fprintf(stderr, "Expected '%s' and got '%s'\n",
-            [[expect description] UTF8String],
-            [s UTF8String]);
-        }
-    }
-  va_end(args);
-}
-
-/* Tests obj and expect for equality ... logs the descriptionas as UTF8 to
- * stderr if they are not equal.
- */
-static void hopeeq(id obj, id expect, const char *description, ...)  __attribute__((unused)) __attribute__ ((format(printf, 3, 4)));
-static void hopeeq(id obj, id expect, const char *description, ...)
-{
-  va_list args;
-  va_start(args, description);
-  if (obj == expect || [obj isEqual: expect])
-    {
-      fprintf(stderr, "PASS: ");
-      vfprintf(stderr, description, args);
-      fprintf(stderr, "\n");
-    }
-  else
-    {
-      fprintf(stderr, "DASHED: ");
-      vfprintf(stderr, description, args);
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Expected '%s' and got '%s'\n",
-        [[expect description] UTF8String],
-        [[obj description] UTF8String]);
-    }
-  va_end(args);
-}
 
 #define TEST_FOR_CLASS(aClassName, aClass, TestDescription) \
   pass([aClass isKindOfClass: NSClassFromString(aClassName)], TestDescription)
@@ -101,20 +33,18 @@ static void hopeeq(id obj, id expect, const char *description, ...)
       && [_testString length], description); \
   }
 
-/* SETs are used to group code which is outside of the scope of the
-   current test but could raise exceptions that should be caught to
-   allow further tests to run.  */
-#define START_SET(supported) if ((supported)) { NS_DURING 
-#define END_SET(desc, args...) NS_HANDLER \
-  fprintf(stderr, "EXCEPTION: %s %s %s\n", \
-    [[localException name] UTF8String], \
-    [[localException reason] UTF8String], \
-    [[[localException userInfo] description] UTF8String]); \
-  unresolved (desc, ## args); \
- NS_ENDHANDLER } \
- else unsupported (desc, ## args)
+/* DEPRECATED
+ * This is for backward compatibility, the original havng been replaced
+ * by two clearer/simpler macros.
+ * Please use PASS_EXCEPTION() for a test which is supposed to raise,
+ * or PASS_RUNS() to test that code runs without raising an exception.
+ */ 
+#define TEST_EXCEPTION(code, exceptionName, shouldRaise, description) \
+  if (shouldRaise) { PASS_EXCEPTION(code, exceptionName, description) } \
+  else { PASS_RUNS(code, description) }
 
-/* START_TEST/END_TEST can be used if the code being tested could raise
+/* DEPRECATED
+   START_TEST/END_TEST can be used if the code being tested could raise
    and the exception should be considered a test failure.  The exception
    is not reraised to allow subsequent tests to execute.  The START_TEST
    macro takes an argument which will skip the test as UNSUPPORTED if it
@@ -130,39 +60,6 @@ static void hopeeq(id obj, id expect, const char *description, ...)
       [[[localException userInfo] description] UTF8String]); \
     pass (NO, desc, ## args); NS_ENDHANDLER } \
   else unsupported (desc, ## args)
-
-/* You can pass nil for expectedExceptionName if you don't care about the
- * type of exception */
-/* test if an exception is thrown or not */
-#define TEST_EXCEPTION(code, exceptionName, shouldThrow, description) \
-  NS_DURING \
-    code; \
-    pass(shouldThrow == NO, description); \
-  NS_HANDLER \
-    pass((shouldThrow == YES \
-      && (exceptionName == nil \
-	|| [[localException name] isEqual: exceptionName])), \
-      description); \
-    if (shouldThrow == YES \
-      && !(exceptionName == nil \
-	|| [[localException name] isEqual: exceptionName])) \
-      [localException raise]; \
-  NS_ENDHANDLER
-
-/* test a condition fail if any exceptions are thrown */
-#define PASS (cond, args...) \
-  NS_DURING \
-    { \
-      [[NSGarbageCollector defaultCollector] collectUnconditionally]; \
-      pass(cond, ## args); \
-      [[NSGarbageCollector defaultCollector] collectUnconditionally]; \
-    } \
-  NS_HANDLER \
-    pass(0, ## args); \
-    printf("%s: %s", [[localException name] UTF8String], \
-      [[localException description] UTF8String]); \
-  NS_ENDHANDLER
-
 
 static void test_NSMutableCopying(NSString *iClassName,
 				  NSString *mClassName, 
@@ -218,13 +115,13 @@ static void test_alloc_only(NSString *className)
   pass(obj0 != nil, "%s has working alloc", prefix);
   pass([obj0 isKindOfClass: theClass],
     "%s alloc gives the correct class", prefix);
-  TEST_EXCEPTION([obj0 description], NSInvalidArgumentException, YES, "raises NSInvalidArgumentException in description")
+  PASS_EXCEPTION([obj0 description], NSInvalidArgumentException, "raises NSInvalidArgumentException in description")
 
-  TEST_EXCEPTION(if([obj0 init]==nil)[NSException raise: NSInvalidArgumentException format: @""],
-    NSInvalidArgumentException, YES, "returns nil or raises NSInvalidArgumentException in init")
+  PASS_EXCEPTION(if([obj0 init]==nil)[NSException raise: NSInvalidArgumentException format: @""],
+    NSInvalidArgumentException, "returns nil or raises NSInvalidArgumentException in init")
 
-  TEST_EXCEPTION(if([theClass new]==nil)[NSException raise: NSInvalidArgumentException format: @""],
-    NSInvalidArgumentException, YES, "returns nil or raises NSInvalidArgumentException in new")
+  PASS_EXCEPTION(if([theClass new]==nil)[NSException raise: NSInvalidArgumentException format: @""],
+    NSInvalidArgumentException, "returns nil or raises NSInvalidArgumentException in new")
 
   obj1 = [theClass allocWithZone: testZone];
   pass([obj1 isKindOfClass: theClass],"%s has working allocWithZone",prefix);
@@ -345,7 +242,7 @@ static void test_keyed_NSCoding(NSArray *objects)
       pass([data length] > 0, "%s can be encoded", prefix);
       decoded = [NSKeyedUnarchiver unarchiveObjectWithData: data];
       pass (decoded != nil, "can be decoded");
-      passeq (decoded, obj, "decoded object equals the original");
+      PASS_EQUAL(decoded, obj, "decoded object equals the original");
       END_SET("test_keyed_NSCoding object %u", i);
     }
 }

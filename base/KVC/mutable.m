@@ -159,8 +159,8 @@ int main(void)
   pass([proxy isKindOfClass:[NSMutableArray class]],
       "proxy is a kind of NSMutableArray");
   [proxy removeLastObject];
-  TEST_EXCEPTION([proxy addObject:@"NaN"];,
-    NSRangeException,YES,"bad removal causes range exception when observing");
+  PASS_EXCEPTION([proxy addObject:@"NaN"];,
+    NSRangeException,"bad removal causes range exception when observing");
   [proxy replaceObjectAtIndex:1 withObject:@"Seven"];
   [proxy addObject:@"Four"];
   [proxy removeObject:@"One"];

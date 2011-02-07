@@ -71,9 +71,9 @@ int main()
     "KVC uses setNilValueForKey:");
 
 /* Don't think we want this case ...
-  TEST_EXCEPTION(
+  PASS_EXCEPTION(
       [setNil takeValue:nil forKey:@"num"],
-      NSInvalidArgumentException, YES,
+      NSInvalidArgumentException,
       "KVC properly throws NSInvalidArgumentException for takeValue:nil");
  */
 

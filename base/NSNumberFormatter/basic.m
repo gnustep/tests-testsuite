@@ -19,22 +19,22 @@ int main()
 
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"1,234.57", "default format same as Cocoa");
+  PASS_EQUAL(str, @"1,234.57", "default format same as Cocoa");
 
   [fmt setAllowsFloats: NO];
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"1,235", "round up for fractional part >0.5");
+  PASS_EQUAL(str, @"1,235", "round up for fractional part >0.5");
 
   num = [[[NSNumber alloc] initWithFloat: 1234.432] autorelease];
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"1,234", "round down for fractional part <0.5");
+  PASS_EQUAL(str, @"1,234", "round down for fractional part <0.5");
 
   [fmt setFormat: @"__000000"];
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"  001234", "numeric and space padding OK");
+  PASS_EQUAL(str, @"  001234", "numeric and space padding OK");
 
   num = [[[NSNumber alloc] initWithFloat: 1234.56] autorelease];
   [fmt setAllowsFloats: YES];
@@ -42,21 +42,21 @@ int main()
   [fmt setNegativeFormat: @"-$(####.##)"];
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"$1234.56c", "prefix and suffix used properly");
+  PASS_EQUAL(str, @"$1234.56c", "prefix and suffix used properly");
 
   num = [[[NSNumber alloc] initWithFloat: -1234.56] autorelease];
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"-$(1234.56)", "negativeFormat used for -ve number");
+  PASS_EQUAL(str, @"-$(1234.56)", "negativeFormat used for -ve number");
 
   str = [fmt stringForObjectValue: [NSDecimalNumber notANumber]];
 
-  passeq(str, @"NaN", "notANumber special case");
+  PASS_EQUAL(str, @"NaN", "notANumber special case");
 
   [fmt setFormat: @"0"];
   str = [fmt stringForObjectValue: num];
 
-  passeq(str, @"-1235", "format string of length 1");
+  PASS_EQUAL(str, @"-1235", "format string of length 1");
 
   [arp release]; arp = nil;
   return 0;

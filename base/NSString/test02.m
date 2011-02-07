@@ -113,27 +113,27 @@ int main()
   GSPathHandling("gnustep");
 
   // UNC
-  passeq([@"//host/share/file.jpg" stringByDeletingLastPathComponent],
+  PASS_EQUAL([@"//host/share/file.jpg" stringByDeletingLastPathComponent],
     @"//host/share/",
     "'//host/file.jpg' stringByDeletingLastPathComponent == '//host/'");
 
   // UNC
-  passeq([@"//host/share/" stringByDeletingLastPathComponent],
+  PASS_EQUAL([@"//host/share/" stringByDeletingLastPathComponent],
     @"//host/share/",
     "'//host/share/' stringByDeletingLastPathComponent == '//host/share/'");
 
   // Not UNC
-  passeq([@"///host/share/" stringByDeletingLastPathComponent],
+  PASS_EQUAL([@"///host/share/" stringByDeletingLastPathComponent],
     @"///host",
     "'///host/share/' stringByDeletingLastPathComponent == '///host'");
 
   // Not UNC
-  passeq([@"//host/share" stringByDeletingLastPathComponent],
+  PASS_EQUAL([@"//host/share" stringByDeletingLastPathComponent],
     @"//host",
     "'//host/share' stringByDeletingLastPathComponent == '//host'");
 
   // Not UNC
-  passeq([@"//dir/" stringByDeletingLastPathComponent],
+  PASS_EQUAL([@"//dir/" stringByDeletingLastPathComponent],
     @"/",
     "'//dir/' stringByDeletingLastPathComponent == '/'");
 
@@ -195,17 +195,17 @@ int main()
   
 #ifdef	GNUSTEP_BASE_LIBRARY
 
-  passeq ([@"//home/user/" stringByStandardizingPath], @"//home/user/",
+  PASS_EQUAL([@"//home/user/" stringByStandardizingPath], @"//home/user/",
     "//home/user/ stringByStandardizingPath == //home/user/");
 
-  passeq ([@"\\\\home\\user\\" stringByStandardizingPath],
+  PASS_EQUAL([@"\\\\home\\user\\" stringByStandardizingPath],
     @"\\\\home\\user\\",
     "\\\\home\\user\\ stringByStandardizingPath == \\\\home\\user\\");
 
-  passeq ([@"c:\\." stringByStandardizingPath], @"c:\\",
+  PASS_EQUAL([@"c:\\." stringByStandardizingPath], @"c:\\",
     "'c:\\.' stringByStandardizingPath == 'c:\\'");
   
-  passeq ([@"c:\\..." stringByStandardizingPath], @"c:\\...",
+  PASS_EQUAL([@"c:\\..." stringByStandardizingPath], @"c:\\...",
     "'c:\\...' stringByStandardizingPath == 'c:\\...'");
   
   pass([@"c:/home" isAbsolutePath] == YES,
@@ -216,28 +216,28 @@ int main()
 
 #endif
 
-  passeq ([@"/home//user/" stringByStandardizingPath], @"/home/user",
+  PASS_EQUAL([@"/home//user/" stringByStandardizingPath], @"/home/user",
    "/home//user/ stringByStandardizingPath == /home/user");
 
-  passeq ([@"//home/user" stringByStandardizingPath], @"/home/user",
+  PASS_EQUAL([@"//home/user" stringByStandardizingPath], @"/home/user",
    "//home/user stringByStandardizingPath == /home/user");
 
-  passeq ([@"///home/user" stringByStandardizingPath], @"/home/user",
+  PASS_EQUAL([@"///home/user" stringByStandardizingPath], @"/home/user",
    "///home/user stringByStandardizingPath == /home/user");
   
-  passeq ([@"/home/./user" stringByStandardizingPath], @"/home/user",
+  PASS_EQUAL([@"/home/./user" stringByStandardizingPath], @"/home/user",
    "/home/./user stringByStandardizingPath == /home/user");
   
-  passeq ([@"/home/user/." stringByStandardizingPath], @"/home/user",
+  PASS_EQUAL([@"/home/user/." stringByStandardizingPath], @"/home/user",
    "/home/user/. stringByStandardizingPath == /home/user");
   
-  passeq ([@"/home/.//././user" stringByStandardizingPath], @"/home/user",
+  PASS_EQUAL([@"/home/.//././user" stringByStandardizingPath], @"/home/user",
    "/home/.//././user stringByStandardizingPath == /home/user");
   
-  passeq ([@"/home/../nicola" stringByStandardizingPath], @"/home/../nicola",
+  PASS_EQUAL([@"/home/../nicola" stringByStandardizingPath], @"/home/../nicola",
    "/home/../nicola stringByStandardizingPath == /home/../nicola");
   
-  passeq ([@"/." stringByStandardizingPath], @"/",
+  PASS_EQUAL([@"/." stringByStandardizingPath], @"/",
    "/. stringByStandardizingPath == /");
   
   result = [NSArray arrayWithObjects: @"nicola",@"core",nil];

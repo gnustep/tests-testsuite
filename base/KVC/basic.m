@@ -228,24 +228,24 @@ int main()
   pass([[undefinedKey2 valueForKey: @"Lücke"] isEqualToString: @"GNUstep"],
       "KVC works with undefined keys (using deprecated methods) ");
 
-  TEST_EXCEPTION(
+  PASS_EXCEPTION(
     [tester setValue: @"" forKey: @"nonexistent"],
-    NSUndefinedKeyException, YES,
+    NSUndefinedKeyException,
     "KVC properly throws @\"NSUnknownKeyException\"");
 
-  TEST_EXCEPTION(
+  PASS_EXCEPTION(
     [tester setValue: @"" forKey: @"nonexistent"],
-    NSUndefinedKeyException, YES,
+    NSUndefinedKeyException,
     "KVC properly throws NSUndefinedKeyException");
 
-  TEST_EXCEPTION(
+  PASS_EXCEPTION(
     [tester setValue: @"" forKeyPath: @"child.nonexistent"],
-    @"NSUnknownKeyException", YES,
+    @"NSUnknownKeyException",
     "KVC properly throws @\"NSUnknownKeyException\" with key paths");
 
-  TEST_EXCEPTION(
+  PASS_EXCEPTION(
     [tester setValue: @"" forKeyPath: @"child.nonexistent"],
-    NSUndefinedKeyException, YES,
+    NSUndefinedKeyException,
     "KVC properly throws NSUndefinedKeyException with key paths");
 
   pass(sel_getUid(0) == 0, "null string gives null selector");

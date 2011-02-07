@@ -15,11 +15,11 @@ int main()
   NSData   *data1;
   NSArray *a;
 
-  TEST_EXCEPTION(val1 = [NSString stringWithCString:"Archiver.dat"];
+  PASS_RUNS(val1 = [NSString stringWithCString:"Archiver.dat"];
     val2 = [NSString stringWithCString:"A Goodbye"];
     val3 = [NSString stringWithCString:"Testing all strings"];
     vals1 = [[NSArray arrayWithObject:val1] arrayByAddingObject:val2];
-    vals2 = [vals1 arrayByAddingObject:val2];, nil, NO, 
+    vals2 = [vals1 arrayByAddingObject:val2];,
     "We can build basic strings and arrays for tests");
   
   data1 = [NSArchiver archivedDataWithRootObject:vals2];

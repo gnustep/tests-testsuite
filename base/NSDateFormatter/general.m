@@ -23,7 +23,7 @@ int main(void)
   [outFmt setLocale: [[NSLocale alloc] initWithLocaleIdentifier: @"pt_BR"]];
   [outFmt setDateFormat: @"HH:mm 'on' EEEE MMMM d"];
   str = [outFmt stringFromDate: date];
-  passeq (str, @"17:36 on quinta-feira janeiro 27",
+  PASS_EQUAL(str, @"17:36 on quinta-feira janeiro 27",
     "Output has the same format as Cocoa.");
   RELEASE(outFmt);
   RELEASE(inFmt);
@@ -35,11 +35,11 @@ int main(void)
   [inFmt setLocale: locale];
   [inFmt setTimeZone: [NSTimeZone timeZoneWithName: @"GMT"]];
   date = [inFmt dateFromString: @"15/06/1982"];
-  passeq ([date description], @"1982-06-15 00:00:00 +0000",
+  PASS_EQUAL([date description], @"1982-06-15 00:00:00 +0000",
     "GMT time zone is correctly accounted for.");
   [inFmt setTimeZone: [NSTimeZone timeZoneWithName: @"EST"]];
   date = [inFmt dateFromString: @"15/06/1982"];
-  passeq ([date description], @"1982-06-15 05:00:00 +0000",
+  PASS_EQUAL([date description], @"1982-06-15 05:00:00 +0000",
     "EST time zone is correctly accounted for.");
   RELEASE(inFmt);
   
@@ -54,7 +54,7 @@ int main(void)
   [inFmt setTimeStyle: NSDateFormatterNoStyle];
   str = [inFmt stringFromDate: date];
   pass (year == 1982, "Year is 1982");
-  passeq (str, @"15 June 1982", "Date is formatted correctly.");
+  PASS_EQUAL(str, @"15 June 1982", "Date is formatted correctly.");
   RELEASE(locale);
   RELEASE(cal);
   RELEASE(inFmt);

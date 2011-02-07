@@ -49,7 +49,9 @@ int main()
       while ((s = [e nextObject]) != nil)
         if ([s rangeOfString: @"testAbc"].length > 0)
           break;
-      hope(s != nil, "working callStackSymbols ... if this has failed it is probably due to a lack of support for objective-c method names (local symbols) in the backtrace_symbols() function of your libc. If so, you might lobby your operating system provider for a fix.");
+      testHopeful = YES;
+      pass(s != nil, "working callStackSymbols ... if this has failed it is probably due to a lack of support for objective-c method names (local symbols) in the backtrace_symbols() function of your libc. If so, you might lobby your operating system provider for a fix.");
+      testHopeful = NO;
     }
   NS_ENDHANDLER
 

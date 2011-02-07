@@ -114,23 +114,23 @@ int main(void) {
                           forKey:@"key"]
                 forKey:@"dict"];
 
-  TEST_EXCEPTION(
+  PASS_RUNS(
       [tester setValue:n forKeyPath:@"child.child.num1"],
-      nil, NO, "KVC appears to work with key path");
+      "KVC appears to work with key path");
   pass([[tester valueForKeyPath:@"child.child.num1"] isEqualToNumber:n],
       "KVC works with key paths");
 
   NSLog(@"tester.child.child = %@", [tester valueForKeyPath:
       @"child.child"]);
-  TEST_EXCEPTION(
+  PASS_RUNS(
       [tester setValue:string forKeyPath:@"child.child.Lücke"],
-      nil, NO, "KVC appears to work with a unicode key path");
+      "KVC appears to work with a unicode key path");
   pass([[tester valueForKeyPath:@"child.child.Lücke"] isEqualToString:string],
       "KVC works with unicode path");
 
-  TEST_EXCEPTION(
+  PASS_RUNS(
       [tester setValue:string forKeyPath:@"dict.Lücke"],
-      nil, NO, "KVC appears to work with a unicode key path (test2)");
+      "KVC appears to work with a unicode key path (test2)");
   pass([[tester valueForKeyPath:@"dict.Lücke"] isEqualToString:string],
       "KVC works with unicode path (test2)");
 

@@ -18,9 +18,9 @@ int main()
   request = [NSURLRequest requestWithURL: httpURL];
   pass(request != nil,
     "NSURLRequest +requestWithURL returns a request from a valid URL");
-  passeq([[request URL] absoluteString], [httpURL absoluteString],
+  PASS_EQUAL([[request URL] absoluteString], [httpURL absoluteString],
     "Request URL is equal to the URL used for creation");
-  passeq([request HTTPMethod], @"GET",
+  PASS_EQUAL([request HTTPMethod], @"GET",
     "Request is initialized with a GET method");
 
   request = [NSURLRequest requestWithURL: foobarURL];
@@ -31,14 +31,14 @@ int main()
   pass(mutable != nil && [mutable isKindOfClass:[NSMutableURLRequest class]],
     "NSURLRequest -mutableCopy returns a mutable request");
   [mutable setHTTPMethod: @"POST"];
-  passeq([mutable HTTPMethod], @"POST",
+  PASS_EQUAL([mutable HTTPMethod], @"POST",
     "Can setHTTPMethod of a mutable request (POST)");
   [mutable setHTTPMethod: @"NONHTTPMETHOD"];
-  passeq([mutable HTTPMethod], @"NONHTTPMETHOD",
+  PASS_EQUAL([mutable HTTPMethod], @"NONHTTPMETHOD",
     "Can setHTTPMethod of a mutable request (non existant NONHTTPMETHOD)");
 
   [mutable addValue: @"value1" forHTTPHeaderField: @"gnustep"];
-  passeq([mutable valueForHTTPHeaderField: @"gnustep"], @"value1",
+  PASS_EQUAL([mutable valueForHTTPHeaderField: @"gnustep"], @"value1",
     "Can set and get a value for an HTTP header field");
   [mutable addValue: @"value2" forHTTPHeaderField: @"gnustep"];
   pass([mutable valueForHTTPHeaderField: @"gnustep"], @"value1,value2",

@@ -1,3 +1,27 @@
+2011-02-07 Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* Testing.h:
+	* ObjectTesting.h:
+	Reorganise, change names, add comments etc. With the aim of making
+	it easier to write testcases and to understand how testcases work.
+	NB.  Work in progress.
+	* base/NSDateFormatter/general.m:
+	* base/NSNumberFormatter/basic10_4.m:
+	* base/NSNumberFormatter/basic.m:
+	* base/NSException/basic.m:
+	* base/NSString/test02.m:
+	* base/NSURLRequest/basic.m:
+	* base/NSLocale/general.m:
+	* base/NSArchiver/general.m:
+	* base/NSArchiver/create.m:
+	* base/NSUserDefaults/general.m:
+	* base/NSArray/basic.m:
+	* base/KVC/mutable.m:
+	* base/KVC/path.m:
+	* base/KVC/basic.m:
+	* base/KVC/nil.m:
+	Tweaks for test framework changes.
+
 2011-01-17 Phillipe Roussel, Richard Frith-Macdonald
 
         * base/NSURLConnection/basic.m:

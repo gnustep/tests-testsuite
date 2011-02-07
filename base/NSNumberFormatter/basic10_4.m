@@ -13,17 +13,17 @@ int main()
   num = [[[NSNumber alloc] initWithFloat: 1234.567] autorelease];
 
   str = [fmt stringFromNumber: num];
-  passeq (str, @"1235", "default 10.4 format same as Cocoa");
+  PASS_EQUAL(str, @"1235", "default 10.4 format same as Cocoa");
 
   [fmt setMaximumFractionDigits: 2];
   str = [fmt stringFromNumber: num];
 
-  passeq (str, @"1234.57", "round up for fractional part >0.5");
+  PASS_EQUAL(str, @"1234.57", "round up for fractional part >0.5");
 
   num = [[[NSNumber alloc] initWithFloat: 1234.432] autorelease];
   str = [fmt stringFromNumber: num];
 
-  passeq (str, @"1234.43", "round down for fractional part <0.5");
+  PASS_EQUAL(str, @"1234.43", "round down for fractional part <0.5");
 
   [fmt setNumberStyle: NSNumberFormatterNoStyle];
   [fmt setMaximumFractionDigits: 0];
@@ -33,7 +33,7 @@ int main()
   [fmt setPaddingPosition: NSNumberFormatterPadBeforePrefix];
   str = [fmt stringFromNumber: num];
   
-  passeq (str, @"0+1234", "numeric and space padding OK");
+  PASS_EQUAL(str, @"0+1234", "numeric and space padding OK");
 
   num = [[[NSNumber alloc] initWithFloat: 1234.56] autorelease];
   [fmt setNumberStyle: NSNumberFormatterCurrencyStyle];
@@ -41,22 +41,22 @@ int main()
   [fmt setPositiveSuffix: @"c"];
   str = [fmt stringFromNumber: num];
   
-  passeq (str, @"R$1.235c", "prefix and suffix used properly");
+  PASS_EQUAL(str, @"R$1.235c", "prefix and suffix used properly");
 
   num = [[[NSNumber alloc] initWithFloat: -1234.56] autorelease];
   str = [fmt stringFromNumber: num];
 
-  passeq (str, @"(R$1.235)", "negativeFormat used for -ve number");
+  PASS_EQUAL(str, @"(R$1.235)", "negativeFormat used for -ve number");
 
   str = [fmt stringFromNumber: [NSDecimalNumber notANumber]];
 
-  passeq (str, @"NaN", "notANumber special case");
+  PASS_EQUAL(str, @"NaN", "notANumber special case");
 
   [fmt setNumberStyle: NSNumberFormatterNoStyle];
   [fmt setMaximumFractionDigits: 0];
   str = [fmt stringFromNumber: num];
   
-  passeq (str, @"-1235", "format string of length 1");
+  PASS_EQUAL(str, @"-1235", "format string of length 1");
 
   [arp release]; arp = nil;
   return 0;
