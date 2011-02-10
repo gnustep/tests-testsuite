@@ -55,9 +55,13 @@ int main(void)
   str = [inFmt stringFromDate: date];
   pass (year == 1982, "Year is 1982");
   PASS_EQUAL(str, @"15 June 1982", "Date is formatted correctly.");
-  RELEASE(locale);
   RELEASE(cal);
   RELEASE(inFmt);
+  
+  str = [NSDateFormatter dateFormatFromTemplate: @"MMMdd"
+    options: 0 locale: locale];
+  PASS_EQUAL(str, @"dd MMM", "Convert date format as Cocoa.");
+  RELEASE(locale);
   
   RELEASE(pool);
   return 0;
