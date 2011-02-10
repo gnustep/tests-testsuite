@@ -1,10 +1,11 @@
 #import "ObjectTesting.h"
-#import <Foundation/NSAutoreleasePool.h>
-#import <Foundation/NSTimeZone.h>
+#import <Foundation/Foundation.h>
 
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  NSLocale *locale;
+  NSString *str;
   id current;
   id localh = [NSTimeZone defaultTimeZone];
   int offset = [localh secondsFromGMT];
@@ -41,7 +42,25 @@ int main()
        && [current secondsFromGMT] == offset
        && [current isDaylightSavingTime] == NO,
        "can set default time zone");
-
+  
+  current = [NSTimeZone timeZoneWithName: @"America/Sao_Paulo"];
+  locale = [[NSLocale alloc] initWithLocaleIdentifier: @"en_GB"];
+  str = [current localizedName: NSTimeZoneNameStyleStandard locale: locale];
+  PASS_EQUAL (str, @"Brasilia Time",
+    "Correctly localizes standard time zone name");
+  str = [current localizedName: NSTimeZoneNameStyleShortStandard
+    locale: locale];
+  PASS_EQUAL (str, @"GMT-03:00", "Correctly localizes short time zone name");
+  str = [current localizedName: NSTimeZoneNameStyleDaylightSaving
+    locale: locale];
+  PASS_EQUAL (str, @"Brasilia Summer Time",
+    "Correctly localizes DST time zone name");
+  str = [current localizedName: NSTimeZoneNameStyleShortDaylightSaving
+    locale: locale];
+  PASS_EQUAL (str, @"GMT-02:00",
+    "Correctly localizes short DST time zone name");
+  RELEASE(locale);
+  
   [arp release]; arp = nil;
   return 0;
 }
