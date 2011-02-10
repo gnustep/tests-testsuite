@@ -6,6 +6,7 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   NSLocale *locale;
   NSString *str;
+  NSDate *date;
   id current;
   id localh = [NSTimeZone defaultTimeZone];
   int offset = [localh secondsFromGMT];
@@ -60,6 +61,16 @@ int main()
   PASS_EQUAL (str, @"GMT-02:00",
     "Correctly localizes short DST time zone name");
   RELEASE(locale);
+  
+  date = [NSDate dateWithTimeIntervalSince1970: 1.0];
+  pass ([current daylightSavingTimeOffsetForDate: date] == 0.0,
+    "Returns correct Daylight Saving offset.");
+  date = [NSDate dateWithTimeIntervalSince1970: 1297308214.0];
+  pass ([current daylightSavingTimeOffsetForDate: date] == 3600.0,
+    "Returns correct Daylight Saving offset.");
+  date = [NSDate date];
+  pass ([current daylightSavingTimeOffset] == [current daylightSavingTimeOffsetForDate: date],
+    "Returns correct Daylight Saving offset.");
   
   [arp release]; arp = nil;
   return 0;
