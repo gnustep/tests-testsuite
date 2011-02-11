@@ -75,7 +75,9 @@
   [serverStream scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
   [serverStream open];
 
-  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 60]];
+  /* Run for up to 5 minutes to allow slow/large tests to complete.
+   */
+  [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 300]];
 
   return 0;
 }
@@ -213,6 +215,7 @@ NSLog(@"Server %p %d", theStream, streamEvent);
 		[ip close];
 		[ip removeFromRunLoop: rl forMode: NSDefaultRunLoopMode];
 		ip = nil;
+	        NSLog(@"Done reading %d", count+1);
 	      }
 	    NSLog(@"Done writing %d", count+1);
 	  }
