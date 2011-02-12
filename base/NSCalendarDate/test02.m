@@ -196,11 +196,11 @@ int main()
   
   pass([[myBirthday descriptionWithCalendarFormat: @"%R" 
                      locale: myLocale] isEqualToString: @"13:00"],
-       "%R format works in description");
+       "%%R format works in description");
   
   pass([[myBirthday descriptionWithCalendarFormat: @"%r" 
                      locale: myLocale] isEqualToString: @"01:00:00 PM"],
-       "%r format works in description");
+       "%%r format works in description");
   
   [arp release]; arp = nil;
   return 0;
