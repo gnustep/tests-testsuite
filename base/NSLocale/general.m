@@ -5,7 +5,8 @@
 
 int main(void)
 {
-  NSAutoreleasePool *arp = [NSAutoreleasePool new];
+  START_SET(GS_USE_ICU)
+
   NSLocale *locale;
   id            o;
   unichar       u;
@@ -117,6 +118,6 @@ int main(void)
     @"americanenglish",
     "Canonical language identifier for 'AmericanEnglish is americanenglish");
   
-  RELEASE(arp);
+  END_SET("NSLocale general");
   return 0;
 }

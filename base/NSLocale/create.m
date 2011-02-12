@@ -4,7 +4,8 @@
 
 int main(void)
 {
-  NSAutoreleasePool *arp = [NSAutoreleasePool new];
+  START_SET(GS_USE_ICU)
+
   NSLocale *locale;
   
   locale = [NSLocale systemLocale];
@@ -15,6 +16,7 @@ int main(void)
   pass (locale != nil, "+currentLocale return non-nil");
   TEST_FOR_CLASS(@"NSLocale", locale, "+currentLocale return a NSLocale");
   
-  RELEASE(arp);
+  END_SET("NSLocale create")
+
   return 0;
 }

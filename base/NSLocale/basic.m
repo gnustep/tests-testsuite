@@ -5,7 +5,7 @@
 
 int main()
 {  
-  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  START_SET(GS_USE_ICU)
   id testObj = [NSLocale currentLocale];
 
   test_NSObject(@"NSLocale", [NSArray arrayWithObject: testObj]);
@@ -13,6 +13,6 @@ int main()
   test_NSCopying(@"NSLocale", @"NSLocale",
     [NSArray arrayWithObject: testObj], NO, NO);
   
-  RELEASE(arp);
+  END_SET("NSLocale basic")
   return 0;
 }
