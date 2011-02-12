@@ -5,7 +5,7 @@ int
 main()
 {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  NSObject *anObject = [[NSObject new] autorelease];
+  NSObject *anObject = [NSObject new];
 
   [anObject release];
   [anObject release];
