@@ -2,6 +2,7 @@
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSArray.h>
 #import <Foundation/NSString.h>
+#import <Foundation/NSFileManager.h>
 
 int main()
 {
@@ -236,6 +237,13 @@ int main()
   
   PASS_EQUAL([@"/home/../nicola" stringByStandardizingPath], @"/home/../nicola",
    "/home/../nicola stringByStandardizingPath == /home/../nicola");
+
+  NSFileManager *fm = [NSFileManager defaultManager];
+  [fm createDirectoryAtPath: @"/tmp/foo" attributes: nil];
+  [fm createSymbolicLinkAtPath: @"/tmp/foo" pathContent: @"/tmp/bar"];
+  PASS_EQUAL([@"/tmp/foo" stringByStandardizingPath], @"/tmp/foo", 
+    "foo->bar symlink not expanded by stringByStandardizingPath");
+
   
   PASS_EQUAL([@"/." stringByStandardizingPath], @"/",
    "/. stringByStandardizingPath == /");
