@@ -14,6 +14,7 @@ should be included _once_ in a test that wants to test a particular class.
 This is the main entry point to this file. Call it with a class that's
 supposed to be a concrete NSString subclass.
 */
+#define class_pointer isa
 #import <objc/Object.h>
 
 void TestNSStringClass(Class stringClass);
