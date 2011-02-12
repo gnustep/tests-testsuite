@@ -1,5 +1,9 @@
 #import "generic.h"
 
+@interface NSObject (PretendToBeNSString)
+- (NSUInteger)length;
+@end
+
 @implementation NSObject(TestAdditions)
 -(BOOL)testEquals:(id)anObject
 {
