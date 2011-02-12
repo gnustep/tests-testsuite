@@ -63,31 +63,30 @@ static NSException *testRaised __attribute__((unused)) = nil;
  * calling this function in order to specify that if the condition is
  * not true it should be treated as a dashed hope rather than a failure.
  */
-static void report_pass(int testPassed, const char *file, const char *function, int line, const char *format, ...) __attribute__((unused)) __attribute__ ((format(printf, 5, 6)));
-static void report_pass(int testPassed, const char *file, const char *function, int line, const char *format, ...)
+static void pass(int testPassed, const char *format, ...)  __attribute__((unused)) __attribute__ ((format(printf, 2, 3)));
+static void pass(int testPassed, const char *format, ...)
 {
   va_list args;
   va_start(args, format);
   if (testPassed)
     {
-      fprintf(stderr, "PASS: %s:%d %s(): ", file, line, function);
+      fprintf(stderr, "PASS: ");
       testPassed = YES;
     }
   else if (YES == testHopeful)
     {
-      fprintf(stderr, "DASHED:  %s:%d %s(): ", file, line, function);
+      fprintf(stderr, "DASHED: ");
       testPassed = NO;
     }
   else
     {
-      fprintf(stderr, "FAIL:  %s:%d %s(): ", file, line, function);
+      fprintf(stderr, "FAIL: ");
       testPassed = NO;
     }
   vfprintf(stderr, format, args);
   fprintf(stderr, "\n");
   va_end(args);
 }
-#define pass(passed, msg...) report_pass(passed, __FILE__, __func__, __LINE__, msg)
 
 /* The unresolved() function is called with a single string argument to
  * notify the testsuite that a test failed to complete for some reason.
