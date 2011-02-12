@@ -134,7 +134,7 @@ int main()
   [defaultOutput setDelegate: nil];
 #endif
 
-#if 1
+  START_SET(GS_USE_GNUTLS)
   done = NO;
   byteCount = 0;
   defaultInput = nil;
@@ -163,7 +163,7 @@ int main()
   pass(byteCount>0, "read www.google.com https");
   [defaultInput setDelegate: nil];
   [defaultOutput setDelegate: nil];
-#endif
+  END_SET("NSStream SSL support")
 
   [arp release];
   return 0;
