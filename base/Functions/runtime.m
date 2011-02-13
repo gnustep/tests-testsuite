@@ -96,13 +96,23 @@ main(int argc, char *argv[])
   t1 = NSGetSizeAndAlignment(t1, &s, &a);
   pass(t1 == &t0[4], "NSGetSizeAndAlignment() steps through sel");
 
+  pass(NO == class_isMetaClass(Nil),
+    "class_isMetaClass() returns NO for Nil");
+  pass(Nil == class_getSuperclass(Nil),
+    "class_getSuperclass() returns NO for Nil");
+  pass(strcmp(class_getName(Nil), "nil") == 0,
+    "class_getName() for Nil is nil");
+  pass(0 == class_getInstanceVariable(Nil, 0), 
+    "class_getInstanceVariables() for Nil,0 is 0");
+  pass(0 == class_getVersion(Nil), 
+    "class_getVersion() for Nil is 0");
+
   obj = [NSObject new];
   cls = [SubClass1 class];
 
   pass(c1initialize != 0, "+initialize was called");
   pass(c1load != 0, "+load was called");
   pass(c1initialize > c1load, "+load occurs before +initialize");
-  pass(strcmp(class_getName(Nil), "nil") == 0, "class name for Nil is nil");
   pass(strcmp(class_getName(cls), "SubClass1") == 0, "class name works");
   pass(YES == class_respondsToSelector(cls, @selector(sel2)),
     "class_respondsToSelector() works for class method");
@@ -219,6 +229,6 @@ main(int argc, char *argv[])
   pass([NSStringFromSelector(sel) isEqual: @"xxxyyy_odd_name_xxxyyy"],
     "NSStringFromSelector() works for existing selector");
 
-  exit(0);
+  return 0;
 }
 
