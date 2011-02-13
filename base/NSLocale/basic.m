@@ -1,11 +1,16 @@
 #import "Testing.h"
 #import "ObjectTesting.h"
 #import <Foundation/NSLocale.h>
-#import <Foundation/NSAutoreleasePool.h>
+
+#if	defined(GS_USE_ICU)
+#define	NSLOCALE_SUPPORTED	GS_USE_ICU
+#else
+#define	NSLOCALE_SUPPORTED	1 /* Assume Apple support */
+#endif
 
 int main()
 {  
-  START_SET(GS_USE_ICU)
+  START_SET(NSLOCALE_SUPPORTED)
   id testObj = [NSLocale currentLocale];
 
   test_NSObject(@"NSLocale", [NSArray arrayWithObject: testObj]);

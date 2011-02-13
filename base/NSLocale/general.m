@@ -3,9 +3,15 @@
 #import <Foundation/NSValue.h>
 #import "ObjectTesting.h"
 
+#if	defined(GS_USE_ICU)
+#define	NSLOCALE_SUPPORTED	GS_USE_ICU
+#else
+#define	NSLOCALE_SUPPORTED	1 /* Assume Apple support */
+#endif
+
 int main(void)
 {
-  START_SET(GS_USE_ICU)
+  START_SET(NSLOCALE_SUPPORTED)
 
   NSLocale *locale;
   id            o;

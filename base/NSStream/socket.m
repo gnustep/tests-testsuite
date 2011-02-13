@@ -5,6 +5,12 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSStream.h>
 
+#if	defined(GS_USE_GNUTLS)
+#define	SSL_SUPPORTED	GS_USE_GNUTLS
+#else
+#define	SSL_SUPPORTED	1 /* Assume Apple supports it */
+#endif
+
 static NSOutputStream *defaultOutput = nil;
 static NSInputStream *defaultInput = nil;
 static int byteCount = 0;
@@ -134,7 +140,7 @@ int main()
   [defaultOutput setDelegate: nil];
 #endif
 
-  START_SET(GS_USE_GNUTLS)
+  START_SET(SSL_SUPPORTED)
   done = NO;
   byteCount = 0;
   defaultInput = nil;
