@@ -115,7 +115,7 @@ static void test_alloc_only(NSString *className)
   pass(obj0 != nil, "%s has working alloc", prefix);
   pass([obj0 isKindOfClass: theClass],
     "%s alloc gives the correct class", prefix);
-  PASS_EXCEPTION([obj0 description], NSInvalidArgumentException, "raises NSInvalidArgumentException in description")
+  PASS_EXCEPTION([obj0 description], NSGenericException, "raises NSGenericException in description")
 
   PASS_EXCEPTION(if([obj0 init]==nil)[NSException raise: NSInvalidArgumentException format: @""],
     NSInvalidArgumentException, "returns nil or raises NSInvalidArgumentException in init")
