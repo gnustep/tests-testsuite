@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSKeyedArchiver.h>
 #import <Foundation/NSPropertyList.h>
-#include "../../Testing.h"
+#include <Testing.h>
 int main()
 {
   NSAutoreleasePool	*pool = [[NSAutoreleasePool alloc] init];

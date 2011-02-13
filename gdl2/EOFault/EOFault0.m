@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <EOControl/EOControl.h>
-#include "../../Testing.h"
+#include <Testing.h>
 
 @interface TestFaultHandler : EOFaultHandler
 @end

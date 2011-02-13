@@ -1,6 +1,6 @@
 #include <Foundation/NSAutoreleasePool.h>
 #include <Foundation/NSIndexSet.h>
-#include "../../Testing.h"
+#include <Testing.h>
 int main()
 {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
