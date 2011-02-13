@@ -14,9 +14,6 @@ should be included _once_ in a test that wants to test a particular class.
 This is the main entry point to this file. Call it with a class that's
 supposed to be a concrete NSString subclass.
 */
-#define class_pointer isa
-#import <objc/Object.h>
-
 void TestNSStringClass(Class stringClass);
 
 
@@ -30,12 +27,7 @@ void TestNSStringClass(Class stringClass);
 #define FORMAT_STRING(str) ((str) ? str : "NULL")
 
 
-#if	defined(GNUSTEP_BASE_LIBRARY)
-/* Check if a pointer is valid */
-#define IS_VALID_OBJECT(obj) (((id)obj)->class_pointer != (void*) 0xdeadface)
-#else
-#define IS_VALID_OBJECT(obj) (1)
-#endif
+#define IS_VALID_OBJECT(obj) (object_getClass((id)obj) != zombieClass)
 
 
 Class stringClass;
@@ -232,6 +224,8 @@ void test_return_self_optimizations(void)
 {
   NSAutoreleasePool *arp;
   NSString *string, *returnValue;
+  Class	zombieClass = NSClassFromString(@"NSZombie");
+
 
   arp = [NSAutoreleasePool new];
   string = [[stringClass alloc] initWithCharacters: NULL
