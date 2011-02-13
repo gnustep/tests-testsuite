@@ -33,9 +33,9 @@ include $(GNUSTEP_MAKEFILES)/common.make
 #include $(GNUSTEP_MAKEFILES)/aggregate.make
 
 all:
-	@(echo "Starting 'runtests.sh base' to run the base library tests.")
-	@(echo "Please use 'runtests.sh' to run more tests.")
-	./runtests.sh base
+	@(echo "Starting 'gnustep-tests base' to run the base library tests.")
+	@(echo "Please use 'gnustep-tests' to run more tests.")
+	gnustep-tests base
 
 -include GNUmakefile.postamble
 
