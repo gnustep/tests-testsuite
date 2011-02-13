@@ -1,3 +1,15 @@
+2011-02-13 Richard Frith-Macdonald  <rfm@gnu.org>
+
+	* clean:
+	* GNUmakefile.tests:
+	* ObjectTesting.h:
+	* runtest.sh:
+	* runtests.sh:
+	* Testing.h:
+	Remove ... superceded by newer versions provided by gnustep-make
+	* README
+	Update to reflect separation of the test framework from the testsuite
+
 2011-02-07 Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* Testing.h:
