@@ -176,18 +176,18 @@
       [[NSRunLoop currentRunLoop] runUntilDate: until];
     }
 
-  pass(acceptEmptyBlocks == 'N', "Accept with no inputs or timers will exit");
-  pass(acceptTimerBlocks == 'Y', "Accept with timers will not exit");
-  pass(blockForEmpty == 'N', "A loop with no inputs or timers will exit");
-  pass(blockForInput == 'Y', "A loop with an input source will block");
-  pass(blockForTimer == 'Y', "A loop with a timer will block");
-  pass(limitForEmpty == 'N', "A loop with no inputs or timers has no limit");
-  pass(limitForInput == 'Y', "A loop with an input source has distant future");
-  pass(limitForTimer == 'Y', "A loop with a timer has timer fire date");
-  pass(moreForEmpty == 'N', "A loop with no inputs or timers has no more");
-  pass(moreForInput == 'Y', "A loop with an input source has more");
-  pass(moreForTimer == 'Y', "A loop with a timer has more");
-  pass(performed == 'Y', "Methods will be performed in a loop without inputs");
+  PASS(acceptEmptyBlocks == 'N', "Accept with no inputs or timers will exit");
+  PASS(acceptTimerBlocks == 'Y', "Accept with timers will not exit");
+  PASS(blockForEmpty == 'N', "A loop with no inputs or timers will exit");
+  PASS(blockForInput == 'Y', "A loop with an input source will block");
+  PASS(blockForTimer == 'Y', "A loop with a timer will block");
+  PASS(limitForEmpty == 'N', "A loop with no inputs or timers has no limit");
+  PASS(limitForInput == 'Y', "A loop with an input source has distant future");
+  PASS(limitForTimer == 'Y', "A loop with a timer has timer fire date");
+  PASS(moreForEmpty == 'N', "A loop with no inputs or timers has no more");
+  PASS(moreForInput == 'Y', "A loop with an input source has more");
+  PASS(moreForTimer == 'Y', "A loop with a timer has more");
+  PASS(performed == 'Y', "Methods will be performed in a loop without inputs");
 }
 
 @end

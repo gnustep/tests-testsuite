@@ -9,9 +9,9 @@ int main()
   unichar theUniChar[1] = {0xdd00};
   theString = [NSString stringWithCharacters:theUniChar length:1];
   NS_DURING
-    pass(theString == nil, "bad unichar");
+    PASS(theString == nil, "bad unichar");
   NS_HANDLER
-    pass(1,"bar");
+    PASS(1,"bar");
   NS_ENDHANDLER
   
   [arp release]; arp = nil;

@@ -86,119 +86,119 @@ int main()
 			second: 0
 		      timeZone: [NSTimeZone timeZoneWithName: @"MET"]];
    
-  pass([[myBirthday descriptionWithCalendarFormat: @"%%" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%%" 
                      locale: myLocale] isEqualToString: @"%"],
        "%% format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%a" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%a" 
                      locale: myLocale] isEqualToString: @"Mer"],
        "%%a format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%A" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%A" 
                      locale: myLocale] isEqualToString: @"Mercoledi"],
        "%%A format works in description");
 
-  pass([[myBirthday descriptionWithCalendarFormat: @"%b" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%b" 
                      locale: myLocale] isEqualToString: @"Nov"],
        "%%b format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%B" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%B" 
                      locale: myLocale] isEqualToString: @"Novembre"],
        "%%B format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%d" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%d" 
                      locale: myLocale] isEqualToString: @"20"],
        "%%d format works in description");
 
-  pass([[myBirthday descriptionWithCalendarFormat: @"%e" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%e" 
                      locale: myLocale] isEqualToString: @"20"],
        "%%e format works in description");
   
-  pass([[anotherDay descriptionWithCalendarFormat: @"%e" 
+  PASS([[anotherDay descriptionWithCalendarFormat: @"%e" 
                      locale: myLocale] isEqualToString: @"2"],
        "%%e format has no leading space with single digit");
   
-  pass([[anotherDay descriptionWithCalendarFormat: @"%2e" 
+  PASS([[anotherDay descriptionWithCalendarFormat: @"%2e" 
                      locale: myLocale] isEqualToString: @" 2"],
        "%%2e format has leading space with single digit");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%F" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%F" 
                      locale: myLocale] isEqualToString: @"000"],
        "%%F format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%H" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%H" 
                      locale: myLocale] isEqualToString: @"13"],
        "%%H format works in description");
 
-  pass([[myBirthday descriptionWithCalendarFormat: @"%I" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%I" 
                      locale: myLocale] isEqualToString: @"01"],
        "%%I format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%j" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%j" 
                      locale: myLocale] isEqualToString: @"324"],
        "%%j format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%m" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%m" 
                      locale: myLocale] isEqualToString: @"11"],
        "%%m format works in description");
 
-  pass([[myBirthday descriptionWithCalendarFormat: @"%M" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%M" 
                      locale: myLocale] isEqualToString: @"00"],
        "%%M format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%p" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%p" 
                      locale: myLocale] isEqualToString: @"PM"],
        "%%p format works in description");
  
-  pass([[myBirthday descriptionWithCalendarFormat: @"%S" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%S" 
                      locale: myLocale] isEqualToString: @"00"],
        "%%S format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%w" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%w" 
                      locale: myLocale] isEqualToString: @"3"],
        "%%w format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%y" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%y" 
                      locale: myLocale] isEqualToString: @"74"],
        "%%y format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%Y" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%Y" 
                      locale: myLocale] isEqualToString: @"1974"],
        "%%Y format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%Z" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%Z" 
                      locale: myLocale] isEqualToString: @"MET"],
        "%%Z format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%z" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%z" 
                      locale: myLocale] isEqualToString: @"+0100"],
        "%%z format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%d %m %Y" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%d %m %Y" 
                      locale: myLocale] isEqualToString: @"20 11 1974"],
        "%%d %%m %%Y format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%d %B %y" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%d %B %y" 
                      locale: myLocale] isEqualToString: @"20 Novembre 74"],
        "%%d %%B %%Y format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%H:%M:%S" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%H:%M:%S" 
                      locale: myLocale] isEqualToString: @"13:00:00"],
        "%%H:%%M:%%S format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%H%%%M%%%S" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%H%%%M%%%S" 
                      locale: myLocale] isEqualToString: @"13%00%00"],
        "%%H%%%%%%M%%%%%%S format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%H:%M (%Z)" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%H:%M (%Z)" 
                      locale: myLocale] isEqualToString: @"13:00 (MET)"],
        "%%H%%M format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%R" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%R" 
                      locale: myLocale] isEqualToString: @"13:00"],
        "%%R format works in description");
   
-  pass([[myBirthday descriptionWithCalendarFormat: @"%r" 
+  PASS([[myBirthday descriptionWithCalendarFormat: @"%r" 
                      locale: myLocale] isEqualToString: @"01:00:00 PM"],
        "%%r format works in description");
   

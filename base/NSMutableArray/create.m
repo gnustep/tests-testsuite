@@ -18,13 +18,13 @@ int main()
   vals[2] = val3;
 
   obj = [NSMutableArray arrayWithCapacity:10];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSMutableArray class]] &&
        [obj count] == 0,
        "+arrayWithCapacity creates an empty mutable array");
   
   obj = [NSMutableArray array];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSMutableArray class]] &&
        [obj count] == 0,
        "+array creates an empty mutable array");
@@ -34,26 +34,26 @@ int main()
 		 "+arrayWithObject: with nil object raises an exception");
   
   obj = [NSMutableArray arrayWithObject:val1];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSMutableArray class]] &&
        [obj count] == 1,
        "+arrayWithObject: builds minimal array");
 
   obj = [NSMutableArray arrayWithObjects:vals count:3];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSMutableArray class]] &&
        [obj count] == 3,
        "+arrayWithObjects:count: builds an array"); 
   
   obj = [NSMutableArray arrayWithObjects:val1,val2,val3,nil];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSMutableArray class]] &&
        [obj count] == 3,
        "+arrayWithObjects: builds an array");
   
   old = obj;
   obj = [NSMutableArray arrayWithArray:old];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSMutableArray class]] &&
        [obj isEqual:old],
        "+arrayWithArray: copies array");

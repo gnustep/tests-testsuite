@@ -41,23 +41,23 @@ int main()
    
   
   dict = [NSDictionary new];
-  pass(dict != nil && 
+  PASS(dict != nil && 
        [dict isKindOfClass:[NSDictionary class]] 
        && [dict count] == 0,
        "-count returns zero for an empty dictionary");
 
-  pass([dict hash] == 0, "-hash returns zero for an empty dictionary");
+  PASS([dict hash] == 0, "-hash returns zero for an empty dictionary");
   obj = [dict allKeys];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSArray class]] &&
        [obj count] == 0,
        "-allKeys gives an empty array for an empty dictionary");
   
   obj = [dict allKeysForObject:nil];
-  pass(obj == nil, "-allKeysForObject: gives nil for an empty dictionary");
+  PASS(obj == nil, "-allKeysForObject: gives nil for an empty dictionary");
 
   obj = [dict allValues];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSArray class]] &&
        [obj count] == 0,
        "-allValues gives an empty array for an empty dictionary");
@@ -67,7 +67,7 @@ int main()
 
     o1 = [dict objectForKey:nil];
     o2 = [dict objectForKey:key1];
-    pass(o1 == nil && o2 == nil, 
+    PASS(o1 == nil && o2 == nil, 
          "-objectForKey: gives nil for an empty dictionary");
   }
 
@@ -77,7 +77,7 @@ int main()
     
     k1 = [e nextObject];
     k2 = [e nextObject];
-    pass(e != nil && k1 == nil && k2 == nil, 
+    PASS(e != nil && k1 == nil && k2 == nil, 
          "-keyEnumerator: is ok for empty dictionary");
   }
   
@@ -87,14 +87,14 @@ int main()
 
     v1 = [e nextObject];
     v2 = [e nextObject];
-    pass(e != nil && v1 == nil && v2 == nil,
+    PASS(e != nil && v1 == nil && v2 == nil,
          "-objectEnumerator: is ok for empty dictionary");
   }
   
   {
     NSString *notFound = @"notFound";
     NSArray *a = [dict objectsForKeys:keys1 notFoundMarker:notFound];
-    pass(a != nil &&
+    PASS(a != nil &&
          [a isKindOfClass:[NSArray class]] &&
 	 [a count] == 2 &&
 	 [a objectAtIndex:0] == notFound &&
@@ -104,21 +104,21 @@ int main()
  
   obj = [dict description];
   obj = [obj propertyList];
-  pass(obj != nil && 
+  PASS(obj != nil && 
        [obj isKindOfClass:[NSDictionary class]] && 
        [obj count] == 0,
        "-description gives us a text property-list");
   
   dict = [[NSDictionary dictionaryWithObjects:vals1 forKeys:keys1] retain];
-  pass(dict != nil && 
+  PASS(dict != nil && 
        [dict isKindOfClass:[NSDictionary class]] && 
        [dict count] == 2,
        "-count returns two for an dictionary with two keys");
   
-  pass([dict hash] == 2, "-hash returns two for a dictionary with two keys");
+  PASS([dict hash] == 2, "-hash returns two for a dictionary with two keys");
   
   obj = [dict allKeys];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSArray class]] &&
        [obj count] == 2 &&
        [obj containsObject:key1] &&
@@ -129,7 +129,7 @@ int main()
     NSArray *o1,*o2;
     o1 = [dict allKeysForObject:val1];
     o2 = [dict allKeysForObject:val2];
-    pass(o1 != nil &&
+    PASS(o1 != nil &&
          [o1 isKindOfClass:[NSArray class]] &&
 	 [o1 count] == 1 &&
 	 [o1 containsObject:key1] &&
@@ -140,21 +140,21 @@ int main()
 	 "-allKeysForObject: gives the key we expect");
   }
   obj = [dict allValues];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSArray class]] &&
        [obj count] == 2 &&
        [obj containsObject:val1] &&
        [obj containsObject:val2],
        "-allValues gives the values we put in the dictionary");
  
-  pass([dict objectForKey:nil] == nil,"-objectForKey: gives nil for a nil key");
-  pass([dict objectForKey:key3] == nil,
+  PASS([dict objectForKey:nil] == nil,"-objectForKey: gives nil for a nil key");
+  PASS([dict objectForKey:key3] == nil,
        "-objectForKey: gives nil for a key not in the dictionary");
   
   {
     id o1 = [dict objectForKey: key1];
     id o2 = [dict objectForKey: key2];
-    pass(o1 == val1 && o2 == val2, 
+    PASS(o1 == val1 && o2 == val2, 
          "-objectForKey: gives the objects we added for the keys");
   }
 
@@ -164,7 +164,7 @@ int main()
     k1 = [e nextObject]; 
     k2 = [e nextObject]; 
     k3 = [e nextObject]; 
-    pass(k1 != nil &&
+    PASS(k1 != nil &&
          k2 != nil &&
 	 k3 == nil &&
 	 k1 != k2 &&
@@ -180,7 +180,7 @@ int main()
     v2 = [e nextObject]; 
     v3 = [e nextObject]; 
     
-    pass(v1 != nil &&
+    PASS(v1 != nil &&
          v2 != nil &&
 	 v3 == nil &&
 	 v1 != v2 &&
@@ -193,7 +193,7 @@ int main()
     NSString *notFound = @"notFound";
     NSArray *a = [dict objectsForKeys:keys2 notFoundMarker:notFound];
     
-    pass(a != nil &&
+    PASS(a != nil &&
          [a isKindOfClass:[NSArray class]] &&
 	 [a count] == 3 &&
 	 [a objectAtIndex:0] == val1 &&
@@ -204,7 +204,7 @@ int main()
   
   {
     NSArray *a = [dict keysSortedByValueUsingSelector:@selector(compare:)];
-    pass(a != nil &&
+    PASS(a != nil &&
          [a isKindOfClass:[NSArray class]] &&
          [a count] == 2 &&
 	 [a objectAtIndex:0] == key2 &&
@@ -214,20 +214,20 @@ int main()
   
   obj = [dict description];
   obj = [obj propertyList];
-  pass(obj != nil && 
+  PASS(obj != nil && 
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj isEqual:dict],
        "-description gives us a text property-list");
   
 
   ASSIGN(dict,[NSDictionary dictionaryWithObjects:vals4 forKeys:keys4]);
-  pass(dict != nil, "we can create a dictionary with several keys");
+  PASS(dict != nil, "we can create a dictionary with several keys");
   
 #if     defined(GNUSTEP_BASE_LIBRARY)
   obj = [NSSerializer serializePropertyList:dict];
   obj = [NSDeserializer deserializePropertyListFromData:obj
                                       mutableContainers:YES];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj isEqual:dict],
        "data/number/data are ok in serialized property-list");

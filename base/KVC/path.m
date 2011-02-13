@@ -107,7 +107,7 @@ int main(void) {
   NSNumber * n2 = [NSNumber numberWithDouble:87.999];
 
   [tester setValue:n2 forKeyPath:@"child.num2"];
-  pass([[tester valueForKeyPath:@"child.num2"] isEqualToNumber:n2],
+  PASS([[tester valueForKeyPath:@"child.num2"] isEqualToNumber:n2],
       "KVC works with simple paths");
 
   [deprecated takeValue:[NSDictionary dictionaryWithObject:@"test"
@@ -117,7 +117,7 @@ int main(void) {
   PASS_RUNS(
       [tester setValue:n forKeyPath:@"child.child.num1"],
       "KVC appears to work with key path");
-  pass([[tester valueForKeyPath:@"child.child.num1"] isEqualToNumber:n],
+  PASS([[tester valueForKeyPath:@"child.child.num1"] isEqualToNumber:n],
       "KVC works with key paths");
 
   NSLog(@"tester.child.child = %@", [tester valueForKeyPath:
@@ -125,13 +125,13 @@ int main(void) {
   PASS_RUNS(
       [tester setValue:string forKeyPath:@"child.child.Lücke"],
       "KVC appears to work with a unicode key path");
-  pass([[tester valueForKeyPath:@"child.child.Lücke"] isEqualToString:string],
+  PASS([[tester valueForKeyPath:@"child.child.Lücke"] isEqualToString:string],
       "KVC works with unicode path");
 
   PASS_RUNS(
       [tester setValue:string forKeyPath:@"dict.Lücke"],
       "KVC appears to work with a unicode key path (test2)");
-  pass([[tester valueForKeyPath:@"dict.Lücke"] isEqualToString:string],
+  PASS([[tester valueForKeyPath:@"dict.Lücke"] isEqualToString:string],
       "KVC works with unicode path (test2)");
 
   [arp release];

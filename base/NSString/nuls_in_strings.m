@@ -17,10 +17,10 @@ int main(int argc, char **argv)
 
   normalString = [[NSString alloc] initWithCharacters: characters length: 3];
 
-  pass([constantString length] == 3, "nuls in constant strings");
-  pass([normalString length] == 3, "nuls in non-constant strings");
-  pass([constantString hash] == [normalString hash], "hashes match");
-  pass([normalString isEqual: constantString]
+  PASS([constantString length] == 3, "nuls in constant strings");
+  PASS([normalString length] == 3, "nuls in non-constant strings");
+  PASS([constantString hash] == [normalString hash], "hashes match");
+  PASS([normalString isEqual: constantString]
     && [constantString isEqual: normalString], "compare as equal");
 
   return 0;

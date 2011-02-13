@@ -21,7 +21,7 @@ int main()
   
   /* hmpf is this correct */
   data1 = [NSData dataWithBytes:str1 length:(strlen(str1) * sizeof(void*))];
-  pass(data1 != nil &&
+  PASS(data1 != nil &&
        [data1 isKindOfClass:[NSData class]] &&
        [data1 length] == (strlen(str1) * sizeof(void*)) &&
        [data1 bytes] != str1 &&
@@ -29,13 +29,13 @@ int main()
        "+dataWithBytes:length: works");
   
   mutable = [NSMutableData data];
-  pass(mutable != nil && 
+  PASS(mutable != nil && 
        [mutable isKindOfClass:[NSMutableData class]] &&
        [mutable length] == 0,
        "+data creates empty mutable data");
   
   [mutable setData:data1];
-  pass(mutable != nil &&
+  PASS(mutable != nil &&
        [mutable length] == (strlen(str1) * sizeof(void*)),
        "-setData: works");
   
@@ -43,7 +43,7 @@ int main()
   tmp = (char *)malloc([mutable length]);
   [mutable getBytes:tmp range:NSMakeRange(22,6)];
   tmp[6] = '\0';
-  pass(mutable != nil &&
+  PASS(mutable != nil &&
        strcmp(tmp,str2) == 0,
        "-replaceBytesInRange:withBytes suceeds");
   free(tmp);

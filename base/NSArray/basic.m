@@ -10,11 +10,11 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   test_alloc(@"NSArray"); 
   obj = [NSArray new];
-  pass((obj != nil && [obj count] == 0),"can create an empty array");
+  PASS((obj != nil && [obj count] == 0),"can create an empty array");
   str = @"hello";
   [testObjs addObject: obj];
   obj = [NSArray arrayWithObject:str];
-  pass((obj != nil && [obj count] == 1), "can create an array with one element");
+  PASS((obj != nil && [obj count] == 1), "can create an array with one element");
   [testObjs addObject: obj];
   test_NSObject(@"NSArray", testObjs);
   test_NSCoding(testObjs);
@@ -22,18 +22,18 @@ int main()
   test_NSMutableCopying(@"NSArray",@"NSMutableArray",testObjs);
   
   obj = [NSArray arrayWithContentsOfFile: @"test.plist"];
-  pass((obj != nil && [obj count] > 0),"can create an array from file");
+  PASS((obj != nil && [obj count] > 0),"can create an array from file");
 #if 1
   /* The apple foundation is arguably buggy in that it seems to create a
    * mutable array ... we currently copy that
    */
-  pass([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
+  PASS([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
   PASS_RUNS([obj addObject: @"x"],"can add to array");
 #else
-  pass([obj isKindOfClass: [NSMutableArray class]] == NO,"array immutable");
+  PASS([obj isKindOfClass: [NSMutableArray class]] == NO,"array immutable");
 #endif
   obj = [obj objectAtIndex: 0];
-  pass([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
+  PASS([obj isKindOfClass: [NSMutableArray class]] == YES,"array mutable");
   [arp release]; arp = nil;
   return 0;
 }

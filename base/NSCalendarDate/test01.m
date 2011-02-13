@@ -36,21 +36,21 @@ int main()
                            calendarFormat: @"%b %d %y %H:%M:%S"] 
 			          timeIntervalSinceReferenceDate]; 
  
-  pass ((time1 < time2 && time2 < time3 && time3 < time4 && time4 < time5
+  PASS ((time1 < time2 && time2 < time3 && time3 < time4 && time4 < time5
     && time5 < time6 && time6 < time7 && time7 < time8 && time8 < time9),
     "+dateWithString:calendarFormat: works if no time zone is specified");
   
   date1 = [NSCalendarDate dateWithString: @"Nov 29 06 12:00am" 
                           calendarFormat: @"%b %d %y %H:%M%p"]; 
-  pass(date1 != nil && [date1 hourOfDay] == 0, "12:00am is midnight");
+  PASS(date1 != nil && [date1 hourOfDay] == 0, "12:00am is midnight");
 
   date1 = [NSCalendarDate dateWithString: @"Nov 29 06 12:00pm" 
                           calendarFormat: @"%b %d %y %H:%M%p"]; 
-  pass(date1 != nil && [date1 hourOfDay] == 12, "12:00pm is noon");
+  PASS(date1 != nil && [date1 hourOfDay] == 12, "12:00pm is noon");
 
   date1 = [NSCalendarDate dateWithString: @"Nov 29 06 01:25:38" 
                           calendarFormat: @"%b %d %y %H:%M:%S"]; 
-  pass([date1 timeIntervalSinceReferenceDate] + 1 == [[date1 addTimeInterval:1]
+  PASS([date1 timeIntervalSinceReferenceDate] + 1 == [[date1 addTimeInterval:1]
   						timeIntervalSinceReferenceDate],
        "-addTimeInterval: works on a NSCalendarDate parsed with no timezone");
 
@@ -64,9 +64,9 @@ int main()
     NSCalendarDate *date2 = [NSCalendarDate 
       dateWithString:dateString2 calendarFormat:fmt2];
     NSLog(@"%@\n%@", dateString, [date descriptionWithCalendarFormat:fmt]);
-    pass([dateString isEqual: [date descriptionWithCalendarFormat:fmt]],
+    PASS([dateString isEqual: [date descriptionWithCalendarFormat:fmt]],
       "formatting milliseconds works");
-    pass([dateString2 isEqual: [date2 descriptionWithCalendarFormat:fmt2]],
+    PASS([dateString2 isEqual: [date2 descriptionWithCalendarFormat:fmt2]],
       "formatting with %%e works");
   }
 

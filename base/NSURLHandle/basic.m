@@ -27,21 +27,21 @@ int main()
 
   cls = [NSURLHandle URLHandleClassForURL: httpURL];
 
-  pass([cls canInitWithURL: httpURL] == YES,
+  PASS([cls canInitWithURL: httpURL] == YES,
     "Appropriate subclass found for +URLHandleClassForURL:");
   handle1 = [[cls alloc] initWithURL: httpURL cached: YES];
   handle2 = [NSURLHandle cachedHandleForURL: httpURL];
 
-  pass(handle2 != nil, "Available handle returned from cache");
+  PASS(handle2 != nil, "Available handle returned from cache");
 
   [handle1 autorelease];
   [cls autorelease];
 
 #if	!defined(GNUSTEP_BASE_LIBRARY)
-  pass(NO, "URLHandleClassForURL: seems to hang on MacOS-X when given an unknown URL scheme ... you may want to check to see if it has been fixed");
+  PASS(NO, "URLHandleClassForURL: seems to hang on MacOS-X when given an unknown URL scheme ... you may want to check to see if it has been fixed");
 #else
   cls = [NSURLHandle URLHandleClassForURL: foobarURL];
-  pass(cls == Nil, "Nil class returned for unknown URL scheme");
+  PASS(cls == Nil, "Nil class returned for unknown URL scheme");
 #endif
 
   [arp release]; arp = nil;

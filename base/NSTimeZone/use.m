@@ -12,34 +12,34 @@ int main()
   int offset = [localh secondsFromGMT];
 
   current = [NSTimeZone timeZoneForSecondsFromGMT: 900];
-  pass(current != nil && [current isKindOfClass: [NSTimeZone class]]
+  PASS(current != nil && [current isKindOfClass: [NSTimeZone class]]
        && [current secondsFromGMT] == 900,
        "+timeZoneForSecondsFromGMT works");
 
   current = [NSTimeZone timeZoneForSecondsFromGMT: -45];
-  pass(current != nil && [current isKindOfClass: [NSTimeZone class]]
+  PASS(current != nil && [current isKindOfClass: [NSTimeZone class]]
        && [current secondsFromGMT] == -60,
        "+timeZoneForSecondsFromGMT rounds to minute");
 
   current = [NSTimeZone timeZoneForSecondsFromGMT: 7260];
-  pass(current != nil && [current isKindOfClass: [NSTimeZone class]]
+  PASS(current != nil && [current isKindOfClass: [NSTimeZone class]]
        && [[current name] isEqual: @"GMT+0201"],
        "+timeZoneForSecondsFromGMT has correct name");
 
   current = [NSTimeZone timeZoneForSecondsFromGMT: -3600];
-  pass(current != nil && [current isKindOfClass: [NSTimeZone class]]
+  PASS(current != nil && [current isKindOfClass: [NSTimeZone class]]
        && [[current abbreviation] isEqual: @"GMT-0100"],
        "+timeZoneForSecondsFromGMT has correct abbreviation");
 
   current = [NSTimeZone timeZoneForSecondsFromGMT: -3600];
-  pass(current != nil && [current isKindOfClass: [NSTimeZone class]]
+  PASS(current != nil && [current isKindOfClass: [NSTimeZone class]]
        && [current isDaylightSavingTime] == NO,
        "+timeZoneForSecondsFromGMT has DST NO");
 
   current = [NSTimeZone timeZoneForSecondsFromGMT: offset];
   [NSTimeZone setDefaultTimeZone: current];
   current = [NSTimeZone localTimeZone];
-  pass(current != nil && [current isKindOfClass: [NSTimeZone class]]
+  PASS(current != nil && [current isKindOfClass: [NSTimeZone class]]
        && [current secondsFromGMT] == offset
        && [current isDaylightSavingTime] == NO,
        "can set default time zone");
@@ -63,13 +63,13 @@ int main()
   RELEASE(locale);
   
   date = [NSDate dateWithTimeIntervalSince1970: 1.0];
-  pass ([current daylightSavingTimeOffsetForDate: date] == 0.0,
+  PASS ([current daylightSavingTimeOffsetForDate: date] == 0.0,
     "Returns correct Daylight Saving offset.");
   date = [NSDate dateWithTimeIntervalSince1970: 1297308214.0];
-  pass ([current daylightSavingTimeOffsetForDate: date] == 3600.0,
+  PASS ([current daylightSavingTimeOffsetForDate: date] == 3600.0,
     "Returns correct Daylight Saving offset.");
   date = [NSDate date];
-  pass ([current daylightSavingTimeOffset] == [current daylightSavingTimeOffsetForDate: date],
+  PASS ([current daylightSavingTimeOffset] == [current daylightSavingTimeOffsetForDate: date],
     "Returns correct Daylight Saving offset.");
   
   [arp release]; arp = nil;

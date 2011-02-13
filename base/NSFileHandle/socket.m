@@ -69,7 +69,7 @@ int main()
   sFH = [NSFileHandle fileHandleAsServerAtAddress: @"127.0.0.1"
 		       service: GST_PORT
 		       protocol: @"tcp"];
-  pass([sFH isKindOfClass:[NSFileHandle class]],
+  PASS([sFH isKindOfClass:[NSFileHandle class]],
        "NSFileHandle understands +fileHandleAsServerAtAddress:");
 
   [sFH acceptConnectionInBackgroundAndNotify];
@@ -78,15 +78,15 @@ int main()
   cFH = [NSFileHandle fileHandleAsClientAtAddress: @"127.0.0.1"
 		      service: GST_PORT
 		      protocol: @"tcp"];
-  pass([cFH isKindOfClass:[NSFileHandle class]],
+  PASS([cFH isKindOfClass:[NSFileHandle class]],
        "NSFileHandle understands +fileHandleAsClientAtAddress:");
 
   [cFH writeData: wData];
   [[NSRunLoop currentRunLoop] run];
-  pass(rFH != nil, "NSFileHandle connection was made");
+  PASS(rFH != nil, "NSFileHandle connection was made");
 
   rData = [rFH availableData];
-  pass([wData isEqual: rData],
+  PASS([wData isEqual: rData],
        "NSFileHandle -writeData:/-availableData match with socket");
 
   [arp release]; arp = nil;

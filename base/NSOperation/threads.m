@@ -125,13 +125,13 @@ int main()
   NSAutoreleasePool     *arp = [NSAutoreleasePool new];
 
   cnt = [ThreadCounter new];
-  pass((cnt != nil && [cnt count] == 0), "counter was set up");
+  PASS((cnt != nil && [cnt count] == 0), "counter was set up");
 
   // Check that operation runs in current thread.
   obj = [OpFlag new];
   [obj start];
-  pass(([obj ran] == YES), "operation ran");
-  pass(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
+  PASS(([obj ran] == YES), "operation ran");
+  PASS(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
   [obj release];
 
   // Check that monitoring of another thread works.
@@ -140,9 +140,9 @@ int main()
                            toTarget: obj
                          withObject: nil];
   [NSThread sleepForTimeInterval: 0.1];
-  pass(([obj isFinished] == YES), "operation finished");
-  pass(([obj ran] == YES), "operation ran");
-  pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
+  PASS(([obj isFinished] == YES), "operation finished");
+  PASS(([obj ran] == YES), "operation ran");
+  PASS(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
   [obj release];
 
   // Check that exit from thread in -main causes operation tracking to fail.
@@ -151,10 +151,10 @@ int main()
                            toTarget: obj
                          withObject: nil];
   [NSThread sleepForTimeInterval: 0.1];
-  pass(([obj isFinished] == NO), "operation exited");
-  pass(([obj ran] == YES), "operation ran");
-  pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
-  pass(([obj isExecuting] == YES), "operation seems to be running");
+  PASS(([obj isFinished] == NO), "operation exited");
+  PASS(([obj ran] == YES), "operation ran");
+  PASS(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
+  PASS(([obj isExecuting] == YES), "operation seems to be running");
   [obj release];
 
   // Check that raising exception in -main causes operation tracking to fail.
@@ -162,16 +162,16 @@ int main()
   TEST_EXCEPTION([obj start];,
   		 NSGenericException, YES, 
 		 "NSOperation exceptions propogate from main");
-  pass(([obj isFinished] == NO), "operation failed to finish");
-  pass(([obj ran] == YES), "operation ran");
-  pass(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
-  pass(([obj isExecuting] == YES), "operation seems to be running");
+  PASS(([obj isFinished] == NO), "operation failed to finish");
+  PASS(([obj ran] == YES), "operation ran");
+  PASS(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
+  PASS(([obj isExecuting] == YES), "operation seems to be running");
   [obj release];
 
   obj = [OpFlag new];
   [obj start];
-  pass(([obj ran] == YES), "operation ran");
-  pass(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
+  PASS(([obj ran] == YES), "operation ran");
+  PASS(([obj thread] == [NSThread currentThread]), "operation ran in this thread");
   [obj release];
 
   obj = [OpFlag new];
@@ -179,40 +179,40 @@ int main()
   [cnt reset];
   [q addOperation: obj];
   [q waitUntilAllOperationsAreFinished];
-  pass(([obj ran] == YES), "operation ran");
-  pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
-  pass(([cnt count] == 0), "thread did not exit immediately");
+  PASS(([obj ran] == YES), "operation ran");
+  PASS(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
+  PASS(([cnt count] == 0), "thread did not exit immediately");
   [obj release];
   /* Observer behavior on OSX 10.6 is that the thread exits after five seconds ... but who knows what that might change to. */
   [NSThread sleepForTimeInterval: 6.0];
-  pass(([cnt count] == 1), "thread exit occurs after six seconds");
+  PASS(([cnt count] == 1), "thread exit occurs after six seconds");
 
-  pass(([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]), "current queue outside -main is main queue");
-  pass(([NSOperationQueue mainQueue] != nil), "main queue is not nil");
+  PASS(([NSOperationQueue currentQueue] == [NSOperationQueue mainQueue]), "current queue outside -main is main queue");
+  PASS(([NSOperationQueue mainQueue] != nil), "main queue is not nil");
   obj = [OpFlag new];
   [q addOperation: obj];
   [q waitUntilAllOperationsAreFinished];
-  pass(([obj isFinished] == YES), "main queue runs an operation");
-  pass(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
+  PASS(([obj isFinished] == YES), "main queue runs an operation");
+  PASS(([obj thread] != [NSThread currentThread]), "operation ran in other thread");
 
   [q setSuspended: YES];
   obj = [OpFlag new];
   [q addOperation: obj];
   [NSThread sleepForTimeInterval: 0.1];
-  pass(([obj isFinished] == NO), "suspend works");
+  PASS(([obj isFinished] == NO), "suspend works");
   [q setSuspended: NO];
   [q waitUntilAllOperationsAreFinished];
-  pass(([obj isFinished] == YES), "unsuspend works");
+  PASS(([obj isFinished] == YES), "unsuspend works");
   [obj release];
 
   [q setMaxConcurrentOperationCount: 0];
   obj = [OpFlag new];
   [q addOperation: obj];
   [NSThread sleepForTimeInterval: 0.1];
-  pass(([obj isFinished] == NO), "max operation count of zero suspends queue");
+  PASS(([obj isFinished] == NO), "max operation count of zero suspends queue");
   [q setMaxConcurrentOperationCount: 1];
   [q waitUntilAllOperationsAreFinished];
-  pass(([obj isFinished] == YES), "resetting max operation queue sarts it");
+  PASS(([obj isFinished] == YES), "resetting max operation queue sarts it");
   [obj release];
 
   a = [NSMutableArray array];
@@ -229,7 +229,7 @@ int main()
   [obj release];
   [q setSuspended: NO];
   [q addOperations: a waitUntilFinished: YES];
-  pass(([list isEqual: a]), "operations ran in order of addition");
+  PASS(([list isEqual: a]), "operations ran in order of addition");
 
   [list removeAllObjects];
   [a removeAllObjects];
@@ -249,7 +249,7 @@ int main()
   [obj addDependency: old];
   [q setSuspended: NO];
   [q addOperations: a waitUntilFinished: YES];
-  pass(([list objectAtIndex: 0] == [a objectAtIndex: 1] && [list objectAtIndex: 1] == [a objectAtIndex: 0]), "operations ran in order of dependency");
+  PASS(([list objectAtIndex: 0] == [a objectAtIndex: 1] && [list objectAtIndex: 1] == [a objectAtIndex: 0]), "operations ran in order of dependency");
 
 
   [arp release]; arp = nil;

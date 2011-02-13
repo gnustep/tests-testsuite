@@ -78,7 +78,7 @@ int main()
   [defaultOutput open];
   [rl run];
 
-  pass([goldData isEqualToData:testData], "Local pipe");
+  PASS([goldData isEqualToData:testData], "Local pipe");
   [arp release];
   return 0;
 }

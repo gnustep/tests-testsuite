@@ -29,11 +29,11 @@ int main(int argc, char **argv)
     }*/
 
   h = [s hash];
-  pass(h != 0, "[NSConstantString hash] does not return 0");
+  PASS(h != 0, "[NSConstantString hash] does not return 0");
 
   s = [[NSString alloc] initWithString: s];
   h = [s hash];
-  pass(h != 0, "[NSString hash] does not return 0");
+  PASS(h != 0, "[NSString hash] does not return 0");
 
   return 0;
 }

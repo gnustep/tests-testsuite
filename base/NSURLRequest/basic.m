@@ -16,7 +16,7 @@ int main()
     "NSURLRequest +alloc returns an NSURLRequest");
 
   request = [NSURLRequest requestWithURL: httpURL];
-  pass(request != nil,
+  PASS(request != nil,
     "NSURLRequest +requestWithURL returns a request from a valid URL");
   PASS_EQUAL([[request URL] absoluteString], [httpURL absoluteString],
     "Request URL is equal to the URL used for creation");
@@ -24,11 +24,11 @@ int main()
     "Request is initialized with a GET method");
 
   request = [NSURLRequest requestWithURL: foobarURL];
-  pass(request != nil,
+  PASS(request != nil,
     "NSURLRequest +requestWithURL returns a request from an invalid URL (unknown scheme)");
   
   mutable = [request mutableCopy];
-  pass(mutable != nil && [mutable isKindOfClass:[NSMutableURLRequest class]],
+  PASS(mutable != nil && [mutable isKindOfClass:[NSMutableURLRequest class]],
     "NSURLRequest -mutableCopy returns a mutable request");
   [mutable setHTTPMethod: @"POST"];
   PASS_EQUAL([mutable HTTPMethod], @"POST",
@@ -41,7 +41,7 @@ int main()
   PASS_EQUAL([mutable valueForHTTPHeaderField: @"gnustep"], @"value1",
     "Can set and get a value for an HTTP header field");
   [mutable addValue: @"value2" forHTTPHeaderField: @"gnustep"];
-  pass([mutable valueForHTTPHeaderField: @"gnustep"], @"value1,value2",
+  PASS([mutable valueForHTTPHeaderField: @"gnustep"], @"value1,value2",
     "Handle multiple values for an HTTP header field");
   [mutable release];
 

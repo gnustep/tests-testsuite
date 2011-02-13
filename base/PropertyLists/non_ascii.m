@@ -13,16 +13,16 @@ int main(int argc, char **argv)
 	NSAutoreleasePool   *arp = [NSAutoreleasePool new];
 
 	plist=[[NSString stringWithContentsOfFile: @"non_ascii_utf8.plist"] propertyList];
-	pass(plist!=nil, "utf8 plist works");
+	PASS(plist!=nil, "utf8 plist works");
 
 	plist=[[NSString stringWithContentsOfFile: @"non_ascii_utf16.plist"] propertyList];
-	pass(plist!=nil, "utf16 plist works");
+	PASS(plist!=nil, "utf16 plist works");
 
 	plist=[[NSString stringWithContentsOfFile: @"non_ascii_utf8.strings"] propertyListFromStringsFileFormat];
-	pass(plist!=nil, "utf8 strings file works");
+	PASS(plist!=nil, "utf8 strings file works");
 
 	plist=[[NSString stringWithContentsOfFile: @"non_ascii_utf16.strings"] propertyListFromStringsFileFormat];
-	pass(plist!=nil, "utf16 strings file works");
+	PASS(plist!=nil, "utf16 strings file works");
 
 	[arp release]; arp = nil;
 

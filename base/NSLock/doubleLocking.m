@@ -32,7 +32,7 @@ int main()
   NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   string = [NSString alloc];
   string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
-  pass([string rangeOfString: @"deadlock"].length > 0,
+  PASS([string rangeOfString: @"deadlock"].length > 0,
     "NSLock deadlocked as expected");
 
   command = [helpers stringByAppendingPathComponent: @"doubleNSConditionLock"];
@@ -47,7 +47,7 @@ int main()
   NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   string = [NSString alloc];
   string = [string initWithData: data encoding: NSISOLatin1StringEncoding];
-  pass([string rangeOfString: @"deadlock"].length > 0,
+  PASS([string rangeOfString: @"deadlock"].length > 0,
     "NSConditionLock deadlocked as expected");
 
   ASSIGN(lock,[NSRecursiveLock new]);
@@ -57,18 +57,18 @@ int main()
   [lock unlock];
 
   ASSIGN(lock,[NSLock new]);
-  pass([lock tryLock] == YES, "NSLock can tryLock");
-  pass([lock tryLock] == NO, "NSLock says NO for recursive tryLock");
+  PASS([lock tryLock] == YES, "NSLock can tryLock");
+  PASS([lock tryLock] == NO, "NSLock says NO for recursive tryLock");
   [lock unlock];
 
   ASSIGN(lock,[NSConditionLock new]);
-  pass([lock tryLock] == YES, "NSConditionLock can tryLock");
-  pass([lock tryLock] == NO, "NSConditionLock says NO for recursive tryLock");
+  PASS([lock tryLock] == YES, "NSConditionLock can tryLock");
+  PASS([lock tryLock] == NO, "NSConditionLock says NO for recursive tryLock");
   [lock unlock];
 
   ASSIGN(lock,[NSRecursiveLock new]);
-  pass([lock tryLock] == YES, "NSRecursiveLock can tryLock");
-  pass([lock tryLock] == YES, "NSRecursiveLock says YES for recursive tryLock");
+  PASS([lock tryLock] == YES, "NSRecursiveLock can tryLock");
+  PASS([lock tryLock] == YES, "NSRecursiveLock says YES for recursive tryLock");
   [lock unlock];
 
   [arp release];

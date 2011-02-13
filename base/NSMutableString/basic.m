@@ -83,15 +83,15 @@ int main()
   ext = [@"\"\\UFE66???\"" propertyList];
   want = [@"\"hello\\UFE66???\"" propertyList];
   [base appendString:ext];
-  pass([base length] == 9 && [ext length] == 4
+  PASS([base length] == 9 && [ext length] == 4
     && [want length] == 9 && [base isEqual:want],
     "We can append a unicode string to a C string");
 
-  pass([[[NSMutableString alloc] initWithCharacters: &u0 length: 1]
+  PASS([[[NSMutableString alloc] initWithCharacters: &u0 length: 1]
     isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for ascii");
 
-  pass([[[NSMutableString alloc] initWithCharacters: &u1 length: 1]
+  PASS([[[NSMutableString alloc] initWithCharacters: &u1 length: 1]
     isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for unicode");
 
@@ -103,20 +103,20 @@ int main()
 
   testObj = [@"hello" mutableCopy];
   [testObj replaceCharactersInRange: NSMakeRange(1,1) withString: @"a"];
-  pass([testObj isEqual: @"hallo"],
+  PASS([testObj isEqual: @"hallo"],
     "replaceCharactersInRange:withString: works in middle of string");
   [testObj replaceCharactersInRange: NSMakeRange(4,1) withString: @"y"];
-  pass([testObj isEqual: @"hally"],
+  PASS([testObj isEqual: @"hally"],
     "replaceCharactersInRange:withString: works at end of string");
 
   [testObj setString: @"hello"];
   [testObj replaceCharactersInRange: NSMakeRange(1,1)
 			 withString: [CustomString stringWithCString: "a"]];
-  pass([testObj isEqual: @"hallo"],
+  PASS([testObj isEqual: @"hallo"],
     "custom string replacement works in middle of string");
   [testObj replaceCharactersInRange: NSMakeRange(4,1)
 			 withString: [CustomString stringWithCString: "y"]];
-  pass([testObj isEqual: @"hally"],
+  PASS([testObj isEqual: @"hally"],
     "custom string replacement works at end of string");
 
   [testObj release];

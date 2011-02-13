@@ -7,11 +7,11 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   double d;
 
-  pass([@"12" intValue] == 12, "simple intValue works");
-  pass([@"-12" intValue] == -12, "negative intValue works");
-  pass([@"+12" intValue] == 12, "positive intValue works");
-  pass([@"1.6" intValue] == 1, "intValue ignores trailing data");
-  pass([@"                                12" intValue] == 12,
+  PASS([@"12" intValue] == 12, "simple intValue works");
+  PASS([@"-12" intValue] == -12, "negative intValue works");
+  PASS([@"+12" intValue] == 12, "positive intValue works");
+  PASS([@"1.6" intValue] == 1, "intValue ignores trailing data");
+  PASS([@"                                12" intValue] == 12,
     "intValue with leading space works");
 
   d = [@"1.2" doubleValue];

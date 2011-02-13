@@ -6,7 +6,7 @@
 int main()
 {
   Class theClass = NSClassFromString(@"NSObject"); 
-  pass(theClass == [NSObject class],
+  PASS(theClass == [NSObject class],
        "'NSObject' %s","uses +class to return self");
   return 0;
 }

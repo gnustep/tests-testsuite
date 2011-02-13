@@ -11,13 +11,13 @@ int main()
   id obj = [NSArchiver new];
   NSMutableData     *data1;
 
-  pass((obj != nil && [obj isKindOfClass:[NSArchiver class]] &&
+  PASS((obj != nil && [obj isKindOfClass:[NSArchiver class]] &&
        [obj archiverData] != nil), "+new creates an empty NSArchiver");
   [obj release];
   obj = [NSArchiver alloc];
   data1 = [NSMutableData dataWithLength: 0];
   obj = [obj initForWritingWithMutableData: data1];
-  pass((obj != nil && [obj isKindOfClass:[NSArchiver class]] && data1 == [obj archiverData]), "-initForWritingWithMutableData seems ok");
+  PASS((obj != nil && [obj isKindOfClass:[NSArchiver class]] && data1 == [obj archiverData]), "-initForWritingWithMutableData seems ok");
 
   PASS_EXCEPTION([[NSUnarchiver alloc] initForReadingWithData:nil];, 
                  @"NSInvalidArgumentException",

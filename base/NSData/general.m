@@ -21,7 +21,7 @@ int main()
   
   /* hmpf is this correct */
   data1 = [NSData dataWithBytes:str1 length:(strlen(str1) * sizeof(void*))];
-  pass(data1 != nil &&
+  PASS(data1 != nil &&
        [data1 isKindOfClass:[NSData class]] &&
        [data1 length] == (strlen(str1) * sizeof(void*)) &&
        [data1 bytes] != str1 &&
@@ -29,18 +29,18 @@ int main()
        "+dataWithBytes:length: works");
   
   data2 = [NSData dataWithBytesNoCopy:str2 length:(strlen(str2) * sizeof(void*))];
-  pass(data2 != nil && [data2 isKindOfClass:[NSData class]] &&
+  PASS(data2 != nil && [data2 isKindOfClass:[NSData class]] &&
        [data2 length] == (strlen(str2) * sizeof(void*)) &&
        [data2 bytes] == str2,
        "+dataWithBytesNoCopy:length: works");
   
   data1 = [NSData dataWithBytes:nil length:0];
-  pass(data1 != nil && [data1 isKindOfClass:[NSData class]] && 
+  PASS(data1 != nil && [data1 isKindOfClass:[NSData class]] && 
        [data1 length] == 0, 
        "+dataWithBytes:length works with 0 length");
   
   [data2 getBytes:hold range:NSMakeRange(2,6)]; 
-  pass(strcmp(hold,"st str") == 0, "-getBytes:range works");
+  PASS(strcmp(hold,"st str") == 0, "-getBytes:range works");
   
   TEST_EXCEPTION([data2 getBytes:hold 
                            range:NSMakeRange(strlen(str2)*sizeof(void*),1)];,
@@ -63,7 +63,7 @@ int main()
   data2 = [NSData dataWithBytesNoCopy:str1 
                                length:(strlen(str1) * sizeof(void*))
 			 freeWhenDone:NO];
-  pass(data2 != nil && [data2 isKindOfClass:[NSData class]] &&
+  PASS(data2 != nil && [data2 isKindOfClass:[NSData class]] &&
        [data2 length] == (strlen(str1) * sizeof(void*)) &&
        [data2 bytes] == str1, 
        "+dataWithBytesNoCopy:length:freeWhenDone: works");
@@ -72,7 +72,7 @@ int main()
   
   { 
     BOOL didNotSegfault = YES;
-    pass(didNotSegfault, "+dataWithBytesNoCopy:length:freeWhenDone:NO doesn't free memory");
+    PASS(didNotSegfault, "+dataWithBytesNoCopy:length:freeWhenDone:NO doesn't free memory");
   }
   return 0;
 }

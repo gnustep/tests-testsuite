@@ -12,7 +12,7 @@ int main()
   path = [[[NSFileManager defaultManager] currentDirectoryPath] 
   				 stringByAppendingPathComponent:@"Resources"];
   
-  pass([NSBundle mainBundle] != nil, 
+  PASS([NSBundle mainBundle] != nil, 
        "+mainBundle returns non-nil if the tool has no bundle");
   
   bundle = [NSBundle bundleWithPath:path];
@@ -22,20 +22,20 @@ int main()
   
   TEST_STRING([bundle bundlePath],"a bundle has a path");
   
-  pass([path isEqual:[bundle bundlePath]] &&
+  PASS([path isEqual:[bundle bundlePath]] &&
        [[bundle bundlePath] isEqual:path],
        "bundlePath returns the correct path");
   
   TEST_FOR_CLASS(@"NSDictionary",[bundle infoDictionary],
                  "a bundle has an infoDictionary");
   
-  pass([NSBundle bundleWithPath:
+  PASS([NSBundle bundleWithPath:
            [path stringByAppendingPathComponent:@"nonexistent"]] == nil,
        "+bundleWithPath returns nil for a non-existing path"); 
   
   {
     NSArray *arr = [NSBundle allBundles];
-    pass(arr != nil && [arr isKindOfClass:[NSArray class]] && [arr count] != 0,
+    PASS(arr != nil && [arr isKindOfClass:[NSArray class]] && [arr count] != 0,
          "+allBundles returns an array");
   }
   [arp release]; arp = nil;

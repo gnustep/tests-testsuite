@@ -12,13 +12,13 @@ int main()
   test_alloc(@"NSDictionary");
   obj = [NSDictionary new];
   [testObjs addObject:obj];
-  pass(obj != nil && 
+  PASS(obj != nil && 
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 0,
        "can create an empty dictionary");
   obj = [NSDictionary dictionaryWithObject:@"Hello" forKey:@"Key"];
   [testObjs addObject:obj];
-  pass(obj != nil && 
+  PASS(obj != nil && 
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 1, 
        "can create a dictionary with one element");

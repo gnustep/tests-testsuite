@@ -34,7 +34,7 @@ int main()
   [archiver finishEncoding];
   NSLog(@"%*.*s", [data2 length], [data2 length], [data2 bytes]);
   ms = [NSKeyedUnarchiver unarchiveObjectWithData: data2];
-  pass([[[ms anyObject] absoluteString] isEqual: @"http://www.w3.org/"],
+  PASS([[[ms anyObject] absoluteString] isEqual: @"http://www.w3.org/"],
     "Can archive and restore a URL");
   
   [archiver release];
@@ -51,21 +51,21 @@ int main()
 		 vals2 = [vals1 arrayByAddingObject: val2];, nil, NO, 
 		 "We can build basic strings and arrays for tests");
   
-  pass([NSKeyedArchiver archiveRootObject:vals2 toFile:val1],
+  PASS([NSKeyedArchiver archiveRootObject:vals2 toFile:val1],
     "archiveRootObject:toFile: seems ok"); 
   
   data1 = [NSKeyedArchiver archivedDataWithRootObject:vals2];
-  pass((data1 != nil && [data1 length] != 0),
+  PASS((data1 != nil && [data1 length] != 0),
     "archivedDataWithRootObject: seems ok");
   
   a = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
   NSLog(@"From data: original array %@, decoded array %@",vals2, a);
-  pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
+  PASS((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
        "unarchiveObjectWithData: seems ok");
   
   a = [NSKeyedUnarchiver unarchiveObjectWithFile:val1];
   NSLog(@"From file: original array %@, decoded array %@",vals2, a);
-  pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
+  PASS((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
        "unarchiveObjectWithFile: seems ok");
 
   // encode
@@ -77,7 +77,7 @@ int main()
   // decode...
   unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData: data2];
   s = [[unarchiver decodeObjectForKey: @"string"] retain];
-  pass((s != nil && [s isKindOfClass:[NSString class]] && [s isEqual: val3]),
+  PASS((s != nil && [s isKindOfClass:[NSString class]] && [s isEqual: val3]),
     "encodeObject:forKey: seems okay");
   [data2 release];
 

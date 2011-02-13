@@ -37,17 +37,17 @@
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
-  pass([NicolaTest conformsToProtocol:@protocol(DoingNothing)],
+  PASS([NicolaTest conformsToProtocol:@protocol(DoingNothing)],
        "+conformsToProtocol returns YES on an implemented protocol");
-  pass([NicolaTest conformsToProtocol:@protocol(DoingNothingCategory)],
+  PASS([NicolaTest conformsToProtocol:@protocol(DoingNothingCategory)],
        "+conformsToProtocol returns YES on a protocol implemented in a category");
-  pass(![NicolaTest conformsToProtocol:@protocol(NSCoding)],
+  PASS(![NicolaTest conformsToProtocol:@protocol(NSCoding)],
        "+conformsToProtocol returns NO on an unimplemented protocol");
-  pass([[NicolaTest new] conformsToProtocol:@protocol(DoingNothing)],
+  PASS([[NicolaTest new] conformsToProtocol:@protocol(DoingNothing)],
        "-conformsToProtocol returns YES on an implemented protocol");
-  pass([[NicolaTest new] conformsToProtocol:@protocol(DoingNothingCategory)],
+  PASS([[NicolaTest new] conformsToProtocol:@protocol(DoingNothingCategory)],
        "-conformsToProtocol returns YES on a protocol implemented in a category"); 
-  pass(![[NicolaTest new] conformsToProtocol:@protocol(NSCoding)],
+  PASS(![[NicolaTest new] conformsToProtocol:@protocol(NSCoding)],
        "-conformsToProtocol returns NO on an unimplemented protocol");
 
   [arp release]; arp = nil;

@@ -15,11 +15,11 @@ int main()
   bstr = [bstr propertyList];
   adat = [bstr dataUsingEncoding: NSUTF8StringEncoding];
 
-  pass((adat != nil && [adat isKindOfClass: [NSData class]]),
+  PASS((adat != nil && [adat isKindOfClass: [NSData class]]),
 	 "We can convert from UTF8 Encoding");
 
   cstr = [[NSString alloc] initWithData: adat encoding: NSUTF8StringEncoding];
-  pass((cstr != nil && [cstr isKindOfClass: [NSString class]]),
+  PASS((cstr != nil && [cstr isKindOfClass: [NSString class]]),
        "We can convert to UTF8 Encoding");
 
   [arp release]; arp = nil;

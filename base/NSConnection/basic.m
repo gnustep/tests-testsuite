@@ -12,7 +12,7 @@ int main()
   testObject = [NSConnection new];
   test_NSObject(@"NSConnection",[NSArray arrayWithObject:testObject]); 
   testObject = [NSConnection defaultConnection];
-  pass(testObject != nil && [testObject isKindOfClass:[NSConnection class]],
+  PASS(testObject != nil && [testObject isKindOfClass:[NSConnection class]],
        "NSConnection +defaultConnection works");
   
   [arp release]; arp = nil;

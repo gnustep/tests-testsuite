@@ -36,11 +36,11 @@ int main(int argc, char **argv)
   NSData *data;
 
   contents = [NSString stringWithContentsOfFile: file];
-  pass([contents hasPrefix:@"This"], "stringWithContentsOfFile: UTF-8 BOM");
+  PASS([contents hasPrefix:@"This"], "stringWithContentsOfFile: UTF-8 BOM");
 
   data = [NSData dataWithContentsOfFile: file];
   contents = [[[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding] autorelease];
-  pass([contents hasPrefix:@"This"], "initWithData:encoding: UTF-8 BOM");
+  PASS([contents hasPrefix:@"This"], "initWithData:encoding: UTF-8 BOM");
 
   [pool release];
   return 0;

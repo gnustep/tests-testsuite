@@ -17,8 +17,8 @@ int main()
   inv = [NSInvocation invocationWithMethodSignature: sig];
   
   run = [NSRunLoop currentRunLoop];
-  pass(run != nil, "NSRunLoop understands [+currentRunLoop]");
-  pass([run currentMode] == nil, "-currentMode returns nil");
+  PASS(run != nil, "NSRunLoop understands [+currentRunLoop]");
+  PASS([run currentMode] == nil, "-currentMode returns nil");
   
   TEST_EXCEPTION(date = [NSDate dateWithTimeIntervalSinceNow:3];
   		 [run runUntilDate:date];,

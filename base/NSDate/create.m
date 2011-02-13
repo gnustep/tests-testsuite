@@ -12,40 +12,40 @@ int main()
 
   val = @"2000-10-19 00:00:00 +0000";
   date1 = [NSDate date];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+date works");
   date1 = [NSDate dateWithString:val];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+dateWithString works");
 
   date2 = [NSCalendarDate dateWithTimeIntervalSinceReferenceDate: 
    			    [date1 timeIntervalSinceReferenceDate]];
-  pass(date2 != nil && [date2 isKindOfClass:[NSDate class]],
+  PASS(date2 != nil && [date2 isKindOfClass:[NSDate class]],
        "+dateWithTimeIntervalSinceReferenceDate: works");
   // Make sure we get day in correct zone.
   [date2 setTimeZone: [NSTimeZone timeZoneForSecondsFromGMT: 0]];
-  pass([date2 dayOfMonth] == 19, "+dateWithString makes correct day");
-  pass([date2 monthOfYear] == 10, "+dateWithString makes correct month");
-  pass([date2 yearOfCommonEra] == 2000, "+dateWithString makes correct year");
+  PASS([date2 dayOfMonth] == 19, "+dateWithString makes correct day");
+  PASS([date2 monthOfYear] == 10, "+dateWithString makes correct month");
+  PASS([date2 yearOfCommonEra] == 2000, "+dateWithString makes correct year");
   
   date1 = [NSDate dateWithTimeIntervalSinceNow:0];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
         "+dateWithTimeIntervalSinceNow: works");
   
   date1 = [NSDate dateWithTimeIntervalSince1970:0];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
         "+dateWithTimeIntervalSince1970: works");
   
   date1 = [NSDate dateWithTimeIntervalSinceReferenceDate:0];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
         "+dateWithTimeIntervalSinceReferenceDate: works");
   
   date1 = [NSDate distantFuture];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+distantFuture works");
   
   date1 = [NSDate distantPast];
-  pass(date1 != nil && [date1 isKindOfClass:[NSDate class]],
+  PASS(date1 != nil && [date1 isKindOfClass:[NSDate class]],
        "+distantPast works");
   
   [arp release]; arp = nil;

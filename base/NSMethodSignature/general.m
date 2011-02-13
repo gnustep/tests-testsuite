@@ -208,11 +208,13 @@ test_compare_server_signature(void)
       const char *msg;
 
 #define TEST_SEL(SELNAME) { \
+      BOOL ok; \
       lclSig = [objct runtimeSignatureForSelector: @selector(SELNAME)]; \
       rmtSig = [proxy runtimeSignatureForSelector: @selector(SELNAME)]; \
       msg = [[NSString stringWithFormat: @"runtime: sel:%s\nlcl:%s\nrmt:%s", \
 	GSNameFromSelector(@selector(SELNAME)), lclSig, rmtSig] UTF8String]; \
-      pass(GSSelectorTypesMatch(lclSig, rmtSig), msg); \
+      ok = GSSelectorTypesMatch(lclSig, rmtSig); \
+      PASS(ok, "%s", msg) \
       }
 
       TEST_SEL(void_void);
@@ -299,10 +301,12 @@ test_GSSelectorTypesMatch(void)
   while (pairs[i][0])
     {
       const char *s;
+      BOOL ok;
 
       s = [[NSString stringWithFormat: @"pair %d matches:\n%s\n%s",
 	i, pairs[i][0], pairs[i][1]] UTF8String];
-      pass(GSSelectorTypesMatch(pairs[i][0], pairs[i][1]) == YES, s);
+      ok = GSSelectorTypesMatch(pairs[i][0], pairs[i][1]);
+      PASS(ok, "%s", s)
       i++;
     }
 }
@@ -346,9 +350,9 @@ main(int argc, char *argv[])
   o = [SimpleClass new];
   s = [o methodSignatureForSelector: @selector(sel1)];
   e = @encode(const char*);
-  pass(strcmp(e, "r*") == 0, "@encode(const char*) makes 'r*' type encoding");
-  pass(strcmp([s methodReturnType], "r*") == 0,
-    "sel1 return type is 'r*'");
+  PASS(strcmp(e, "r*") == 0, "@encode(const char*) makes 'r*' type encoding")
+  PASS(strcmp([s methodReturnType], "r*") == 0,
+    "sel1 return type is 'r*'")
 
 #if	GNUSTEP
   if ([[[[NSProcessInfo processInfo] arguments] lastObject] isEqual: @"srv"])

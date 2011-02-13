@@ -14,7 +14,7 @@ int main()
   obj = [NSKeyedArchiver alloc];
   data1 = [NSMutableData dataWithLength: 0];
   obj = [obj initForWritingWithMutableData: data1];
-  pass((obj != nil && [obj isKindOfClass:[NSKeyedArchiver class]]), "-initForWritingWithMutableData seems ok");
+  PASS((obj != nil && [obj isKindOfClass:[NSKeyedArchiver class]]), "-initForWritingWithMutableData seems ok");
 
   TEST_EXCEPTION([[NSUnarchiver alloc] initForReadingWithData:nil];, 
                  @"NSInvalidArgumentException", YES,

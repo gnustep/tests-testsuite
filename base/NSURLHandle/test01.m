@@ -40,21 +40,21 @@ int main(int argc, char **argv)
       // try some different requests
       handle = [[[cls alloc] initWithURL: url cached: NO] autorelease];
       rxd = [handle loadInForeground];
-      pass([rxd isEqual: resp],
+      PASS([rxd isEqual: resp],
            "Got the correct data from a 200 - status load") ;
-      pass([handle status] == NSURLHandleLoadSucceeded,
+      PASS([handle status] == NSURLHandleLoadSucceeded,
            "200 - status: Handle load succeeded") ;
       
       url = [NSURL URLWithString: @"http://localhost:54321/401"];
       handle = [[[cls alloc] initWithURL: url cached: NO] autorelease];
       rxd = [handle loadInForeground];
-      pass([handle status] == NSURLHandleNotLoaded,
+      PASS([handle status] == NSURLHandleNotLoaded,
            "401 - status: Handle load not loaded (unanswered auth challenge)");
 
       url = [NSURL URLWithString: @"http://localhost:54321/404"];
       handle = [[[cls alloc] initWithURL: url cached: NO] autorelease];
       rxd = [handle loadInForeground];
-      pass([handle status] == NSURLHandleNotLoaded,
+      PASS([handle status] == NSURLHandleNotLoaded,
 	   "404 - status: Handle load not loaded (resource not found)");
       [t terminate];
       [t waitUntilExit];

@@ -167,7 +167,7 @@ void test(Class class)
       NSCAssert([sentinel isEqual: [decodedInstance objectAtIndex: 1]],
 	NSInternalInconsistencyException);
 
-      pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
+      PASS([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
 	ofVersion: v], "decoding current version of class %s", POBJECT(class));
 
       for (; v >= 0; v--)
@@ -179,8 +179,8 @@ void test(Class class)
 	      if (v == [class version])
 		{
 		  if (!update)
-		    pass(0, "%s has reference data for the current version",
-		      POBJECT(class));
+		    PASS(0, "%s has reference data for the current version",
+		      POBJECT(class))
 		  else
 		    [NSArchiver archiveRootObject:
 		      [NSArray arrayWithObjects: instance, sentinel, nil]
@@ -192,14 +192,14 @@ void test(Class class)
 	  decodedInstance = [NSUnarchiver unarchiveObjectWithData: d];
 	  NSCAssert([sentinel isEqual: [decodedInstance objectAtIndex: 1]],
 	    NSInternalInconsistencyException);
-	  pass([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
+	  PASS([class verifyTestInstance: [decodedInstance objectAtIndex: 0]
 	    ofVersion: v], "decoding version %i of class %s",
 	    v, POBJECT(class));
 	}
     }
   NS_HANDLER
     {
-      pass(0, "decoding class %s: %s", 
+      PASS(0, "decoding class %s: %s", 
 	POBJECT(class), POBJECT(localException));
     }
   NS_ENDHANDLER

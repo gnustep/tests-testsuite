@@ -31,9 +31,9 @@ int main()
   outHandle = [outPipe fileHandleForReading];
 
   [task launch];
-  pass([task standardOutput] == outPipe, "standardOutput returns pipe");
+  PASS([task standardOutput] == outPipe, "standardOutput returns pipe");
   data = [outHandle readDataToEndOfFile];
-  pass([data length] > 0, "was able to read data from subtask");
+  PASS([data length] > 0, "was able to read data from subtask");
   NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   [task terminate];
 
@@ -46,7 +46,7 @@ int main()
 
   [task launch];
   data = [outHandle readDataToEndOfFile];
-  pass([data length] > 0, "was able to read data from subtask");
+  PASS([data length] > 0, "was able to read data from subtask");
   NSLog(@"Data was %*.*s", [data length], [data length], [data bytes]);
   [task terminate];
 
@@ -65,7 +65,7 @@ int main()
     nil]];
   [task launch];
   [task waitUntilExit];
-  pass([task terminationStatus] == 0, "subtask changes process group");
+  PASS([task terminationStatus] == 0, "subtask changes process group");
   [task release];
 #endif
 

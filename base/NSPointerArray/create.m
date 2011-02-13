@@ -20,27 +20,27 @@ int main()
   vals[2] = val3;
 
   obj = [[NSPointerArray new] autorelease];
-  pass(obj != nil
+  PASS(obj != nil
     && [obj isKindOfClass:[NSPointerArray class]]
     && [obj count] == 0,
     "+new creates an empty pointer array");
   
   [obj addPointer: (void*)@"hello"];
-  pass([obj count] == 1, "+addPointer: increments count");
+  PASS([obj count] == 1, "+addPointer: increments count");
   [obj addPointer: nil];
-  pass([obj count] == 2, "+addPointer: works with nil");
+  PASS([obj count] == 2, "+addPointer: works with nil");
 
   [obj insertPointer: (void*)vals[0] atIndex: 0];
   [obj insertPointer: (void*)vals[1] atIndex: 0];
   [obj insertPointer: (void*)vals[2] atIndex: 0];
-  pass([obj count] == 5 && [obj pointerAtIndex: 2] == (void*)vals[0],
+  PASS([obj count] == 5 && [obj pointerAtIndex: 2] == (void*)vals[0],
     "+insertPointer:atIndex: works");
   
   obj = [NSPointerArray pointerArrayWithWeakObjects];
   ms = [@"hello" mutableCopy];
   rc = [ms retainCount];
   [obj addPointer: ms];
-  pass(rc == [ms retainCount], "array with weak references doesn't retain");
+  PASS(rc == [ms retainCount], "array with weak references doesn't retain");
 
   [arp release]; arp = nil;
   return 0;

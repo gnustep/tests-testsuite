@@ -8,11 +8,11 @@ int main()
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
   id testObj;
   
-  pass([NSRunLoop new] == nil, "run loop initialises to nil");
+  PASS([NSRunLoop new] == nil, "run loop initialises to nil");
   testObj = [NSRunLoop currentRunLoop];
   test_NSObject(@"NSRunLoop", [NSArray arrayWithObject:testObj]);
 
-  pass([NSTimer new] == nil, "timer initialises to nil");
+  PASS([NSTimer new] == nil, "timer initialises to nil");
   ASSIGN(testObj, [[NSTimer alloc] initWithFireDate: 0 interval: 0 target: [NSObject class] selector: @selector(description) userInfo: nil repeats: NO]);
   test_NSObject(@"NSTimer", [NSArray arrayWithObject:testObj]);
   

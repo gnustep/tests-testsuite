@@ -18,13 +18,13 @@ int main()
   vals[2] = val3;
 
   obj = [[NSHashTable new] autorelease];
-  pass(obj != nil
+  PASS(obj != nil
     && [obj isKindOfClass:[NSHashTable class]]
     && [obj count] == 0,
     "+new creates an empty hash table");
   
   [obj addObject: (void*)@"hello"];
-  pass([obj count] == 1, "-addObject: increments count");
+  PASS([obj count] == 1, "-addObject: increments count");
   TEST_EXCEPTION([obj addObject: nil];,
     NSInvalidArgumentException, YES, "-addObject: raises with nil");
 

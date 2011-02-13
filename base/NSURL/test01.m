@@ -53,7 +53,7 @@ int main()
 	  data = [url resourceDataUsingCache: NO];
 	  str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
 	  sprintf(buf, "keep-alive test %d OK",i);
-	  pass([data isEqual:resp], buf);
+	  PASS([data isEqual:resp], "%s", buf)
 	}
       [t terminate];
       [t waitUntilExit];

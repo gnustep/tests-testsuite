@@ -6,65 +6,65 @@
 int main()
 {
   NSAutoreleasePool   *arp = [NSAutoreleasePool new];
-  pass([[@"" pathComponents] count] == 0, "pathComponents ''");
-  pass([[@"usr" pathComponents] count] == 1, "pathComponents 'usr'");
-  pass([[@"usr/" pathComponents] count] == 2, "pathComponents 'usr/'");
-  pass([[@"usr/bin" pathComponents] count] == 2, "pathComponents 'usr/bin'");
-  pass([[@"usr//bin" pathComponents] count] == 2, "pathComponents 'usr//bin'");
-  pass([[@"usr///bin" pathComponents] count] == 2, "pathComponents 'usr///bin'");
-  pass([[@"/" pathComponents] count] == 1, "pathComponents '/'");
-  pass([[@"/usr" pathComponents] count] == 2, "pathComponents '/usr'");
-  pass([[@"/usr/" pathComponents] count] == 3, "pathComponents '/usr/'");
-  pass([[@"/usr/bin" pathComponents] count] == 3, "pathComponents '/usr/bin'");
-  pass([[@"/usr//bin" pathComponents] count] == 3, "pathComponents '/usr//bin'");
-  pass([[@"/usr///bin" pathComponents] count] == 3, "pathComponents '/usr///bin'");
-  pass([[@"" stringByAppendingPathComponent:@""] isEqual:@""],
+  PASS([[@"" pathComponents] count] == 0, "pathComponents ''");
+  PASS([[@"usr" pathComponents] count] == 1, "pathComponents 'usr'");
+  PASS([[@"usr/" pathComponents] count] == 2, "pathComponents 'usr/'");
+  PASS([[@"usr/bin" pathComponents] count] == 2, "pathComponents 'usr/bin'");
+  PASS([[@"usr//bin" pathComponents] count] == 2, "pathComponents 'usr//bin'");
+  PASS([[@"usr///bin" pathComponents] count] == 2, "pathComponents 'usr///bin'");
+  PASS([[@"/" pathComponents] count] == 1, "pathComponents '/'");
+  PASS([[@"/usr" pathComponents] count] == 2, "pathComponents '/usr'");
+  PASS([[@"/usr/" pathComponents] count] == 3, "pathComponents '/usr/'");
+  PASS([[@"/usr/bin" pathComponents] count] == 3, "pathComponents '/usr/bin'");
+  PASS([[@"/usr//bin" pathComponents] count] == 3, "pathComponents '/usr//bin'");
+  PASS([[@"/usr///bin" pathComponents] count] == 3, "pathComponents '/usr///bin'");
+  PASS([[@"" stringByAppendingPathComponent:@""] isEqual:@""],
        "'' stringByAppendingPathComponent: ''");
-  pass([[@"" stringByAppendingPathComponent:@"usr"] isEqual:@"usr"],
+  PASS([[@"" stringByAppendingPathComponent:@"usr"] isEqual:@"usr"],
        "'' stringByAppendingPathComponent: 'usr'");
-  pass([[@"" stringByAppendingPathComponent:@"usr/"] isEqual:@"usr"],
+  PASS([[@"" stringByAppendingPathComponent:@"usr/"] isEqual:@"usr"],
        "'' stringByAppendingPathComponent: 'usr/'");
-  pass([[@"" stringByAppendingPathComponent:@"/usr"] isEqual:@"/usr"],
+  PASS([[@"" stringByAppendingPathComponent:@"/usr"] isEqual:@"/usr"],
        "'' stringByAppendingPathComponent: '/usr'");
-  pass([[@"" stringByAppendingPathComponent:@"/usr/"] isEqual:@"/usr"],
+  PASS([[@"" stringByAppendingPathComponent:@"/usr/"] isEqual:@"/usr"],
        "'' stringByAppendingPathComponent: '/usr/'");
-  pass([[@"/" stringByAppendingPathComponent:@""] isEqual:@"/"],
+  PASS([[@"/" stringByAppendingPathComponent:@""] isEqual:@"/"],
        "'/' stringByAppendingPathComponent: ''");
-  pass([[@"/" stringByAppendingPathComponent:@"usr"] isEqual:@"/usr"],
+  PASS([[@"/" stringByAppendingPathComponent:@"usr"] isEqual:@"/usr"],
        "'/' stringByAppendingPathComponent: 'usr'");
-  pass([[@"/" stringByAppendingPathComponent:@"usr/"] isEqual:@"/usr"],
+  PASS([[@"/" stringByAppendingPathComponent:@"usr/"] isEqual:@"/usr"],
        "'/' stringByAppendingPathComponent: 'usr/'");
-  pass([[@"/" stringByAppendingPathComponent:@"/usr"] isEqual:@"/usr"],
+  PASS([[@"/" stringByAppendingPathComponent:@"/usr"] isEqual:@"/usr"],
        "'/' stringByAppendingPathComponent: '/usr'");
-  pass([[@"/" stringByAppendingPathComponent:@"/usr/"] isEqual:@"/usr"],
+  PASS([[@"/" stringByAppendingPathComponent:@"/usr/"] isEqual:@"/usr"],
        "'/' stringByAppendingPathComponent: '/usr/'");
-  pass([[@"usr" stringByAppendingPathComponent:@""] isEqual:@"usr"],
+  PASS([[@"usr" stringByAppendingPathComponent:@""] isEqual:@"usr"],
        "'usr' stringByAppendingPathComponent: ''");
-  pass([[@"usr" stringByAppendingPathComponent:@"bin"] isEqual:@"usr/bin"],
+  PASS([[@"usr" stringByAppendingPathComponent:@"bin"] isEqual:@"usr/bin"],
        "'usr' stringByAppendingPathComponent: 'bin'");
-  pass([[@"usr" stringByAppendingPathComponent:@"bin/"] isEqual:@"usr/bin"],
+  PASS([[@"usr" stringByAppendingPathComponent:@"bin/"] isEqual:@"usr/bin"],
        "'usr' stringByAppendingPathComponent: 'bin/'");
-  pass([[@"usr" stringByAppendingPathComponent:@"/bin"] isEqual:@"usr/bin"],
+  PASS([[@"usr" stringByAppendingPathComponent:@"/bin"] isEqual:@"usr/bin"],
        "'usr' stringByAppendingPathComponent: '/bin'");
-  pass([[@"usr" stringByAppendingPathComponent:@"/bin/"] isEqual:@"usr/bin"],
+  PASS([[@"usr" stringByAppendingPathComponent:@"/bin/"] isEqual:@"usr/bin"],
        "'usr' stringByAppendingPathComponent: '/bin/'");
-  pass([[@"/usr" stringByAppendingPathComponent:@""] isEqual:@"/usr"],
+  PASS([[@"/usr" stringByAppendingPathComponent:@""] isEqual:@"/usr"],
        "'/usr' stringByAppendingPathComponent: ''");
-  pass([[@"/usr" stringByAppendingPathComponent:@"bin"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr" stringByAppendingPathComponent:@"bin"] isEqual:@"/usr/bin"],
        "'/usr' stringByAppendingPathComponent: 'bin'");
-  pass([[@"/usr" stringByAppendingPathComponent:@"bin/"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr" stringByAppendingPathComponent:@"bin/"] isEqual:@"/usr/bin"],
        "'/usr' stringByAppendingPathComponent: 'bin/'");
-  pass([[@"/usr" stringByAppendingPathComponent:@"/bin"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr" stringByAppendingPathComponent:@"/bin"] isEqual:@"/usr/bin"],
        "'/usr' stringByAppendingPathComponent: '/bin'");
-  pass([[@"/usr" stringByAppendingPathComponent:@"/bin/"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr" stringByAppendingPathComponent:@"/bin/"] isEqual:@"/usr/bin"],
        "'/usr' stringByAppendingPathComponent: '/bin/'");
-  pass([[@"/usr/" stringByAppendingPathComponent:@""] isEqual:@"/usr"],
+  PASS([[@"/usr/" stringByAppendingPathComponent:@""] isEqual:@"/usr"],
        "'/usr/' stringByAppendingPathComponent: ''");
-  pass([[@"/usr/" stringByAppendingPathComponent:@"bin"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr/" stringByAppendingPathComponent:@"bin"] isEqual:@"/usr/bin"],
        "'/usr/' stringByAppendingPathComponent: 'bin'");
-  pass([[@"/usr/" stringByAppendingPathComponent:@"bin/"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr/" stringByAppendingPathComponent:@"bin/"] isEqual:@"/usr/bin"],
        "'/usr/' stringByAppendingPathComponent: 'bin/'");
-  pass([[@"/usr/" stringByAppendingPathComponent:@"/bin/"] isEqual:@"/usr/bin"],
+  PASS([[@"/usr/" stringByAppendingPathComponent:@"/bin/"] isEqual:@"/usr/bin"],
        "'/usr/' stringByAppendingPathComponent: '/bin/'");
   [arp release]; arp = nil;
   return 0;

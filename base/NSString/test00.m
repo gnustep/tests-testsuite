@@ -65,16 +65,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
   want = ci;
 
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   opts = 0;
   type =  "case sensitive comparison for";
@@ -92,16 +92,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
     }
   want = cs;
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
 
   opts = NSCaseInsensitiveSearch | NSLiteralSearch;
   type =  "case insensitive literal comparison for";
@@ -119,16 +119,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
     }
   want = lci;
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
 
   opts = NSLiteralSearch;
   type =  "case sensitive literal comparison for";
@@ -146,16 +146,16 @@ static void strCompare (char *s0, char *s1, NSComparisonResult ci,
     }
   want = lcs;
   res = [cs0 compare:cs1 options:opts range:ra];
-  pass(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:us1 options:opts range:ra];
-  pass(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UUString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [us0 compare:cs1 options:opts range:ra];
-  pass(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "UCString %s '%s' and '%s' %s ", type, s0, s1, txt);
   
   res = [cs0 compare:us1 options:opts range:ra];
-  pass(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
+  PASS(res == want, "CUString %s '%s' and '%s' %s ", type, s0, s1, txt);
 
 }
 
@@ -189,16 +189,16 @@ static void strRange(char *s0, char *s1, unsigned int opts,
                  nil,NO, "create strings for range is ok");
   
   res = [cs0 rangeOfString:cs1 options:opts range:range];
-  pass(rangesEqual(res,want), "CCString range for '%s' and '%s' is ok",s0,s1);
+  PASS(rangesEqual(res,want), "CCString range for '%s' and '%s' is ok",s0,s1);
   
   res = [us0 rangeOfString:us1 options:opts range:range];
-  pass(rangesEqual(res,want), "UUString range for '%s' and '%s' is ok",s0,s1);
+  PASS(rangesEqual(res,want), "UUString range for '%s' and '%s' is ok",s0,s1);
 
   res = [us0 rangeOfString:cs1 options:opts range:range];
-  pass(rangesEqual(res,want), "UCString range for '%s' and '%s' is ok",s0,s1);
+  PASS(rangesEqual(res,want), "UCString range for '%s' and '%s' is ok",s0,s1);
 
   res = [cs0 rangeOfString:us1 options:opts range:range];
-  pass(rangesEqual(res,want), "CUString range for '%s' and '%s' is ok",s0,s1);
+  PASS(rangesEqual(res,want), "CUString range for '%s' and '%s' is ok",s0,s1);
 }
 
 static void strRangeFromSet(char *s, NSCharacterSet *c, unsigned int o, NSRange range, NSRange want)
@@ -229,16 +229,16 @@ static void strRangeFromSet(char *s, NSCharacterSet *c, unsigned int o, NSRange 
                  nil,NO, "create strings for range");
    
    res = [cs0 rangeOfCharacterFromSet:c options:o range:range];
-   pass(rangesEqual(res,want), "CString range for '%s' is ok",s);
+   PASS(rangesEqual(res,want), "CString range for '%s' is ok",s);
 
    res = [us0 rangeOfCharacterFromSet:c options:o range:range];
-   pass(rangesEqual(res,want), "UString range for '%s' is ok",s);
+   PASS(rangesEqual(res,want), "UString range for '%s' is ok",s);
 
    res = [cs1 rangeOfCharacterFromSet:c options:o range:range];
-   pass(rangesEqual(res,want), "MCString range for '%s' is ok",s);
+   PASS(rangesEqual(res,want), "MCString range for '%s' is ok",s);
 
    res = [us1 rangeOfCharacterFromSet:c options:o range:range];
-   pass(rangesEqual(res,want), "MUString range for '%s' is ok",s);
+   PASS(rangesEqual(res,want), "MUString range for '%s' is ok",s);
 }
 static void testLineRange(char *s, NSRange range, NSRange want)
 {
@@ -249,7 +249,7 @@ static void testLineRange(char *s, NSRange range, NSRange want)
   cs0 = [NSString stringWithCString:s];
   l = [cs0 length];
   res = [cs0 lineRangeForRange:range];
-  pass(rangesEqual(res,want), "lineRangeForRange: with '%s' is ok",s);
+  PASS(rangesEqual(res,want), "lineRangeForRange: with '%s' is ok",s);
 }
 
 int main()
@@ -353,8 +353,8 @@ int main()
   testLineRange("This is a line of text\r\n", NSMakeRange(10, 10), NSMakeRange(0, 24));
   testLineRange("This is a line of text\r\r", NSMakeRange(10, 10), NSMakeRange(0, 23));
   
-  pass([@"1.2e3" doubleValue] == 1.2e3, "Simple double conversion works");
-  pass([@"4.5E6" floatValue] == 4.5e6, "Simple float conversion works");
+  PASS([@"1.2e3" doubleValue] == 1.2e3, "Simple double conversion works");
+  PASS([@"4.5E6" floatValue] == 4.5e6, "Simple float conversion works");
 
   
   [arp release]; arp = nil;

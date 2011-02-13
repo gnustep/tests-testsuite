@@ -83,7 +83,7 @@ void testWriteBasicType_##testName (char *typeName, testType *toEncode) \
       [arch encodeObject:str]; \
       [mData writeToFile:fileName atomically:YES]; \
       data = [NSData dataWithContentsOfFile:fileName]; \
-      pass([data isEqual:mData], \
+      PASS([data isEqual:mData], \
 	   "can write %s of size %li", typeName, typeSize); \
       [fileName release]; \
       [mData release]; \
@@ -111,10 +111,10 @@ void testReadBasicType_##testName (char *pre, testType *expect, testType *toDeco
 	    [unArch decodeValueOfObjCType:@encode(testType) at:toDecode]; \
 	  NS_HANDLER \
 	    NSLog(@"%@ %@", [localException name], [localException reason]); \
-	    pass(0, "can unarchive %s from %s", pre, [fileName cString]); \
+	    PASS(0, "can unarchive %s from %s", pre, [fileName cString]); \
 	  NS_ENDHANDLER \
 	  str2 = [unArch decodeObject]; \
-	  pass((VAL_TEST(*expect,*toDecode) && [str isEqual:str2]), \
+	  PASS((VAL_TEST(*expect,*toDecode) && [str isEqual:str2]), \
 		"can unarchive %s from %s", pre, [fileName cString]); \
 	} \
     } \
@@ -208,10 +208,10 @@ int main()
   [obj1 setValues];
   data = [NSArchiver archivedDataWithRootObject: obj1];
   obj2 = [NSUnarchiver unarchiveObjectWithData: data];
-  pass([obj1 testCInt:obj2],       "archiving as int - dearchiving as NSInteger");
-  pass([obj1 testCUInt:obj2],      "archiving as unsigned int - dearchiving as NSUInteger");
-  pass([obj1 testNSInteger:obj2],  "archiving as NSInteger - dearchiving as int");
-  pass([obj1 testNSUInteger:obj2], "archiving as NSUInteger - dearchiving as unsigned int");
+  PASS([obj1 testCInt:obj2],       "archiving as int - dearchiving as NSInteger");
+  PASS([obj1 testCUInt:obj2],      "archiving as unsigned int - dearchiving as NSUInteger");
+  PASS([obj1 testNSInteger:obj2],  "archiving as NSInteger - dearchiving as int");
+  PASS([obj1 testNSUInteger:obj2], "archiving as NSUInteger - dearchiving as unsigned int");
   
   [pool release]; pool = nil;
   return 0;

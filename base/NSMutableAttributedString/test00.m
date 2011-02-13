@@ -44,25 +44,25 @@ int main()
   
   attrStr = [[NSMutableAttributedString alloc] initWithString:baseString 
                                                       attributes:red];
-  pass([[attrStr string] isEqual:baseString] &&
+  PASS([[attrStr string] isEqual:baseString] &&
        [attrStr checkAttributes:red range:NSMakeRange(0,10)],
        "-initWithString:attributes: works");
   
   [attrStr setAttributes:blue range:NSMakeRange(0,10)];
-  pass([attrStr checkAttributes:blue range:NSMakeRange(0,10)],
+  PASS([attrStr checkAttributes:blue range:NSMakeRange(0,10)],
        "-setAttributes:range: works for the whole string");
    
   ASSIGN(attrStr,[[NSMutableAttributedString alloc] initWithString:baseString 
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(0,5)];
-  pass([attrStr checkAttributes:blue range:NSMakeRange(0,5)] &&
+  PASS([attrStr checkAttributes:blue range:NSMakeRange(0,5)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)],
        "-setAttributes:range: works for the first half of the string");
   
   ASSIGN(attrStr,[[NSMutableAttributedString alloc] initWithString:baseString 
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(3,5)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,3)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,3)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(3,5)] &&
        [attrStr checkAttributes:red range:NSMakeRange(8,2)],
        "-setAttributes:range: works for the middle of the string");
@@ -70,7 +70,7 @@ int main()
   ASSIGN(attrStr,[[NSMutableAttributedString alloc] initWithString:baseString 
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(5,5)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,5)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,5)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(5,5)],
        "-setAttributes:range: works for the last half of the string");
    
@@ -79,7 +79,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(0,3)];
   [attrStr setAttributes:red range:NSMakeRange(3,4)];
   [attrStr setAttributes:gray range:NSMakeRange(7,3)];
-  pass([attrStr checkAttributes:blue range:NSMakeRange(0,3)] &&
+  PASS([attrStr checkAttributes:blue range:NSMakeRange(0,3)] &&
        [attrStr checkAttributes:red range:NSMakeRange(3,4)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(7,3)],
        "-setAttributes:range: works in three parts of the string");
@@ -89,7 +89,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(0,5)];
   [attrStr setAttributes:red range:NSMakeRange(3,5)];
   [attrStr setAttributes:gray range:NSMakeRange(4,5)];
-  pass([attrStr checkAttributes:blue range:NSMakeRange(0,3)] &&
+  PASS([attrStr checkAttributes:blue range:NSMakeRange(0,3)] &&
        [attrStr checkAttributes:red range:NSMakeRange(3,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(4,5)] &&
        [attrStr checkAttributes:red range:NSMakeRange(9,1)],
@@ -101,7 +101,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(4,2)];
   [attrStr setAttributes:blue range:NSMakeRange(7,2)];
   [attrStr setAttributes:gray range:NSMakeRange(2,6)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(1,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(2,6)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(8,1)] &&
@@ -112,7 +112,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(2,5)];
   [attrStr setAttributes:gray range:NSMakeRange(2,5)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,2)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,2)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(2,5)] &&
        [attrStr checkAttributes:red range:NSMakeRange(7,3)], 
        "-setAttributes:range: works with replacing");
@@ -122,7 +122,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(1,8)];
   [attrStr setAttributes:red range:NSMakeRange(2,6)];
   [attrStr setAttributes:gray range:NSMakeRange(3,4)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(1,1)] &&
        [attrStr checkAttributes:red range:NSMakeRange(2,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(3,4)] &&
@@ -135,7 +135,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(1,3)];
   [attrStr setAttributes:gray range:NSMakeRange(1,4)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(1,4)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)],
        "-setAttributes:range: works with extending at the end (diff color)");
@@ -144,7 +144,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:gray range:NSMakeRange(1,3)];
   [attrStr setAttributes:gray range:NSMakeRange(1,4)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(1,4)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)],
        "-setAttributes:range: works with extending at the end (diff color)");
@@ -153,7 +153,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(2,3)];
   [attrStr setAttributes:gray range:NSMakeRange(1,4)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(1,4)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)], 
        "-setAttributes:range: works with extending at the beginning (diff color)");
@@ -162,7 +162,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:gray range:NSMakeRange(2,3)];
   [attrStr setAttributes:gray range:NSMakeRange(1,4)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(1,4)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)], 
        "-setAttributes:range: works with extending at the beginning (same color)");
@@ -172,7 +172,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(1,3)];
   [attrStr setAttributes:gray range:NSMakeRange(2,2)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(1,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(2,2)] &&
        [attrStr checkAttributes:red range:NSMakeRange(4,6)], 
@@ -182,7 +182,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:gray range:NSMakeRange(1,3)];
   [attrStr setAttributes:gray range:NSMakeRange(2,2)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(1,3)] &&
        [attrStr checkAttributes:red range:NSMakeRange(4,6)], 
        "-setAttributes:range: works with subset at the end (same color)");
@@ -191,7 +191,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:blue range:NSMakeRange(2,3)];
   [attrStr setAttributes:gray range:NSMakeRange(2,2)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,2)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,2)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(2,2)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(4,1)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)], 
@@ -201,7 +201,7 @@ int main()
                                                         attributes:red]);
   [attrStr setAttributes:gray range:NSMakeRange(2,3)];
   [attrStr setAttributes:gray range:NSMakeRange(2,2)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,2)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,2)] &&
        [attrStr checkAttributes:gray range:NSMakeRange(2,3)] &&
        [attrStr checkAttributes:red range:NSMakeRange(5,5)], 
        "-setAttributes:range: works with subset at the beginning (same color)");
@@ -211,7 +211,7 @@ int main()
   [attrStr setAttributes:gray range:NSMakeRange(2,1)];
   [attrStr setAttributes:gray range:NSMakeRange(4,1)];
   [attrStr setAttributes:blue range:NSMakeRange(1,5)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(1,5)] &&
        [attrStr checkAttributes:red range:NSMakeRange(6,4)], 
        "-setAttributes:range: works with subsets (diff color)");     
@@ -221,7 +221,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(2,1)];
   [attrStr setAttributes:blue range:NSMakeRange(4,1)];
   [attrStr setAttributes:blue range:NSMakeRange(1,5)];
-  pass([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
+  PASS([attrStr checkAttributes:red range:NSMakeRange(0,1)] &&
        [attrStr checkAttributes:blue range:NSMakeRange(1,5)] &&
        [attrStr checkAttributes:red range:NSMakeRange(6,4)], 
        "-setAttributes:range: works with subsets (same color)");     
@@ -233,7 +233,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(7,2)];
   [attrStr setAttributes:red range:NSMakeRange(3,2)];
   [attrStr setAttributes:gray range:NSMakeRange(0,10)];
-  pass([attrStr checkAttributes:gray range:NSMakeRange(0,10)], 
+  PASS([attrStr checkAttributes:gray range:NSMakeRange(0,10)], 
        "-setAttributes:range: works with setting attributes for the whole string"); 
    
   ASSIGN(attrStr,[[NSMutableAttributedString alloc] initWithString:baseString 
@@ -241,7 +241,7 @@ int main()
   [attrStr setAttributes:blue range:NSMakeRange(0,1)];
   [attrStr setAttributes:blue range:NSMakeRange(1,1)];
   [attrStr setAttributes:blue range:NSMakeRange(2,1)];
-  pass([attrStr checkAttributes:blue range:NSMakeRange(0,3)] && 
+  PASS([attrStr checkAttributes:blue range:NSMakeRange(0,3)] && 
        [attrStr checkAttributes:red range:NSMakeRange(3,7)], 
        "-setAttributes:range: works with nearby attributes"); 
   

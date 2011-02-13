@@ -34,25 +34,25 @@ int main()
   charSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     
   str = [NSString stringWithCString:"one\ntwo\nthree\n"];
-  pass(scanThreeWords(str,charSet), 
+  PASS(scanThreeWords(str,charSet), 
        "scanning three words separated by newlines");
   
   str = @"one two three ";
-  pass(scanThreeWords(str,charSet), 
+  PASS(scanThreeWords(str,charSet), 
        "scanning three words separated by spaces");
   
   str = @"one\ttwo\tthree\t";
-  pass(scanThreeWords(str,charSet), 
+  PASS(scanThreeWords(str,charSet), 
        "scanning three words separated by tabs");
   
   str = @"one \ntwo \nthree \n";
-  pass(scanThreeWords(str,charSet), 
+  PASS(scanThreeWords(str,charSet), 
        "scanning three words separated by newlines and spaces");
   
   charSet = [charSet mutableCopy];
   [charSet addCharactersInString:@";"];
   str = @"one ;two ;three ;";
-  pass(scanThreeWords(str,charSet), 
+  PASS(scanThreeWords(str,charSet), 
        "scanning three words separated by spaces and semi-colons");
   
   [arp release]; arp = nil;

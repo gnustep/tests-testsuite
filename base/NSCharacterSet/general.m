@@ -9,7 +9,7 @@ int main()
   NSCharacterSet *theSet,*iSet;
   NSData *data1 = nil;
   theSet = [NSCharacterSet alphanumericCharacterSet];
-  pass([theSet characterIsMember:'A'] &&
+  PASS([theSet characterIsMember:'A'] &&
        [theSet characterIsMember:'Z'] &&
        [theSet characterIsMember:'a'] &&
        [theSet characterIsMember:'z'] &&
@@ -21,7 +21,7 @@ int main()
        "Check some characters from alphanumericCharacterSet");
   
   theSet = [NSCharacterSet lowercaseLetterCharacterSet];
-  pass(![theSet characterIsMember:'A'] &&
+  PASS(![theSet characterIsMember:'A'] &&
        ![theSet characterIsMember:'Z'] &&
        [theSet characterIsMember:'a'] &&
        [theSet characterIsMember:'z'] &&
@@ -33,7 +33,7 @@ int main()
        "Check some characters from lowercaseLetterCharacterSet");
   
   theSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-  pass(![theSet characterIsMember:'A'] &&
+  PASS(![theSet characterIsMember:'A'] &&
        ![theSet characterIsMember:'Z'] &&
        ![theSet characterIsMember:'a'] &&
        ![theSet characterIsMember:'z'] &&
@@ -46,11 +46,11 @@ int main()
        "Check some characters from whitespaceAndNewlineCharacterSet");
   
   data1 = [theSet bitmapRepresentation];
-  pass(data1 != nil && [data1 isKindOfClass:[NSData class]],
+  PASS(data1 != nil && [data1 isKindOfClass:[NSData class]],
        "-bitmapRepresentation works");
   
   iSet = [theSet invertedSet]; 
-  pass([iSet characterIsMember:'A'] &&
+  PASS([iSet characterIsMember:'A'] &&
        [iSet characterIsMember:'Z'] &&
        [iSet characterIsMember:'a'] &&
        [iSet characterIsMember:'z'] &&
@@ -68,17 +68,17 @@ int main()
     thirdSet = nil;
     fourthSet = [NSMutableCharacterSet decimalDigitCharacterSet];
     thirdSet = [[firstSet class] decimalDigitCharacterSet];
-    pass (firstSet == secondSet && 
+    PASS (firstSet == secondSet && 
           firstSet == thirdSet && 
 	  firstSet != fourthSet,
 	  "Caching of standard sets");
   }
 
   theSet = [NSCharacterSet characterSetWithCharactersInString:@"Not a set"];
-  pass(theSet != nil && [theSet isKindOfClass:[NSCharacterSet class]],
+  PASS(theSet != nil && [theSet isKindOfClass:[NSCharacterSet class]],
        "Create custom set with characterSetWithCharactersInString:");
   
-  pass([theSet characterIsMember:' '] &&
+  PASS([theSet characterIsMember:' '] &&
        [theSet characterIsMember:'N'] &&
        [theSet characterIsMember:'o'] &&
        ![theSet characterIsMember:'A'] &&

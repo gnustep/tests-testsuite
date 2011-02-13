@@ -89,7 +89,7 @@ int main(void)
         [q enqueue: obj];
       }
     [NSThread sleepForTimeInterval: 2.0];
-    pass([sent isEqual: received], "Condition lock");
+    PASS([sent isEqual: received], "Condition lock");
   }
   return 0;
 }

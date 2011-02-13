@@ -19,7 +19,7 @@ int main(int argc,char **argv)
 					  parameters: nil]];
 				
   data = [NSData dataWithContentsOfFile: @"mime8.dat"];
-  pass([[doc rawMimeData] isEqual: data], "Can make a simple document");
+  PASS([[doc rawMimeData] isEqual: data], "Can make a simple document");
   [arp release]; arp = nil;
   return 0;
 }

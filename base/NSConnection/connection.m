@@ -16,7 +16,7 @@ int main()
                    		  ofType:@"bundle"
 			     inDirectory:bundlePath];
   bundle = [NSBundle bundleWithPath:bundlePath];
-  pass([bundle load],"We can load the test bundle");
+  PASS([bundle load],"We can load the test bundle");
   {
     /* this should probably be rewritten to uh return a bool */
     NS_DURING
@@ -26,9 +26,9 @@ int main()
     
       date = [NSDate dateWithTimeIntervalSinceNow:1];
       [run runUntilDate:date];
-      pass(1, "NSConnection can do a simple connection");
+      PASS(1, "NSConnection can do a simple connection");
     NS_HANDLER
-      pass(0, "NSConnection can do a simple connection");
+      PASS(0, "NSConnection can do a simple connection");
     NS_ENDHANDLER
   }
   [arp release]; arp = nil;

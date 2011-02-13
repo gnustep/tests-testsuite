@@ -18,15 +18,15 @@ int main()
   vals[2] = val3;
 
   obj = [[NSMapTable new] autorelease];
-  pass(obj != nil
+  PASS(obj != nil
     && [obj isKindOfClass:[NSMapTable class]]
     && [obj count] == 0,
     "+new creates an empty hash table");
   
   [obj setObject: val1 forKey: @"Key1"];
-  pass([obj count] == 1, "-setObject:forKey increments count");
+  PASS([obj count] == 1, "-setObject:forKey increments count");
   [obj setObject: nil forKey: @"Key2"];
-  pass([obj count] == 2, "-setObject:forKey: works with nil value");
+  PASS([obj count] == 2, "-setObject:forKey: works with nil value");
   TEST_EXCEPTION([obj setObject: val1 forKey: nil];,
     NSInvalidArgumentException, YES, "-setObject:forKey: raises with nil key");
 

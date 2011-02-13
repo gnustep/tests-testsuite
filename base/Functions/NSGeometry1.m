@@ -27,47 +27,47 @@ geom_string()
   r = NSMakeRect(23.45, -3.45, 2044.3, 2033);
   s = NSMakeSize(0.5, 0.22);
 
-  pass(NSEqualPoints(p, NSMakePoint(23.45, -3.45)),
+  PASS(NSEqualPoints(p, NSMakePoint(23.45, -3.45)),
     "identical points are equal");
   if (sizeof(CGFloat) == sizeof(float))
     {
-      pass(NSEqualPoints(p, NSMakePoint(23.450001, -3.45)),
+      PASS(NSEqualPoints(p, NSMakePoint(23.450001, -3.45)),
         "near identical points are equal");
     }
   else
     {
-      pass(NSEqualPoints(p, NSMakePoint(23.450000000000001, -3.45)),
+      PASS(NSEqualPoints(p, NSMakePoint(23.450000000000001, -3.45)),
         "near identical points are equal");
     }
-  pass(!NSEqualPoints(p, NSMakePoint(23.4500019, -3.45)),
+  PASS(!NSEqualPoints(p, NSMakePoint(23.4500019, -3.45)),
     "moderately similar points are not equal");
-  pass(NSEqualSizes(s, NSMakeSize(0.5, 0.22)),
+  PASS(NSEqualSizes(s, NSMakeSize(0.5, 0.22)),
     "identical sizes are equal");
   if (sizeof(CGFloat) == sizeof(float))
     {
-      pass(NSEqualSizes(s, NSMakeSize(0.50000001, 0.22)),
+      PASS(NSEqualSizes(s, NSMakeSize(0.50000001, 0.22)),
        "near identical sizes are equal");
     }
   else
     {
-      pass(NSEqualSizes(s, NSMakeSize(0.50000000000000001, 0.22)),
+      PASS(NSEqualSizes(s, NSMakeSize(0.50000000000000001, 0.22)),
        "near identical sizes are equal");
     }
-  pass(!NSEqualSizes(s, NSMakeSize(0.50000003, 0.22)),
+  PASS(!NSEqualSizes(s, NSMakeSize(0.50000003, 0.22)),
     "moderately similar sizes are not equal");
-  pass(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033)),
+  PASS(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033)),
     "identical rects are equal");
   if (sizeof(CGFloat) == sizeof(float))
     {
-      pass(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.00001)),
+      PASS(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.00001)),
         "near identical rects are equal");
     }
   else
     {
-      pass(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.0000000000001)),
+      PASS(NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.0000000000001)),
         "near identical rects are equal");
     }
-  pass(!NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.0001)),
+  PASS(!NSEqualRects(r, NSMakeRect(23.45, -3.45, 2044.3, 2033.0001)),
     "moderately similar rects are not equal");
 
 #if     defined(GNUSTEP_BASE_LIBRARY)
@@ -76,46 +76,46 @@ geom_string()
       [dflt setBool: NO forKey: @"GSMacOSXCompatible"];
       [NSUserDefaults resetStandardUserDefaults];
     }
-  pass((MacOSXCompatibleGeometry() == NO), 
+  PASS((MacOSXCompatibleGeometry() == NO), 
        "Not in MacOSX geometry compat mode");
 
   sp = NSStringFromPoint(p);
   p2 = NSPointFromString(sp);
-  pass((EQ(p2.x, p.x) && EQ(p2.y, p.y)), 
+  PASS((EQ(p2.x, p.x) && EQ(p2.y, p.y)), 
        "Can read output of NSStringFromPoint");
 
   sr = NSStringFromRect(r);
   r2 = NSRectFromString(sr);
-  pass((EQ(r2.origin.x, r.origin.x) && EQ(r2.origin.y, r.origin.y)
+  PASS((EQ(r2.origin.x, r.origin.x) && EQ(r2.origin.y, r.origin.y)
     && EQ(r2.size.width, r.size.width) && EQ(r2.size.height, r.size.height)), 
        "Can read output of NSStringFromRect");
 
   ss = NSStringFromSize(s);
   s2 = NSSizeFromString(ss);
-  pass((EQ(s2.width, s.width) && EQ(s2.height, s.height)), 
+  PASS((EQ(s2.width, s.width) && EQ(s2.height, s.height)), 
        "Can read output of NSStringFromSize");
 
   dflt = [NSUserDefaults standardUserDefaults];
   [dflt setBool: YES forKey: @"GSMacOSXCompatible"];
   [NSUserDefaults resetStandardUserDefaults];
-  pass((MacOSXCompatibleGeometry() == YES), 
+  PASS((MacOSXCompatibleGeometry() == YES), 
        "In MacOSX geometry compat mode");
 #endif
 
   sp = NSStringFromPoint(p);
   p2 = NSPointFromString(sp);
-  pass((EQ(p2.x, p.x) && EQ(p2.y, p.y)), 
+  PASS((EQ(p2.x, p.x) && EQ(p2.y, p.y)), 
        "Can read output of NSStringFromPoint (MacOSX compat)");
 
   sr = NSStringFromRect(r);
   r2 = NSRectFromString(sr);
-  pass((EQ(r2.origin.x, r.origin.x) && EQ(r2.origin.y, r.origin.y)
+  PASS((EQ(r2.origin.x, r.origin.x) && EQ(r2.origin.y, r.origin.y)
     && EQ(r2.size.width, r.size.width) && EQ(r2.size.height, r.size.height)), 
        "Can read output of NSStringFromRect (MacOSX compat)");
 
   ss = NSStringFromSize(s);
   s2 = NSSizeFromString(ss);
-  pass((EQ(s2.width, s.width) && EQ(s2.height, s.height)), 
+  PASS((EQ(s2.width, s.width) && EQ(s2.height, s.height)), 
        "Can read output of NSStringFromSize (MacOSX compat)");
 
 #if     defined(GNUSTEP_BASE_LIBRARY)

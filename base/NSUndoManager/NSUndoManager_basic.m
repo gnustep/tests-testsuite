@@ -114,12 +114,12 @@ int main()
   seven = @"seven";
   eight = @"eight";
 
-  pass([um levelsOfUndo] == 0, "initial levels of undo is zero");
-  pass([um groupingLevel] == 0, "initial grouping level is zero");
-  pass([um isUndoRegistrationEnabled] == YES, "undo registration is enabled");
-  pass([um groupsByEvent] == YES, " groups by event enabled");
-  pass([um isUndoing] == NO, "undoing not in progress");
-  pass([um isRedoing] == NO, "redoing not in progress");
+  PASS([um levelsOfUndo] == 0, "initial levels of undo is zero");
+  PASS([um groupingLevel] == 0, "initial grouping level is zero");
+  PASS([um isUndoRegistrationEnabled] == YES, "undo registration is enabled");
+  PASS([um groupsByEvent] == YES, " groups by event enabled");
+  PASS([um isUndoing] == NO, "undoing not in progress");
+  PASS([um isRedoing] == NO, "redoing not in progress");
   [um setGroupsByEvent: NO];
 
   [um beginUndoGrouping]; 
@@ -128,9 +128,9 @@ int main()
   [obj setFooReg:one];
   [um endUndoGrouping];
   
-  pass(([obj fooUndo] == nil && sane),
+  PASS(([obj fooUndo] == nil && sane),
        "registerWithUndoTarget:selector:object single level undo");
-  pass(([obj fooRedo] == one && sane),
+  PASS(([obj fooRedo] == one && sane),
        "registerWithUndoTarget:selector:object single level redo");
   
   [um beginUndoGrouping];
@@ -138,19 +138,19 @@ int main()
   isRedoing = NO;
   [obj setFooReg:two];
   [um endUndoGrouping];
-  pass([obj foo] == two && sane, "set two");
+  PASS([obj foo] == two && sane, "set two");
   
   [um beginUndoGrouping];
   [obj setFooReg:three];
   [um endUndoGrouping];
-  pass([obj foo] == three && sane, "set three");
+  PASS([obj foo] == three && sane, "set three");
   
-  pass(([obj fooUndo] == two && sane
+  PASS(([obj fooUndo] == two && sane
   	&& [obj fooUndo] == one && sane 
 	&& [obj fooUndo] == nil && sane),
        "registerWithUndoTarget:selector:object multi level undo");
 
-  pass(([obj fooRedo] == one && sane 
+  PASS(([obj fooRedo] == one && sane 
   	&& [obj fooRedo] == two && sane 
 	&& [obj fooRedo] == three && sane),
        "registerWithUndoTarget:selector:object multi level redo");
@@ -165,9 +165,9 @@ int main()
   [obj setFooPrep:five];
   [um endUndoGrouping];
   
-  pass(([obj fooUndo] == four && sane),
+  PASS(([obj fooUndo] == four && sane),
        "prepareWithInvocationTarget single level undo");
-  pass(([obj fooRedo] == five && sane),
+  PASS(([obj fooRedo] == five && sane),
        "prepareWithInvocationTarget single level redo");
   
   [um beginUndoGrouping];
@@ -176,14 +176,14 @@ int main()
   [obj setFooPrep:six];
   [um endUndoGrouping];
   
-  pass(([obj fooUndo] == five && sane 
+  PASS(([obj fooUndo] == five && sane 
   	&& [obj fooUndo] == four && sane),
        "prepareWithInvocationTarget multi level undo");
-  pass(([obj fooRedo] == five && sane 
+  PASS(([obj fooRedo] == five && sane 
   	&& [obj fooRedo] == six && sane),
        "prepareWithInvocationTarget multi level redo");
   
-  pass(([obj fooUndo] == five && sane
+  PASS(([obj fooUndo] == five && sane
 	&& [obj fooUndo] == four && sane
 	&& [obj fooUndo] == three && sane
 	&& [obj fooUndo] == two && sane
@@ -191,7 +191,7 @@ int main()
 	&& [obj fooUndo] == nil && sane),
        "mixing prepare... and register... in undo stack");
   
-  pass(([obj fooRedo] == one && sane
+  PASS(([obj fooRedo] == one && sane
   	&& [obj fooRedo] == two && sane
 	&& [obj fooRedo] == three && sane
 	&& [obj fooRedo] == four && sane
@@ -205,8 +205,8 @@ int main()
   [obj setNumber:1];
   [um endUndoGrouping];
   
-  pass(([obj numUndo] == 0), "single level undo with int argument");
-  pass(([obj numRedo] == 1), "single level redo with int argument");
+  PASS(([obj numUndo] == 0), "single level undo with int argument");
+  PASS(([obj numRedo] == 1), "single level redo with int argument");
   
   [um beginUndoGrouping];
   isUndoing = NO;
@@ -220,11 +220,11 @@ int main()
   [obj setNumber:3];
   [um endUndoGrouping];
   
-  pass(([obj numUndo] == 2 && sane
+  PASS(([obj numUndo] == 2 && sane
   	&& [obj numUndo] == 1 && sane
 	&& [obj numUndo] == 0 && sane),
        "multi level undo with int argument");
-  pass(([obj numRedo] == 1 && sane 
+  PASS(([obj numRedo] == 1 && sane 
        && [obj numRedo] == 2 && sane
        && [obj numRedo] == 3 && sane),
       "multi level redo with int argument");
@@ -246,19 +246,19 @@ int main()
   isRedoing = NO;
   isUndoing = YES;  
   [um undo];
-  pass(([obj number] == 7 && sane && [obj foo] == seven && sane),
+  PASS(([obj number] == 7 && sane && [obj foo] == seven && sane),
        "undo grouping works with undo");
   
   isUndoing = NO;
   isRedoing = YES;
   [um redo];
-  pass(([obj number] == 8 && sane && [obj foo] == eight && sane),
+  PASS(([obj number] == 8 && sane && [obj foo] == eight && sane),
        "undo grouping works with redo");
   DESTROY(um);  
   um = [[NSUndoManager alloc] init];
   [um setGroupsByEvent: NO];
   [um setLevelsOfUndo: 2];
-  pass(([um levelsOfUndo] == 2), "setLevelsOfUndo: is sane.");
+  PASS(([um levelsOfUndo] == 2), "setLevelsOfUndo: is sane.");
   
   one = @"one";
   two = @"two";
@@ -289,12 +289,12 @@ int main()
   [obj setFooPrep:four];
   [um endUndoGrouping];
 
-  pass(([obj fooUndo] == three && sane
+  PASS(([obj fooUndo] == three && sane
 	&& [obj fooUndo] == two && sane
 	&& [obj fooUndo] == two && sane),
        "levels of undo really works with undo.");
   
-  pass(([obj fooRedo] == three && sane 
+  PASS(([obj fooRedo] == three && sane 
 	&& [obj fooRedo] == four && sane 
 	&& [obj fooRedo] == four && sane),
        "levels of undo really works with redo.");
@@ -307,14 +307,14 @@ int main()
   [um beginUndoGrouping];
   [um registerUndoWithTarget:obj selector:@selector(setFooReg:) object:bar];
   [um endUndoGrouping];
-  pass(([bar retainCount] == (rc + 1)),"registerUndoWithTarget:selector:object: retains its argument object");
+  PASS(([bar retainCount] == (rc + 1)),"registerUndoWithTarget:selector:object: retains its argument object");
   isRedoing = NO;
   isUndoing = YES;
   
   [um undo];  /* setFooReg: should cause a retain. */
   [pool release];
   pool = [NSAutoreleasePool new];
-  pass((rc+1== [bar retainCount]),"-undo causes NSUndoManager to release its argument object");
+  PASS((rc+1== [bar retainCount]),"-undo causes NSUndoManager to release its argument object");
   [pool release]; pool = nil;
   return 0;
 }

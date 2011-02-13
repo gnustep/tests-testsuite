@@ -147,6 +147,7 @@ int main(void)
 
   Lists *list = [[[Lists alloc] init] autorelease];
   Observer *observer = [Observer new];
+  id o;
   NSMutableArray * proxy;
   NSDictionary * temp;
 
@@ -156,91 +157,90 @@ int main(void)
   [list setValue: @"x" forKey: @"string"];
 
   proxy = [list mutableArrayValueForKey:@"numbers"];
-  pass([proxy isKindOfClass:[NSMutableArray class]],
-      "proxy is a kind of NSMutableArray");
+  PASS([proxy isKindOfClass:[NSMutableArray class]],
+      "proxy is a kind of NSMutableArray")
   [proxy removeLastObject];
   PASS_EXCEPTION([proxy addObject:@"NaN"];,
-    NSRangeException,"bad removal causes range exception when observing");
+    NSRangeException,"bad removal causes range exception when observing")
   [proxy replaceObjectAtIndex:1 withObject:@"Seven"];
   [proxy addObject:@"Four"];
   [proxy removeObject:@"One"];
   
-  pass([[list valueForKey:@"numbers"] isEqualToArray:
-    [NSArray arrayWithObjects:
+  o = [NSArray arrayWithObjects:
       @"One",
       @"Two",
       @"Three",
       @"Four",
-      nil]],
-    "KVC mutableArrayValueForKey: proxy works with array proxy methods");
+      nil];
+  PASS([[list valueForKey:@"numbers"] isEqualToArray: o],
+    "KVC mutableArrayValueForKey: proxy works with array proxy methods")
 
   proxy = [list mutableArrayValueForKey:@"cities"];
-  pass([proxy isKindOfClass:[NSMutableArray class]],
-      "proxy is a kind of NSMutableArray");
+  PASS([proxy isKindOfClass:[NSMutableArray class]],
+      "proxy is a kind of NSMutableArray")
   [proxy addObject:@"Lima"];
-  pass([[list valueForKey:@"cities"] isEqualToArray:
-    [NSArray arrayWithObjects:
+  o = [NSArray arrayWithObjects:
       @"Grand Rapids",
       @"Chicago",
       @"Lima",
-      nil]],
-    "KVC mutableArrayValueForKey: proxy works with set<Key>:");
+      nil];
+  PASS([[list valueForKey:@"cities"] isEqualToArray: o],
+    "KVC mutableArrayValueForKey: proxy works with set<Key>:")
 
   proxy = [list mutableArrayValueForKey:@"third"];
-  pass([proxy isKindOfClass:[NSMutableArray class]],
-      "proxy is a kind of NSMutableArray");
+  PASS([proxy isKindOfClass:[NSMutableArray class]],
+      "proxy is a kind of NSMutableArray")
 
-  pass(proxy != [list valueForKey:@"third"],
-     "KVC mutableArrayValueForKey: returns a proxy array for the ivar");
-  pass([[proxy objectAtIndex:1] isEqualToString:@"b"],
-      "This proxy works");
+  PASS(proxy != [list valueForKey:@"third"],
+     "KVC mutableArrayValueForKey: returns a proxy array for the ivar")
+  PASS([[proxy objectAtIndex:1] isEqualToString:@"b"],
+      "This proxy works")
   
   temp = [NSDictionary dictionaryWithObject:list forKey:@"list"];
   proxy = [temp mutableArrayValueForKeyPath:@"list.numbers"];
-  pass([proxy isKindOfClass:NSClassFromString(@"NSKeyValueMutableArray")],
-       "mutableArrayValueForKey: works");
+  PASS([proxy isKindOfClass:NSClassFromString(@"NSKeyValueMutableArray")],
+       "mutableArrayValueForKey: works")
   
 
   Sets * set = [[[Sets alloc] init] autorelease];
   NSMutableSet * setProxy;
 
   setProxy = [set mutableSetValueForKey:@"one"];
-  pass([setProxy isKindOfClass:[NSMutableSet class]],
-      "proxy is a kind of NSMutableSet");
+  PASS([setProxy isKindOfClass:[NSMutableSet class]],
+      "proxy is a kind of NSMutableSet")
 
   [setProxy removeObject:@"one"];
   [setProxy addObject:@"ten"];
   [setProxy removeObject:@"eight"];
   [setProxy addObject:@"three"];
 
-  pass([setProxy isEqualToSet:[NSSet setWithObjects:@"one", @"two", @"three",
-      nil]],
-      "KVC mutableSetValueForKey: proxy uses methods");
+  o = [NSSet setWithObjects:@"one", @"two", @"three", nil];
+  PASS([setProxy isEqualToSet: o],
+      "KVC mutableSetValueForKey: proxy uses methods")
 
   setProxy = [set mutableSetValueForKey:@"two"];
-  pass([setProxy isKindOfClass:[NSMutableSet class]],
-      "proxy is a kind of NSMutableSet");
+  PASS([setProxy isKindOfClass:[NSMutableSet class]],
+      "proxy is a kind of NSMutableSet")
   [setProxy addObject:@"seven"];
   [setProxy minusSet:[NSSet setWithObject:@"eight"]];
-  pass([setProxy isEqualToSet:[NSSet setWithObjects:@"one", @"two", @"seven",
-      nil]],
-      "KVC mutableSetValueForKey: proxy works with set<Key>:");
+  o = [NSSet setWithObjects:@"one", @"two", @"seven", nil];
+  PASS([setProxy isEqualToSet: o],
+      "KVC mutableSetValueForKey: proxy works with set<Key>:")
 
   setProxy = [set mutableSetValueForKey:@"three"];
-  pass([setProxy isKindOfClass:[NSMutableSet class]],
-      "proxy is kind of NSMutableSet");
-  pass(setProxy != [set valueForKey:@"three"],
-         "KVC mutableSetValueForKey: returns a proxy set for the ivar");
+  PASS([setProxy isKindOfClass:[NSMutableSet class]],
+      "proxy is kind of NSMutableSet")
+  PASS(setProxy != [set valueForKey:@"three"],
+         "KVC mutableSetValueForKey: returns a proxy set for the ivar")
   [setProxy addObject:@"seven"];
   [setProxy removeObject:@"eight"];
-  pass([setProxy isEqualToSet:[NSSet setWithObjects:@"one", @"two", @"seven",
-      nil]],
-      "this proxy works");
+  o = [NSSet setWithObjects:@"one", @"two", @"seven", nil];
+  PASS([setProxy isEqualToSet: o], "this proxy works")
 
   temp = [NSDictionary dictionaryWithObject:set forKey:@"set"];
   setProxy = [temp mutableSetValueForKeyPath:@"set.three"];
-  pass([setProxy isKindOfClass:NSClassFromString(@"NSKeyValueMutableSet")],
-       "mutableSetValueForKey: works");
+  PASS([setProxy isKindOfClass:NSClassFromString(@"NSKeyValueMutableSet")],
+       "mutableSetValueForKey: works")
 
   [list removeObserver: observer forKeyPath: @"numbers"];
   [list removeObserver: observer forKeyPath: @"string"];

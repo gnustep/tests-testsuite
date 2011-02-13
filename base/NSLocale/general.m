@@ -91,7 +91,7 @@ int main(void)
     "en_US does not have variant code");
   PASS_EQUAL([locale objectForKey: NSLocaleCollationIdentifier], nil,
     "en_US does not have a collation identifier");
-  pass ([[locale objectForKey: NSLocaleUsesMetricSystem] boolValue] == NO,
+  PASS ([[locale objectForKey: NSLocaleUsesMetricSystem] boolValue] == NO,
     "en_US does not use the metric system");
   RELEASE(locale);
   
@@ -114,7 +114,7 @@ int main(void)
     @"some rubbish",
     "Canonical identifier for 'some rubbish is 'some rubbish'");
 
-  /* Let's just hope the next two pass.
+  /* Let's just hope the next two PASS.
    */
   testHopeful = YES;
   PASS_EQUAL([NSLocale canonicalLocaleIdentifierFromString: @"AmericanEnglish"],

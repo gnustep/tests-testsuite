@@ -20,9 +20,9 @@
 		    inv = [NSInvocation invocationWithMethodSignature:sig]; \
 		    [inv setSelector:selx]; \
 		    [inv invokeWithTarget:tar]; \
-		    pass(1,"Invoke %s",[NSStringFromSelector(selx) cString]); \
+		    PASS(1,"Invoke %s",[NSStringFromSelector(selx) cString]); \
 		  NS_HANDLER \
-		    pass(0,"Invoke %s",[NSStringFromSelector(selx) cString]); \
+		    PASS(0,"Invoke %s",[NSStringFromSelector(selx) cString]); \
 		    [localException raise]; \
 		  NS_ENDHANDLER \
 		}
@@ -36,9 +36,9 @@
 		    [inv setSelector:selx]; \
 		    [inv setArgument:argp atIndex:2]; \
 		    [inv invokeWithTarget:tar]; \
-		    pass(1,"Invoke %s",[NSStringFromSelector(selx) cString]); \
+		    PASS(1,"Invoke %s",[NSStringFromSelector(selx) cString]); \
 		  NS_HANDLER \
-		    pass(0,"Invoke %s",[NSStringFromSelector(selx) cString]); \
+		    PASS(0,"Invoke %s",[NSStringFromSelector(selx) cString]); \
 		    [localException raise]; \
 		  NS_ENDHANDLER \
 		}
@@ -72,7 +72,7 @@ int main()
                   pathForResource:@"InvokeProxy"
 	                   ofType:@"bundle"];
   bundle = [NSBundle bundleWithPath:bundlePath];
-  pass([bundle load],
+  PASS([bundle load],
        "loading resources from bundle");
   tClass = NSClassFromString(@"InvokeTarget");
   pClass = NSClassFromString(@"InvokeProxy");
@@ -82,92 +82,92 @@ int main()
   pxy = [[pClass alloc] initWithTarget:tar]; 
   TEST_INVOKE(@selector(retChar));
   [inv getReturnValue:&cret];
-  pass(cret == 99 &&
+  PASS(cret == 99 &&
        [pxy retChar] == 99, 
        "Can return chars");
   
   TEST_INVOKE(@selector(retShort));
   [inv getReturnValue:&sret];
-  pass(sret == 12345 &&
+  PASS(sret == 12345 &&
        [pxy retShort] == 12345, 
        "Can return short");
   
   TEST_INVOKE(@selector(retInt));
   [inv getReturnValue:&iret];
-  pass(iret == 123456 &&
+  PASS(iret == 123456 &&
        [pxy retInt] == 123456, 
        "Can return int");
    
   TEST_INVOKE(@selector(retLong));
   [inv getReturnValue:&lret];
-  pass(lret == 123456 &&
+  PASS(lret == 123456 &&
        [pxy retLong] == 123456, 
        "Can return long");
   
   TEST_INVOKE(@selector(retFloat));
   [inv getReturnValue:&fret];
-  pass(fabs(123.456 - fret) <= 0.001 &&
+  PASS(fabs(123.456 - fret) <= 0.001 &&
        fabs(123.456 - [pxy retFloat]) <= 0.001, 
        "Can return float");
    
   TEST_INVOKE(@selector(retDouble));
   [inv getReturnValue:&dret];
-  pass(fabs(123.456 - dret) <= 0.001 &&
+  PASS(fabs(123.456 - dret) <= 0.001 &&
        fabs(123.456 - [pxy retDouble]) <= 0.001, 
        "Can return double");
    
   TEST_INVOKE(@selector(retObject));
   [inv getReturnValue:&oret];
-  pass(oret == tar &&
+  PASS(oret == tar &&
        tar == [pxy retObject], 
        "Can return object");
   
   carg = 1; 
   TEST_INVOKE_ARG(@selector(loopChar:),&carg);
   [inv getReturnValue:&cret];
-  pass(cret == 2 &&
+  PASS(cret == 2 &&
        2 == [pxy loopChar:carg],
        "Can send/return chars");
 
   sarg = 1;
   TEST_INVOKE_ARG(@selector(loopShort:),&sarg);
   [inv getReturnValue:&sret];
-  pass(sret == 2 &&
+  PASS(sret == 2 &&
        [pxy loopShort:sarg] == 2,
        "Can send/return shorts");
   
   iarg = 1;
   TEST_INVOKE_ARG(@selector(loopInt:),&iarg);
   [inv getReturnValue:&iret];
-  pass(iret == 2 &&
+  PASS(iret == 2 &&
        [pxy loopInt:iarg] == 2,
        "Can send/return ints");
    
   larg = 1;
   TEST_INVOKE_ARG(@selector(loopLong:),&larg);
   [inv getReturnValue:&lret];
-  pass(lret == 2 &&
+  PASS(lret == 2 &&
        [pxy loopLong:larg] == 2,
        "Can send/return longs");
   
   farg = 1;
   TEST_INVOKE_ARG(@selector(loopFloat:),&farg);
   [inv getReturnValue:&fret];
-  pass(fabs(2 - fret) <= 0.001 &&
+  PASS(fabs(2 - fret) <= 0.001 &&
        fabs(2 - [pxy loopFloat:farg]) <= 0.001,
        "Can send/return floats");
   
   darg = 1;
   TEST_INVOKE_ARG(@selector(loopDouble:),&darg);
   [inv getReturnValue:&dret];
-  pass(fabs(2 - dret) <= 0.001 &&
+  PASS(fabs(2 - dret) <= 0.001 &&
        fabs(2 - [pxy loopFloat:darg]) <= 0.001,
        "Can send/return double");
   
   oarg = pxy;
   TEST_INVOKE_ARG(@selector(loopObject:),&oarg);
   [inv getReturnValue:&oret];
-  pass(oret == pxy &&
+  PASS(oret == pxy &&
        [pxy loopObject:oarg] == pxy,
        "Can send/return objects");
   
@@ -179,7 +179,7 @@ int main()
   
   TEST_INVOKE_ARG(@selector(loopString:),&cparg);
   [inv getReturnValue:&cpret];
-  pass(strcmp(cpret,"Iello There") == 0 &&
+  PASS(strcmp(cpret,"Iello There") == 0 &&
        strcmp([pxy loopString:cparg2],"Iello There") == 0,
        "Can send/return char *");
 
@@ -187,7 +187,7 @@ int main()
   ssarg.i = 9;
   TEST_INVOKE_ARG(@selector(loopSmall:),&ssarg);
   [inv getReturnValue:&ssret];
-  pass(ssret.c == 7 && ssret.i == 10,
+  PASS(ssret.c == 7 && ssret.i == 10,
        "Can send/return small structs"); 
   
   lsarg.i = 8;
@@ -195,7 +195,7 @@ int main()
   lsarg.f = 11.0;
   TEST_INVOKE_ARG(@selector(loopLarge:),&lsarg);
   [inv getReturnValue:&lsret];
-  pass(lsret.i == 9 && 
+  PASS(lsret.i == 9 && 
        lsret.s == "Hello" &&
        lsret.f == 11.0,
        "Can send/return large structs");
@@ -204,7 +204,7 @@ int main()
   TEST_INVOKE_ARG(@selector(loopRect:),&rarg);
   [inv getReturnValue:&rret];
   rprx = [pxy loopRect:rarg];
-  pass(NSEqualRects(rret, rarg) && NSEqualRects(rprx, rarg),
+  PASS(NSEqualRects(rret, rarg) && NSEqualRects(rprx, rarg),
        "Can send/return NSRect");
   
   [arp release]; arp = nil;

@@ -9,18 +9,18 @@ int main()
   void *ovp;
 
   aZone = NSDefaultMallocZone();
-  pass((aZone != NULL), "NSDefaultMallocZone() returns something");
+  PASS((aZone != NULL), "NSDefaultMallocZone() returns something");
 
   aZone = NSCreateZone(1024,1024,0);
-  pass((aZone != NULL), "NSCreateZone() works for an unfreeable zone");
+  PASS((aZone != NULL), "NSCreateZone() works for an unfreeable zone");
  
   aZone = NSCreateZone(1024,1024,1);
-  pass((aZone != NULL), "NSCreateZone() works for a normal zone");
+  PASS((aZone != NULL), "NSCreateZone() works for a normal zone");
  
   if ([NSGarbageCollector defaultCollector] == nil)
     {
       NSSetZoneName(aZone, @"My Zone");
-      pass(([NSZoneName(aZone) isEqual: @"My Zone"]),
+      PASS(([NSZoneName(aZone) isEqual: @"My Zone"]),
 	"NSZoneName() returns previously set string");
      
       vp = NSZoneCalloc(aZone,17,12);
@@ -29,18 +29,18 @@ int main()
       NS_DURING
 	{
 	  NSZoneFree(aZone,vp);
-	  pass(1, "NSZoneFree() calloc'd buffer"); 
+	  PASS(1, "NSZoneFree() calloc'd buffer"); 
 	}
       NS_HANDLER
-       pass(0, "NSZoneFree() calloc'd buffer %s",
+       PASS(0, "NSZoneFree() calloc'd buffer %s",
 	[[localException name] cString]); 
       NS_ENDHANDLER
       
       NS_DURING
 	NSZoneFree(aZone,vp);
-	pass(0, "NSZoneFree() free'd buffer throws exception"); 
+	PASS(0, "NSZoneFree() free'd buffer throws exception"); 
       NS_HANDLER
-	pass(1, "NSZoneFree() free'd buffer throws exception: %s",
+	PASS(1, "NSZoneFree() free'd buffer throws exception: %s",
 	  [[localException name] cString]); 
       NS_ENDHANDLER
 
@@ -51,10 +51,10 @@ int main()
       NS_DURING
 	{
 	  NSZoneFree(aZone,vp);
-	  pass(1, "NSZoneFree() malloc'd buffer"); 
+	  PASS(1, "NSZoneFree() malloc'd buffer"); 
 	}
       NS_HANDLER
-       pass(0, "NSZoneFree() malloc'd buffer %s",
+       PASS(0, "NSZoneFree() malloc'd buffer %s",
 	[[localException name] cString]); 
       NS_ENDHANDLER
 
@@ -67,20 +67,20 @@ int main()
       
       NS_DURING
 	NSZoneFree(aZone,vp);
-	pass(1,"NSZoneFree() releases memory held after realloc");
+	PASS(1,"NSZoneFree() releases memory held after realloc");
       NS_HANDLER
-	pass(0,"NSZoneFree() releases memory held after realloc");
+	PASS(0,"NSZoneFree() releases memory held after realloc");
       NS_ENDHANDLER
 
-      pass((NSZoneFromPointer(vp) == aZone),
+      PASS((NSZoneFromPointer(vp) == aZone),
 	"NSZoneFromPointer() returns zone where memory came from");
      
       NS_DURING
        [NSString allocWithZone:aZone];
        NSRecycleZone(aZone);
-	pass(1,"NSRecycleZone seems to operate");
+	PASS(1,"NSRecycleZone seems to operate");
       NS_HANDLER
-	pass(0,"NSRecycleZone seems to operate");
+	PASS(0,"NSRecycleZone seems to operate");
       NS_ENDHANDLER
     }
 

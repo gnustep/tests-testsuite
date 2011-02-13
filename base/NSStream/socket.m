@@ -134,8 +134,8 @@ int main()
     }
 
   // I cannot verify the content at www.google.com,
-  // so as long as it has something, that is passing
-  pass(byteCount>0, "read www.google.com");
+  // so as long as it has something, that is PASSing
+  PASS(byteCount>0, "read www.google.com");
   [defaultInput setDelegate: nil];
   [defaultOutput setDelegate: nil];
 #endif
@@ -166,7 +166,7 @@ int main()
       [rl runMode: NSDefaultRunLoopMode beforeDate: d];
     }
 
-  pass(byteCount>0, "read www.google.com https");
+  PASS(byteCount>0, "read www.google.com https");
   [defaultInput setDelegate: nil];
   [defaultOutput setDelegate: nil];
   END_SET("NSStream SSL support")

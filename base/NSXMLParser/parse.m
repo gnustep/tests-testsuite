@@ -291,8 +291,8 @@ int main()
   NSString              *e1 =
 @"parserDidStartDocument:\nparser:didStartElement:namespaceURI:qualifiedName:attributes: test  test {\n    x = 1;\n}\nparser:didEndElement:namespaceURI:qualifiedName: test  test\nparserDidEndDocument:\n";
 
-  pass(testParseCString(x1, e1), "simple document 1");
-  pass(testParseCString(x1e, e1), "simple document 1 without header");
+  PASS((testParseCString(x1, e1)), "simple document 1")
+  PASS((testParseCString(x1e, e1)), "simple document 1 without header")
 
   /* Now perform any tests using .xml and .result pairs of files in
    * the ParseData subdirectory.
@@ -312,7 +312,7 @@ int main()
 	  str = [str stringByAppendingPathExtension: @"result"];
           xmlData = [NSData dataWithContentsOfFile: xmlPath];
           result = [NSString stringWithContentsOfFile: str];
-	  pass(testParse(xmlData, result), [xmlName UTF8String]);
+	  PASS((testParse(xmlData, result)), "%s", [xmlName UTF8String])
 	}
     }
 

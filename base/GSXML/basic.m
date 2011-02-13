@@ -29,9 +29,9 @@ int main()
 
   NS_DURING
     node = [GSXMLNode new]; 
-    pass(node == nil, "GSXMLNode +new returns nil");
+    PASS(node == nil, "GSXMLNode +new returns nil");
   NS_HANDLER
-    pass(node == nil, "GSXMLNode +new returns nil");
+    PASS(node == nil, "GSXMLNode +new returns nil");
   NS_ENDHANDLER
   
   TEST_FOR_CLASS(@"GSXMLNamespace",[GSXMLNamespace alloc],
@@ -40,18 +40,18 @@ int main()
 
   NS_DURING
     namespace = [GSXMLNamespace new]; 
-    pass(namespace == nil, "GSXMLNamespace +new returns nil");
+    PASS(namespace == nil, "GSXMLNamespace +new returns nil");
   NS_HANDLER
-    pass(namespace == nil, "GSXMLNamespace +new returns nil");
+    PASS(namespace == nil, "GSXMLNamespace +new returns nil");
   NS_ENDHANDLER
   
   doc = [GSXMLDocument documentWithVersion: @"1.0"];
   node = [doc makeNodeWithNamespace: nil name: @"nicola" content: nil]; 
-  pass (node != nil,"Can create a document node");
+  PASS (node != nil,"Can create a document node");
   
   
   [doc setRoot: node];
-  pass([[doc root] isEqual: node],"Can set document node as root node");
+  PASS([[doc root] isEqual: node],"Can set document node as root node");
   
   [doc makeNodeWithNamespace: nil name: @"nicola" content: nil];
   [node makeChildWithNamespace: nil
@@ -61,48 +61,48 @@ int main()
 			  name: @"paragraph"
 		       content: @"Hi this is even some more text"];
   [doc setRoot: node];
-  pass([[doc root] isEqual: node],
+  PASS([[doc root] isEqual: node],
     "Can set a document node (with children) as root node");
   
   namespace = [node makeNamespaceHref: @"http: //www.gnustep.org"
 			       prefix: @"gnustep"];
-  pass(namespace != nil,"Can create a node namespace");
+  PASS(namespace != nil,"Can create a node namespace");
   
   node = [doc makeNodeWithNamespace: namespace name: @"nicola" content: nil];
-  pass([[node namespace] isEqual: namespace],
+  PASS([[node namespace] isEqual: namespace],
     "Can create a node with a namespace");
 
   node = [doc makeNodeWithNamespace: namespace name: @"another" content: nil];
-  pass([[node namespace] isEqual: namespace],
+  PASS([[node namespace] isEqual: namespace],
     "Can create a node with same namespace as another node");
   
-  pass([[namespace prefix] isEqual: @"gnustep"],
+  PASS([[namespace prefix] isEqual: @"gnustep"],
     "A namespace remembers its prefix");
   
 
   rpc = [(GSXMLRPC*)[GSXMLRPC alloc] initWithURL: @"http://localhost/"];
-  pass(rpc != nil, "Can initialise an RPC instance");
+  PASS(rpc != nil, "Can initialise an RPC instance");
 
   iparams = [NSMutableArray array];
   oparams = [NSMutableArray array];
 
   dat = [rpc buildMethod: @"method" params: nil];
-  pass(dat != nil, "Can build an empty method call (nil params)");
+  PASS(dat != nil, "Can build an empty method call (nil params)");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse an empty method call (nil params)");
 
   dat = [rpc buildMethod: @"method" params: iparams];
-  pass(dat != nil, "Can build an empty method call");
+  PASS(dat != nil, "Can build an empty method call");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse an empty method call");
 
   [iparams addObject: @"a string"];
   dat = [rpc buildMethod: @"method" params: iparams];
-  pass(dat != nil, "Can build a method call with a string");
+  PASS(dat != nil, "Can build a method call with a string");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse a method call with a string");
 
   [rpc setCompact: YES];
@@ -112,35 +112,35 @@ int main()
   str = [str stringByReplacingString: @"</string>" withString: @""];
   str = [rpc parseMethod: [str dataUsingEncoding: NSUTF8StringEncoding]
   		  params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse a method call with a string without the <string> element");
 
   [iparams addObject: [NSNumber numberWithInt: 4]];
   dat = [rpc buildMethod: @"method" params: iparams];
-  pass(dat != nil, "Can build a method call with an integer");
+  PASS(dat != nil, "Can build a method call with an integer");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse a method call with an integer");
 
   [iparams addObject: [NSNumber numberWithFloat: 4.5]];
   dat = [rpc buildMethod: @"method" params: iparams];
-  pass(dat != nil, "Can build a method call with a float");
+  PASS(dat != nil, "Can build a method call with a float");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse a method call with a float");
 
   [iparams addObject: [NSData dataWithBytes: "1234" length: 4]];
   dat = [rpc buildMethod: @"method" params: iparams];
-  pass(dat != nil, "Can build a method call with binary data");
+  PASS(dat != nil, "Can build a method call with binary data");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"] && [iparams isEqual: oparams],
+  PASS([str isEqual: @"method"] && [iparams isEqual: oparams],
     "Can parse a method call with binary data");
 
   [iparams addObject: [NSDate date]];
   dat = [rpc buildMethod: @"method" params: iparams];
-  pass(dat != nil, "Can build a method call with a date");
+  PASS(dat != nil, "Can build a method call with a date");
   str = [rpc parseMethod: dat params: oparams];
-  pass([str isEqual: @"method"]
+  PASS([str isEqual: @"method"]
     && [[iparams description] isEqual: [oparams description]],
     "Can parse a method call with a date");
 

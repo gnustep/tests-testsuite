@@ -26,10 +26,8 @@ int main (int argc, const char * argv[])
 
   for (i = 0; i < kTestCaseCount; i++)
     {
-      char	name[100];
-
-      sprintf(name, "xml propertylist parse test %d", i);
-      pass(RunTestCase(&sTestCases[i], i + 1), name);
+      PASS((RunTestCase(&sTestCases[i], i + 1)),
+	"xml propertylist parse test %d", i)
     }
     
   [pool release];

@@ -23,10 +23,10 @@ int main()
     "NSURLProtocol +canonicalRequestForRequest: returns an NSURLProtocol");
 
   copy = [mutable copy];
-  pass([NSURLProtocol requestIsCacheEquivalent: mutable toRequest: copy],
+  PASS([NSURLProtocol requestIsCacheEquivalent: mutable toRequest: copy],
     "NSURLProtocol +requestIsCacheEquivalent:toRequest returns YES with a request and its copy");
   [copy setHTTPMethod: @"POST"];
-  pass([NSURLProtocol requestIsCacheEquivalent: mutable toRequest: copy] == NO,
+  PASS([NSURLProtocol requestIsCacheEquivalent: mutable toRequest: copy] == NO,
     "NSURLProtocol +requestIsCacheEquivalent:toRequest returns NO after a method change");
   [copy release];
 

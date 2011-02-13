@@ -11,66 +11,66 @@ int main()
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
-  pass(ret, "NSLock with tryLock, then unlocking");
+  PASS(ret, "NSLock with tryLock, then unlocking");
  
   ASSIGN(lock,[NSLock new]);
   [lock tryLock];
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive try lock with NSLock should return NO"); 
+  PASS(ret == NO, "Recursive try lock with NSLock should return NO"); 
   
   ASSIGN(lock,[NSConditionLock new]);
   [lock lock];
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive try lock with NSConditionLock should return NO"); 
+  PASS(ret == NO, "Recursive try lock with NSConditionLock should return NO"); 
   
   ret = [lock tryLockWhenCondition: 42];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive tryLockWhenCondition: with NSConditionLock (1) should return NO"); 
+  PASS(ret == NO, "Recursive tryLockWhenCondition: with NSConditionLock (1) should return NO"); 
   [lock unlockWithCondition: 42];
   [lock lock];
   ret = [lock tryLockWhenCondition: 42];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive tryLockWhenCondition: with NSConditionLock (2) should return NO"); 
+  PASS(ret == NO, "Recursive tryLockWhenCondition: with NSConditionLock (2) should return NO"); 
   
   ASSIGN(lock,[NSRecursiveLock new]);
   [lock tryLock];
   ret = [lock tryLock];
   if (ret)
     [lock unlock];
-  pass(ret == YES, "Recursive try lock with NSRecursiveLock should return YES"); 
+  PASS(ret == YES, "Recursive try lock with NSRecursiveLock should return YES"); 
   
   ASSIGN(lock,[NSLock new]);
   ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
-  pass(ret, "NSLock lockBeforeDate: works");
+  PASS(ret, "NSLock lockBeforeDate: works");
   
   ASSIGN(lock,[NSLock new]);
   [lock tryLock];
   ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive lockBeforeDate: with NSLock returns NO");
+  PASS(ret == NO, "Recursive lockBeforeDate: with NSLock returns NO");
   
   ASSIGN(lock,[NSConditionLock new]);
   [lock tryLock];
   ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
-  pass(ret == NO, "Recursive lockBeforeDate: with NSConditionLock returns NO");
+  PASS(ret == NO, "Recursive lockBeforeDate: with NSConditionLock returns NO");
   
   ASSIGN(lock,[NSRecursiveLock new]);
   [lock tryLock];
   ret = [lock lockBeforeDate: [NSDate dateWithTimeIntervalSinceNow: 1]];
   if (ret)
     [lock unlock];
-  pass(ret == YES, "Recursive lockBeforeDate: with NSRecursiveLock returns YES");
+  PASS(ret == YES, "Recursive lockBeforeDate: with NSRecursiveLock returns YES");
   
   [arp release]; arp = nil;
   return 0;

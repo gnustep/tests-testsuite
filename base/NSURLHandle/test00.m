@@ -107,7 +107,7 @@ resourceDidFailLoadingWithReason: (NSString *)reason
 
   [handle beginLoadInBackground];
   [handle cancelLoadInBackground];
-  pass([self status] == URLHandleClientDidCancelLoading,
+  PASS([self status] == URLHandleClientDidCancelLoading,
     "URLHandleResourceDidCancelLoading called");
   [handle release];
 
@@ -117,7 +117,7 @@ resourceDidFailLoadingWithReason: (NSString *)reason
    * background and wait a bit
    */
   [handle loadInBackground];
-  pass([self status] == URLHandleClientDidBeginLoading,
+  PASS([self status] == URLHandleClientDidBeginLoading,
     "URLHandleResourceDidBeginLoading called");
 
   [handle release];

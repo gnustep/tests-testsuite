@@ -20,23 +20,23 @@ int main()
   /* --- [NSBundle -pathsForResourcesOfType:inDirectory:] --- */
   bundle = [NSBundle bundleWithPath: path];
   arr = [bundle pathsForResourcesOfType:@"txt" inDirectory: nil];
-  pass((arr && [arr count]), "-pathsForResourcesOfType:inDirectory: returns an array");
+  PASS((arr && [arr count]), "-pathsForResourcesOfType:inDirectory: returns an array");
   localPath = [path stringByAppendingPathComponent: @"Resources/NonLocalRes.txt"];
-  pass([arr containsObject: localPath], "Returned array contains non-localized resource");
+  PASS([arr containsObject: localPath], "Returned array contains non-localized resource");
   localPath = [path stringByAppendingPathComponent: @"Resources/English.lproj/TextRes.txt"];
-  pass([arr containsObject: localPath], "Returned array contains localized resource");
+  PASS([arr containsObject: localPath], "Returned array contains localized resource");
 
   /* --- [NSBundle +pathsForResourcesOfType:inDirectory:] --- */
   carr = [NSBundle pathsForResourcesOfType:@"txt" inDirectory: path];
-  pass([arr isEqual: carr], "+pathsForResourcesOfType:inDirectory: returns same array");
+  PASS([arr isEqual: carr], "+pathsForResourcesOfType:inDirectory: returns same array");
 
   /* --- [NSBundle -pathsForResourcesOfType:inDirectory:forLocalization:] --- */
   arr = [bundle pathsForResourcesOfType:@"txt" inDirectory: nil forLocalization: @"English"];
-  pass((arr && [arr count]), "-pathsForResourcesOfType:inDirectory:forLocalization returns an array");
+  PASS((arr && [arr count]), "-pathsForResourcesOfType:inDirectory:forLocalization returns an array");
   localPath = [path stringByAppendingPathComponent: @"Resources/NonLocalRes.txt"];
-  pass([arr containsObject: localPath], "Returned array contains non-localized resource");
+  PASS([arr containsObject: localPath], "Returned array contains non-localized resource");
   localPath = [path stringByAppendingPathComponent: @"Resources/English.lproj/TextRes.txt"];
-  pass([arr containsObject: localPath], "Returned array contains localized resource");
+  PASS([arr containsObject: localPath], "Returned array contains localized resource");
 
   [arp release]; arp = nil;
   return 0;

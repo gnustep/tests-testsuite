@@ -24,13 +24,13 @@ int main()
   vals2 = [NSArray arrayWithObjects:val1, val2, val2, nil];
   vals3 = [NSArray arrayWithObjects:val1, val2, val3, nil];
   obj = [NSDictionary new];
-  pass(obj != nil && 
+  PASS(obj != nil && 
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 0,
        "+new creates an empty dictionary");
   
   obj = [NSDictionary dictionary];
-  pass(obj != nil && 
+  PASS(obj != nil && 
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 0,
        "+dictionary creates an empty dictionary");
@@ -44,13 +44,13 @@ int main()
 		  "+dictionaryWithObject:forKey: with nil value");
 
   obj = [NSDictionary dictionaryWithObject:val1 forKey:key1];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 1, 
        "+dictionaryWithObject:forKey: builds minimal dictionary");
   
   obj = [NSDictionary dictionaryWithObjects:vals1 forKeys:keys1];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 2, 
        "+dictionaryWithObjects:forKeys: builds a dictionary");
@@ -59,19 +59,19 @@ int main()
                  NSInvalidArgumentException, YES,
 		 "+dictionaryWithObjects:forKeys: with arrays of different sizes");
   obj = [NSDictionary dictionaryWithObjects:vals2 forKeys:keys2];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 3, 
        "we can have multiple identical objects in a dictionary");
   
   obj = [NSDictionary dictionaryWithObjects:vals3 forKeys:keys3];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isKindOfClass:[NSDictionary class]] &&
        [obj count] == 2, 
        "we can't have multiple identical keys in a dictionary");
   old = obj;
   obj = [NSDictionary dictionaryWithDictionary:old];
-  pass(obj != nil &&
+  PASS(obj != nil &&
        [obj isEqual: old], "+dictionaryWithDictionary: copies dictionary");
    
   [arp release]; arp = nil;

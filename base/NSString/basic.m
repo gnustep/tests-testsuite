@@ -24,12 +24,12 @@ int main()
   test_NSMutableCopying(@"NSString", @"NSMutableString",
   			[NSArray arrayWithObject:testObj]);
 
-  pass([(s = [[NSString alloc] initWithCharacters: &u0 length: 1])
+  PASS([(s = [[NSString alloc] initWithCharacters: &u0 length: 1])
     isKindOfClass: [NSString class]]
     && ![s isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for ascii");
 
-  pass([(s = [[NSString alloc] initWithCharacters: &u1 length: 1])
+  PASS([(s = [[NSString alloc] initWithCharacters: &u1 length: 1])
     isKindOfClass: [NSString class]]
     && ![s isKindOfClass: [NSMutableString class]],
     "initWithCharacters:length: creates mutable string for unicode");
@@ -38,11 +38,11 @@ int main()
   		 NSInvalidArgumentException, YES, 
 		 "NSString -initWithString: does not allow nil argument");
 
-  pass([@"he" getCString: buf maxLength: 2 encoding: NSASCIIStringEncoding]==NO,
+  PASS([@"he" getCString: buf maxLength: 2 encoding: NSASCIIStringEncoding]==NO,
     "buffer exact length fails");
-  pass([@"hell" getCString: buf maxLength: 5 encoding: NSASCIIStringEncoding],
+  PASS([@"hell" getCString: buf maxLength: 5 encoding: NSASCIIStringEncoding],
     "buffer length+1 works");
-  pass(strcmp(buf, "hell") == 0, "getCString:maxLength:encoding");
+  PASS(strcmp(buf, "hell") == 0, "getCString:maxLength:encoding");
 
   [arp release]; arp = nil;
   return 0;

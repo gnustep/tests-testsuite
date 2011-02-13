@@ -21,49 +21,49 @@ int main()
 
   testObj = [NSAffineTransform new];
   [testObjs addObject:testObj];
-  pass(testObj != nil, "can create a new transfor");
+  PASS(testObj != nil, "can create a new transfor");
    
   test_NSObject(@"NSAffineTransform", testObjs);
   test_NSCoding(testObjs);
   test_NSCopying(@"NSAffineTransform", @"NSAffineTransform", testObjs, NO, YES);
   
   testObj = [NSAffineTransform transform];
-  pass(testObj != nil, "can create an autoreleased transform");
+  PASS(testObj != nil, "can create an autoreleased transform");
 
   [testObj setTransformStruct: flip];
   p = [testObj transformPoint: NSMakePoint(10,10)];
-  pass(eq(p.x, 10) && eq(p.y, -10), "flip transform inverts point y");
+  PASS(eq(p.x, 10) && eq(p.y, -10), "flip transform inverts point y");
 
   s = [testObj transformSize: NSMakeSize(10,10)];
-  pass(s.width == 10 && s.height == -10, "flip transform inverts size height");
+  PASS(s.width == 10 && s.height == -10, "flip transform inverts size height");
 
   p = [testObj transformPoint: p];
   s = [testObj transformSize: s];
-  pass(eq(p.x, 10) && eq(p.y, 10) && s.width == 10 && s.height == 10,
+  PASS(eq(p.x, 10) && eq(p.y, 10) && s.width == 10 && s.height == 10,
     "flip is reversible");
   
   testObj = [NSAffineTransform transform];
   [testObj translateXBy: 5.0 yBy: 6.0];
   p = [testObj transformPoint: NSMakePoint(10,10)];
-  pass(eq(p.x, 15.0) && eq(p.y, 16.0), "simple translate works");
+  PASS(eq(p.x, 15.0) && eq(p.y, 16.0), "simple translate works");
 
   [testObj translateXBy: 5.0 yBy: 4.0];
   p = [testObj transformPoint: NSMakePoint(10,10)];
-  pass(eq(p.x, 20.0) && eq(p.y, 20.0), "two simple translates work");
+  PASS(eq(p.x, 20.0) && eq(p.y, 20.0), "two simple translates work");
   
   [testObj rotateByDegrees: 90.0];
   p = [testObj transformPoint: NSMakePoint(10,10)];
-  pass(eq(p.x, 0.0) && eq(p.y, 20.0), "translate and rotate works");
+  PASS(eq(p.x, 0.0) && eq(p.y, 20.0), "translate and rotate works");
   
   testObj = [NSAffineTransform transform];
 
   [testObj rotateByDegrees: 90.0];
   p = [testObj transformPoint: NSMakePoint(10,10)];
-  pass(eq(p.x, -10.0) && eq(p.y, 10.0), "simple rotate works");
+  PASS(eq(p.x, -10.0) && eq(p.y, 10.0), "simple rotate works");
   
   [testObj translateXBy: 5.0 yBy: 6.0];
   p = [testObj transformPoint: NSMakePoint(10,10)];
-  pass(eq(p.x, -16.0) && eq(p.y, 15.0), "rotate and translate works");
+  PASS(eq(p.x, -16.0) && eq(p.y, 15.0), "rotate and translate works");
 
   [arp release]; arp = nil;
   return 0;

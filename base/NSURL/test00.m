@@ -75,7 +75,7 @@ int main()
           // Get status code
           str = [u propertyForKey: NSHTTPPropertyStatusCodeKey];
 	  sprintf(buf, "respond test %d OK", i);
-	  pass([data isEqual: cont], buf);
+	  PASS([data isEqual: cont], "%s", buf)
 	  [pool release];
 	}
       // Wait for server termination
@@ -118,7 +118,7 @@ int main()
               // Get status code
               str = [url propertyForKey: NSHTTPPropertyStatusCodeKey];
 	      sprintf(buf, "respond with keepalive %d (pause %d) OK", i, j);
-	      pass([data isEqual: cont], buf);
+	      PASS([data isEqual: cont], "%s", buf)
 	      [pool release];
 	      /* Allow remote end time to close socket.
 	       */

@@ -32,7 +32,7 @@ int main()
 	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
   date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
   [run runUntilDate: date];
-  pass([str isEqual: @"foo"], 
+  PASS([str isEqual: @"foo"], 
        "-performSelector:target:argument:order:modes: works for one performer");
   
   str = [[NSMutableString alloc] init]; 
@@ -44,7 +44,7 @@ int main()
   date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
   [run runUntilDate: date];
   [run runUntilDate: date];
-  pass([str isEqual: @"foo"],
+  PASS([str isEqual: @"foo"],
        "-performSelector:target:argument:order:modes: only sends the message once");
   
   str = [[NSMutableString alloc] init]; 
@@ -60,7 +60,7 @@ int main()
 	modes: [NSArray arrayWithObject: NSDefaultRunLoopMode]];
   date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
   [run runUntilDate: date];
-  pass([str isEqual: @"foobar"],
+  PASS([str isEqual: @"foobar"],
        "-performSelector:target:argument:order:modes: orders performers correctly");
   
   str = [[NSMutableString alloc] init]; 
@@ -84,7 +84,7 @@ int main()
 	argument: @"bar"];
   date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
   [run runUntilDate: date];
-  pass([str isEqual: @"foozot"],
+  PASS([str isEqual: @"foozot"],
        "-cancelPerformSelector:target:argument: works");
   
   str = [[NSMutableString alloc] init]; 
@@ -101,7 +101,7 @@ int main()
   [run cancelPerformSelectorsWithTarget: str];
   date = [NSDate dateWithTimeIntervalSinceNow: 0.1];
   [run runUntilDate: date];
-  pass([str isEqualToString: @""], "-cancelPerformSelectorsWithTarget: works %s",[str cString]); 
+  PASS([str isEqualToString: @""], "-cancelPerformSelectorsWithTarget: works %s",[str cString]); 
 
   [fh closeFile];
   [fh release];

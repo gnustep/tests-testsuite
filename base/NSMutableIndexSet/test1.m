@@ -36,7 +36,7 @@ int main()
 
   u = [[NSKeyedUnarchiver alloc] initForReadingWithData: m];
   decoded = [u decodeObjectForKey: @"outer1"];
-  pass([decoded isEqual: original], "decoded value equals encoded");
+  PASS([decoded isEqual: original], "decoded value equals encoded");
   [u release];
   [pool release];
   return 0;

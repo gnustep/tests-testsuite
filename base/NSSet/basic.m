@@ -10,12 +10,12 @@ int main()
 
   testObj = [NSSet new];
   [testObjs addObject:testObj];
-  pass(testObj != nil && [testObj count] == 0,
+  PASS(testObj != nil && [testObj count] == 0,
        "can create an empty set");
    
   testObj = [NSSet setWithObject:@"Hello"];
   [testObjs addObject:testObj];
-  pass(testObj != nil && [testObj count] == 1, "can create a set with one element");
+  PASS(testObj != nil && [testObj count] == 1, "can create a set with one element");
   
   test_NSObject(@"NSSet", testObjs);
   test_NSCoding(testObjs);

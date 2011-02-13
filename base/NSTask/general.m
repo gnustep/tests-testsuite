@@ -22,7 +22,7 @@ int main()
   env = [[info environment] mutableCopy];
   yes = YES;
   
-  pass(info != nil && [info isKindOfClass: [NSProcessInfo class]]
+  PASS(info != nil && [info isKindOfClass: [NSProcessInfo class]]
        && env != nil && [env isKindOfClass: [NSMutableDictionary class]]
        && yes == YES,
        "We can build some objects for task tests");
@@ -39,7 +39,7 @@ int main()
   task = [NSTask launchedTaskWithLaunchPath: pth1
 		 arguments: [NSArray array]];
   [task waitUntilExit];
-  pass(YES, "launchedTaskWithLaunchPath:arguments: works");
+  PASS(YES, "launchedTaskWithLaunchPath:arguments: works");
 
   task = [NSTask new];
   args = [NSArray arrayWithObjects: @"xxx", @"yyy", nil];

@@ -22,7 +22,7 @@ int main()
   dict = [NSDictionary dictionaryWithObjectsAndKeys: @"myname", @"Name", 
   	@"myvalue", @"Value", @".test.com", @"Domain", nil];
   cookie = [NSHTTPCookie cookieWithProperties: dict];
-  pass(cookie == nil, "cookie without path returns nil");
+  PASS(cookie == nil, "cookie without path returns nil");
 
   dict = [NSDictionary dictionaryWithObject:
         @"S=calendar=R7tjDKqNB5L8YTZSvf29Bg;Expires=Wed, 09-Mar-2011 23:00:35 GMT"
@@ -32,16 +32,16 @@ int main()
   cookies= [NSHTTPCookie cookiesWithResponseHeaderFields: dict forURL: url];
   TEST_FOR_CLASS(@"NSArray", cookies,
     "NSHTTPCookie +cookiesWithResponseHeaderFields: returns an NSArray");
-  pass([cookies count ] == 1, "cookies array contains a cookie");
+  PASS([cookies count ] == 1, "cookies array contains a cookie");
   cookie = [cookies objectAtIndex: 0];
-  pass([[cookie name] isEqual: @"S"], "NSHTTPCookie returns proper name");
-  pass([[cookie value] isEqual: @"calendar=R7tjDKqNB5L8YTZSvf29Bg"],
+  PASS([[cookie name] isEqual: @"S"], "NSHTTPCookie returns proper name");
+  PASS([[cookie value] isEqual: @"calendar=R7tjDKqNB5L8YTZSvf29Bg"],
   	   "NSHTTPCookie returns proper value");
-  pass([[cookie domain] isEqual: [url host]], 
+  PASS([[cookie domain] isEqual: [url host]], 
   	   "NSHTTPCookie returns proper domain");
   
   dict = [NSHTTPCookie requestHeaderFieldsWithCookies: cookies];
-  pass([[dict objectForKey: @"Cookie"] isEqual: @"S=calendar=R7tjDKqNB5L8YTZSvf29Bg"],
+  PASS([[dict objectForKey: @"Cookie"] isEqual: @"S=calendar=R7tjDKqNB5L8YTZSvf29Bg"],
   	"NSHTTPCookie can generate proper cookie");
 
   [arp release]; arp = nil;

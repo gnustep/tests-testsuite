@@ -46,40 +46,21 @@ int main()
   DefaultNil * defaultNil = [DefaultNil new];
   DeprecatedNil * deprecatedNil = [DeprecatedNil new];
   SetNil * setNil = [SetNil new];
-  BOOL passed;
 
-  passed = NO;
+  PASS_EXCEPTION([defaultNil setValue: nil forKey: @"num"],
+    NSInvalidArgumentException, "KVC handles setting nil for a scalar")
 
-  NS_DURING
-    [defaultNil setValue:nil forKey:@"num"];
-  NS_HANDLER
-    if ([[localException name] isEqualToString:NSInvalidArgumentException])
-      passed = YES;
-  NS_ENDHANDLER
-  pass(passed, "KVC handles setting nil for a scalar");
+  PASS_EXCEPTION([defaultNil takeValue: nil forKey: @"num"],
+    NSInvalidArgumentException,
+    "KVC handles setting nil for a scalar via takeValue:")
 
-  NS_DURING
-    [defaultNil takeValue:nil forKey:@"num"];
-  NS_HANDLER
-    if ([[localException name] isEqualToString:NSInvalidArgumentException])
-      passed = YES;
-  NS_ENDHANDLER
-  pass(passed, "KVC handles setting nil for a scalar via takeValue:");
+  [setNil setValue:nil forKey: @"num"];
+  PASS([[setNil valueForKey: @"num"] intValue] == 0,
+    "KVC uses setNilValueForKey:")
 
-  [setNil setValue:nil forKey:@"num"];
-  pass([[setNil valueForKey:@"num"] intValue] == 0,
-    "KVC uses setNilValueForKey:");
-
-/* Don't think we want this case ...
-  PASS_EXCEPTION(
-      [setNil takeValue:nil forKey:@"num"],
-      NSInvalidArgumentException,
-      "KVC properly throws NSInvalidArgumentException for takeValue:nil");
- */
-
-  [deprecatedNil setValue:nil forKey:@"num"];
-  pass([[deprecatedNil valueForKey:@"num"] intValue] == 0,
-    "KVC uses deprecated unableToSetNilForKey:");
+  [deprecatedNil setValue:nil forKey: @"num"];
+  PASS([[deprecatedNil valueForKey: @"num"] intValue] == 0,
+    "KVC uses deprecated unableToSetNilForKey:")
 
   [arp release]; arp = nil;
   return 0;

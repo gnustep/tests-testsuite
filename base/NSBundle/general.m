@@ -20,7 +20,7 @@ int main()
   TEST_FOR_CLASS(@"NSBundle",gnustepBundle,
     "+bundleForLibrary: makes a bundle for us");
   
-  pass([gnustepBundle principalClass] == [NSObject class], 
+  PASS([gnustepBundle principalClass] == [NSObject class], 
     "-principalClass returns NSObject for the +bundleForLibrary:gnustep-base");
   
   classBundle = [NSBundle bundleForClass: [TestClass class]];
@@ -29,26 +29,26 @@ int main()
     "+bundleForClass: makes a bundle for us");
 
   NSLog(@"%@", [classBundle principalClass]);
-  pass([classBundle principalClass] == [TestClass class], 
+  PASS([classBundle principalClass] == [TestClass class], 
     "-principalClass returns TestClass for +bundleForClass:[TestClass class]");
 
-  pass(classBundle == [NSBundle mainBundle], 
+  PASS(classBundle == [NSBundle mainBundle], 
     "-mainBundle is the same as +bundleForClass:[TestClass class]");
 
-  pass([[gnustepBundle classNamed:@"NSArray"] isEqual:[NSArray class]] &&
+  PASS([[gnustepBundle classNamed:@"NSArray"] isEqual:[NSArray class]] &&
        [[NSArray class] isEqual: [gnustepBundle classNamed:@"NSArray"]],
        "-classNamed returns the correct class");
   
   TEST_STRING([gnustepBundle resourcePath],"-resourcePath returns a string");
   
   [gnustepBundle setBundleVersion:42];
-  pass([gnustepBundle bundleVersion] == 42,
+  PASS([gnustepBundle bundleVersion] == 42,
     "we can set and get gnustep bundle version");
   
-  pass([gnustepBundle load], "-load behaves properly on the gnustep bundle");
+  PASS([gnustepBundle load], "-load behaves properly on the gnustep bundle");
 
   exepath = [gnustepBundle executablePath];
-  pass([fm fileExistsAtPath: exepath],
+  PASS([fm fileExistsAtPath: exepath],
     "-executablePath returns an executable path (gnustep bundle)");
 
   path = [[[fm currentDirectoryPath]
@@ -56,21 +56,21 @@ int main()
       stringByAppendingPathComponent: @"TestBundle.bundle"];
 
   bundle = [NSBundle bundleWithPath: path];
-  pass([bundle isKindOfClass:[NSBundle class]],
+  PASS([bundle isKindOfClass:[NSBundle class]],
     "+bundleWithPath returns an NSBundle");
 
   exepath = [bundle executablePath];
-  pass([fm fileExistsAtPath: exepath],
+  PASS([fm fileExistsAtPath: exepath],
     "-executablePath returns an executable path (real bundle)");
   
   identifierBundle
     = [NSBundle bundleWithIdentifier: @"Test Bundle Identifier 1"];
-  pass(identifierBundle == bundle,
+  PASS(identifierBundle == bundle,
     "+bundleWithIdentifier returns correct bundle");
 
   identifierBundle
     = [NSBundle bundleWithIdentifier: @"Test Bundle Identifier 2"];
-  pass(identifierBundle == nil,
+  PASS(identifierBundle == nil,
     "+bundleWithIdentifier returns nil for non-existent identifier");
 
   [arp release]; arp = nil;

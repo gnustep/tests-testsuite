@@ -23,18 +23,18 @@ int main()
     "We can build basic strings and arrays for tests");
   
   data1 = [NSArchiver archivedDataWithRootObject:vals2];
-  pass((data1 != nil && [data1 length] != 0),
+  PASS((data1 != nil && [data1 length] != 0),
     "archivedDataWithRootObject: seems ok");
   
-  pass([NSArchiver archiveRootObject:vals2 toFile:val1],
+  PASS([NSArchiver archiveRootObject:vals2 toFile:val1],
     "archiveRootObject:toFile: seems ok"); 
   
   a = [NSUnarchiver unarchiveObjectWithData:data1];
-  pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
+  PASS((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
        "unarchiveObjectWithData: seems ok");
   
   a = [NSUnarchiver unarchiveObjectWithFile:val1];
-  pass((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
+  PASS((a != nil && [a isKindOfClass:[NSArray class]] && [a isEqual:vals2]),
        "unarchiveObjectWithFile: seems ok");
 
   [[NSFileManager  defaultManager] removeFileAtPath: val1 handler: nil];

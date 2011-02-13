@@ -53,7 +53,7 @@ int main(void)
   [inFmt setDateStyle: NSDateFormatterLongStyle];
   [inFmt setTimeStyle: NSDateFormatterNoStyle];
   str = [inFmt stringFromDate: date];
-  pass (year == 1982, "Year is 1982");
+  PASS (year == 1982, "Year is 1982");
   PASS_EQUAL(str, @"15 June 1982", "Date is formatted correctly.");
   RELEASE(cal);
   RELEASE(inFmt);

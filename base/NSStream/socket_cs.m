@@ -290,7 +290,7 @@ int main()
   [clientOutput open];
 
   [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
-  pass([goldData isEqualToData: testData], "Local tcp");
+  PASS([goldData isEqualToData: testData], "Local tcp");
 
   DESTROY(serverInput);
   DESTROY(serverOutput);
@@ -321,7 +321,7 @@ int main()
   [clientOutput scheduleInRunLoop: rl forMode: NSDefaultRunLoopMode];
 
   [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
-  pass([goldData isEqualToData: testData], "Local tcp (blocking open)");
+  PASS([goldData isEqualToData: testData], "Local tcp (blocking open)");
 
   DESTROY(serverInput);
   DESTROY(serverOutput);
@@ -351,7 +351,7 @@ int main()
 
   [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
-  pass([goldData isEqualToData: testData], "Local socket");
+  PASS([goldData isEqualToData: testData], "Local socket");
 
   DESTROY(serverInput);
   DESTROY(serverOutput);
@@ -382,7 +382,7 @@ int main()
 
   [rl runUntilDate: [NSDate dateWithTimeIntervalSinceNow: 30]];
 
-  pass([goldData isEqualToData: testData], "Local socket (blocking open)");
+  PASS([goldData isEqualToData: testData], "Local socket (blocking open)");
 
   DESTROY(serverInput);
   DESTROY(serverOutput);

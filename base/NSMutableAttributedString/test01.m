@@ -58,25 +58,25 @@ int main()
   as = [[NSMutableAttributedString alloc] initWithString:base1 attributes:nil];
   [as replaceCharactersInRange:NSMakeRange(2,2) withString:@""];
   [as _sanity];
-  pass([[as string] isEqual:@"ba-1"], 
+  PASS([[as string] isEqual:@"ba-1"], 
        "-replaceCharactersInRange: withString: works with zero length string");
 
   as = [[NSMutableAttributedString alloc] initWithString:base1 attributes:nil];
   [as replaceCharactersInRange:NSMakeRange(2,2) withString:base2];
   [as _sanity];
-  pass([[as string] isEqual:@"babase-2-1"], 
+  PASS([[as string] isEqual:@"babase-2-1"], 
        "-replaceCharactersInRange:withString: works in middle of string");
 
   as = [[NSMutableAttributedString alloc] initWithString:base1 attributes:nil];
   [as replaceCharactersInRange:NSMakeRange(6,0) withString:base2];
   [as _sanity];
-  pass([[as string] isEqual:@"base-1base-2"], 
+  PASS([[as string] isEqual:@"base-1base-2"], 
        "-replaceCharactersInRange:withString: works at end of string works");
   
   as = [[NSMutableAttributedString alloc] initWithString:base1 attributes:nil];
   [as replaceCharactersInRange:NSMakeRange(0,0) withString:base2];
   [as _sanity];
-  pass([[as string] isEqual:@"base-2base-1"], 
+  PASS([[as string] isEqual:@"base-2base-1"], 
        "-replaceCharactersInRange:withString: works at start of string works");
   
   attrE = [NSDictionary dictionary]; 
@@ -89,14 +89,14 @@ int main()
   [as replaceCharactersInRange:NSMakeRange(0,0) withString:@"aa"];
   [as replaceCharactersInRange:NSMakeRange(2,0) withString:@"bb"];
   [as _sanity];
-  pass([as checkAttributes:attrE range:NSMakeRange(0,4)],
+  PASS([as checkAttributes:attrE range:NSMakeRange(0,4)],
        "-replaceCharactersInRange:withString: keeps attributes if entire string is replaced");
 
   as = [[NSMutableAttributedString alloc] initWithString:base1
                                               attributes:attr1];
   [as replaceCharactersInRange:NSMakeRange(0,6) withString:base2];
   [as _sanity];
-  pass([[as string] isEqual:base2] &&
+  PASS([[as string] isEqual:base2] &&
        [as checkAttributes:attr1 range:NSMakeRange(0,6)],
        "-replaceCharactersInRange:withString: keeps attributes if entire string is replaced");
   
@@ -128,7 +128,7 @@ int main()
               [as replaceCharactersInRange:NSMakeRange(start, length)
 	                        withString:@""];
 	      [as _sanity];
-	      pass([[as string] length] == (8 - length) &&
+	      PASS([[as string] length] == (8 - length) &&
 	           [as checkAttributes:aBegin location:0] &&
 		   [as checkAttributes:aEnd location: (8 - length)],
 		   "attribute/(replaceCharacters... with zero length string) interaction _sanity checks %i %i",start, length);
@@ -150,7 +150,7 @@ int main()
 	    [as replaceCharactersInRange:NSMakeRange(start,length) 
 	                      withString:@"foo"];
 	    [as _sanity];
-	    pass([[as string] length] == (11 - length) &&
+	    PASS([[as string] length] == (11 - length) &&
 	         [as checkAttributes:aBegin range:NSMakeRange(start,3)],
            	 "attribute/replaceCharacters... interaction _sanity checks %i %i",start,length);
 	      

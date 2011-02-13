@@ -38,31 +38,31 @@ int main(int argc,char **argv)
   root = [plist propertyList];
 
   result = [[array valueForKeyPath:@"@sum.value"] intValue] == 22;
-  pass(result, "-[NSArray valueForKeyPath: @\"@sum.value\"]");
+  PASS(result, "-[NSArray valueForKeyPath: @\"@sum.value\"]");
 
   result = [[array valueForKeyPath:@"@count.value"] intValue] == 2;
-  pass(result, "-[NSArray valueForKeyPath: @\"@count.value\"]");
+  PASS(result, "-[NSArray valueForKeyPath: @\"@count.value\"]");
 
   result = [[array valueForKeyPath:@"@count"] intValue] == 2;
-  pass(result, "-[NSArray valueForKeyPath: @\"@count\"]");
+  PASS(result, "-[NSArray valueForKeyPath: @\"@count\"]");
 
   aiv = [ArrayIVar new];
   ivar = [NSArray arrayWithObjects: @"Joe", @"Foo", @"Bar", @"Cat", nil];
   [aiv setTestArray: ivar];
 
-  pass([aiv valueForKeyPath: @"testArray.@count"]
+  PASS([aiv valueForKeyPath: @"testArray.@count"]
     == [ivar valueForKey: @"@count"], "valueForKey: matches valueForKeypath:");
 
   /* Advanced KVC */
 
   result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@avg.value"] intValue] == 12;
-  pass(result, "-[NSArray valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@avg.value\"]");
+  PASS(result, "-[NSArray valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@avg.value\"]");
 
   result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@count.value"] intValue] == 4;
-  pass(result, "-[NSArray valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@count.value\"]");
+  PASS(result, "-[NSArray valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@count.value\"]");
 
   result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@count"] intValue] == 4;
-  pass(result, "-[NSArray valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@count\"]");
+  PASS(result, "-[NSArray valueForKeyPath: @\"displayGroup.allObjects.@sum.detailArray.@count\"]");
 
   [pool release];
   return (0);

@@ -27,7 +27,7 @@ int main()
                   pathForResource:@"InvokeProxy"
 	                   ofType:@"bundle"];
   bundle = [NSBundle bundleWithPath:bundlePath];
-  pass([bundle load],
+  PASS([bundle load],
        "loading resources from bundle");
   tClass = NSClassFromString(@"InvokeTarget");
    
@@ -37,7 +37,7 @@ int main()
   /* 
     Test if the return value is retained. It is in the Apple OpenStep edition
     for Windows (YellowBox)
-    matt: this doesn't seem like a valid test as pass/fail will vary on
+    matt: this doesn't seem like a valid test as PASS/fail will vary on
     platforms
    */
   sig = [tar methodSignatureForSelector:@selector(retObject)];
@@ -45,7 +45,7 @@ int main()
   retc = [[tar retObject] retainCount];
   [inv setSelector:@selector(retObject)];
   [inv invokeWithTarget:tar];
-  pass(retc + 1 == [[tar retObject] retainCount],
+  PASS(retc + 1 == [[tar retObject] retainCount],
        "Retain return value");
   
   sig = [tar methodSignatureForSelector:@selector(loopObject:)];
@@ -55,7 +55,7 @@ int main()
   [inv invokeWithTarget:tar];
   [inv retainArguments];
   [inv setArgument:&tar atIndex:2];
-  pass(retc + 1 == [tar retainCount],
+  PASS(retc + 1 == [tar retainCount],
        "Will Retain arguments after -retainArguments");
   
   sig = [tar methodSignatureForSelector:@selector(loopObject:)];
@@ -64,7 +64,7 @@ int main()
   [inv setSelector:@selector(loopObject:)];
   [inv invokeWithTarget:tar];
   [inv setArgument:&tar atIndex:2];
-  pass(retc == [tar retainCount],
+  PASS(retc == [tar retainCount],
        "default will not retain arguments");
   
   sig = [tar methodSignatureForSelector:@selector(retObject)];
@@ -72,7 +72,7 @@ int main()
   [inv setSelector:@selector(retObject)];
   [inv invokeWithTarget:nil];
   [inv getReturnValue:&ret];
-  pass(ret == nil,"Check if nil target works");
+  PASS(ret == nil,"Check if nil target works");
   
   sig = [tar methodSignatureForSelector:@selector(returnIdButThrowException)];
   inv = [NSInvocation invocationWithMethodSignature: sig];

@@ -6,7 +6,7 @@ int main()
 {
   NSAutoreleasePool *arp = [NSAutoreleasePool new];
 
-  pass (1, "include of Foundation/NSAttributedString.h works");
+  PASS (1, "include of Foundation/NSAttributedString.h works");
   [arp release];
   return 0;
 }

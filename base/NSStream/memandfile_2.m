@@ -128,7 +128,7 @@ int main()
   [rl run];
 
   NSData *answer = [output propertyForKey: NSStreamDataWrittenToMemoryStreamKey];
-  pass([goldData isEqualToData: answer], "file to memory copy ok");
+  PASS([goldData isEqualToData: answer], "file to memory copy ok");
 
   // second test, memory to file copy
   NSString *pathO = @"temp";
@@ -144,7 +144,7 @@ int main()
   [rl run];
 
   NSData *answer2 = [NSData dataWithContentsOfFile: pathO];
-  pass([goldData isEqualToData: answer2], "memory to file copy ok");
+  PASS([goldData isEqualToData: answer2], "memory to file copy ok");
 
   [[NSFileManager defaultManager] removeFileAtPath: pathO handler: nil];
     

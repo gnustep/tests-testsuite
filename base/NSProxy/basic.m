@@ -12,9 +12,9 @@ int main()
   NSZone *testZone = NSCreateZone(1024,1024,1);
 
   theClass = [NSProxy class];
-  pass(theClass != Nil, "%s exists",prefix); 
+  PASS(theClass != Nil, "%s exists",prefix); 
   obj0 = [NSProxy alloc];
-  pass(obj0 != nil, "%s has working alloc",prefix);
+  PASS(obj0 != nil, "%s has working alloc",prefix);
   TEST_EXCEPTION([obj0 isKindOfClass:theClass];, NSInvalidArgumentException,
   		 YES, "NSProxy -isKindOfClass raises exception");
   
@@ -23,13 +23,13 @@ int main()
 		 "NSProxy -isKindOfClass raises exception");
   
   obj1 = [NSProxy allocWithZone:testZone];
-  pass(obj1 != nil, "%s has working allocWithZone:",prefix);
-  pass(NSZoneFromPointer(obj1) == testZone, "%s uses zone for alloc",prefix);
-  pass([obj1 zone] == testZone, "%s -zone works",prefix);
+  PASS(obj1 != nil, "%s has working allocWithZone:",prefix);
+  PASS(NSZoneFromPointer(obj1) == testZone, "%s uses zone for alloc",prefix);
+  PASS([obj1 zone] == testZone, "%s -zone works",prefix);
   
-  pass([obj1 hash] != 0, "%s has working -hash",prefix);
-  pass([obj1 isEqual:obj1] == YES, "%s has working -isEqual:",prefix);
-  pass([obj1 class] == theClass, "%s has working -class",prefix);
+  PASS([obj1 hash] != 0, "%s has working -hash",prefix);
+  PASS([obj1 isEqual:obj1] == YES, "%s has working -isEqual:",prefix);
+  PASS([obj1 class] == theClass, "%s has working -class",prefix);
   
   [arp release]; arp = nil;
   return 0;

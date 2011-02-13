@@ -30,18 +30,18 @@ int main(int argc, char **argv)
   [NSAutoreleasePool new];
   for (i=0;i<(sizeof(constantStringY)/sizeof(constantStringY[0]));i++)
     {
-      pass([constantStringY[i] boolValue] == YES, "constant:%s == YES", [constantStringY[i] lossyCString]);
-      pass([constantStringN[i] boolValue] == NO,  "constant:%s == NO",  [constantStringN[i] lossyCString]);
+      PASS([constantStringY[i] boolValue] == YES, "constant:%s == YES", [constantStringY[i] lossyCString]);
+      PASS([constantStringN[i] boolValue] == NO,  "constant:%s == NO",  [constantStringN[i] lossyCString]);
 
       normalString = [NSString stringWithString:constantStringY[i]];
-      pass([normalString boolValue] == YES, "normal:%s == YES", [normalString lossyCString]);
+      PASS([normalString boolValue] == YES, "normal:%s == YES", [normalString lossyCString]);
       normalString = [NSString stringWithString:constantStringN[i]];
-      pass([normalString boolValue] == NO,  "normal:%s == NO",  [normalString lossyCString]);
+      PASS([normalString boolValue] == NO,  "normal:%s == NO",  [normalString lossyCString]);
 
       mutableString = (id)[NSMutableString stringWithString:constantStringY[i]];
-      pass([mutableString boolValue] == YES, "mutable:%s == YES", [mutableString lossyCString]);
+      PASS([mutableString boolValue] == YES, "mutable:%s == YES", [mutableString lossyCString]);
       mutableString = (id)[NSMutableString stringWithString:constantStringN[i]];
-      pass([mutableString boolValue] == NO,  "mutable:%s == NO",  [mutableString lossyCString]);
+      PASS([mutableString boolValue] == NO,  "mutable:%s == NO",  [mutableString lossyCString]);
     }
 
   return 0;

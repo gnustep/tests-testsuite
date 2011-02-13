@@ -29,7 +29,7 @@ int main()
   NSUserDefaults *defs;
 
   defs = [NSUserDefaults standardUserDefaults];
-  pass(defs != nil && [defs isKindOfClass: [NSUserDefaults class]],
+  PASS(defs != nil && [defs isKindOfClass: [NSUserDefaults class]],
        "NSUserDefaults understands +standardUserDefaults");
 
 #if	defined(GNUSTEP_BASE_LIBRARY)
@@ -37,16 +37,16 @@ int main()
   id lang;
 
   lang = [NSUserDefaults userLanguages];
-  pass(lang != nil && [lang isKindOfClass: [NSArray class]],
+  PASS(lang != nil && [lang isKindOfClass: [NSArray class]],
        "NSUserDefaults understands +userLanguages");
 
   [NSUserDefaults setUserLanguages:
     [NSArray arrayWithObject: @"Bogus language"]];
-  pass([lang isEqual: [NSUserDefaults userLanguages]] == NO,
+  PASS([lang isEqual: [NSUserDefaults userLanguages]] == NO,
        "NSUserDefaults understands +setUserLanguages");
 
   [NSUserDefaults setUserLanguages: lang];
-  pass([lang isEqual: [NSUserDefaults userLanguages]],
+  PASS([lang isEqual: [NSUserDefaults userLanguages]],
        "NSUserDefaults can set user languages");
 }
 #endif
@@ -57,19 +57,19 @@ int main()
     object: nil];
 
   [defs setBool: YES forKey: @"Test Suite Bool"];
-  pass([defs boolForKey: @"Test Suite Bool"],
+  PASS([defs boolForKey: @"Test Suite Bool"],
        "NSUserDefaults can set/get a BOOL");
 
   PASS_EQUAL([obs count], @"1", "setting a boolean causes notification");
 
   [defs setInteger: 34 forKey: @"Test Suite Int"];
-  pass([defs integerForKey: @"Test Suite Int"] == 34,
+  PASS([defs integerForKey: @"Test Suite Int"] == 34,
        "NSUserDefaults can set/get an int");
 
   PASS_EQUAL([obs count], @"2", "setting an integer causes notification");
 
   [defs setObject: @"SetString" forKey: @"Test Suite Str"];
-  pass([[defs stringForKey: @"Test Suite Str"] isEqual: @"SetString"],
+  PASS([[defs stringForKey: @"Test Suite Str"] isEqual: @"SetString"],
        "NSUserDefaults can set/get a string");
   
   [arp release]; arp = nil;

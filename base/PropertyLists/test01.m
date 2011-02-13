@@ -118,40 +118,40 @@ int main()
 
       if (func == 0) continue;
 
-      pass(func(@"ariosto"),
+      PASS(func(@"ariosto"),
 	   "We can generate a property list from a string");
 
-      pass(func([NSArray array]),
+      PASS(func([NSArray array]),
 	   "We can generate a property list from an empty array");
 
-      pass(func([NSArray arrayWithObject: @"Palinuro"]),
+      PASS(func([NSArray arrayWithObject: @"Palinuro"]),
 	   "We can generate a property list from an array with a single object");
 
-      pass(func([NSArray arrayWithObjects: 
+      PASS(func([NSArray arrayWithObjects: 
 					 @"Palinuro", @"Enea", nil]),
 	   "We can generate a property list from an array with two objects");
 
-      pass(func([NSArray arrayWithObjects: 
+      PASS(func([NSArray arrayWithObjects: 
 					 @"Palinuro", @"Enea", 
 				       @"Eurialo e Niso", nil]),
        "We can generate a property list from "
        "an array with three objects and \"s");
 
-      pass(func([NSDictionary dictionary]),
+      PASS(func([NSDictionary dictionary]),
 	   "We can generate a property list from an empty dictionary");
 
-      pass(func([NSDictionary dictionaryWithObject: @"Virgilio"
+      PASS(func([NSDictionary dictionaryWithObject: @"Virgilio"
 					    forKey: @"Autore"]),
 	"We can generate a property list from a "
 	"dictionary with a single key/value pair");
 
-      pass(func([NSDictionary dictionaryWithObjectsAndKeys: 
+      PASS(func([NSDictionary dictionaryWithObjectsAndKeys: 
 					      @"Virgilio", @"Autore",
 					    @"Eneide", @"Titolo", nil]),
 	"We can generate a property list from a "
 	"dictionary with two key/value pairs");
 
-      pass(func([NSDictionary dictionaryWithObjectsAndKeys: 
+      PASS(func([NSDictionary dictionaryWithObjectsAndKeys: 
 					      @"Virgilio", @"Autore",
 					    [NSArray arrayWithObject: @"Molte"],
 					    @"Opere", nil]),
@@ -172,7 +172,7 @@ int main()
 	[object setObject: objectB forKey: @"bbb"];
 	[object setObject: objectC forKey: @"ccc"];
 	[object setObject: objectD forKey: @"Auri;"];
-	pass(func(object),
+	PASS(func(object),
 	     "We can generate a medium-size property list (1)");
       }
       {
@@ -277,21 +277,21 @@ int main()
 	[object setObject: objectA forKey: @"Un dizionario"];
 	[object setObject: objectB forKey: @"Un altro dizionario"];
 
-	pass(func(object),
+	PASS(func(object),
 	     "We can generate a medium-size property list (2)");
       }
 
-      pass(func([NSData data]),
+      PASS(func([NSData data]),
 	   "We can generate a property list from an empty data");
 
-      pass(func([@"Questo e` un test" dataUsingEncoding: 1]),
+      PASS(func([@"Questo e` un test" dataUsingEncoding: 1]),
 	   "We can generate a property list from very simple data");
 
-      pass(func([[[NSProcessInfo processInfo] 
+      PASS(func([[[NSProcessInfo processInfo] 
 				 globallyUniqueString] dataUsingEncoding: 7]),
 	   "We can generate a property list from very simple data (2)");
 
-      pass(func([NSMutableArray arrayWithObject:
+      PASS(func([NSMutableArray arrayWithObject:
 				[@"*()3\"#@Q``''" dataUsingEncoding: 1]]),
 	"We can generate a property list from an "
 	"array containing very simple data");
@@ -311,7 +311,7 @@ int main()
 	[object addObject: [NSArray arrayWithObject: @"="]];
 	[object addObject: [NSDictionary dictionary]];
 
-	pass(func(object),
+	PASS(func(object),
 	  "We can generate a property list from an array containing various things");
       }
     }

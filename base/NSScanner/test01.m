@@ -70,49 +70,49 @@ int main()
   int intmin = (0 - (intmax - 1));
   NSScanner *scn;
 
-  pass(scanInt((intmax - 20),&ret), "NSScanner large ints"); 
-  pass(scanInt((intmin + 20),&ret), "NSScanner small ints");
+  PASS(scanInt((intmax - 20),&ret), "NSScanner large ints"); 
+  PASS(scanInt((intmin + 20),&ret), "NSScanner small ints");
   
   scn = [NSScanner scannerWithString:@"1234F00"];
-  pass(([scn scanInt:&ret] && ([scn scanLocation] == 4)),
+  PASS(([scn scanInt:&ret] && ([scn scanLocation] == 4)),
        "NSScanner non-digits terminate scan");
   
   scn = [NSScanner scannerWithString:@"junk"];
-  pass((![scn scanInt:&ret] && ([scn scanLocation] == 0)),
+  PASS((![scn scanInt:&ret] && ([scn scanLocation] == 0)),
        "NSScanner non-digits terminate scan");
   
   scn = [NSScanner scannerWithString:@"junk"];
-  pass(![scn scanInt:&ret] && ([scn scanLocation] == 0),
+  PASS(![scn scanInt:&ret] && ([scn scanLocation] == 0),
        "NSScanner non-digits dont consume characters to be skipped");
   
 #if     defined(GNUSTEP_BASE_LIBRARY)
-  pass(scanRadixUnsigned(@"1234FOO", 1, 1234, 4, &ret)
+  PASS(scanRadixUnsigned(@"1234FOO", 1, 1234, 4, &ret)
        && scanRadixUnsigned(@"01234FOO", 1, 01234, 5, &ret)
        && scanRadixUnsigned(@"0x1234FOO", 1, 0x1234F, 7, &ret)
        && scanRadixUnsigned(@"0X1234FOO", 1, 0x1234F, 7, &ret)
        && scanRadixUnsigned(@"012348FOO", 1, 01234, 5, &ret),
        "NSScanner radiux unsigned (non-digits terminate scan)");
   
-  pass(scanRadixUnsigned(@"FOO", 0, 0, 0, &ret)
+  PASS(scanRadixUnsigned(@"FOO", 0, 0, 0, &ret)
        && scanRadixUnsigned(@"  FOO", 0, 0, 0, &ret)
        && scanRadixUnsigned(@" 0x ", 0, 0, 0, &ret),
        "NSScanner radiux unsigned (non-digits dont move scan)");
 #endif
   
-  pass(scanHex(@"1234FOO", 1, 0x1234F, 5, &ret)
+  PASS(scanHex(@"1234FOO", 1, 0x1234F, 5, &ret)
        && scanHex(@"01234FOO", 1, 0x1234F, 6, &ret),
        "NSScanner hex (non-digits terminate scan)");
  /* dbl1 = 123.456;
   dbl2 = 123.45678901234567890123456789012345678901234567;
   dbl3 = 1.23456789;
   */
-  pass(scanDouble(@"123.456",123.456,&dret) 
+  PASS(scanDouble(@"123.456",123.456,&dret) 
        && scanDouble(@"123.45678901234567890123456789012345678901234567",
                        123.45678901234567890123456789012345678901234567,&dret)
        && scanDouble(@"0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000123456789e+100", 1.23456789, &dret),
        "NSScanner scans doubles");
   
-  pass(scanDouble(@"1e0", 1, &dret)
+  PASS(scanDouble(@"1e0", 1, &dret)
        && scanDouble(@"1e1", 10, &dret)
        && scanDouble(@"1e+1", 10, &dret)
        && scanDouble(@"1e+10", 1e10, &dret)

@@ -45,12 +45,12 @@ main()
 	       object: nil];
 
   [center postNotificationName: @"Notification" object: nil];
-  pass([MyClass notificationCounter] == 1, "simple notification works");
+  PASS([MyClass notificationCounter] == 1, "simple notification works");
   object = nil;
   [collector collectExhaustively];
-  pass([MyClass finalisationCounter] == 1, "finalisation done");
+  PASS([MyClass finalisationCounter] == 1, "finalisation done");
   [center postNotificationName: @"Notification" object: nil];
-  pass([MyClass notificationCounter] == 1, "automatic removal works");
+  PASS([MyClass notificationCounter] == 1, "automatic removal works");
 
   return 0;
 }

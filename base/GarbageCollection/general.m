@@ -9,13 +9,13 @@ main()
 
   if (collector == nil) return 0;	// No garbage collection.
 
-  pass([collector zone] == NSDefaultMallocZone(),
+  PASS([collector zone] == NSDefaultMallocZone(),
     "collector zone is default");
-  pass([[NSObject new] zone] == NSDefaultMallocZone(),
+  PASS([[NSObject new] zone] == NSDefaultMallocZone(),
     "object zone is default");
-  pass((z = NSCreateZone(1024, 128, YES)) == NSDefaultMallocZone(),
+  PASS((z = NSCreateZone(1024, 128, YES)) == NSDefaultMallocZone(),
     "created zone is default");
-  pass((z = NSCreateZone(1024, 128, YES)) == NSDefaultMallocZone(),
+  PASS((z = NSCreateZone(1024, 128, YES)) == NSDefaultMallocZone(),
     "created zone is default");
   NSRecycleZone(z);
 
