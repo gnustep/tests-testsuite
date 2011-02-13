@@ -3,9 +3,15 @@
 #import <Foundation/NSCalendar.h>
 #import "ObjectTesting.h"
 
+#if	defined(GS_USE_ICU)
+#define	NSCALENDAR_SUPPORTED	GS_USE_ICU
+#else
+#define	NSCALENDAR_SUPPORTED	1 /* Assume Apple support */
+#endif
+
 int main(void)
 {
-  NSAutoreleasePool *arp = [NSAutoreleasePool new];
+  START_SET(NSCALENDAR_SUPPORTED)
   NSCalendar *cal;
   
   cal = [NSCalendar currentCalendar];
@@ -18,6 +24,6 @@ int main(void)
     "-initWithCalendarIdentifier: return a NSCalendar");
   RELEASE(cal);
   
-  RELEASE(arp);
+  END_SET("NSCalendar create")
   return 0;
 }

@@ -1,11 +1,16 @@
 #import "Testing.h"
 #import "ObjectTesting.h"
 #import <Foundation/NSCalendar.h>
-#import <Foundation/NSAutoreleasePool.h>
+
+#if	defined(GS_USE_ICU)
+#define	NSCALENDAR_SUPPORTED	GS_USE_ICU
+#else
+#define	NSCALENDAR_SUPPORTED	1 /* Assume Apple support */
+#endif
 
 int main()
 {  
-  NSAutoreleasePool   *arp = [NSAutoreleasePool new];
+  START_SET(NSCALENDAR_SUPPORTED)
   id testObj = [NSCalendar currentCalendar];
 
   test_NSObject(@"NSCalendar", [NSArray arrayWithObject: testObj]);
@@ -13,6 +18,6 @@ int main()
   test_NSCopying(@"NSCalendar", @"NSCalendar",
     [NSArray arrayWithObject: testObj], NO, NO);
   
-  RELEASE(arp);
+  END_SET("NSCalendar basic")
   return 0;
 }
