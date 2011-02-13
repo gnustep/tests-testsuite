@@ -7,7 +7,12 @@
 #import <Foundation/NSObjCRuntime.h>
 
 #include        <string.h>
+
+#if	defined(GNUSTEP)
+#import		<GNUstepBase/GSObjCRuntime.h>
+#else
 #include        <objc/runtime.h>
+#endif
 
 static int      c1count = 0;
 static int      c1initialize = 0;
