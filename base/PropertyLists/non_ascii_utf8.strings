@@ -1,5 +1,0 @@
-/* Comment åäö. */
-
-ascii = ascii;
-"NågotMindreAscii" = foo;
-"Quoted non-ascii åäö" = "åäö";
