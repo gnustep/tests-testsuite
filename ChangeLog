@@ -1,3 +1,9 @@
+2011-02-16 Richard Frith-Macdonald  <rfm@gnu.org>
+
+	Deleted the 'base' subdirectory and  used svn propset to set
+	svn:externals to point to the new copy in the base library at
+	'svn://svn.gna.org/svn/gnustep/libs/base/trunk/Tests/base'.
+
 2011-02-13 Richard Frith-Macdonald  <rfm@gnu.org>
 
 	* clean:
