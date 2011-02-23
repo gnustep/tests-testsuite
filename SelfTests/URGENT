@@ -1,7 +1,0 @@
-
-IMPORTANT --- You are running self tests for the test framework itsself.
-
-You should therefore expect to see a variety of test results rather than just
-a long series of test passes.  Do not worry as long as the final summary says
-that all tests are OK.
-
