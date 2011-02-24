@@ -42,7 +42,7 @@ int main(int argc,char **argv)
   NSSet *keys;
   Class qCls = [EOQualifier class];
 
-  START_SET(YES);
+  START_SET("EOQualifier/"__FILE__);
 
   START_TEST(YES);
   qual = [qCls qualifierWithQualifierFormat:

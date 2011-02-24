@@ -19,7 +19,7 @@ int main()
   volatile BOOL result;
   unsigned i, c;
 
-  START_SET(YES)
+  START_SET("bad qualifiers formats");
   {
     for (i = 0, c = [qfs count]; i < c; i++)
       {

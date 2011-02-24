@@ -38,7 +38,7 @@ int main(int argc,char **argv)
   EOSortOrdering *sOrd3 = nil;
   EOSortOrdering *sOrd4 = nil;
 
-  START_SET(YES);
+  START_SET("EOSortOrdering/EOSortOrdering00.m");
 
   START_TEST(YES);
   sOrd1 = [[EOSortOrdering alloc] initWithKey: @"name"

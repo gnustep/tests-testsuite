@@ -35,7 +35,7 @@ int main(int argc,char **argv)
   id tmp = nil;
   EOOrQualifier *qual;
 
-  START_SET(YES);
+  START_SET("EOQualifier/EOOrQualifier00.m");
 
   START_TEST(YES);
   {

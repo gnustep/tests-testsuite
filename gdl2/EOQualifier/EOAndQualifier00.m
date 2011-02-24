@@ -34,7 +34,7 @@ int main(int argc,char **argv)
   id tmp = nil;
   EOQualifier *qual;
 
-  START_SET(YES);
+  START_SET("EOQualifier/EOAndQualifier00.m");
 
   START_TEST(YES);
   {
@@ -44,7 +44,7 @@ int main(int argc,char **argv)
     EOKeyValueQualifier *keyValQual2 = nil;
     EOKeyValueQualifier *keyValQual3 = nil;
 
-    START_SET(YES);
+    START_SET("Prepare: -[EOAndQualifier initWithQualifierArray:]");
     result = NO;
     keyValQual1 
       = [[EOKeyValueQualifier alloc] initWithKey: @"name"
@@ -62,7 +62,7 @@ int main(int argc,char **argv)
 
     qual = [[EOAndQualifier alloc] initWithQualifierArray: setQualArr];
 
-    START_SET(YES);
+    START_SET("Evaluate: -[EOAndQualifier initWithQualifierArray:]");
     {
       BOOL local;
       NSSet *setQualSet;

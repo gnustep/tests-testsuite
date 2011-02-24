@@ -37,7 +37,7 @@ int main()
     {
       id objectToTest = [objectsToTest objectAtIndex:j];
       const char *className = [[[objectToTest class] description] cString];
-      START_SET(YES);
+      START_SET("-validateName: with valid names");
       for (i = 0; i < [validNames count]; i++)
         {
           NSString *aName = [validNames objectAtIndex:i];
@@ -48,7 +48,7 @@ int main()
         }
       END_SET("-validateName: with valid names");
       
-      START_SET(YES);
+      START_SET("-validateName with invalid names");
       for (i = 0; i < [invalidNames count]; i++)
         {
           NSString *aName = [invalidNames objectAtIndex:i];
@@ -62,7 +62,7 @@ int main()
       END_TEST(result, "%s -validateName: with invalid name '(nil)", className);
       END_SET("-validateName with invalid names");
      
-      START_SET(YES);
+      START_SET("%s -setName: with valid names", className);
       for (i = 0; i < [validNames count]; i++)
 	{
 	  NSString *aName = [validNames objectAtIndex:i];
@@ -80,7 +80,7 @@ int main()
     	}
       END_SET("%s -setName: with valid names", className);
 
-      START_SET(YES);
+      START_SET("%s -setName: with invalid names", className);
       for (i = 0; i < [invalidNames count]; i++)
 	{
 	  NSString *aName = [invalidNames objectAtIndex:i];
@@ -99,7 +99,7 @@ int main()
       
     }
     
-  START_SET(YES)
+  START_SET("-validateName return values");
   {
     NSString *aName = [validNames objectAtIndex:0];
     START_TEST(YES);

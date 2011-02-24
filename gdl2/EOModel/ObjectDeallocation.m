@@ -71,7 +71,7 @@ int main()
    *
    * not every pointer will be set to nil.
    */
-  START_SET(YES);
+  START_SET("entity unretained pointers");
   
   START_TEST(YES);
   rc = [model retainCount]; 
@@ -92,7 +92,7 @@ int main()
   
   END_SET("entity unretained pointers");
   
-  START_SET(YES);
+  START_SET("attribute unretained pointers");
   
   START_TEST(YES);
   rc = [e1 retainCount];
@@ -110,7 +110,7 @@ int main()
   
   END_SET("attribute unretained pointers");
 
-  START_SET(YES);
+  START_SET("relationship unretained pointers");
 
   START_TEST(YES);
   result = [r1 entity] == nil;
@@ -127,7 +127,7 @@ int main()
   
   END_SET("relationship unretained pointers");
  
-  START_SET(YES);
+  START_SET("parent/sub entities");
 
   START_TEST(YES);
   rc = [e4 retainCount];

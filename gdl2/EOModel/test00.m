@@ -59,7 +59,7 @@ int main(int argc,char **argv)
   EOJoin *prodSupJoin = nil;
   EOStoredProcedure *storedProc = nil;
 
-  START_SET(YES);
+  START_SET("EOModel/test00.m");
 
   START_TEST(YES);
   pidAttr = [EOAttribute new];
@@ -97,7 +97,7 @@ int main(int argc,char **argv)
   [productEnt addAttribute: supplierId];
   [productEnt addAttribute: grpId];
   [productEnt setPrimaryKeyAttributes: [NSArray arrayWithObject: pidAttr]];
-  START_SET(YES);
+  START_SET("EOEntity creation result evaluation");
   {
     BOOL local;
     result = NO;
@@ -142,7 +142,7 @@ int main(int argc,char **argv)
   [model setConnectionDictionary: connDict];
   [model addEntity: productEnt];
   [model addEntity: supplierEnt];
-  START_SET(YES);
+  START_SET("EOModel creation result evaluation");
   {
     BOOL local;
     result = NO;
@@ -243,7 +243,7 @@ int main(int argc,char **argv)
 
     plist = [NSMutableDictionary dictionary];
     [model encodeTableOfContentsIntoPropertyList: plist];
-    START_SET(YES);
+    START_SET("-[EOModel encodeTableOfContentsIntoPropertyList:]"
     {
       BOOL local;
       result = NO;
@@ -273,7 +273,7 @@ int main(int argc,char **argv)
   filePath = [filePath stringByAppendingPathComponent: [model name]];
   START_TEST(YES);
   [model writeToFile: filePath];
-  START_SET(YES);
+  START_SET("-[EOModel writeToFile:] result evaluation");
   {
     NSString *idxPath;
     NSString *fileContentString;

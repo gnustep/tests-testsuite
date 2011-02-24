@@ -93,7 +93,7 @@ int main(int argc,char **argv)
   EODataSource *dataSource;
   NSCalendarDate *date;
 
-  START_SET(YES);
+  START_SET("EODisplayGroup/EODisplayGroup00.m");
 
   START_TEST(YES);
   tmp = [EODisplayGroup globalDefaultStringMatchOperator];

@@ -38,7 +38,7 @@ int main(int argc,char **argv)
   EOGlobalID *gid2 = nil;
   NSMutableSet *gidset = [NSMutableSet setWithCapacity:300];
 
-  START_SET(YES);
+  START_SET("EOGlobalID/EOTemporaryGlobalID00.m");
 
   START_TEST(YES);
   gid1 = [EOTemporaryGlobalID temporaryGlobalID];

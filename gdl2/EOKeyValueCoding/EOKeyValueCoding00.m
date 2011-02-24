@@ -184,7 +184,7 @@ int main(int argc,char **argv)
   NSMutableDictionary *mdic0 = (id)[NSMutableDictionary dictionary];
   EONull *null = [EONull null];
 
-  START_SET(YES);
+  START_SET("EOKeyValueCoding/EOKeyValueCoding00.m");
 
   START_TEST(YES);
   [EOKVCTester flushAllKeyBindings];

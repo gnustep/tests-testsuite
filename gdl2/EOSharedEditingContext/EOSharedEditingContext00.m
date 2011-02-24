@@ -36,7 +36,7 @@ int main(int argc,char **argv)
   EOSharedEditingContext *sec = nil;
   id tmp = nil;
 
-  START_SET(YES);
+  START_SET("EOSharedEditingContext/"__FILE__);
 
   START_TEST(YES);
   {

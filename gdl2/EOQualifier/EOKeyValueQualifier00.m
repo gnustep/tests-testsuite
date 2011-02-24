@@ -34,7 +34,7 @@ int main(int argc,char **argv)
   id tmp = nil;
   EOKeyValueQualifier *qual;
 
-  START_SET(YES);
+  START_SET("EOQualifier/EOKeyValueQualifier00.m");
 
   START_TEST(YES);
   qual = [[EOKeyValueQualifier alloc] initWithKey: @"name"

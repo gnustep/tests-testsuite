@@ -49,7 +49,7 @@ int main(int argc,char **argv)
   currAdaptorName = setupModel(model);
   /*  Now we have the testcases for the installed Adaptors.  */
 
-  START_SET(YES);
+  START_SET("Bug8993 preperation");
   [EOSQLExpression setUseQuotedExternalNames: YES];
 
   currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
@@ -93,7 +93,7 @@ int main(int argc,char **argv)
   [ec saveChanges];
 
   END_SET("Bug8993 preperation");
-  START_SET(YES);
+  START_SET(Bug8993);
   [ec deleteObject: objS];
   START_TEST(YES);
   [ec saveChanges];

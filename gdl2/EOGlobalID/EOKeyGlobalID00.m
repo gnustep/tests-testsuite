@@ -47,9 +47,9 @@ int main(int argc,char **argv)
   EOKeyGlobalID *gid2 = nil;
   EOKeyGlobalID *gid3 = nil;
 
-  START_SET(YES);
+  START_SET("EOGlobalID/EOKeyGlobalID00.m");
 
-  START_SET(YES);
+  START_SET("+[EOKeyGlobalID globalIDWithEntityName:keys:keyCount:zone:]");
   {
     NSArray *keyValArr1 = [NSArray arrayWithObjects:
 				     @"keyVal1", @"keyVal2", nil];

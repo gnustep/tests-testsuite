@@ -35,7 +35,7 @@ int main(int argc,char **argv)
 
   EOQualifierVariable *qualVar;
 
-  START_SET(YES);
+  START_SET("EOQualifier/EOQualifierVariable00.m");
 
   START_TEST(YES);
   qualVar = [[EOQualifierVariable alloc] initWithKey: @"keyName"];

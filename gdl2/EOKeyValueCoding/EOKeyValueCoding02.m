@@ -82,7 +82,7 @@ int main(int argc,char **argv)
   NSString *plist = @"{displayGroup={allObjects=({detailArray=({value=4;},{value=2;});},{detailArray=({value=8;},{value=10;});});};}";
   NSDictionary *root = [plist propertyList];
 
-  START_SET(YES);
+  START_SET("EOKeyValueCoding" __FILE__);
 
   START_TEST(YES);
   result = [[root valueForKeyPath:@"displayGroup.allObjects.@sum.detailArray.@avg.value"] intValue] == 12;

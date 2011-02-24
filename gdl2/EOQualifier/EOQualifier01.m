@@ -41,7 +41,7 @@ int main(int argc,char **argv)
   NSArray *arr1, *arr1t, *arr1o, *arr2o;
   NSMutableArray *arr2, *arr2t;
   
-  START_SET(YES);
+  START_SET("EOQualifier/"__FILE__);
 
   dict1 = [NSDictionary dictionaryWithObject: @"1" forKey: @"num"];
   dict2 = [NSDictionary dictionaryWithObject: @"2" forKey: @"num"];

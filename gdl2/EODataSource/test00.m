@@ -44,7 +44,7 @@ int main(int argc,char **argv)
   id tmp = nil, tmp1 = nil, tmp2 = nil, tmp3 = nil;
   volatile BOOL result = NO;
 
-  START_SET(YES);
+  START_SET("EODataSource/test00.m");
 
   /* Setup the database */
   model = globalModelForKey(TSTTradingModelName);
@@ -93,7 +93,7 @@ int main(int argc,char **argv)
 				   calendarFormat:@"%Y-%m-%d"] forKey: @"date"];
   START_TEST(YES);
   [masterDS insertObject: tmp1];
-  START_SET(YES);
+  START_SET("-[EODatabaseDataSource insertObject:] result evaluation 1");
   [ec saveChanges];
   tmp2 = [masterDS fetchObjects];
   result = [tmp2 containsObject: tmp1];
@@ -103,7 +103,7 @@ int main(int argc,char **argv)
 
   START_TEST(YES);
   [detailDS qualifyWithRelationshipKey:@"orderPos" ofObject: tmp1];
-  START_SET(YES);
+  START_SET("-[EODetailDataSource qualifyWithRelationshipKey:ofObject:]"
   result = ([detailDS masterObject] == tmp1);
   END_SET("-[EODetailDataSource qualifyWithRelationshipKey:ofObject:]"
 	  "result evaluation");
@@ -137,7 +137,7 @@ int main(int argc,char **argv)
   [tmp1 takeValue: [NSNumber numberWithInt: 1] forKey: @"price"];
   START_TEST(YES);
   [detailDS insertObject: tmp1];
-  START_SET(YES);
+  START_SET("-[EODetailDataSource insertObject:] result evaluation 2");
   [ec saveChanges];
   tmp2 = [detailDS fetchObjects];
   result = [tmp2 containsObject: tmp1];
@@ -147,7 +147,7 @@ int main(int argc,char **argv)
 
   START_TEST(YES);
   tmp1 = [detailDS createObject];
-  START_SET(YES);
+  START_SET("-[EODetailDataSource insertObject:] result evaluation 3");
   [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"amount"];
   [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"value"];
   [tmp1 takeValue: [NSNumber numberWithInt: 2] forKey: @"price"];

@@ -38,7 +38,7 @@ int main(int argc,char **argv)
   EOSQLExpression* sqlExpression=nil;
   NSString* sqlString=nil;
   
-  START_SET(YES);
+  START_SET("EOQualifier/EOKeyValueQualifier00.m");
 
 /*
   NSMutableSet* debugSet=[[NSProcessInfo processInfo] debugSet];

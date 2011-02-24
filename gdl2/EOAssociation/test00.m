@@ -37,7 +37,7 @@ int main(int argc,char **argv)
   unsigned i,c;
   volatile BOOL result = NO;
 
-  START_SET(YES);
+  START_SET("EOAssociation/test00.m");
 
   START_TEST(YES);
   tmp = [EOAssociation aspects];

@@ -104,7 +104,7 @@ int main(int argc,char **argv)
   EOClassDescription *clDesc;
   EOClassDescription *clDescDel;
 
-  START_SET(YES);
+  START_SET("EOClassDescription/EOClassDescription00.m");
 
   del = [MyDelegate new];
 

@@ -108,7 +108,7 @@ int main()
 	   Class qClass = Nil;
 	   NSString *key;
 
-           START_SET(YES);
+	   START_SET("qualifierWithQualifierFormat:arguments");
 	   key = [NSString stringWithFormat:@"%s", stuff[i].key];
 
 	   qFmt = [NSString stringWithFormat:@"(%@ %s %s)",
@@ -206,7 +206,7 @@ int main()
         }
 
       fmt = [formats componentsJoinedByString:agFormat];
-      START_SET(YES);
+      START_SET("aggregate qualifiers");
 
       START_TEST(YES);
       q = [EOQualifier qualifierWithQualifierFormat:fmt arguments:args];

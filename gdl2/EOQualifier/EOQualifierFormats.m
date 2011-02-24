@@ -7,7 +7,7 @@ main(int argc, char *argv[])
   volatile BOOL result;
   EOQualifier *qual;
 
-  START_SET(YES);
+  START_SET("EOQualifier/" __FILE__);
   START_TEST(YES);
   qual = [EOQualifier qualifierWithQualifierFormat:@"bla = %%"];
   result = [qual isKindOfClass:[EOKeyComparisonQualifier class]];

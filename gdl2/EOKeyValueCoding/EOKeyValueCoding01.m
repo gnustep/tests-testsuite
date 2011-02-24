@@ -143,7 +143,7 @@ int main(int argc,char **argv)
   id detail;
   NSDictionary *dict;
 
-  START_SET(YES);
+  START_SET("EOKeyValueCoding/EOKeyValueCoding00.m");
 
   master = [Master new];
   [master setName:@"master"];

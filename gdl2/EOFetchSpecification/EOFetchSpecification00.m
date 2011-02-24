@@ -38,7 +38,7 @@ int main(int argc,char **argv)
   EOQualifier *qual;
   NSArray *sOrd;
 
-  START_SET(YES);
+  START_SET("EOFetchSpecification/EOFetchSpecification00.m");
 
   START_TEST(YES);
   fSpec = [[EOFetchSpecification alloc] init];

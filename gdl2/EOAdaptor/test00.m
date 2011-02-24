@@ -52,7 +52,7 @@ int main(int argc,char **argv)
   currAdaptorName = setupModel(model);
   /*  Now we have the testcases for the installed Adaptors.  */
 
-  START_SET(YES);
+  START_SET("EOAdaptor/test00.m");
   [EOSQLExpression setUseQuotedExternalNames: YES];
 
   START_TEST(YES);
@@ -60,7 +60,7 @@ int main(int argc,char **argv)
   result = [adaptorNamesArr containsObject:currAdaptorName];
   END_TEST(result, "+[EOAdaptor availableAdaptorNames:]" );
 
-      START_SET(YES);
+      START_SET("EOAdaptor")
 
       START_TEST(YES);
       currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
@@ -154,7 +154,7 @@ int main(int argc,char **argv)
       [currAdaptorChannel closeChannel];
 
       
-      END_SET("EOAdaptor: %s", [currAdaptorName cString]);
+      END_SET("EOAdaptor")
 
   entities = [model entities];
   tmp1 = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -164,7 +164,8 @@ int main(int argc,char **argv)
   START_TEST(YES);
   tmp = [currAdaptorExprClass schemaCreationStatementsForEntities: entities
 			      options: tmp1];
-  START_SET(YES);
+  START_SET("-[EOSQLExpression schemaCreationStatementsForEntities:options:]"
+	  " result evaluation");
   {
     BOOL local = NO;
     result = NO;
@@ -226,7 +227,8 @@ int main(int argc,char **argv)
   START_TEST(YES);
   tmp = [currAdaptorExprClass schemaCreationStatementsForEntities: entities
 			      options: tmp1];
-  START_SET(YES);
+  START_SET("-[EOSQLExpression schemaCreationStatementsForEntities:options:]"
+	  " result evaluation");
   {
     BOOL local = NO;
     result = NO;

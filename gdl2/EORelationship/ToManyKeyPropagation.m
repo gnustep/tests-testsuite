@@ -51,7 +51,7 @@ int main(int argc,char **argv)
 			     @"Software", @"IT", @"Licensing",@"Activist",@"Grass-Roots" };
   unsigned i,n;
 
-  START_SET(YES);
+  START_SET("EORelationship/" __FILE__);
 
   filePath = @"ToManyKeyPropagation.eomodel";
   model = [[EOModel alloc] initWithContentsOfFile: filePath];

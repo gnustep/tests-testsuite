@@ -34,7 +34,7 @@ int main(int argc,char **argv)
   id tmp = nil;
   EOKeyComparisonQualifier *qual;
 
-  START_SET(YES);
+  START_SET("EOQualifier/EOKeyComparisonQualifier00.m");
 
   START_TEST(YES);
   qual 

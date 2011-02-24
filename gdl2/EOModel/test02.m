@@ -37,7 +37,7 @@ int main(int argc,char **argv)
   NSString *filePath;
 
   EOModel  *model = nil;
-  START_SET(YES);
+  START_SET("EOModel/" __FILE__);
 
   /* Load eomodel file.  */
   START_TEST(YES);

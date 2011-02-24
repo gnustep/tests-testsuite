@@ -36,7 +36,7 @@ int main(int argc,char **argv)
   EOEditingContext *ec2 = nil;
   id tmp = nil;
 
-  START_SET(YES);
+  START_SET("EOEditingContext/EOEditingContext00.m");
 
   START_TEST(YES);
   {

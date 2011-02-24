@@ -56,7 +56,7 @@ int main()
   EOEditingContext *ec = nil;
   id objPrd = nil;
   
-  START_SET(YES);
+  START_SET("EOFault/" __FILE__);
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
   setupModel(model);

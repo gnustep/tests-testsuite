@@ -41,7 +41,7 @@ int main(int argc,char **argv)
   Class qCls = [EOQualifier class];
   NSDictionary *dict = [[NSMutableDictionary alloc] init];
 
-  START_SET(YES);
+  START_SET("EOQualifier/EOQualifier00.m");
 
   START_TEST(YES);
   tmp = [NSSet setWithObjects: @"=", @"!=", @"<=", @"<", @">=", @">",

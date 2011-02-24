@@ -45,7 +45,7 @@ int main(int argc,char **argv)
   id del = nil;
   id tmp = nil;
 
-  START_SET(YES);
+  START_SET("EOSharedEditingContext/"__FILE__);
 
   model = globalModelForKey(@"TSTTradingModel.eomodeld");
   setupModel(model);

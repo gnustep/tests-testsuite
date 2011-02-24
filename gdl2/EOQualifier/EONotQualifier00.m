@@ -34,7 +34,7 @@ int main(int argc,char **argv)
   id tmp = nil;
   EONotQualifier *qual;
 
-  START_SET(YES);
+  START_SET("EOQualifier/EONotQualifier00.m");
 
   START_TEST(YES);
   {

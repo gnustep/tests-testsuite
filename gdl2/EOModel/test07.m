@@ -27,7 +27,7 @@ int main()
   [ent2 setName:@"ent2"];
   [ent2 setClassName:@"EOGenericRecord"];
 
-  START_SET(YES)
+  START_SET("EOModel parent tests");
   [ent1 addSubEntity:ent2];
   START_TEST(YES)
   result = [ent2 parentEntity] == ent1;

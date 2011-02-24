@@ -81,8 +81,7 @@ int main(int argc,char **argv)
 
   /*  Now we have the testcases for the installed Adaptors.  */
 
-  START_SET(YES);
-      START_SET(YES);
+  START_SET("EOAdaptor/EOAdaptorTypes00.m");
 
       model = [[EOModel alloc] initWithContentsOfFile: @"EOAdaptorTypes.eomodel"];
       NSCAssert(model, @"Failed to load model. ");
@@ -209,8 +208,6 @@ int main(int argc,char **argv)
       
       [[EOModelGroup defaultGroup] removeModel: model];
       dropDatabaseWithModel(model);
-
-      END_SET("EOAdaptor: %s", [currAdaptorName cString]);
 
   END_SET("EOAdaptor/EOAdaptorTypes00.m");
   [pool release];
