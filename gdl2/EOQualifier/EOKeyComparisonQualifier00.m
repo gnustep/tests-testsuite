@@ -43,7 +43,7 @@ int main(int argc,char **argv)
 					  EOQualifierOperatorGreaterThan
 					rightKey: @"distributed"];
   result = [[qual leftKey] isEqual: @"invented"];
-  result = result && sel_eq([qual selector],
+  result = result && sel_isEqual([qual selector],
 			    EOQualifierOperatorGreaterThan);
   result = result && [[qual rightKey] isEqual: @"distributed"];
   END_TEST(result, 

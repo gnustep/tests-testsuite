@@ -103,7 +103,7 @@ int main(int argc,char **argv)
 
   START_TEST(YES);
   [detailDS qualifyWithRelationshipKey:@"orderPos" ofObject: tmp1];
-  START_SET("-[EODetailDataSource qualifyWithRelationshipKey:ofObject:]"
+  START_SET("-[EODetailDataSource qualifyWithRelationshipKey:ofObject:]");
   result = ([detailDS masterObject] == tmp1);
   END_SET("-[EODetailDataSource qualifyWithRelationshipKey:ofObject:]"
 	  "result evaluation");

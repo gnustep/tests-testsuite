@@ -41,7 +41,7 @@ int main(int argc,char **argv)
 
   /*  Now we have the testcases for the installed Adaptors.  */
 
-  START_SET(YES);
+  START_SET("EOAdaptorEncoding");
 
   adaptor = [EOAdaptor adaptorWithName:[[EOAdaptor availableAdaptorNames] lastObject]];
   map = [@"{"
@@ -98,7 +98,7 @@ int main(int argc,char **argv)
       databaseEncoding = [adaptor databaseEncoding];
       result = result && (expectedEncoding == databaseEncoding ? YES : NO);
     }
-  END_TEST(result, [@"-[EOAdaptor databaseEncoding]" cString]);
+  END_TEST(result, "-[EOAdaptor databaseEncoding]");
 	      
 
   END_SET("EOAdaptorEncoding");

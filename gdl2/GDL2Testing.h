@@ -3,7 +3,7 @@
 #ifdef GNUSTEP_TESTING
 #include <GNUstepBase/GSTesting.h>
 #else
-#include "../ObjectTesting.h"
+#include "ObjectTesting.h"
 #endif
 
 #include <Foundation/Foundation.h>

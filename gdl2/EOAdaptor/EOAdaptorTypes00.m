@@ -90,7 +90,7 @@ int main(int argc,char **argv)
       START_TEST(YES)
       adaptorNamesArr = [EOAdaptor availableAdaptorNames];
       result = [adaptorNamesArr containsObject: currAdaptorName];
-      END_TEST(result, [[NSString stringWithFormat:@"availableAdaptorNames contains '%@'", currAdaptorName] cString]);
+      END_TEST(result, "availableAdaptorNames contains '%s'", [currAdaptorName UTF8String]);
 	      
       currAdaptor = [EOAdaptor adaptorWithName: currAdaptorName];
       [currAdaptor setConnectionDictionary: [model connectionDictionary]];

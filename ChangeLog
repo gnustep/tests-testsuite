@@ -1,3 +1,24 @@
+2017-05-14  Fred Kiefer <FredKiefer@gmx.de>
+
+	* gdl2/Bug8993/test00.m
+	* gdl2/EOAdaptor/EOAdaptorEncoding.m
+	* gdl2/EOAdaptor/EOAdaptorTypes00.m
+	* gdl2/EODataSource/test00.m
+	* gdl2/EODisplayGroup/EODisplayGroup00.m
+	* gdl2/EOKeyValueCoding/EOKeyValueCoding00.m
+	* gdl2/EOModel/test00.m
+	* gdl2/EOModel/test01.m
+	* gdl2/EOQualifier/EOKeyComparisonQualifier00.m
+	* gdl2/EOQualifier/EOKeyValueQualifier00.m
+	* gdl2/EOQualifier/EOQualifier00.m
+	* gdl2/EOQualifier/EOQualifier02.m
+	* gdl2/EOSharedEditingContext/EOSharedEditingContext01.m
+	* gdl2/EOSortOrdering/EOSortOrdering00.m: Use sel_isEqual instead
+	of sel_eq. Correct invalid macro calls.
+	* gdl2/GDL2Testing.h: Correctly import ObjectTesting.h.
+	* gdl2/GNUmakefile.super: Change orde of frameworks.
+	Patch by Mark Clements <mark.clements@ki.se>
+
 2011-02-19 Richard Frith-Macdonald  <rfm@gnu.org>
 
 	Deleted the 'gui' subdirectory and  used svn propset to set

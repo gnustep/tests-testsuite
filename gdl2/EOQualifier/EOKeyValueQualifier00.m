@@ -42,7 +42,7 @@ int main(int argc,char **argv)
 					EOQualifierOperatorGreaterThan
 				      value: @"PostgresSQL"];
   result = [[qual key] isEqual: @"name"];
-  result = result && sel_eq([qual selector], EOQualifierOperatorGreaterThan);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorGreaterThan);
   result = result && [[qual value] isEqual: @"PostgresSQL"];
   END_TEST(result,
 	   "-[EOKeyValueQualifier initWithKey:operatorSelector:value:]");

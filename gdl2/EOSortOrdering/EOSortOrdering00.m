@@ -55,19 +55,19 @@ int main(int argc,char **argv)
 				  selector: EOCompareDescending];
 
   result = [[sOrd1 key] isEqual: @"name"];
-  result = result && sel_eq([sOrd1 selector],
+  result = result && sel_isEqual([sOrd1 selector],
 			    EOCompareCaseInsensitiveAscending);
 
   result = result && [[sOrd2 key] isEqual: @"details"];
-  result = result && sel_eq([sOrd2 selector],
+  result = result && sel_isEqual([sOrd2 selector],
 			    EOCompareCaseInsensitiveDescending);
 
   result = result && [[sOrd3 key] isEqual: @"number"];
-  result = result && sel_eq([sOrd3 selector],
+  result = result && sel_isEqual([sOrd3 selector],
 			    EOCompareAscending);
 
   result = result && [[sOrd4 key] isEqual: @"date"];
-  result = result && sel_eq([sOrd4 selector],
+  result = result && sel_isEqual([sOrd4 selector],
 			    EOCompareDescending);
 
   END_TEST(result, "-[EOSortOrdering initWithKey:selector:]");

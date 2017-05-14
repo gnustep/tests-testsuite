@@ -243,7 +243,7 @@ int main(int argc,char **argv)
 
     plist = [NSMutableDictionary dictionary];
     [model encodeTableOfContentsIntoPropertyList: plist];
-    START_SET("-[EOModel encodeTableOfContentsIntoPropertyList:]"
+    START_SET("-[EOModel encodeTableOfContentsIntoPropertyList:]");
     {
       BOOL local;
       result = NO;

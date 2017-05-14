@@ -77,13 +77,13 @@ int main(int argc,char **argv)
   END_TEST(result, "-[EOSharedEditingContext objectsWithFetchSpecification:editingContext:]");
 
   obj = [tmp lastObject];
-  TEST_EXCEPTION([obj takeValue: @"Software" forKey: @"name"];,
-		 NSInternalInconsistencyException, YES,
-		 "object in EOSharedEditingContext may not be altered");
+  PASS_EXCEPTION([obj takeValue: @"Software" forKey: @"name"];,
+   		 NSInternalInconsistencyException,
+   		 "object in EOSharedEditingContext may not be altered");
 
-  TEST_EXCEPTION([sec deleteObject: obj];,
-		 NSInternalInconsistencyException, YES,
-		 "object in EOSharedEditingContext may not be deleted");
+  PASS_EXCEPTION([sec deleteObject: obj];,
+  		 NSInternalInconsistencyException,
+   		 "object in EOSharedEditingContext may not be deleted");
 
   START_TEST(YES);
   tmp = [ec1 objectsWithFetchSpecification: fs editingContext: ec1];

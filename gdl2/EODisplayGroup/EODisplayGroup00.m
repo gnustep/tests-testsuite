@@ -44,7 +44,7 @@
   if (![obj isKindOfClass: [self class]])
     return NO;
 
-  return sel_eq(_selector, (SEL)((EOKeyValueQualifier *)obj)->_selector)
+  return sel_isEqual(_selector, (SEL)((EOKeyValueQualifier *)obj)->_selector)
          && [_key testIsEqual:((EOKeyValueQualifier *)obj)->_key]
          && [_value testIsEqual:((EOKeyValueQualifier *)obj)->_value];
 }

@@ -229,14 +229,14 @@ int main(int argc,char **argv)
   END_TEST(result, "-[NSObject(EOKeyValueCoding) unableToSetNilForKey:]");
 
   obj = [EOKVCTester new];
-  TEST_EXCEPTION(([obj takeValue: null forKey: @"other_int_iv"]); , 
-		 NSInvalidArgumentException, YES,
-		 "-[NSObject(EOKeyValueCoding) unableToSetNilForKey:]"
-		 " raise (EONull)");
-  TEST_EXCEPTION(([obj takeValue: nil forKey: @"other_int_iv"]); , 
-		 NSInvalidArgumentException, YES,
-		 "-[NSObject(EOKeyValueCoding) unableToSetNilForKey:]"
-		 " raise (nil)");
+  PASS_EXCEPTION(([obj takeValue: null forKey: @"other_int_iv"]); , 
+   		 NSInvalidArgumentException,
+   		 "-[NSObject(EOKeyValueCoding) unableToSetNilForKey:]"
+   		 " raise (EONull)");
+  PASS_EXCEPTION(([obj takeValue: nil forKey: @"other_int_iv"]); , 
+   		 NSInvalidArgumentException,
+   		 "-[NSObject(EOKeyValueCoding) unableToSetNilForKey:]"
+   		 " raise (nil)");
 
   /* NSArray */
   START_TEST(YES);

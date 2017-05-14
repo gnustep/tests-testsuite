@@ -57,28 +57,28 @@ int main(int argc,char **argv)
   END_TEST(result, "+[EOQualifier relationalQualifierOperators]");
 
   START_TEST(YES);
-  result = sel_eq([qCls operatorSelectorForString: @"="],
+  result = sel_isEqual([qCls operatorSelectorForString: @"="],
 		  EOQualifierOperatorEqual);
-  result = result && sel_eq([qCls operatorSelectorForString: @"=="],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"=="],
 			    EOQualifierOperatorEqual);
-  result = result && sel_eq([qCls operatorSelectorForString: @"!="],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"!="],
 			    EOQualifierOperatorNotEqual);
-  result = result && sel_eq([qCls operatorSelectorForString: @"<>"],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"<>"],
 			    EOQualifierOperatorNotEqual);
-  result = result && sel_eq([qCls operatorSelectorForString: @"<"],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"<"],
 			    EOQualifierOperatorLessThan);
-  result = result && sel_eq([qCls operatorSelectorForString: @">"],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @">"],
 			    EOQualifierOperatorGreaterThan);
-  result = result && sel_eq([qCls operatorSelectorForString: @"<="],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"<="],
 			    EOQualifierOperatorLessThanOrEqualTo);
-  result = result && sel_eq([qCls operatorSelectorForString: @">="],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @">="],
 			    EOQualifierOperatorGreaterThanOrEqualTo);
-  result = result && sel_eq([qCls operatorSelectorForString: @"like"],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"like"],
 			    EOQualifierOperatorLike);
-  result = result && sel_eq([qCls operatorSelectorForString:
+  result = result && sel_isEqual([qCls operatorSelectorForString:
 				    @"caseInsensitiveLike"],
 			    EOQualifierOperatorCaseInsensitiveLike);
-  result = result && sel_eq([qCls operatorSelectorForString: @"doesContain"],
+  result = result && sel_isEqual([qCls operatorSelectorForString: @"doesContain"],
 			    EOQualifierOperatorContains);
   END_TEST(result, "+[EOQualifier operatorSelectorForString:]");
 
@@ -124,7 +124,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: @"constant"];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = 'constant''");
 
@@ -133,7 +133,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyComparisonQualifier class]];
   result = result && [[qual leftKey] isEqual: @"key"];
   result = result && [[qual rightKey] isEqual: @"value"];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = value'");
 
@@ -142,7 +142,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyComparisonQualifier class]];
   result = result && [[qual leftKey] isEqual: @"key"];
   result = result && [[qual rightKey] isEqual: @"value"];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'(key = value)'");
 
@@ -151,7 +151,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: [NSNumber numberWithInt: 25]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = 25'");
 
@@ -160,7 +160,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: [NSNumber numberWithInt: -25]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = -25'");
 
@@ -169,7 +169,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: [NSNumber numberWithDouble: -12.8]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = -12.8'");
 
@@ -178,7 +178,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: [NSNumber numberWithInt: 25]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = (NSNumber)'25''");
 
@@ -187,7 +187,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: [NSNumber numberWithFloat: 25.5]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = (NSNumber)'25.5''");
 
@@ -197,7 +197,7 @@ int main(int argc,char **argv)
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] 
 		       isEqual: [NSNumber numberWithDouble: 42.94967296]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = (NSNumber)'42.94967296''");
 
@@ -207,7 +207,7 @@ int main(int argc,char **argv)
   result = [qual isKindOfClass: [EOKeyValueQualifier class]];
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: tmp];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "@'key = (NSDecimalNumber)'25.1''");
 

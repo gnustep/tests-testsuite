@@ -51,7 +51,7 @@ int main(int argc,char **argv)
   result = result && [[qual key] isEqual: @"key"];
   result = result && [[qual value] isEqual: 
 				     [@"\"const\\U00C0\\U038F\\U4E20\"" propertyList]];
-  result = result && sel_eq([qual selector], EOQualifierOperatorEqual);
+  result = result && sel_isEqual([qual selector], EOQualifierOperatorEqual);
   END_TEST(result, "+[EOQualifier qualifierWithQualifierFormat:] "
 	   "Unicode: @'key = 'const$$$''");
 

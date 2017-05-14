@@ -93,7 +93,7 @@ int main(int argc,char **argv)
   [ec saveChanges];
 
   END_SET("Bug8993 preperation");
-  START_SET(Bug8993);
+  START_SET("Bug8993");
   [ec deleteObject: objS];
   START_TEST(YES);
   [ec saveChanges];
